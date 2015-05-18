@@ -1,0 +1,22 @@
+<h2>Show user</h2>
+
+<ul>
+
+  <li>
+    <strong>Hash:</strong>
+    <%= @user.hash %>
+  </li>
+
+  <li>
+    <strong>Nick:</strong>
+    <%= @user.nick %>
+  </li>
+
+  <li>
+    <strong>Tags:</strong>
+    <%= @user.tags %>
+  </li>
+
+</ul>
+
+<%= link "Back", to: user_path(@conn, :index) %>

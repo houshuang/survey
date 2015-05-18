@@ -1,0 +1,1 @@
+<P>This is where you will select your tags. Current time is <%= inspect(:calendar.local_time) %></P>
