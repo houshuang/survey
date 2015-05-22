@@ -1,0 +1,161 @@
+#Teacher Background 				
+text,How many years have you been teaching any subject in K-12 education? Please Enter a whole number (for example: 15) 
+
+multi,At what grade levels do you currently teach?
+	k-3
+	4-6
+	7-8
+	9-12
+	I do not currently teach in a k-12 educational system
+
+radio,If you do not currently teach in a k-12 educational system, please specify your role.
+	Informal education (museums, after school, etc)
+	School administration (leadership, technology specialists, etc)
+	Higher education (college, university, etc)
+	Adult and continuing education
+
+text, Other  (Please specify?)
+
+radio,What is your highest level of education (Highest degree earned)
+	High school diploma
+	Associate degree
+	Bachelors
+	Masters
+	Ph.D.
+
+radio,How much professional development do you regularly engage in
+	at least one workshop or conference per year
+	occasional workshop or conference 
+	rarely engage in formal professional development
+
+radio,How often do you use a computer (Including smartphone and tablets) for personal matters?
+	Several times a day
+	almost everyday
+	1-2 times a week
+	Rarely
+
+grid,How available are the following technologies for small group work (2 - 5 students per group) in your classes? 
+choices
+	Not available
+	Available if I reserve in advance
+	Easily available
+rows
+	Personal computers, including laptops
+	Hand-held computers (for example: PDAs, tablets, smartphones, iPads)
+	Internet access
+	Student response system or "Clickers" (handheld devices used to respond electronically to questions in class) 
+
+grid,How often do students use each of the following instructional technologies in your classroom? 
+choices
+	Never
+	Rarely
+	Sometimes
+	Often
+	Almost every day 
+rows
+	Personal computers, including laptops
+	Hand-held computers (tablets, smart phones)
+	Classroom response system or “Clickers” 
+	Smart board
+
+grid,Do you agree with the following statements about using computers in classroom instruction/teaching? 
+choices
+	strongly disagree
+	disagree
+	neutral
+	agree
+	strongly agree
+rows
+	Using computers for instruction doesn’t really fit with my teaching style.
+	Computers have only limited use in a classroom.
+	Computers are good for individual work but not for collaboration
+	Computers are best used for drill and reinforcement of skills taught in class.
+	Computers can help students to discover or construct ideas for themselves.
+
+radio,How much support do teachers at your school receive for innovative use of technology?
+	teachers are very well supported
+	teachers receive some support
+	teachers are on their own, but encouraged to try new things
+	teachers are discouraged from trying new approaches
+
+radio,In your school, is there a clear vision statement about technology integration for learning and assessment?
+	Yes, there is a very clear vision and teachers are actively engaged in pursuing it
+	Yes, there is a technology vision, but teachers are not supported in pursuing it
+	Yes, there is a technology vision, but it is not sufficient, or teachers do not agree with its direction. 
+	There is some support for technology integration, but no clear vision.
+	No, there is no vision statement about technology integration.
+
+	
+# About this course
+text,Why did you sign up for this course?
+text, Describe how students learn through inquiry
+text,What do you think is a good role for technology in supporting such learning?
+text,How do “inquiry-based approaches” change the role of the teacher in the classroom?
+
+# Inquiry
+
+radio,What is a good length of class time for an inquiry lesson?
+	10 minutes
+	45 minutes
+	90 minutes
+	2 weeks of class time
+	1 month or more of class time
+
+radio,How often do you employ inquiry-oriented lessons?
+	every day
+	once per week
+	once per month
+	once per unit or semester
+
+
+grid,When you teach, how much emphasis do you give to the following
+choices	
+	none 
+	minimal emphasis 
+	moderate emphasis 
+	strong emphasis
+rows
+	Memorizing vocabulary and/or facts
+	Understanding concepts
+	Learning about process skills (for example: observing, measuring, critical thinking)
+	Learning to collaborate and work as a team
+	Learning to find, critique and use resources
+	Learning real-life applications your topic
+	Increasing students’ interest in your topic
+	Preparing for further study in your topic
+	Learning test taking skills/strategies
+
+grid,How confident are you in enacting the following instructional practices? 
+choicerange
+	not confident
+	highly confident
+	5
+rows
+	providing alternative explanations or examples when students are confused
+	responding to difficult questions from your students
+	adjusting your lessons to differentiate for individual student needs 
+	using a variety of assessment strategies
+	monitoring student understanding on an ongoing basis throughout a unit
+	assessing student understanding at the conclusion of a unit 
+	providing appropriate challenges for high-achieving students
+	developing lessons that combine subject matter, technologies, and teaching approaches.
+
+#Collaborative Learning 
+grid,Thinking about your learning, please indicate how much you agree with the following statements about learning with peers  
+choicerange
+	not at all
+	to a large extent
+	5
+rows
+	To what extent do you learn from your peers, and not only from the teachers?
+	Would you value more opportunities to learn from your peers?
+	Have you joined Facebook or other virtual study groups for classes (not organized by the teacher)? If yes, did you find that helpful?
+	Have you participated in informal study groups not organized by the professor or teaching assistant? If yes, did you find that helpful?
+	Have you shown drafts of your papers to other students and gotten feedback, or given feedback on drafts?
+	Do you discuss course topics outside of courses with friends, housemates or family?
+	What is your opinion of working with your peers in this course?
+	I often discussed with other students the content of the lectures.
+	I often explained my ideas to other students.
+	I often asked other students to explain their ideas to me.
+	Other students usually listened carefully to my ideas.
+
