@@ -1,5 +1,52 @@
 defmodule Survey.HTML.Survey do
   import MultiDef
+  import Survey.HTML.Helpers
+  import Phoenix.HTML
+  import Phoenix.HTML.Form
+
+  def gen_survey(file, form) do
+    parse(file)
+    |> Enum.map(fn(x) -> gen_elements(x, form) end)
+    |> IO.iodata_to_binary
+    |> raw
+  end
+
+  mdef unsafe_concat do
+    {:safe, x} -> x
+    x when is_list(x) -> x
+    x when is_binary(x) -> x
+  end
+
+  mdef gen_elements do
+    {:header, txt}, form -> ["<h3>", txt, "</h3>"]
+    %{type: "text"} = h, form -> ["<label>", h.name, ": </label>", unsafe(text_input(form, String.to_atom(h.name)))]
+    %{type: "radio"} = h, form -> radio(h, form)
+    %{type: "multi"} = h, form -> multi(h, form)
+    %{type: "textbox"} = h, form -> ["<label>", h.name, ": </label>", unsafe(textarea(form, h.name))]
+    %{type: "grid", choicerange: _} = h, form -> unsafe(grid_select(h.name, h.rows, h.choicerange))
+    %{type: "grid", choices: _} = h, form -> unsafe(grid_select(h.name, h.rows, h.choices))
+  end
+
+  def multi(h, form) do
+    opts = h.options
+    |> Enum.map(
+      fn x -> [unsafe(checkbox(form, String.to_atom("#{h.name}.#{x}"))), "<label>", x, ": </label><br>", ] end)
+    ["<h3>", h.name, "</h3>", opts]
+  end
+
+  def radio(h, form) do
+    opts = h.options
+    |> Enum.map(fn x -> 
+    
+      [unsafe(radio_button(form, String.to_atom("#{h.name}.#{x}"), "false")), "<label>", x, ": </label><br>", ] end )
+    ["<h3>", h.name, "</h3>", opts]
+  end
+  
+  
+  mdef unsafe do
+    {:safe, x} -> x
+    x -> x
+  end
 
   def parse(file) do
     File.stream!(file)
@@ -9,7 +56,6 @@ defmodule Survey.HTML.Survey do
     |> Enum.reduce({:wait, []}, &concat_blocks/2)
     |> elem(1)
     |> Enum.reverse
-    |> IO.inspect
   end
   
   mdef line_types do
@@ -21,16 +67,6 @@ defmodule Survey.HTML.Survey do
     "rows" -> :rows
     rest -> [type, q] = String.split(rest, ",", parts: 2); {:question, type, String.strip(q)}
   end
-
-  # def conc_tr(x,y) do 
-  #   IO.inspect(y)
-  #   IO.inspect(x)
-  #   IO.puts("------------------------------")
-  #   res = concat_blocks(x,y)
-  #   IO.inspect(res)
-  #   IO.puts("==============================\n")
-  #   res
-  # end
 
   mdef concat_blocks do
     :choicerange, {_, acc} -> {:choicerange, acc}

@@ -2,6 +2,10 @@ defmodule Survey.HTML.Helpers do
   require Logger
   import Phoenix.HTML
 
+  def multi(form, name, options) do
+    "Multi: #{name}"
+  end
+  
   def magic_suggest(name, data, opts \\ %{}) do
     opts = opts 
             |> Map.merge(%{data: data})
@@ -35,7 +39,6 @@ defmodule Survey.HTML.Helpers do
   end
 
   def grid_select(name, rows, {min, max, num}) when is_map(rows) do
-    Logger.info("Grid_select")
     elem_list = 1..num 
       |> Enum.to_list
       |> Enum.map(&Integer.to_string/1)
@@ -43,6 +46,15 @@ defmodule Survey.HTML.Helpers do
     header = elem_list |> Enum.map(&tdwrap/1)
 
     header = ["<table>", trwrap(["<td></td>", tdwrap(min), header, tdwrap(max)])]
+    body = rows |> Enum.map(fn x -> body_row(name, x, elem_list) end)
+    footer = "</table>"
+    raw IO.iodata_to_binary([header, body, footer])
+  end
+
+  def grid_select(name, rows, elem_list) when is_list(elem_list) do
+    header = elem_list |> Enum.map(&tdwrap/1)
+
+    header = ["<table>", trwrap(["<td></td><td></td>", header])]
     body = rows |> Enum.map(fn x -> body_row(name, x, elem_list) end)
     footer = "</table>"
     raw IO.iodata_to_binary([header, body, footer])

@@ -90,7 +90,7 @@ radio,In your school, is there a clear vision statement about technology integra
 text,Why did you sign up for this course?
 text, Describe how students learn through inquiry
 text,What do you think is a good role for technology in supporting such learning?
-text,How do “inquiry-based approaches” change the role of the teacher in the classroom?
+text,How do "inquiry-based approaches" change the role of the teacher in the classroom?
 
 # Inquiry
 

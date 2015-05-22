@@ -1,7 +1,6 @@
     <h3>Select teaching interests</h3>
     <%= form_for @conn, tag_path(@conn, :submit), [name: :search], fn f -> %>
     <%= magic_suggest("tags", data, %{placeholder: "Please input relevant tags to your education"}) %>
-    <h3>How confident are you in enacting the following instructional practices</h3>
-    <%= grid_select("likert", likert, {"Not confident", "Very confident", 5}) %>
+    <%= gen_survey("data/survey.txt", f) %>
     <%= submit "Submit", class: "btn btn-primary" %>
             <% end %>

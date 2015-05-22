@@ -8,6 +8,6 @@ defmodule Survey.TagController do
   end
 
   def submit(conn, params) do
-    json conn, inspect(params)
+    text conn, inspect(params, pretty: true)
   end
 end
