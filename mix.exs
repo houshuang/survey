@@ -38,6 +38,7 @@ defmodule Survey.Mixfile do
       {:poison, "~> 1.4.0"},
       {:mix_test_watch, "~> 0.1.0"},
       {:multidef, github: "pragdave/mdef"},
+      {:exrm, "~> 0.15.3"}
     ]
   end
 end

@@ -6,6 +6,7 @@ defmodule Survey.HTML.Survey do
 
   def gen_survey(file, form) do
     parse(file)
+    |> IO.inspect
     |> Enum.map(fn(x) -> gen_elements(x, form) end)
     |> IO.iodata_to_binary
     |> raw
@@ -22,8 +23,8 @@ defmodule Survey.HTML.Survey do
     %{type: "text"} = h, form -> ["<label>", h.name, ": </label>", unsafe(text_input(form, String.to_atom(h.name)))]
     %{type: "radio"} = h, form -> radio(h, form)
     %{type: "multi"} = h, form -> multi(h, form)
-    %{type: "textbox"} = h, form -> ["<label>", h.name, ": </label>", unsafe(textarea(form, h.name))]
-    %{type: "grid", choicerange: _} = h, form -> unsafe(grid_select(h.name, h.rows, h.choicerange))
+    %{type: "textbox"} = h, form -> ["<label>", h.name, ": </label>", unsafe(textarea(form, String.to_atom(h.name)))]
+    %{type: "grid", choicerange: _} = h, form -> unsafe(grid_select(h.name, h.rows, List.to_tuple(h.choicerange)))
     %{type: "grid", choices: _} = h, form -> unsafe(grid_select(h.name, h.rows, h.choices))
   end
 
@@ -38,7 +39,7 @@ defmodule Survey.HTML.Survey do
     opts = h.options
     |> Enum.map(fn x -> 
     
-      [unsafe(radio_button(form, String.to_atom("#{h.name}.#{x}"), "false")), "<label>", x, ": </label><br>", ] end )
+      [unsafe(radio_button(form, String.to_atom(h.name), x)), "<label>", x, ": </label><br>", ] end )
     ["<h3>", h.name, "</h3>", opts]
   end
   

@@ -39,7 +39,7 @@ defmodule Survey.HTML.Helpers do
   end
 
   def grid_select(name, rows, {min, max, num}) when is_map(rows) do
-    elem_list = 1..num 
+    elem_list = 1..String.to_integer(num) 
       |> Enum.to_list
       |> Enum.map(&Integer.to_string/1)
 
