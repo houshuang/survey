@@ -1,6 +1,7 @@
 # Mix artifacts
 /_build
 /deps
+/rel
 /*.ez
 #
 # Generate on crash by the VM
