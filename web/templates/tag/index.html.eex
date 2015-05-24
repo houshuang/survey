@@ -1,6 +1,6 @@
     <h3>Select teaching interests</h3>
     <%= form_for @conn, tag_path(@conn, :submit), [name: :search], fn f -> %>
-    <%= magic_suggest("tags", data, %{placeholder: "Please input relevant tags to your education"}) %>
+    <%= raw magic_suggest("tags", data, %{placeholder: "Please input relevant tags to your education"}) %>
     <%= survey %>
     <%= submit "Submit", class: "btn btn-primary" %>
             <% end %>
