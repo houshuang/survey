@@ -6,26 +6,25 @@ defmodule Survey.HTML.Survey do
 
   def gen_survey(file, form) do
     parse(file)
-    |> IO.inspect
     |> Enum.map(fn(x) -> gen_elements(x, form) end)
     |> IO.iodata_to_binary
     |> raw
   end
 
   mdef unsafe_concat do
-    {:safe, x} -> x
-    x when is_list(x) -> x
+    {:safe, x}          -> x
+    x when is_list(x)   -> x
     x when is_binary(x) -> x
   end
 
   mdef gen_elements do
-    {:header, txt}, form -> ["<h3>", txt, "</h3>"]
-    %{type: "text"} = h, form -> ["<label>", h.name, ": </label>", unsafe(text_input(form, String.to_atom(h.name)))]
-    %{type: "radio"} = h, form -> radio(h, form)
-    %{type: "multi"} = h, form -> multi(h, form)
-    %{type: "textbox"} = h, form -> ["<label>", h.name, ": </label>", unsafe(textarea(form, String.to_atom(h.name)))]
+    {:header, txt}, form                      -> ["<h3>", txt, "</h3>"]
+    %{type: "text"} = h, form                 -> ["<label>", h.name, ": </label>", unsafe(text_input(form, String.to_atom(h.name)))]
+    %{type: "radio"} = h, form                -> radio(h, form)
+    %{type: "multi"} = h, form                -> multi(h, form)
+    %{type: "textbox"} = h, form              -> ["<label>", h.name, ": </label>", unsafe(textarea(form, String.to_atom(h.name)))]
     %{type: "grid", choicerange: _} = h, form -> unsafe(grid_select(h.name, h.rows, List.to_tuple(h.choicerange)))
-    %{type: "grid", choices: _} = h, form -> unsafe(grid_select(h.name, h.rows, h.choices))
+    %{type: "grid", choices: _} = h, form     -> unsafe(grid_select(h.name, h.rows, h.choices))
   end
 
   def multi(h, form) do
@@ -38,7 +37,6 @@ defmodule Survey.HTML.Survey do
   def radio(h, form) do
     opts = h.options
     |> Enum.map(fn x -> 
-    
       [unsafe(radio_button(form, String.to_atom(h.name), x)), "<label>", x, ": </label><br>", ] end )
     ["<h3>", h.name, "</h3>", opts]
   end
@@ -60,13 +58,13 @@ defmodule Survey.HTML.Survey do
   def remove_blank_lines(x), do: String.strip(x) != ""
 
   mdef classify_line_types do
-    "#"<>rest -> {:header, rest}
-    " "<>rest -> {:sub, rest}
-    "\t"<>rest -> {:sub, rest}
-    "choices" -> :choices
+    "#"<>rest     -> {:header, rest}
+    " "<>rest     -> {:sub, rest}
+    "\t"<>rest    -> {:sub, rest}
+    "choices"     -> :choices
     "choicerange" -> :choicerange
-    "rows" -> :rows
-    rest -> [type, q] = String.split(rest, ",", parts: 2); {:question, type, String.strip(q)}
+    "rows"        -> :rows
+    rest          -> [type, q] = String.split(rest, ",", parts: 2); {:question, type, String.strip(q)}
   end
 
   def concat_blocks(x) do
@@ -76,16 +74,16 @@ defmodule Survey.HTML.Survey do
   end
 
   mdef concat_blocks_proc do
-    :choicerange, {_, acc} -> {:choicerange, acc}
-    :rows, {_, acc} -> {:rows, acc } 
-    :choices, {_, acc} -> {:choices, acc } 
+    :choicerange, {_, acc}               -> {:choicerange, acc}
+    :rows, {_, acc}                      -> {:rows, acc }
+    :choices, {_, acc}                   -> {:choices, acc }
     {:question, "multi", name}, {_, acc} -> {:options, [%{name: name, type: "multi"} | acc]}
     {:question, "radio", name}, {_, acc} -> {:options, [%{name: name, type: "radio"} | acc]}
 
-    {:question, type, name}, {_, acc} -> {:wait, [%{name: name, type: type} | acc]}
-    {:header, _} = h, {_, acc} -> {:wait, [h | acc]}
+    {:question, type, name}, {_, acc}    -> {:wait, [%{name: name, type: type} | acc]}
+    {:header, _} = h, {_, acc}           -> {:wait, [h | acc]}
 
-    {:sub, str}, {elem, [h | tl] } -> { elem, [ append_in(h, elem, str) | tl ] }
+    {:sub, str}, {elem, [h | tl] }       -> { elem, [ append_in(h, elem, str) | tl ] }
   end
 
   def append_in(h, elem, str), do: Map.update(h, elem, [str], fn x -> List.insert_at(x, 999, str) end)
