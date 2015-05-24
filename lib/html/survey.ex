@@ -51,15 +51,15 @@ defmodule Survey.HTML.Survey do
 
   def parse(file) do
     File.stream!(file)
-    |> Stream.filter(fn x -> String.strip(x) != "" end)
+    |> Stream.filter(&remove_blank_lines/1)
     |> Stream.map(&String.rstrip/1)
-    |> Stream.map(&line_types/1)
-    |> Enum.reduce({:wait, []}, &concat_blocks/2)
-    |> elem(1)
-    |> Enum.reverse
+    |> Stream.map(&classify_line_types/1)
+    |> concat_blocks
   end
   
-  mdef line_types do
+  def remove_blank_lines(x), do: String.strip(x) != ""
+
+  mdef classify_line_types do
     "#"<>rest -> {:header, rest}
     " "<>rest -> {:sub, rest}
     "\t"<>rest -> {:sub, rest}
@@ -69,7 +69,13 @@ defmodule Survey.HTML.Survey do
     rest -> [type, q] = String.split(rest, ",", parts: 2); {:question, type, String.strip(q)}
   end
 
-  mdef concat_blocks do
+  def concat_blocks(x) do
+    Enum.reduce(x, {:wait, []}, &concat_blocks_proc/2)
+    |> elem(1)
+    |> Enum.reverse
+  end
+
+  mdef concat_blocks_proc do
     :choicerange, {_, acc} -> {:choicerange, acc}
     :rows, {_, acc} -> {:rows, acc } 
     :choices, {_, acc} -> {:choices, acc } 
