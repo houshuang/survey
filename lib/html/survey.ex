@@ -14,19 +14,25 @@ defmodule Survey.HTML.Survey do
   def do_section({seq, i}, form) do
     content = Enum.map(seq, fn(x) -> gen_elements(x, form) end)
     display = if i == 0, do: "", else: "display: none"
-    ["<div id=section#{i + 1} class='section' style='#{display}'><h1>Section #{i + 1}</h1>",content, "</div>"]
+    ["<div class='block' style='#{display}'><h1>Section #{i + 1}</h1>",content, "               <hr>
+
+                    <div class='stepsController next right'><a href='#'>Next</a></div> 
+
+</div>"]
   end
 
   mdef gen_elements do
     {:header, txt}, _                         -> ["<h3>", txt, "</h3>"]
-    %{type: "text"} = h, form                 -> ["<label>", h.name, ": </label><input name='#{form}[#{h.number}]' type=text><br>"]
-    %{type: "radio"} = h, form                -> multi(form, h, "radio")
-    %{type: "multi"} = h, form                -> multi(form, h, "checkbox")
-    %{type: "textbox"} = h, form              -> ["<label>", h.name, ": </label><br>", "<textarea name='#{form}[#{h.number}]'></textarea><p>"]
-    %{type: "grid", choicerange: _} = h, form -> grid_select(form, h.name, h.number, h.rows, List.to_tuple(h.choicerange))
-    %{type: "grid", choices: _} = h, form     -> grid_select(form, h.name, h.number, h.rows, h.choices)
+    %{type: "text"} = h, form                 -> fs ["<h4>", h.name, ": </h4><input name='#{form}[#{h.number}]' type=text><br>"]
+    %{type: "radio"} = h, form                -> fs multi(form, h, "radio")
+    %{type: "multi"} = h, form                -> fs multi(form, h, "checkbox")
+    %{type: "textbox"} = h, form              -> fs ["<h4>", h.name, ": </h4>", "<textarea name='#{form}[#{h.number}]'></textarea><p>"]
+    %{type: "grid", choicerange: _} = h, form -> fs grid_select(form, h.name, h.number, h.rows, List.to_tuple(h.choicerange))
+    %{type: "grid", choices: _} = h, form     -> fs grid_select(form, h.name, h.number, h.rows, h.choices)
     :section, _ -> ""
   end
+
+  def fs(x), do: ["<fieldset>", x, "</fieldset>"]
 
   def multi(form, h, type) do
     opts = h.options
@@ -34,17 +40,12 @@ defmodule Survey.HTML.Survey do
     |> Enum.map(
       fn {x, i} -> 
         case type do
-          "checkbox" -> ["<input name='#{form}[#{h.number}.#{[?a + i]}]' value='true' type=checkbox><label>", x, ": </label><br>"]
-          "radio" -> ["<input name='#{form}[#{h.number}]' value='#{[?a + i]}' type=radio><label>", x, ": </label><br>"]
+          "checkbox" -> ["<label><input name='#{form}[#{h.number}.#{[?a + i]}]' value='true' type=checkbox><span>", x, "</span></label>"]
+          "radio" -> ["<label><input name='#{form}[#{h.number}]' value='#{[?a + i]}' type=radio><span>", x, ": </span></label>"]
         end
       end)
 
     ["<h4>", h.name, "</h4>", opts]
-  end
-
-  mdef unsafe do
-    {:safe, x} -> x
-    x -> x
   end
 
   #================================================================================ 

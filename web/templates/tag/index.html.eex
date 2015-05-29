@@ -1,27 +1,18 @@
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <%# <link href="/css/jquery-ui.css" rel="stylesheet"> %>
-
-<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-    <script src="/js/jquery-2.1.4.min.js"></script>
-    <%# <script src="/js/jquery-ui.min.js"></script> %>
-    <script src="/js/bootstrap.min.js"></script>
-    <script src="/js/survey.js"></script>
   
-  
-  
+   <div class="stepsbar">
+            <div class="bar">
+       
 <div class="progress">
   <div class="progress-bar" role="progressbar"  >
   </div>
 </div>
+        </div>
+        </div>
 
-
-</script><%= form_for @conn, tag_path(@conn, :submit), [name: :search, id: :form], fn f -> %>
+        <div class='blocks'>
+</script><%= form_for @conn, tag_path(@conn, :submit), [name: :search], fn f -> %>
     <%# <%= raw magic_suggest("tags", data, %{placeholder: "Please input relevant tags to your education"}) %1> %>
     <%= survey %>
     <%= submit "Next", class: "btn btn-primary", id: "submit" %>
+    <div id='block'>
             <% end %>

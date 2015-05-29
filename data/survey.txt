@@ -20,7 +20,7 @@ textbox,Why did you sign up for this course?
 textbox,How would you define "learning through inquiry?"
 textbox,What do you think is a good role for technology in supporting inquiry?  
 textbox,What is the role of the teacher in an inquiry-based learning environment? 
-section
+
 radio,What would be an ideal length of time for an inquiry learning experience?
 	a few minutes per class period
 	an entire class period 
@@ -48,7 +48,7 @@ rows
 	Learning to find, critique and use resources
 	Learning real-life applications your topic
 	Preparing for further study in your topic
-section	
+	
 grid,How often do students use each of the following instructional technologies in your classroom? 
 choicerange
 	never
@@ -78,7 +78,7 @@ radio,How much support do teachers at your school receive for innovative use of 
 	teachers receive some support
 	teachers are on their own, but encouraged to try new things
 	teachers are discouraged from trying new approaches
-section
+
 radio,In your school, is there a clear vision statement about technology integration for learning and assessment?
 	Yes, there is a very clear vision and teachers are actively engaged in pursuing it
 	Yes, there is a technology vision, but teachers are not supported in pursuing it
@@ -101,7 +101,7 @@ rows
 	providing appropriate challenges for high-achieving students
 	developing lessons that combine subject matter, technologies, and teaching approaches.
 
-section
+
 grid,Please rate the following statements as they apply to your own experiences in learning with your peers  
 choicerange
 	not at all

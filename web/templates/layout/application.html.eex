@@ -1,26 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html class="no-js" lang="en-us">
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title></title>
     <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <!-- Place favicon.ico in the root directory -->
+
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/main.css">
+    <script src="js/modernizr-2.8.3.min.js"></script>
   </head>
-
-  <body>
+  <body id=top>
     <div class="container">
       <div class="header">
 
-      <p class="alert alert-info"><%= get_flash(@conn, :info) %></p>
-      <p class="alert alert-danger"><%= get_flash(@conn, :error) %></p>
+        <p class="alert alert-info"><%= get_flash(@conn, :info) %></p>
+        <p class="alert alert-danger"><%= get_flash(@conn, :error) %></p>
 
-      <%= @inner %>
+      </div>
+    </div>
+    <%= @inner %>
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <script src="js/plugins.js"></script>
+    <script src="js/masked-input.js"></script>
+    <script src="js/main.js"></script>
 
-    </div> <!-- /container -->
-    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
-    <script>require("web/static/js/app")</script>
   </body>
 </html>

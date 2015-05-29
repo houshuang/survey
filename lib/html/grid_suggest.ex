@@ -1,25 +1,20 @@
 defmodule Survey.HTML.GridSuggest do
 
-  def grid_select(form, name, id, rows, {min, max, num}) do
-    elem_list = 1..String.to_integer(num) 
-      |> Enum.to_list
-      |> Enum.map(&Integer.to_string/1)
+  def grid_select(form, name, id, rows, elem_list) do
+    if is_tuple(elem_list) do
+      {min, max, num} = elem_list
+      elems = List.flatten [min, List.duplicate("", String.to_integer(num) - 2), max] 
+      labels = Enum.to_list(1..length(elems)) |> Enum.map(&Integer.to_string/1)
+      IO.inspect(labels)
+    else
+      elems = elem_list
+      labels = elem_list
+    end
 
-    header = elem_list |> Enum.map(&tdwrap/1)
+    headercells = elems |> Enum.map(fn x -> ["<div class='cell'>", x, "</div>"] end)
 
-    header = ["<h3>", name, "</h4><table>", trwrap(["<td></td>", tdwrap(min), header, tdwrap(max)])]
-    body = rows 
-      |> Enum.with_index 
-      |> Enum.map(fn x -> body_row(form, id, x, elem_list) end)
-    footer = "</table>"
-    IO.iodata_to_binary([header, body, footer])
-  end
-
-  def grid_select(form, name, id, rows, elem_list) when is_list(elem_list) do
-    header = elem_list |> Enum.map(&tdwrap/1)
-
-    header = ["<h3>", name, "</h3><table>", trwrap(["<td></td><td></td>", header])]
-    body = rows |> Enum.map(fn x -> body_row(form, id, x, elem_list) end)
+    header = ["<h4>", name, "</h4><div class='evaluation table'><div class='line answers'><div class='cell exception'></div>", headercells, "</div>"]
+    body = rows |> Enum.with_index |> Enum.map(fn x -> body_row(form, id, x, labels) end) 
     footer = "</table>"
     IO.iodata_to_binary([header, body, footer])
   end
@@ -27,12 +22,11 @@ defmodule Survey.HTML.GridSuggest do
   defp body_row(form, id, {desc, i}, elem_list) do 
     selname = "#{form}[#{id}.#{[i + ?a]}]"
     sels = elem_list |> Enum.map(&(sel_elem(selname, &1)))
-    trwrap([tdwrap(desc), tdwrap(""), sels])
+    ["<div class='line'> <div class='cell question'>", desc, "</div>", sels, "</div>"]
   end
 
-  defp sel_elem(name, val), do: tdwrap(["<input type='radio' name='", name, "' value='", val, "' />"])
-
-  defp tdwrap(x), do: ["<td>", x, "</td>"]
-  defp trwrap(x), do: ["<tr>", x, "</tr>"]
+  defp sel_elem(name, val) do
+    ["<div class='cell answer'> <label> <input type='radio' name='", name, "' value='", val, "'> <span>", val, "</span> </label> </div>"]
+  end
 
 end
