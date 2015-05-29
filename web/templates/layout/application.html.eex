@@ -13,7 +13,6 @@
   <body>
     <div class="container">
       <div class="header">
-        <ul class="nav nav-pills pull-right">
 
       <p class="alert alert-info"><%= get_flash(@conn, :info) %></p>
       <p class="alert alert-danger"><%= get_flash(@conn, :error) %></p>

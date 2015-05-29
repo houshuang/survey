@@ -4,9 +4,17 @@ defmodule Survey.HTML.Survey do
 
   def gen_survey(file, form) do
     parse(file)
-    |> Enum.map(fn(x) -> gen_elements(x, form) end)
+    |> sectionify
+    |> Enum.with_index
+    |> Enum.map(fn x -> do_section(x, form) end)
     |> IO.iodata_to_binary
     |> Phoenix.HTML.raw
+  end
+
+  def do_section({seq, i}, form) do
+    content = Enum.map(seq, fn(x) -> gen_elements(x, form) end)
+    display = if i == 0, do: "", else: "display: none"
+    ["<div id=section#{i + 1} class='section' style='#{display}'><h1>Section #{i + 1}</h1>",content, "</div>"]
   end
 
   mdef gen_elements do
@@ -17,6 +25,7 @@ defmodule Survey.HTML.Survey do
     %{type: "textbox"} = h, form              -> ["<label>", h.name, ": </label><br>", "<textarea name='#{form}[#{h.number}]'></textarea><p>"]
     %{type: "grid", choicerange: _} = h, form -> grid_select(form, h.name, h.number, h.rows, List.to_tuple(h.choicerange))
     %{type: "grid", choices: _} = h, form     -> grid_select(form, h.name, h.number, h.rows, h.choices)
+    :section, _ -> ""
   end
 
   def multi(form, h, type) do
@@ -57,6 +66,7 @@ defmodule Survey.HTML.Survey do
     "choices"     -> :choices
     "choicerange" -> :choicerange
     "rows"        -> :rows
+    "section"     -> :section
     rest          -> [type, q] = String.split(rest, ",", parts: 2); {:question, type, String.strip(q)}
   end
 
@@ -76,8 +86,20 @@ defmodule Survey.HTML.Survey do
     {:question, type, name}, {_, num, acc}    -> {:wait, num + 1, [ %{name: name, number: num, type: type} | acc]}
     {:header, _} = h, {_, num, acc}           -> {:wait, num, [h | acc]}
 
+    :section, {_, num, acc}                   -> {:wait, num, [:section | acc]}
+
     {:sub, str}, {elem, num, [h | tl] }       -> { elem, num, [ append_in(h, elem, str) | tl ] }
   end
 
+  # takes a list like [1, 2, 3, :section, 4, 5, 6, :section, 8, 9] and
+  # creates a set of nested lists: [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+  mdef sectionify do
+    seq                  -> sectionify seq, [[]]
+    [:section | tl], acc -> sectionify tl, [[] | acc]
+    [h | t], [h2 | t2]   -> sectionify t, [ List.insert_at(h2, 999, h) | t2 ]
+    [], acc              -> Enum.reverse acc
+  end
+
   def append_in(h, elem, str), do: Map.update(h, elem, [str], fn x -> List.insert_at(x, 999, str) end)
+
 end
