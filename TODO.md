@@ -1,21 +1,15 @@
 TODO
 
 1:
-  - splitting into sections, save on progress, progress-bar
+  - add metadata to file format, specify length of textboxes, validation of number fields
+  - database integration, save on section-change (merge json?)
   - connecting to database, writing results
   - integration with EdX, email or just identifier?
 
 2: 
-  - integrating Archon's thing
+  - finishing autocomplete widget with updated dataset
 
 last part:
-  - way of visualizing results easily
-  - logging and monitoring integration
+  - way of visualizing results easily - chartist, likert-graphs. tagcloud for open-ended answers?
   - tests?
   - more robust release handling, running
-  - any parts possible to split out and make free-standing packages?
-
-
-others:
-  - get formatting help from Renato
-  - integrate UofT questions?
