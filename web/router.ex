@@ -1,6 +1,12 @@
 defmodule Survey.Router do
   use Survey.Web, :router
 
+  pipeline :initial do
+    plug PlugLti
+    plug :accepts, ["html"]
+  end
+
+  end
   pipeline :browser do
     plug PlugLti
     plug :accepts, ["html"]
@@ -14,10 +20,14 @@ defmodule Survey.Router do
   end
 
   scope "/", Survey do
+    pipe_through :initial
+    post "/tags", TagController, :index
+  end
+
+  scope "/", Survey do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
-    post "/tags", TagController, :index
     post "/tags/submit", TagController, :submit
    resources "/users", UserController
   end
