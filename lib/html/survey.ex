@@ -20,8 +20,7 @@ defmodule Survey.HTML.Survey do
 
   mdef gen_elements do
     {:header, txt}, _                         -> ["<h3>", txt, "</h3>"]
-    %{type: "text"} = h, form                 -> fs ["<h4>", h.name, 
-      ": </h4><input name='#{form}[#{h.number}]' type=text><br>"]
+    %{type: "text"} = h, form                 -> textinput(form, h)
     %{type: "radio"} = h, form                -> fs multi(form, h, "radio")
     %{type: "multi"} = h, form                -> fs multi(form, h, "checkbox")
     %{type: "textbox"} = h, form              -> textbox(form, h)
@@ -34,12 +33,22 @@ defmodule Survey.HTML.Survey do
 
   def fs(x), do: ["<fieldset>", x, "</fieldset>"]
 
-  def textbox(form, h) do
-    length = case h do
-      %{meta: %{length: x} } -> inspect(x)
+  def textinput(form, h) do
+    class = case h do
+      %{meta: %{class: x} } -> ["class='", x, "'"]
       _ -> ""
     end
-    ["<h4>", h.name, ": </h4>", "<textarea name='#{form}[#{h.number}]'></textarea><p>", 
+
+    fs ["<h4>", h.name, 
+      ": </h4><input name='#{form}[#{h.number}]' type=text ", class, "><br>"]
+  end
+
+  def textbox(form, h) do
+    length = case h do
+      %{meta: %{length: x} } -> ["<p class='counter' length='", x, "'></p>"]
+      _ -> ""
+    end
+    fs ["<h4>", h.name, ": </h4>", "<textarea name='#{form}[#{h.number}]'></textarea>", 
       length]
   end
 
@@ -114,7 +123,7 @@ defmodule Survey.HTML.Survey do
   def proc_meta(str) do
     [k, v] = String.split(str, "=", parts: 2)
     |> Enum.map(&String.strip/1)
-    Map.put(%{}, k, v)
+    Map.put(%{}, String.to_atom(k), v)
   end
 
   # takes a list like [1, 2, 3, :section, 4, 5, 6, :section, 8, 9] and

@@ -1,5 +1,11 @@
 $(document).ready(function(){
+$(".numeric").keyup(function() {
+    // Get the non Numeric char that was enetered
+    var nonNumericChars = $(this).val().replace(/[0-9]/g, '');                                  
+    // Now set the value in text box 
+    $(this).val( $(this).val().replace(nonNumericChars, ''));    
 
+});
 	var blocksLength = $('.blocks form .block').length;
 
 	$('.stepsbar .bar .progress').css({
@@ -32,7 +38,7 @@ $(document).ready(function(){
 	$('textarea').each(function(){
 
 		var T = $(this);
-		var valueNum = 1000;
+		var valueNum = T.next('.counter').attr('length');
 		T.next('.counter').text(valueNum);
 
 		T.on('keyup', function(){
@@ -69,21 +75,21 @@ $(document).ready(function(){
 
 		$('html,body').animate({
 			scrollTop: $('#top').offset().top},
-		300, function(){
+			300, function(){
 
-			$('.stepsbar .bar .progress').stop().animate({
-				"width": simbolo+'='+(100/blocksLength)+"%"
+				$('.stepsbar .bar .progress').stop().animate({
+					"width": simbolo+'='+(100/blocksLength)+"%"
+				});
+
+				$('.blocks form .block:visible').fadeOut(100, function(){
+					$('.blocks form .block:eq('+(counter-1)+')').fadeIn(100);
+				});
+
+				$('.stepsbar .bar .progress span').text(counter+"/"+blocksLength);
+
 			});
 
-			$('.blocks form .block:visible').fadeOut(100, function(){
-				$('.blocks form .block:eq('+(counter-1)+')').fadeIn(100);
-			});
-
-			$('.stepsbar .bar .progress span').text(counter+"/"+blocksLength);
-
-		});
-
-		return false;
+			return false;
 
 	});
 
