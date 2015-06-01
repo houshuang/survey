@@ -5,7 +5,6 @@ defmodule Survey.HTML.GridSuggest do
       {min, max, num} = elem_list
       elems = List.flatten [min, List.duplicate("", String.to_integer(num) - 2), max] 
       labels = Enum.to_list(1..length(elems)) |> Enum.map(&Integer.to_string/1)
-      IO.inspect(labels)
     else
       elems = elem_list
       labels = elem_list

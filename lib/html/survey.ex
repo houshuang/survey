@@ -14,21 +14,34 @@ defmodule Survey.HTML.Survey do
   def do_section({seq, i}, form) do
     content = Enum.map(seq, fn(x) -> gen_elements(x, form) end)
     display = if i == 0, do: "", else: "display: none"
-    ["<div class='block' style='#{display}'><h1>Section #{i + 1}</h1>",content, "<hr><div class='stepsController next right'><a href='#'>Next</a></div> </div>"]
+    ["<div class='block' style='#{display}'><h1>Section #{i + 1}</h1>",content, 
+      "<hr><div class='stepsController next right'><a href='#'>Next</a></div> </div>"]
   end
 
   mdef gen_elements do
     {:header, txt}, _                         -> ["<h3>", txt, "</h3>"]
-    %{type: "text"} = h, form                 -> fs ["<h4>", h.name, ": </h4><input name='#{form}[#{h.number}]' type=text><br>"]
+    %{type: "text"} = h, form                 -> fs ["<h4>", h.name, 
+      ": </h4><input name='#{form}[#{h.number}]' type=text><br>"]
     %{type: "radio"} = h, form                -> fs multi(form, h, "radio")
     %{type: "multi"} = h, form                -> fs multi(form, h, "checkbox")
-    %{type: "textbox"} = h, form              -> fs ["<h4>", h.name, ": </h4>", "<textarea name='#{form}[#{h.number}]'></textarea><p>"]
-    %{type: "grid", choicerange: _} = h, form -> fs grid_select(form, h.name, h.number, h.rows, List.to_tuple(h.choicerange))
-    %{type: "grid", choices: _} = h, form     -> fs grid_select(form, h.name, h.number, h.rows, h.choices)
+    %{type: "textbox"} = h, form              -> textbox(form, h)
+    %{type: "grid", choicerange: _} = h, form -> fs grid_select(form, h.name, h.number, 
+      h.rows, List.to_tuple(h.choicerange))
+    %{type: "grid", choices: _} = h, form     -> fs grid_select(form, h.name, h.number, 
+      h.rows, h.choices)
     :section, _ -> ""
   end
 
   def fs(x), do: ["<fieldset>", x, "</fieldset>"]
+
+  def textbox(form, h) do
+    length = case h do
+      %{meta: %{length: x} } -> inspect(x)
+      _ -> ""
+    end
+    ["<h4>", h.name, ": </h4>", "<textarea name='#{form}[#{h.number}]'></textarea><p>", 
+      length]
+  end
 
   def multi(form, h, type) do
     opts = h.options
@@ -36,10 +49,10 @@ defmodule Survey.HTML.Survey do
     |> Enum.map(
       fn {x, i} -> 
         case type do
-          "checkbox" -> ["<label><input name='#{form}[#{h.number}.#{[?a + i]}]' value='true' type=checkbox><span>", 
-            x, "</span></label>"]
-          "radio" -> ["<label><input name='#{form}[#{h.number}]' value='#{[?a + i]}' type=radio><span>", 
-            x, ": </span></label>"]
+          "checkbox" -> ["<label><input name='#{form}[#{h.number}.#{[?a + i]}]'",
+            "value='true' type=checkbox><span>", x, "</span></label>"]
+          "radio" -> ["<label><input name='#{form}[#{h.number}]' value='#{[?a + i]}',
+            type=radio><span>", x, ": </span></label>"]
         end
       end)
 
@@ -81,16 +94,21 @@ defmodule Survey.HTML.Survey do
     :choicerange, {_, num, acc}               -> {:choicerange, num, acc}
     :rows, {_, num, acc}                      -> {:rows, num, acc}
     :choices, {_, num, acc}                   -> {:choices, num, acc}
-    {:question, "multi", name}, {_, num, acc} -> {:options, num + 1, [ %{name: name, number: num, type: "multi"} | acc]}
-    {:question, "radio", name}, {_, num, acc} -> {:options, num + 1, [ %{name: name, number: num, type: "radio"} | acc]}
+    {:question, "multi", name}, {_, num, acc} -> {:options, num + 1, 
+      [ %{name: name, number: num, type: "multi"} | acc]}
+    {:question, "radio", name}, {_, num, acc} -> {:options, num + 1, 
+      [ %{name: name, number: num, type: "radio"} | acc]}
 
-    {:question, type, name}, {_, num, acc}    -> {:wait, num + 1, [ %{name: name, number: num, type: type} | acc]}
+    {:question, type, name}, {_, num, acc}    -> {:wait, num + 1, 
+      [ %{name: name, number: num, type: type} | acc]}
     {:header, _} = h, {_, num, acc}           -> {:wait, num, [h | acc]}
 
     :section, {_, num, acc}                   -> {:wait, num, [:section | acc]}
 
-    {:sub, str}, {:meta, num, [h | tl] }      -> { :meta, num, [ map_merge(h, :meta, proc_meta( str )) | tl ] }
-    {:sub, str}, {elem, num, [h | tl] }       -> { elem, num, [ append_in(h, elem, str) | tl ] }
+    {:sub, str}, {:meta, num, [h | tl] }      -> { :meta, num, 
+      [ map_merge(h, :meta, proc_meta( str )) | tl ] }
+    {:sub, str}, {elem, num, [h | tl] }       -> { elem, num, 
+      [ append_in(h, elem, str) | tl ] }
   end
 
   def proc_meta(str) do
@@ -108,7 +126,12 @@ defmodule Survey.HTML.Survey do
     [], acc              -> Enum.reverse acc
   end
 
-  def append_in(h, elem, str), do: Map.update(h, elem, [str], fn x -> List.insert_at(x, 999, str) end)
-  def map_merge(h, elem, kv), do: Map.update(h, elem, kv, fn x -> Map.merge(x, kv) end)
+  def append_in(h, elem, str) do
+    Map.update(h, elem, [str], fn x -> List.insert_at(x, 999, str) end)
+  end
+
+  def map_merge(h, elem, kv) do
+    Map.update(h, elem, kv, fn x -> Map.merge(x, kv) end)
+  end
 
 end

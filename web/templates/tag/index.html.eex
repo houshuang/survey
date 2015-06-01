@@ -1,18 +1,16 @@
-  
-   <div class="stepsbar">
-            <div class="bar">
-       
-<div class="progress">
-  <div class="progress-bar" role="progressbar"  >
+<div class="stepsbar">
+  <div class="bar">
+    <div class="progress">
+      <div class="progress-bar" role="progressbar"  >
+      </div>
+    </div>
   </div>
 </div>
-        </div>
-        </div>
 
-        <div class='blocks'>
-</script><%= form_for @conn, tag_path(@conn, :submit), [name: :search], fn f -> %>
-    <%# <%= raw magic_suggest("tags", data, %{placeholder: "Please input relevant tags to your education"}) %1> %>
-    <%= survey %>
-    <%= submit "Next", class: "btn btn-primary", id: "submit" %>
-    <div id='block'>
-            <% end %>
+<div class='blocks'>
+  <%= form_for @conn, tag_path(@conn, :submit), [name: :search], fn _ -> %>
+  <%# <%= raw magic_suggest("tags", data, %{placeholder: "Please input relevant tags to your education"}) %1> %>
+  <%= survey %>
+  <div id='block'>
+  <% end %>
+</div>
