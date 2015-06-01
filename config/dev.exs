@@ -32,4 +32,9 @@ config :survey, Survey.Repo,
   username: "postgres",
   password: "postgres",
   database: "survey_dev",
+  extensions: [{Extensions.JSON, library: Poison}],
   size: 10 # The amount of database connections in the pool
+
+
+import_config "prod.secret.exs"
+

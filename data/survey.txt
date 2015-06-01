@@ -1,7 +1,6 @@
-
-			
 text,How many years have you been teaching any subject in K-12 education? Please Enter a whole number (for example: 15) 
-
+meta
+	class=numeric
 multi,At what grade levels do you currently teach?
 	k-3
 	4-6
@@ -15,12 +14,20 @@ radio,If you do not currently teach in a k-12 educational system, please specify
 	Higher education (college, university, etc)
 	Adult and continuing education
 text, Other  (Please specify?)
-
 textbox,Why did you sign up for this course?
+meta
+	length=800
 textbox,How would you define "learning through inquiry?"
+meta
+	length=1000
+section
 textbox,What do you think is a good role for technology in supporting inquiry?  
+meta
+	length=1000
 textbox,What is the role of the teacher in an inquiry-based learning environment? 
-
+meta
+	length=1000
+section
 radio,What would be an ideal length of time for an inquiry learning experience?
 	a few minutes per class period
 	an entire class period 

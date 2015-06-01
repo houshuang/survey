@@ -5,7 +5,7 @@ defmodule Survey.User do
     field :hash, :string
     field :nick, :string
     field :tags, {:array, :string}
-
+    field :survey, Survey.JSON
     timestamps
   end
 
