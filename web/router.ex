@@ -17,7 +17,7 @@ defmodule Survey.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
-    get "/tags", TagController, :index
+    post "/tags", TagController, :index
     post "/tags/submit", TagController, :submit
    resources "/users", UserController
   end

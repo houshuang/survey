@@ -3,7 +3,8 @@ defmodule Survey.TagController do
   require Logger
   plug :action
 
-  def index(conn, _params) do
+  def index(conn, params) do
+    Logger.info(inspect(params, pretty: true))
     render conn, "index.html"
   end
 
