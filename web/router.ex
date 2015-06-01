@@ -4,6 +4,8 @@ defmodule Survey.Router do
   pipeline :initial do
     plug PlugLti
     plug :accepts, ["html"]
+    plug :fetch_session
+    plug :fetch_flash
   end
 
   pipeline :browser do
