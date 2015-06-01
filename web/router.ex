@@ -6,7 +6,6 @@ defmodule Survey.Router do
     plug :accepts, ["html"]
   end
 
-  end
   pipeline :browser do
     plug PlugLti
     plug :accepts, ["html"]
