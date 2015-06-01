@@ -14,11 +14,7 @@ defmodule Survey.HTML.Survey do
   def do_section({seq, i}, form) do
     content = Enum.map(seq, fn(x) -> gen_elements(x, form) end)
     display = if i == 0, do: "", else: "display: none"
-    ["<div class='block' style='#{display}'><h1>Section #{i + 1}</h1>",content, "               <hr>
-
-                    <div class='stepsController next right'><a href='#'>Next</a></div> 
-
-</div>"]
+    ["<div class='block' style='#{display}'><h1>Section #{i + 1}</h1>",content, "<hr><div class='stepsController next right'><a href='#'>Next</a></div> </div>"]
   end
 
   mdef gen_elements do
@@ -40,8 +36,10 @@ defmodule Survey.HTML.Survey do
     |> Enum.map(
       fn {x, i} -> 
         case type do
-          "checkbox" -> ["<label><input name='#{form}[#{h.number}.#{[?a + i]}]' value='true' type=checkbox><span>", x, "</span></label>"]
-          "radio" -> ["<label><input name='#{form}[#{h.number}]' value='#{[?a + i]}' type=radio><span>", x, ": </span></label>"]
+          "checkbox" -> ["<label><input name='#{form}[#{h.number}.#{[?a + i]}]' value='true' type=checkbox><span>", 
+            x, "</span></label>"]
+          "radio" -> ["<label><input name='#{form}[#{h.number}]' value='#{[?a + i]}' type=radio><span>", 
+            x, ": </span></label>"]
         end
       end)
 
