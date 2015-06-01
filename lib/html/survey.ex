@@ -68,6 +68,7 @@ defmodule Survey.HTML.Survey do
     "choicerange" -> :choicerange
     "rows"        -> :rows
     "section"     -> :section
+    "meta"        -> :meta
     rest          -> [type, q] = String.split(rest, ",", parts: 2); {:question, type, String.strip(q)}
   end
 
@@ -78,6 +79,7 @@ defmodule Survey.HTML.Survey do
   end
 
   mdef concat_blocks_proc do
+    :meta, {_, num, acc}                      -> {:meta, num, acc}
     :choicerange, {_, num, acc}               -> {:choicerange, num, acc}
     :rows, {_, num, acc}                      -> {:rows, num, acc}
     :choices, {_, num, acc}                   -> {:choices, num, acc}
@@ -89,7 +91,14 @@ defmodule Survey.HTML.Survey do
 
     :section, {_, num, acc}                   -> {:wait, num, [:section | acc]}
 
+    {:sub, str}, {:meta, num, [h | tl] }      -> { :meta, num, [ map_merge(h, :meta, proc_meta( str )) | tl ] }
     {:sub, str}, {elem, num, [h | tl] }       -> { elem, num, [ append_in(h, elem, str) | tl ] }
+  end
+
+  def proc_meta(str) do
+    [k, v] = String.split(str, "=", parts: 2)
+    |> Enum.map(&String.strip/1)
+    Map.put(%{}, k, v)
   end
 
   # takes a list like [1, 2, 3, :section, 4, 5, 6, :section, 8, 9] and
@@ -102,5 +111,6 @@ defmodule Survey.HTML.Survey do
   end
 
   def append_in(h, elem, str), do: Map.update(h, elem, [str], fn x -> List.insert_at(x, 999, str) end)
+  def map_merge(h, elem, kv), do: Map.update(h, elem, kv, fn x -> Map.merge(x, kv) end)
 
 end
