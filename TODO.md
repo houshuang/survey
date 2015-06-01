@@ -1,13 +1,23 @@
 TODO
 
-1:
-  - add metadata to file format, specify length of textboxes, validation of number fields
-  - database integration, save on section-change (merge json?)
-  - connecting to database, writing results
-  - integration with EdX, email or just identifier?
+survey-ui:
+  - send data on next page
+  - implement appropriate next/previous page, submit
 
-2: 
-  - finishing autocomplete widget with updated dataset
+contents:
+  - update to latest version, include questions about nickname etc
+
+tags:
+  - add back magic tags
+  - add updated dataset
+
+persistence:
+  - capture user id on initial access
+  - write survey data to database on each page change
+
+devops:
+  - better way of doing releases
+  - including monitoring in the app
 
 last part:
   - way of visualizing results easily - chartist, likert-graphs. tagcloud for open-ended answers?
