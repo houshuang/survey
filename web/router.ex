@@ -9,7 +9,6 @@ defmodule Survey.Router do
   end
 
   pipeline :browser do
-    plug PlugLti
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_flash
@@ -23,18 +22,13 @@ defmodule Survey.Router do
   scope "/", Survey do
     pipe_through :initial
     post "/tags", TagController, :index
+    get "/tags", TagController, :index
   end
 
   scope "/", Survey do
-    pipe_through :browser # Use the default browser stack
+    pipe_through :browser
 
     get "/", PageController, :index
     post "/tags/submit", TagController, :submit
    resources "/users", UserController
   end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", Survey do
-  #   pipe_through :api
-  # end
-end

@@ -36,5 +36,5 @@ config :survey, Survey.Repo,
   size: 10 # The amount of database connections in the pool
 
 
-import_config "prod.secret.exs"
-
+config :plug_lti,
+  plug_disabled: true
