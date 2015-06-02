@@ -6,6 +6,7 @@ defmodule Survey.Router do
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_flash
+    plug :protect_from_forgery
   end
 
   pipeline :browser do
@@ -13,10 +14,6 @@ defmodule Survey.Router do
     plug :fetch_session
     plug :fetch_flash
     plug :protect_from_forgery
-  end
-
-  pipeline :api do
-    plug :accepts, ["json"]
   end
 
   scope "/", Survey do
@@ -30,5 +27,6 @@ defmodule Survey.Router do
 
     get "/", PageController, :index
     post "/tags/submit", TagController, :submit
-   resources "/users", UserController
+    resources "/users", UserController
   end
+end
