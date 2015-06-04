@@ -62,7 +62,7 @@ defmodule Survey.HTML.Survey do
     end
 
     ["<h4>", h.name, 
-      ": </h4><input name='#{form}[#{name(form, h)}]' type=text ", class, "><br>"]
+      ": </h4>", desc, "<input name='#{form}[#{name(h)}]' type=text ", class, "><br>"]
   end
 
   def textbox(form, h) do
@@ -71,12 +71,12 @@ defmodule Survey.HTML.Survey do
       _ -> ""
     end
 
-    ["<h4>", h.name, ": </h4>", "<textarea name='#{form}[#{name(form, h)}]'></textarea>", 
+    ["<h4>", h.name, ": </h4>", "<textarea name='#{form}[#{name(h)}]'></textarea>", 
       length]
   end
 
   def multi(form, h, type) do
-    name = "#{form}[#{name(form, h)}"
+    name = "#{form}[#{name(h)}"
 
     opts = h.options
     |> Enum.with_index
@@ -116,7 +116,7 @@ defmodule Survey.HTML.Survey do
   end
 
   defp body_row(h, form, {desc, i}, elem_list) do 
-    selname = "#{form}[#{name(form, h)}.#{[i + ?a]}]"
+    selname = "#{form}[#{name(h)}.#{[i + ?a]}]"
     sels = elem_list |> Enum.map(&(sel_elem(selname, &1)))
     ["<div class='line'> <div class='cell question'>", desc, "</div>", sels, "</div>"]
   end
@@ -132,13 +132,14 @@ defmodule Survey.HTML.Survey do
   def fs(x), do: ["<fieldset>", x, "</fieldset>"]
 
   mdef name do
-    form, %{meta: %{name: x} } -> x
-    form, h                    -> Integer.to_string(h.number)
+    %{meta: %{name: x} } -> x
+    h                    -> Integer.to_string(h.number)
   end
+
   mdef desc do
     %{meta: %{desc: x} } -> ["<p><i>", x, "</i></p>"]
     _                    -> []
-   end
+  end
 
   #================================================================================ 
   # parsing
