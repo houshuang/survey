@@ -58,7 +58,8 @@ buttons = function() {
     Window.blocksLength = Window.blocksLength;
     var txt = "";
     if (Window.counter == Window.blocksLength && Window.counter !== undefined) {
-	txt = "<div class='stepsController submit right'><a href='#'>Submit</a></div>";
+	txt =  "<div class='stepsController prev left'><a href='#'>Previous</a></div>" + 
+	"<div class='stepsController submit right'><a href='#'>Submit</a></div>";
     } else if (Window.counter == 1 || Window.counter === undefined) {
 	txt = "<div class='stepsController next right'><a href='#'>Next</a></div>";
     } else {
@@ -66,13 +67,14 @@ buttons = function() {
 	    "<div class='stepsController prev left'><a href='#'>Previous</a></div>";
     }
     $('.navbuttons').html(txt);
-    $('.stepsController a').on('click', function() {buttonclick(this)});
+    $('.stepsController a').on('click', function() {buttonclick(this);});
 };
 
 buttonclick = function(e) {
-    console.log(Window.counter)
-    console.log("Click");
-    $.post("/tags/submit", $("form").serialize(), function(data){
+    if(e.text == "Submit") {
+	$('form').submit();
+    }
+    $.post("/tags/submitajax", $("form").serialize(), function(data){
     });
     var simbolo = "0";
     if($(e).parent().hasClass('next')){
@@ -81,8 +83,7 @@ buttonclick = function(e) {
     } else if($(e).parent().hasClass('prev')){
 	Window.counter--;
 	simbolo = "-";
-    } else {console.log(e);};
-    console.log(Window.counter);
+    } else {console.log(e);}
     $('html,body').animate({
 	scrollTop: $('#top').offset().top},
 	300, function(){

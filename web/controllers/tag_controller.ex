@@ -9,7 +9,16 @@ defmodule Survey.TagController do
   end
 
   def submit(conn, params) do
-    Logger.warn(get_session(conn, :user_id))
-    text conn, "User id: #{get_session(conn, :user_id)}: #{inspect(params, pretty: true)}"
+    save(params)
+    render conn, "survey_success.html"
+  end
+
+  def submit(conn, params) do
+    save(params)
+    text conn, "Success"
+  end
+
+  defp save(params) do
+    Logger.warn(inspect(params, pretty: true))
   end
 end

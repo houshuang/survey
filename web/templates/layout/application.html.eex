@@ -10,9 +10,9 @@
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <!-- Place favicon.ico in the root directory -->
 
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/main.css">
     <script src="js/modernizr-2.8.3.min.js"></script>
   </head>
   <body id=top>
@@ -25,10 +25,10 @@
       </div>
     </div>
     <%= @inner %>
-    <script src="js/jquery-2.1.4.min.js"></script>
-    <script src="js/plugins.js"></script>
-    <script src="js/masked-input.js"></script>
-    <script src="js/main.js"></script>
+    <script src="/js/jquery-2.1.4.min.js"></script>
+    <script src="/js/plugins.js"></script>
+    <script src="/js/masked-input.js"></script>
+    <script src="/js/main.js"></script>
 
   </body>
 </html>
