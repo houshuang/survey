@@ -35,9 +35,10 @@ defmodule Survey.HTML.Survey do
   # elements
 
   mdef gen_elements do
-    {:header, txt}, _ -> ["<h3>", txt, "</h3>"]
-    {:para, txt}, _   -> ["<p>", txt, "</p>"]
-    h, form           -> fs render_question(h, form)
+    {:header, txt}, _   -> ["<h3>", txt, "</h3>"]
+    {:para, txt}, _     -> ["<p>", txt, "</p>"]
+    {:function, txt}, _ -> elem(Code.eval_string(txt), 0)
+    h, form             -> fs render_question(h, form)
   end
 
   mdef render_question do
@@ -178,27 +179,28 @@ defmodule Survey.HTML.Survey do
   end
 
   mdef concat_blocks_proc do
-    :section, {_, num, acc}                   -> {:wait, num, [:section | acc]}
-    {:header, _} = h, {_, num, acc}           -> {:wait, num, [h | acc]}
-    {:question, "para", name}, {_, num, acc}  -> {:wait, num, [{:para, name} | acc]}
-    :meta, {_, num, acc}                      -> {:meta, num, acc}
-    :choicerange, {_, num, acc}               -> {:choicerange, num, acc}
-    :rows, {_, num, acc}                      -> {:rows, num, acc}
-    :choices, {_, num, acc}                   -> {:choices, num, acc}
+    :section, {_, num, acc}                      -> {:wait, num, [:section | acc]}
+    {:header, _} = h, {_, num, acc}              -> {:wait, num, [h | acc]}
+    {:question, "para", name}, {_, num, acc}     -> {:wait, num, [{:para, name} | acc]}
+    {:question, "function", name}, {_, num, acc} -> {:wait, num, [{:function, name} | acc]}
+    :meta, {_, num, acc}                         -> {:meta, num, acc}
+    :choicerange, {_, num, acc}                  -> {:choicerange, num, acc}
+    :rows, {_, num, acc}                         -> {:rows, num, acc}
+    :choices, {_, num, acc}                      -> {:choices, num, acc}
 
-    {:question, "multi", name}, {_, num, acc} -> {:options, num + 1,
+    {:question, "multi", name}, {_, num, acc}    -> {:options, num + 1,
       [ %{name: name, number: num, type: "multi"} | acc]}
 
-    {:question, "radio", name}, {_, num, acc} -> {:options, num + 1,
+    {:question, "radio", name}, {_, num, acc}    -> {:options, num + 1,
       [ %{name: name, number: num, type: "radio"} | acc]}
 
-    {:question, type, name}, {_, num, acc}    -> {:wait, num + 1,
+    {:question, type, name}, {_, num, acc}       -> {:wait, num + 1,
       [ %{name: name, number: num, type: type} | acc]}
 
-    {:sub, str}, {:meta, num, [h | tl] }      -> { :meta, num,
+    {:sub, str}, {:meta, num, [h | tl] }         -> { :meta, num,
       [ map_merge(h, :meta, proc_meta( str )) | tl ] }
 
-    {:sub, str}, {elem, num, [h | tl] }       -> { elem, num,
+    {:sub, str}, {elem, num, [h | tl] }          -> { elem, num,
       [ append_in(h, elem, str) | tl ] }
   end
 

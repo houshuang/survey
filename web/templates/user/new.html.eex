@@ -2,5 +2,5 @@
 
 <%= render "form.html", changeset: @changeset,
                         action: user_path(@conn, :create) %>
-
+                        <script> Window.tags =  <%= tags %> 
 <%= link "Back", to: user_path(@conn, :index) %>

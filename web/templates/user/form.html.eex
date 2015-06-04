@@ -1,26 +1,6 @@
-<%= form_for @changeset, @action, fn f -> %>
-  <%= if f.errors != [] do %>
-    <div class="alert alert-danger">
-      <p>Oops, something went wrong! Please check the errors below:</p>
-      <ul>
-        <%= for {attr, message} <- f.errors do %>
-          <li><%= humanize(attr) %> <%= message %></li>
-        <% end %>
-      </ul>
-    </div>
+<div class='blocks'>
+                        <script> Window.tags =  <%= tags %> </script>
+  <%= form_for @conn, tag_path(@conn, :submit), [name: :search], fn _ -> %>
+  <%= registration %>
   <% end %>
-
-  <div class="form-group">
-    <label>Hash</label>
-    <%= textarea f, :hash, class: "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <label>Nick</label>
-    <%= textarea f, :nick, class: "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%= submit "Submit", class: "btn btn-primary" %>
-  </div>
-<% end %>
+</div>

@@ -1,0 +1,33 @@
+<!doctype html>
+<html class="no-js" lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <!-- Place favicon.ico in the root directory -->
+
+    <link rel="stylesheet" href="/css/main.css">
+    <script src="js/modernizr-2.8.3.min.js"></script>
+    <script src="/js/jquery-2.1.4.min.js"></script>
+  </head>
+  <body id=top>
+    <div class="container">
+      <div class="header">
+
+        <p class="alert alert-info"><%= get_flash(@conn, :info) %></p>
+        <p class="alert alert-danger"><%= get_flash(@conn, :error) %></p>
+
+      </div>
+    </div>
+    <%= @inner %>
+    <script src="/js/plugins.js"></script>
+    <script src="/js/register.js"></script>
+    <script src="/js/masked-input.js"></script>
+    <script src="/js/main.js"></script>
+
+  </body>
+</html>

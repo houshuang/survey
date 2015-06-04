@@ -28,6 +28,7 @@ defmodule Survey.Router do
     get "/", PageController, :index
     post "/tags/submit", TagController, :submit
     post "/tags/submitajax", TagController, :submit
-    resources "/users", UserController
+
+    get "/register", UserController, :index
   end
 end

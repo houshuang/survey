@@ -1,0 +1,54 @@
+#Welcome to the interactive features in this MOOC. First we need to ask you a few questions
+para,To preserve your privacy, our interactive widgets do not receive any information about you from EdX. Therefore we have to ask you these questions.
+
+text,What do you want us to call you?
+meta
+	name=nick
+	desc=This does not have to be your real name, and it will be publicly visible to all MOOC participants.
+	obligatory=true
+
+text,Email address? 
+meta
+	name=email
+	desc=You do not have to give us your email, but if you do, we will be able to send you personalized emails every week with information about the activities you are a part of. You will always be able to easily turn off these notifications, and we will not share your email with anyone.
+	class=email
+
+multi,At what grade levels do you currently teach?
+	K-3
+	4-6
+	7-8
+	9-12
+	I do not currently teach in a K-12 educational system
+meta
+	obligatory=true
+	name=grade
+
+multi, STEAM+
+	S - Science
+	T - Technology
+	E - Engineering
+	A - Arts
+	M - Mathematics
+	+ - Anything else
+meta
+	name=steam
+	desc=Please choose one or several of the topics below as covering your own teaching
+	obligatory=true
+
+
+function,Survey.HTML.MagicSuggest.magic_suggest
+
+text,How many years have you been teaching any subject in K-12 education? 
+meta
+	obligatory=true
+	name=yearsteaching
+	class=numeric
+	desc=Please enter a whole number (for example: 15, or 0 if you have never taught) 
+
+
+radio,If you do not currently teach in a K-12 educational system, please specify your role.
+	Informal education (museums, after school, etc)
+	School administration (leadership, technology specialists, etc)
+	Higher education (college, university, etc)
+	Adult and continuing education
+text, Other  (Please specify?)

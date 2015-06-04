@@ -1,5 +1,4 @@
 /* RESET */
-
 html {}
 html body {line-height: 1;}
 html body p {line-height: 20px;}
@@ -891,5 +890,4 @@ form button {}
 	-o-font-smoothing: antialiased;
 	-ms-font-smoothing: antialiased;
 	font-smoothing: antialiased;
-
-}
+    }
