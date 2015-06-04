@@ -55,6 +55,7 @@ defmodule Survey.HTML.Survey do
   # individual question types
 
   def textinput(form, h) do
+    desc = desc(h)
     class = case h do
       %{meta: %{class: x} } -> ["class='", x, "'"]
       _ -> ""
@@ -134,6 +135,10 @@ defmodule Survey.HTML.Survey do
     form, %{meta: %{name: x} } -> x
     form, h                    -> Integer.to_string(h.number)
   end
+  mdef desc do
+    %{meta: %{desc: x} } -> ["<p><i>", x, "</i></p>"]
+    _                    -> []
+   end
 
   #================================================================================ 
   # parsing
