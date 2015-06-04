@@ -1,4 +1,5 @@
 $(document).ready(function(){
+
     $(".numeric").keyup(function() {
 	// Get the non Numeric char that was enetered
 	var nonNumericChars = $(this).val().replace(/[0-9]/g, '');                                  
@@ -6,13 +7,14 @@ $(document).ready(function(){
 	$(this).val( $(this).val().replace(nonNumericChars, ''));    
 
     });
-    var blocksLength = $('.blocks form .block').length;
+    Window.counter = 1;
+    Window.blocksLength = $('.blocks form .block').length;
 
     $('.stepsbar .bar .progress').css({
-	"width": (100/blocksLength)+"%"
+	"width": (100/Window.blocksLength)+"%"
     });
 
-    $('.stepsbar .bar .progress span').text("1/"+blocksLength);
+    $('.stepsbar .bar .progress span').text("1/"+Window.blocksLength);
     $('input[type="text"].masked').mask('9?9');
     $('.none').each(function(){
 
@@ -47,33 +49,52 @@ $(document).ready(function(){
 	});
 
     });
-    var counter = 1;
 
-    $('.stepsController a').on('click', function(){
-	console.log($("form").serialize())
-	$.post("/tags/submit", $("form").serialize(), function(data){
-	    alert(data);
-	});
-	var simbolo = "0";
-	if($(this).parent().hasClass('next')){
-	    counter++;
-	    simbolo = "+";
-	} else {
-	    counter--;
-	    simbolo = "-";
-	}
-	$('html,body').animate({
-	    scrollTop: $('#top').offset().top},
-	    300, function(){
-
-		$('.stepsbar .bar .progress').stop().animate({
-		    "width": simbolo+'='+(100/blocksLength)+"%"
-		});
-		$('.blocks form .block:visible').fadeOut(100, function(){
-		    $('.blocks form .block:eq('+(counter-1)+')').fadeIn(100);
-		});
-		$('.stepsbar .bar .progress span').text(counter+"/"+blocksLength);
-	    });
-	    return false;
-    });
+    buttons();
 });
+
+buttons = function() {
+    Window.counter = Window.counter;
+    Window.blocksLength = Window.blocksLength;
+    var txt = "";
+    if (Window.counter == Window.blocksLength && Window.counter !== undefined) {
+	txt = "<div class='stepsController submit right'><a href='#'>Submit</a></div>";
+    } else if (Window.counter == 1 || Window.counter === undefined) {
+	txt = "<div class='stepsController next right'><a href='#'>Next</a></div>";
+    } else {
+	txt = "<div class='stepsController next right'><a href='#'>Next</a></div>" +
+	    "<div class='stepsController prev left'><a href='#'>Previous</a></div>";
+    }
+    $('.navbuttons').html(txt);
+    $('.stepsController a').on('click', function() {buttonclick(this)});
+};
+
+buttonclick = function(e) {
+    console.log(Window.counter)
+    console.log("Click");
+    $.post("/tags/submit", $("form").serialize(), function(data){
+    });
+    var simbolo = "0";
+    if($(e).parent().hasClass('next')){
+	Window.counter++;
+	simbolo = "+";
+    } else if($(e).parent().hasClass('prev')){
+	Window.counter--;
+	simbolo = "-";
+    } else {console.log(e);};
+    console.log(Window.counter);
+    $('html,body').animate({
+	scrollTop: $('#top').offset().top},
+	300, function(){
+
+	    $('.stepsbar .bar .progress').stop().animate({
+		"width": simbolo+'='+(100/Window.blocksLength)+"%"
+	    });
+	    $('.blocks form .block:visible').fadeOut(100, function(){
+		$('.blocks form .block:eq('+(Window.counter-1)+')').fadeIn(100);
+	    });
+	    $('.navbuttons').html(buttons(Window.counter, Window.blocksLength));
+	    $('.stepsbar .bar .progress span').text(Window.counter+"/"+Window.blocksLength);
+	});
+	return false;
+};

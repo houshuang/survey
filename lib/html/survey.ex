@@ -15,7 +15,7 @@ defmodule Survey.HTML.Survey do
     content = Enum.map(seq, fn(x) -> gen_elements(x, form) end)
     display = if i == 0, do: "", else: "display: none"
     ["<div class='block' style='#{display}'><h1>Section #{i + 1}</h1>",content, 
-      "<hr><div class='stepsController next right'><a href='#'>Next</a></div> </div>"]
+      "<hr></div>"]
   end
 
   mdef gen_elements do

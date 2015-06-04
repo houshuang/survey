@@ -4,12 +4,12 @@ defmodule Survey.TagController do
   plug :action
 
   def index(conn, params) do
-    Logger.info(inspect(params, pretty: true))
+    conn = put_session(conn, :user_id, "stian")
     render conn, "index.html"
   end
 
   def submit(conn, params) do
-    Logger.info(inspect(params, pretty: true))
-    text conn, inspect(params, pretty: true)
+    Logger.warn(get_session(conn, :user_id))
+    text conn, "User id: #{get_session(conn, :user_id)}: #{inspect(params, pretty: true)}"
   end
 end
