@@ -66,17 +66,19 @@ defmodule Survey.HTML.Survey do
   end
 
   def textbox(form, h) do
+    desc = desc(h)
     length = case h do
       %{meta: %{length: x} } -> ["<p class='counter' length='", x, "'></p>"]
       _ -> ""
     end
 
-    ["<h4>", h.name, ": </h4>", "<textarea name='#{form}[#{name(h)}]'></textarea>", 
+    ["<h4>", h.name, ": </h4>", desc, "<textarea name='#{form}[#{name(h)}]'></textarea>", 
       length]
   end
 
   def multi(form, h, type) do
     name = "#{form}[#{name(h)}"
+    desc = desc(h)
 
     opts = h.options
     |> Enum.with_index
@@ -90,7 +92,7 @@ defmodule Survey.HTML.Survey do
         end
       end)
 
-    ["<h4>", h.name, "</h4>", opts]
+    ["<h4>", h.name, "</h4>", desc, opts]
   end
 
   #--------------------------------------------------------------------------------
