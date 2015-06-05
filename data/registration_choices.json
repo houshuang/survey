@@ -1,0 +1,129 @@
+{
+    "9-12": {
+        "S": [
+            "Physics",
+            "Chemistry",
+            "Biology",
+            "Earth Science",
+            "Environmental Science"
+        ],
+        "T": [
+            "Media Design",
+            "Computer Science"
+        ],
+        "E": [
+            "Robotics"
+        ],
+        "A": [
+            "Dance",
+            "Drama",
+            "Music",
+            "Arts"
+        ],
+        "M": [
+            "Algebra",
+            "Geometry",
+            "Calculus and vectors",
+            "Probability"
+        ],
+        "+": [
+            "Business Studies",
+            "Languages (native and other)",
+            "Geography",
+            "History",
+            "Economics",
+            "Career edu",
+            "World Issues (Social Studies)"
+        ]
+    },
+    "7-8": {
+        "S": [
+            "Biology",
+            "Chemistry",
+            "Earth and Space",
+            "Physics"
+        ],
+        "T": [
+            "Computing"
+        ],
+        "E": [],
+        "A": [
+            "Dance",
+            "Drama",
+            "Music",
+            "Visual arts"
+        ],
+        "M": [
+            "Algebra",
+            "Geometry",
+            "Statistics & Probability"
+        ],
+        "+": [
+            "Languages (native and other)",
+            "Health and PE",
+            "Social Studies",
+            "History",
+            "Geography"
+        ]
+    },
+    "4-6": {
+        "S": [
+            "Biology",
+            "Chemistry",
+            "Earth and Space",
+            "Physics"
+        ],
+        "T": [
+            "Computing"
+        ],
+        "E": [],
+        "A": [
+            "Dance",
+            "Drama",
+            "Music",
+            "Visual arts"
+        ],
+        "M": [
+            "Algebra",
+            "Geometry",
+            "Statistics & Probability"
+        ],
+        "+": [
+            "Languages (native and other)",
+            "Health and PE",
+            "Social Studies",
+            "History",
+            "Geography"
+        ]
+    },
+    "1-3": {
+        "S": [
+            "Biology",
+            "Physics",
+            "Chemistry",
+            "Earth and Space Systems"
+        ],
+        "T": [],
+        "E": [],
+        "A": [
+            "Dance",
+            "Drama",
+            "Music",
+            "Visual arts"
+        ],
+        "M": [
+            "Numbers sense and numeration",
+            "Measurement",
+            "Geometry",
+            "Algebra",
+            "statistics and Probability"
+        ],
+        "+": [
+            "Languages (native and other)",
+            "Health and PE",
+            "Social Studies",
+            "History",
+            "Geography"
+        ]
+    }
+}

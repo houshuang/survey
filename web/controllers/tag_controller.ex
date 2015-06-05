@@ -1,24 +1,33 @@
 defmodule Survey.TagController do
   use Survey.Web, :controller
   require Logger
+  require Ecto.Query
+  import Ecto.Query
+  alias Survey.Repo
+  alias Survey.User
+
   plug :action
 
-  def index(conn, params) do
-    conn = put_session(conn, :user_id, "stian")
+  def index(conn, _) do
     render conn, "index.html"
   end
 
   def submit(conn, params) do
-    save(params)
+    set_survey(conn, params)
     render conn, "survey_success.html"
   end
 
-  def submit(conn, params) do
-    save(params)
+  def submitajax(conn, params) do
+    set_survey(conn, params)
     text conn, "Success"
   end
 
-  defp save(params) do
-    Logger.warn(inspect(params, pretty: true))
+  defp set_survey(conn, surveydata) do
+    Logger.warn("Saving to database")
+    userid = get_session(conn, :repo_userid)
+
+    user = Repo.one userid
+    Repo.update(%{user | survey: surveydata }) 
   end
+
 end
