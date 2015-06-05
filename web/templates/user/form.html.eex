@@ -1,6 +1,8 @@
 <div class='blocks'>
                         <script> Window.tags =  <%= tags %> </script>
-  <%= form_for @conn, tag_path(@conn, :submit), [name: :search], fn _ -> %>
+                        <script> Window.choices =  <%= choices %> </script>
+  <%= form_for @conn, "/register/submit", [name: :search], fn _ -> %>
   <%= registration %>
+  <%= submit "Register" %>
   <% end %>
 </div>

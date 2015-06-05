@@ -10,4 +10,9 @@ defmodule Survey.UserController do
     |> put_layout("minimal.html")
     |> render "form.html"
   end
+
+  def submit(conn, params) do
+    IO.inspect(get_session(conn, :lti_userid))
+    html conn, "OK"
+  end
 end

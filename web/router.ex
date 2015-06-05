@@ -2,7 +2,16 @@ defmodule Survey.Router do
   use Survey.Web, :router
 
   pipeline :initial do
-    plug PlugLti
+    plug EnsureLti
+    plug :accepts, ["html"]
+    plug :fetch_session
+    plug :fetch_flash
+    plug :protect_from_forgery
+    plug EnsureRegistered
+  end
+
+  pipeline :register do
+    plug EnsureLti
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_flash
@@ -14,6 +23,7 @@ defmodule Survey.Router do
     plug :fetch_session
     plug :fetch_flash
     plug :protect_from_forgery
+    plug EnsureRegistered
   end
 
   scope "/", Survey do
@@ -27,8 +37,13 @@ defmodule Survey.Router do
 
     get "/", PageController, :index
     post "/tags/submit", TagController, :submit
-    post "/tags/submitajax", TagController, :submit
+    post "/tags/submitajax", TagController, :submitajax
 
+  end
+
+  scope "/", Survey do
+    pipe_through :register
     get "/register", UserController, :index
+    post "/register/submit", UserController, :submit
   end
 end
