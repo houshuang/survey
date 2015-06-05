@@ -10,9 +10,15 @@
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <!-- Place favicon.ico in the root directory -->
 
+    <script src="/js/jquery-1.8.3.min.js"></script>
+    <script src="/js/lodash.min.js"></script>
+   <script src="/js/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/reset.css">
     <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/jquery.tagit.css">
+    <link rel="stylesheet" href="/css/tagit.ui-zendesk.css">
     <script src="js/modernizr-2.8.3.min.js"></script>
-    <script src="/js/jquery-2.1.4.min.js"></script>
   </head>
   <body id=top>
     <div class="container">
@@ -25,9 +31,8 @@
     </div>
     <%= @inner %>
     <script src="/js/plugins.js"></script>
-    <script src="/js/register.js"></script>
     <script src="/js/masked-input.js"></script>
-    <script src="/js/main.js"></script>
+    <script src="/js/register.js"></script>
 
   </body>
 </html>

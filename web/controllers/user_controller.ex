@@ -12,7 +12,7 @@ defmodule Survey.UserController do
   end
 
   def submit(conn, params) do
-    IO.inspect(get_session(conn, :lti_userid))
-    html conn, "OK"
+    
+    html conn, "Thank you for submitting"
   end
 end

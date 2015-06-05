@@ -34,10 +34,11 @@ meta
 	name=steam
 	desc=Please choose one or several of the topics below as covering your own teaching
 	obligatory=true
-
+section
 
 function,Survey.HTML.MagicSuggest.magic_suggest
-
+function,"<span id='choices'></span>"
+section
 text,How many years have you been teaching any subject in K-12 education? 
 meta
 	obligatory=true

@@ -10,6 +10,7 @@
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <!-- Place favicon.ico in the root directory -->
 
+    <script src="/js/jquery-2.1.4.min.js"></script>
     <link rel="stylesheet" href="/css/normalize.css">
     <link rel="stylesheet" href="/css/reset.css">
     <link rel="stylesheet" href="/css/main.css">
@@ -25,7 +26,6 @@
       </div>
     </div>
     <%= @inner %>
-    <script src="/js/jquery-2.1.4.min.js"></script>
     <script src="/js/plugins.js"></script>
     <script src="/js/masked-input.js"></script>
     <script src="/js/main.js"></script>

@@ -121,6 +121,16 @@ textarea {
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
+span.ui-helper-hidden-accessible div { display: none; }
+.alert-warning {
+  background-color: #fcf8e3;
+  border-color: #faebcc;
+  color: #8a6d3b; }
+.alert {
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px; }
 
 h1, h2, h3, h4, h5, h6 {
     font-family: 'dosisextralight', sans-serif;
@@ -132,7 +142,7 @@ hr {
 }
 
 html {
-    background-color: #0877b0;
+    /* background-color: #0877b0; */
 }
 html body {
     width: 800px;
@@ -144,6 +154,8 @@ html body {
     color: #444;
     font-size: 15px;
 }
+.left {float: left;}
+.right {float: right;}
 
 .stepsbar {
     margin: 10px 0 20px 0;

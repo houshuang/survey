@@ -1,8 +1,19 @@
-<div class='blocks'>
+<div class="stepsbar">
+  <div class="bar">
+    <div class="progress">
+      <div class="progress-bar" role="progressbar"  >
+      </div>
+    </div>
+  </div>
+</div>
                         <script> Window.tags =  <%= tags %> </script>
                         <script> Window.choices =  <%= choices %> </script>
+<div class='blocks'>
   <%= form_for @conn, "/register/submit", [name: :search], fn _ -> %>
   <%= registration %>
-  <%= submit "Register" %>
+</div>
+</div>
+    <div class='navbuttons'></div>
   <% end %>
+</div>
 </div>
