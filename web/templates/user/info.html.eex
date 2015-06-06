@@ -1,0 +1,3 @@
+<h3>Welcome <%= @user.nick %></h3>
+
+

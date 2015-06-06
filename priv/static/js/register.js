@@ -10,6 +10,13 @@ $(document).ready(function(){
   Window.counter = 1;
   Window.blocksLength = $('.blocks form .block').length;
 
+  $('.fieldlevel').on('change', function(e) {
+    if (this.name == 'f[grade|noK12]' && this.checked) {
+      $('.k12').prop('checked', false)
+    } else {
+      $('.nok12').prop('checked', false)
+    }
+  })
   $('.stepsbar .bar .progress').css({
     "width": (100/Window.blocksLength)+"%"
   });
@@ -80,8 +87,6 @@ buttonclick = function(e) {
     if(e.text == "Submit") {
       $('form').submit();
     }
-    $.post("/tags/submitajax", $("form").serialize(), function(data){
-    });
     var simbolo = "0";
     if($(e).parent().hasClass('next')){
       Window.counter++;
@@ -113,23 +118,24 @@ buttonclick = function(e) {
 };
 
 find_data_selectors = function() {
+  if(Window.counter==1) {
   console.log("Recalculating suggestions")
   var data = {};
   $("form").serializeArray().map(function(x){data[x.name] = x.value;}); 
 
   steams = []
-  if (data["f[steam.a]"]) { steams.push("S") }
-  if (data["f[steam.b]"]) { steams.push("T") }
-  if (data["f[steam.c]"]) { steams.push("E") }
-  if (data["f[steam.d]"]) { steams.push("A") }
-  if (data["f[steam.e]"]) { steams.push("M") }
-  if (data["f[steam.f]"]) { steams.push("+") }
+  if (data["f[steam|S]"]) { steams.push("S") }
+  if (data["f[steam|T]"]) { steams.push("T") }
+  if (data["f[steam|E]"]) { steams.push("E") }
+  if (data["f[steam|A]"]) { steams.push("A") }
+  if (data["f[steam|M]"]) { steams.push("M") }
+  if (data["f[steam|+]"]) { steams.push("+") }
 
   grades = []
-  if (data["f[grade.a]"]) { grades.push("1-3") }
-  if (data["f[grade.b]"]) { grades.push("4-6") }
-  if (data["f[grade.c]"]) { grades.push("7-8") }
-  if (data["f[grade.d]"]) { grades.push("9-12") }
+  if (data["f[grade|1-3]"]) { grades.push("1-3") }
+  if (data["f[grade|4-6]"]) { grades.push("4-6") }
+  if (data["f[grade|7-8]"]) { grades.push("7-8") }
+  if (data["f[grade|9-12]"]) { grades.push("9-12") }
 
   jsons = []
   for (var steam in steams) {
@@ -139,12 +145,10 @@ find_data_selectors = function() {
       }}
   }
 
-  jsonsres = [];
-  for (var json in jsons) {
-    if (jsons[json]) { jsonsres = jsonsres.concat(jsons[json]) } 
-  }
+  jsonsres = _.uniq(_.flatten(jsons))
 
   $('#ms-suggest').tagit({
+    fieldName: 'f[tags]',
     availableTags: jsonsres,
     autocomplete: {delay: 0, minLength: 1},
     showAutocompleteOnFocus: true,
@@ -165,7 +169,7 @@ find_data_selectors = function() {
     "M": "Mathematics",
     "+": "+"}
   format_option = function(x) {
-    return "<label> <input name='choices["+ x + "]' value='true' type='checkbox'> <span>"+ x +"</span> </label>"
+    return "<label> <input name='f[choices|"+ x + "]' value='true' type='checkbox'> <span>"+ x +"</span> </label>"
   }
 
   format_question = function(x, opts) {
@@ -181,6 +185,7 @@ find_data_selectors = function() {
 
   choices = _.map(steams, function(x) { return format_question(x, getages(grades, x)) }).join("")
  $('#choices').html(choices) 
+  }
 };
 
 // -------------------------------------------------------

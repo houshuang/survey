@@ -6,14 +6,150 @@
     </div>
   </div>
 </div>
-                        <script> Window.tags =  <%= tags %> </script>
-                        <script> Window.choices =  <%= choices %> </script>
-<div class='blocks'>
-  <%= form_for @conn, "/register/submit", [name: :search], fn _ -> %>
-  <%= registration %>
-</div>
-</div>
-    <div class='navbuttons'></div>
+<div class="blocks">
+  <%= form_for @conn, user_path(@conn, :submit), [name: :search], fn _ -> %>
+    <input name="_utf8" type="hidden" value="✓">
+    <div class="block" style="">
+      <h1>Section 1</h1>
+      <h3>Welcome to the interactive features in this MOOC. First we need to ask
+        you a few questions</h3>
+      <p>To preserve your privacy, our interactive widgets do not receive any information
+        about you from EdX. Therefore we have to ask you these questions.</p>
+      <fieldset>
+        <h4>What do you want us to call you?:</h4>
+        <p>
+          <i>This does not have to be your real name, and it will be publicly visible
+            to all MOOC participants.</i>
+        </p>
+        <input name="f[nick]" type="text">
+        <br>
+      </fieldset>
+      <fieldset>
+        <h4>Email address?:</h4>
+        <p>
+          <i>You do not have to give us your email, but if you do, we will be able
+            to send you personalized emails every week with information about the activities
+            you are a part of. You will always be able to easily turn off these notifications,
+            and we will not share your email with anyone.</i>
+        </p>
+        <input name="f[email]" type="text" class="email">
+        <br>
+      </fieldset>
+      <fieldset>
+        <h4>At what grade levels do you currently teach?</h4>
+        <label>
+          <input class='fieldlevel k12' name="f[grade|K-3]" value="true" type="checkbox">
+          <span>K-3</span>
+        </label>
+        <label>
+          <input class='fieldlevel k12' name="f[grade|4-6]" value="true" type="checkbox">
+          <span>4-6</span>
+        </label>
+        <label>
+          <input class='fieldlevel k12' name="f[grade|7-8]" value="true" type="checkbox">
+          <span>7-8</span>
+        </label>
+        <label>
+          <input class='fieldlevel k12' name="f[grade|9-12]" value="true" type="checkbox">
+          <span>9-12</span>
+        </label>
+        <label>
+          <input class='fieldlevel nok12' name="f[grade|noK12]" value="true" type="checkbox">
+          <span>I do not currently teach in a K-12 educational system</span>
+        </label>
+      </fieldset>
+      <fieldset>
+        <h4>STEAM+</h4>
+        <p>
+          <i>Please choose one or several of the topics below as covering your own
+            teaching</i>
+        </p>
+        <label>
+          <input name="f[steam|S]" value="true" type="checkbox">
+          <span>S - Science</span>
+        </label>
+        <label>
+          <input name="f[steam|T]" value="true" type="checkbox">
+          <span>T - Technology</span>
+        </label>
+        <label>
+          <input name="f[steam|E]" value="true" type="checkbox">
+          <span>E - Engineering</span>
+        </label>
+        <label>
+          <input name="f[steam|A]" value="true" type="checkbox">
+          <span>A - Arts</span>
+        </label>
+        <label>
+          <input name="f[steam|M]" value="true" type="checkbox">
+          <span>M - Mathematics</span>
+        </label>
+        <label>
+          <input name="f[steam|+]" value="true" type="checkbox">
+          <span>+ - Anything else</span>
+        </label>
+      </fieldset>
+      <hr>
+    </div>
+    <div class="block" style="display: none">
+      <h1>Section 2</h1>
+      <h4>Please help us define your teaching area better</h4>
+      <span id="choices"></span>
+      <fieldset>
+        <p>Please enter a number of tags to describe your teaching areas. Some will
+          be automatically suggested based on your selections above, but you can
+          also add new tags. These tags will help us connect you with other people,
+          resources, and groups relevant to your interests.
+
+          Tags can have spaces. Press enter to add a new tag.</p>
+        <script src="/js/tag-it.min.js"></script>
+        <input name='f[tags]' class="form-control" id="ms-suggest">
+      </fieldset>
+      <hr>
+    </div>
+    <div class="block" style="display: none">
+      <h1>Section 3</h1>
+      <fieldset>
+        <h4>How many years have you been teaching any subject in K-12 education?:</h4>
+        <p>
+          <i>Please enter a whole number (for example: 15, or 0 if you have never taught)</i>
+        </p>
+        <input name="f[yearsteaching]" type="text" class="numeric">
+        <br>
+      </fieldset>
+      <fieldset>
+        <h4>If you do not currently teach in a K-12 educational system, please specify
+          your role.</h4>
+        <label>
+          <input name="f[role|informal]" value="a" type="radio">
+          <span>Informal education (museums, after school, etc):</span>
+        </label>
+        <label>
+          <input name="f[role|school_admin]" value="b" type="radio">
+          <span>School administration (leadership, technology specialists, etc):</span>
+        </label>
+        <label>
+          <input name="f[role|highered]" value="c" type="radio">
+          <span>Higher education (college, university, etc):</span>
+        </label>
+        <label>
+          <input name="f[role|adultcontinuing]" value="d" type="radio">
+          <span>Adult and continuing education:</span>
+        </label>
+      </fieldset>
+      <fieldset>
+        <h4>Other (Please specify?):</h4>
+        <input name="f[other_role]" type="text">
+        <br>
+      </fieldset>
+      <hr>
+    </div>
   <% end %>
 </div>
+<div class="navbuttons">
 </div>
+<script src="/js/plugins.js"></script>
+<script src="/js/masked-input.js"></script>
+<script src="/js/register.js"></script>
+<script> Window.tags =  <%= tags %> </script>
+<script> Window.choices =  <%= choices %> </script>

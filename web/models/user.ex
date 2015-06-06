@@ -4,8 +4,14 @@ defmodule Survey.User do
   schema "users" do
     field :hash, :string
     field :nick, :string
+    field :email, :string
     field :tags, {:array, :string}
+    field :grade, {:array, :string}
+    field :role, {:array, :string}
+    field :steam, {:array, :string}
     field :survey, Survey.JSON
+    field :yearsteaching, :integer
+    field :surveystate, :integer
     timestamps
   end
 

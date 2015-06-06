@@ -1,19 +1,16 @@
 TODO
 
-survey-ui:
-  - send data on next page
-  - implement appropriate next/previous page, submit
+figure out how to transmit state from survey by JS - custom field that is read on receipt
+make sure storing and reading survey state works
+applying serialized form state back to form on reload
+cleaning up css for multi-selects
+look at cleaning up generated select names / post-process to make data in db a little cleaner
+info page with a nice serialization of questions
 
-contents:
-  - update to latest version, include questions about nickname etc
-
-tags:
-  - add back magic tags
-  - add updated dataset
-
-persistence:
-  - capture user id on initial access
-  - write survey data to database on each page change
+--------------------------------------------------
+integration:
+  - moving from registration to survey - redirect working
+  - continuing on survey after logoff - storing page number
 
 devops:
   - better way of doing releases

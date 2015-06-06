@@ -16,37 +16,42 @@ defmodule EnsureRegistered do
   require Logger
 
   defmodule NoIDProvided, do:
-    defexception message: "no ID provided"
+  defexception message: "no ID provided"
 
   defmodule UserNotInDB, do:
-    defexception message: "provided user id not found in database"
+  defexception message: "provided user id not found in database"
 
   def init([]), do: []
 
   def call(conn, _) do
     try do
       userid = get_session(conn, :repo_userid)
-      if !userid do
+      if userid do
+        getby = %{id: userid}
+      else
         hash = conn.params["user_id"] || get_session(conn, :lti_userid)
         if !hash, do: raise NoIDProvided
 
-        query = from u in Survey.User, where: u.hash == ^hash, select: u.id
-        userid = Survey.Repo.one(query)
-        if !userid, do: raise UserNotInDB
-        conn = put_session(conn, :repo_userid, userid)
+        getby = %{hash: hash}
       end
 
+      user = Survey.Repo.get_by(Survey.User, getby)
+      if !user, do: raise UserNotInDB
+
       Logger.info("Verified user id #{inspect(userid)}")
-      conn
+
+      conn 
+      |> put_session(:repo_userid, userid)
+      |> assign(:user, user)
 
     rescue 
       e in NoIDProvided -> 
         Logger.info "EnsureRegistered: " <> Exception.message(e)
         conn
-          |> put_resp_header("content-type", "text/plain; charset=utf-8")
-          |> send_resp(Plug.Conn.Status.code(:forbidden), 
-            "User not registered")
-          |> halt
+        |> put_resp_header("content-type", "text/plain; charset=utf-8")
+        |> send_resp(Plug.Conn.Status.code(:forbidden), 
+        "User not registered")
+        |> halt
       UserNotInDB -> register_user(conn)
 
       e -> raise e
@@ -55,7 +60,7 @@ defmodule EnsureRegistered do
 
   def register_user(conn) do
     conn 
-    |> put_private(:ensure_registered_redirect, full_path(conn))
+    |> put_session(:ensure_registered_redirect, full_path(conn))
     |> put_resp_header("location", "/register")
     |> send_resp(302, "")
     |> halt
