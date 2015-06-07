@@ -74,7 +74,7 @@ buttonclick = function(e) {
     if(e.text == "Submit") {
 	$('form').submit();
     }
-    $.post("/tags/submitajax", $("form").serialize(), function(data){
+    $.post("/survey/submitajax", $("form").serialize(), function(data){
     });
     var simbolo = "0";
     if($(e).parent().hasClass('next')){
