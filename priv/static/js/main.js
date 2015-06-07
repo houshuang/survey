@@ -1,5 +1,5 @@
 $(document).ready(function(){
-
+$("form").rememberState({objName: 'search'});
     $(".numeric").keyup(function() {
 	// Get the non Numeric char that was enetered
 	var nonNumericChars = $(this).val().replace(/[0-9]/g, '');                                  

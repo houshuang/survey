@@ -18,7 +18,7 @@ defmodule Survey.Mixfile do
   def application do
     [mod: {Survey, []},
       applications: [:phoenix, :phoenix_html, :cowboy, :logger,
-        :phoenix_ecto, :postgrex]]
+        :phoenix_ecto, :postgrex, :exometer, :dogstatsd]]
   end
 
   # Specifies which paths to compile per environment
@@ -39,7 +39,11 @@ defmodule Survey.Mixfile do
       {:mix_test_watch, "~> 0.1.0"},
       {:multidef, github: "pragdave/mdef"},
       {:exrm, "~> 0.15.3"},
-      {:plug_lti, github: "houshuang/plug_lti"}
+      {:plug_lti, github: "houshuang/plug_lti"},
+      {:exometer_core, github: "PSPDFKit-labs/exometer_core", override: true},
+      {:exometer, github: "PSPDFKit-labs/exometer"},
+      {:edown, github: "uwiger/edown", tag: "0.5", override: true},
+      {:dogstatsd, "0.0.3"}
     ]
   end
 end

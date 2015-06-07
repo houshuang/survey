@@ -14,10 +14,9 @@ defmodule EnsureRegistered do
   require Ecto.Query
   import Ecto.Query
   require Logger
-
   defmodule NoIDProvided, do:
   defexception message: "no ID provided"
-
+  require DogStatsd
   defmodule UserNotInDB, do:
   defexception message: "provided user id not found in database"
 
@@ -38,7 +37,7 @@ defmodule EnsureRegistered do
         if !user, do: raise UserNotInDB
       end
 
-      Logger.info("Verified user id #{user.id}")
+      log_unique(user.id)
 
       conn 
       |> put_session(:repo_userid, user.id)
@@ -64,5 +63,11 @@ defmodule EnsureRegistered do
     |> put_resp_header("location", "/user/register")
     |> send_resp(302, "")
     |> halt
+  end
+
+  def log_unique(id) do
+    Logger.info("Verified user id #{id}")
+    {:ok, statsd} = DogStatsd.new("localhost", 8125)
+    DogStatsd.set(statsd, "unique.users", id)
   end
 end

@@ -3,6 +3,7 @@ defmodule Survey.Router do
 
   pipeline :browser do
     plug EnsureLti
+    plug PlugExometer
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_flash
@@ -13,6 +14,7 @@ defmodule Survey.Router do
   # don't ensure registered, only for new users to register
   pipeline :register do
     plug EnsureLti
+    plug PlugExometer
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_flash

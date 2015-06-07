@@ -1,30 +1,28 @@
 textbox,Why did you sign up for this course?
 meta
-	length=800
+	length=1000
 textbox,How would you define "learning through inquiry?"
 meta
 	length=1000
-section
 textbox,What do you think is a good role for technology in supporting inquiry?  
 meta
 	length=1000
+section
 textbox,What is the role of the teacher in an inquiry-based learning environment? 
 meta
 	length=1000
-section
-multi,What would be an ideal length of time for an inquiry learning experience?
+radio,What would be an ideal length of time for an inquiry learning experience?
 	a few minutes per class period
 	an entire class period 
 	several consecutive class periods
 	several weeks of class time
 	1 month or more of class time
-
 radio,How often do you think inquiry lessons should be included?
 	every day
 	once per week
 	once per month
 	once per unit or semester
-
+section
 grid,How important are each of the following learning objectives to your teaching?  
 choicerange
 	not important
@@ -39,7 +37,7 @@ rows
 	Learning to find, critique and use resources
 	Learning real-life applications your topic
 	Preparing for further study in your topic
-	
+section	
 grid,How often do students use each of the following instructional technologies in your classroom? 
 choicerange
 	never
@@ -51,7 +49,7 @@ rows
 	Classroom response system or “Clickers” 
 	Smart board
 	other (specify)
-
+section
 grid, How available are each of the following technologies for your students, working in small groups of 2 - 5 students?  
 choicerange
 	not available
@@ -64,6 +62,7 @@ rows
 	Internet access
 	other (specify)
 
+section
 radio,How much support do teachers at your school receive for innovative use of technology?
 	teachers are very well supported
 	teachers receive some support
@@ -76,7 +75,7 @@ radio,In your school, is there a clear vision statement about technology integra
 	Yes, there is a technology vision, but it is not sufficient, or teachers do not agree with its direction. 
 	There is some support for technology integration, but no clear vision.
 	No, there is no vision statement about technology integration.
-
+section
 grid,How confident are you in enacting the following instructional practices? 
 choicerange
 	not confident
@@ -92,7 +91,7 @@ rows
 	providing appropriate challenges for high-achieving students
 	developing lessons that combine subject matter, technologies, and teaching approaches.
 
-
+section
 grid,Please rate the following statements as they apply to your own experiences in learning with your peers  
 choicerange
 	not at all
@@ -105,7 +104,7 @@ rows
 	You have participated in informal study groups (not organized by the instructor).
 	You shown drafts of your papers to other students and gotten feedback, or given feedback on drafts.
 	You discuss course topics outside of courses with friends, housemates or family.
-
+section
 grid,What is your opinion of working with your peers in an online course?
 choicerange
 	not at all

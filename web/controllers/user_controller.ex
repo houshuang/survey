@@ -46,7 +46,7 @@ defmodule Survey.UserController do
   end
 
   def delete_survey(conn, _) do
-    Logger.warn(inspect(conn, pretty: true))
+    Logger.debug(inspect(conn, pretty: true))
     user = conn.assigns.user
     Repo.update(%{user | surveystate: 0, survey: nil })
     conn

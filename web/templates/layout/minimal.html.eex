@@ -33,6 +33,7 @@
     <script src="/js/plugins.js"></script>
     <script src="/js/masked-input.js"></script>
     <script src="/js/register.js"></script>
+    <script src="/js/populate.js"></script>
 
   </body>
 </html>

@@ -29,6 +29,7 @@
     <script src="/js/plugins.js"></script>
     <script src="/js/masked-input.js"></script>
     <script src="/js/main.js"></script>
+    <script src="/js/remember-state.js"></script>
 
   </body>
 </html>
