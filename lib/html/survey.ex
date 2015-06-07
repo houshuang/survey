@@ -78,7 +78,6 @@ defmodule Survey.HTML.Survey do
   end
 
   def multi(form, h, type) do
-    name = "#{form}[#{name(h)}"
     desc = desc(h)
 
     opts = h.options
@@ -86,9 +85,9 @@ defmodule Survey.HTML.Survey do
     |> Enum.map(
       fn {x, i} -> 
         case type do
-          "checkbox" -> ["<label><input name='#{name}.#{[?a + i]}]'",
+          "checkbox" -> ["<label><input name='#{form}[#{name(h)}|#{[?a + i]}]'",
             "value='true' type=checkbox><span>", x, "</span></label>"]
-          "radio" -> ["<label><input name='#{name}.#{[?a + i]}]' value='#{[?a + i]}'", 
+          "radio" -> ["<label><input name='#{form}[#{name(h)}]' value='#{[?a + i]}'", 
             "type=radio><span>", x, ": </span></label>"]
         end
       end)
@@ -109,7 +108,9 @@ defmodule Survey.HTML.Survey do
       labels = elem_list
     end
 
-    headercells = elems |> Enum.map(fn x -> ["<div class='cell'>", x, "</div>"] end)
+    headercells = elems 
+    |> Enum.with_index
+    |> Enum.map(fn {x, i} -> ["<div class='cell cellgradient#{i}'>", x, "</div>"] end)
 
     header = ["<h4>", h.name, "</h4><div class='evaluation table'><div class='line answers'>",
       "<div class='cell exception'></div>", headercells, "</div>"]
@@ -119,7 +120,7 @@ defmodule Survey.HTML.Survey do
   end
 
   defp body_row(h, form, {desc, i}, elem_list) do 
-    selname = "#{form}[#{name(h)}.#{[i + ?a]}]"
+    selname = "#{form}[##{name(h)}.#{[i + ?a]}]"
     sels = elem_list |> Enum.map(&(sel_elem(selname, &1)))
     ["<div class='line'> <div class='cell question'>", desc, "</div>", sels, "</div>"]
   end

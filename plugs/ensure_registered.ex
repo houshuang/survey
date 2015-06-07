@@ -27,21 +27,21 @@ defmodule EnsureRegistered do
     try do
       userid = get_session(conn, :repo_userid)
       if userid do
-        getby = %{id: userid}
-      else
+        user = Survey.Repo.get_by(Survey.User, id: userid)
+      end
+      
+      if !userid || !user do
         hash = conn.params["user_id"] || get_session(conn, :lti_userid)
         if !hash, do: raise NoIDProvided
 
-        getby = %{hash: hash}
+        user = Survey.Repo.get_by(Survey.User, hash: hash)
+        if !user, do: raise UserNotInDB
       end
 
-      user = Survey.Repo.get_by(Survey.User, getby)
-      if !user, do: raise UserNotInDB
-
-      Logger.info("Verified user id #{inspect(userid)}")
+      Logger.info("Verified user id #{user.id}")
 
       conn 
-      |> put_session(:repo_userid, userid)
+      |> put_session(:repo_userid, user.id)
       |> assign(:user, user)
 
     rescue 
@@ -61,7 +61,7 @@ defmodule EnsureRegistered do
   def register_user(conn) do
     conn 
     |> put_session(:ensure_registered_redirect, full_path(conn))
-    |> put_resp_header("location", "/register")
+    |> put_resp_header("location", "/user/register")
     |> send_resp(302, "")
     |> halt
   end

@@ -1,10 +1,11 @@
-defmodule Survey.TagController do
+defmodule Survey.SurveyController do
   use Survey.Web, :controller
   require Logger
   require Ecto.Query
   import Ecto.Query
   alias Survey.Repo
   alias Survey.User
+  import Prelude
 
   plug :action
 
@@ -28,7 +29,6 @@ defmodule Survey.TagController do
 
   defp set_survey(conn, params, complete \\ false) do
     Logger.warn("Saving to database")
-    userid = get_session(conn, :repo_userid)
 
     user = conn.assigns.user
     user = %{user | survey: clean_survey(params["f"]) }
@@ -40,11 +40,17 @@ defmodule Survey.TagController do
   end
 
   defp clean_survey(survey) do
-    Enum.filter(survey, &not_empty/1)
+    Logger.warn(inspect(survey))
+    survey
+    |> proc_params
+    |> Enum.filter(&not_empty/1)
+    |> Enum.map(&integers/1)
     |> Enum.into(%{})
   end
 
   defp not_empty({_, ""}), do: false
   defp not_empty(_), do: true
 
+  defp integers({"#" <> k, val}), do: {k, string_to_int_safe(val)}
+  defp integers(x), do: x
 end

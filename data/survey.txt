@@ -12,7 +12,7 @@ textbox,What is the role of the teacher in an inquiry-based learning environment
 meta
 	length=1000
 section
-radio,What would be an ideal length of time for an inquiry learning experience?
+multi,What would be an ideal length of time for an inquiry learning experience?
 	a few minutes per class period
 	an entire class period 
 	several consecutive class periods

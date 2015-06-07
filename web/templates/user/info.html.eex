@@ -1,3 +1,24 @@
-<h3>Welcome <%= @user.nick %></h3>
+<h3>Welcome to user info for <%= @user.nick %></h3>
 
+
+<%= form_for @conn, user_path(@conn, :delete_user), [name: :delete], fn _ ->
+  submit "Delete user" end %>
+  <%= form_for @conn, user_path(@conn, :delete_survey), [name: :delete], fn _ -> 
+  submit "Delete survey data" end %>
+  <P>
+    <h3>Survey data</h3>
+    <span id=survey></span>
+    <p><br>
+    <h3>Registration data</h3>
+    <span id=regdata></span>
+
+      <script src="/js/prettyprint.js"></script>
+      <script> 
+        input=<%=raw Poison.encode!(@user) %>;
+        survey=<%=raw Poison.encode!(@user.survey) %>;
+        $(document).on('ready', function() {
+          $('#regdata').html(prettyPrint(input, {expanded: false}));
+          $('#survey').html(prettyPrint(survey, {expanded: true}));
+        })
+      </script>
 

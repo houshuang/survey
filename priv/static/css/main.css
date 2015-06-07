@@ -224,7 +224,7 @@ html body {
 }
 .blocks form .block fieldset .table {
     margin: 30px 0 0 0;
-    width: 760px;
+    width: 740px;
     overflow: hidden;
 }
 .blocks form .block fieldset .table .line {
@@ -233,16 +233,25 @@ html body {
 .blocks form .block fieldset .table .line:hover {background: #eee;}
 .blocks form .block fieldset .table .line .cell {
     float: left;
-    width: 13%;
+    width: 12%;
     height: 90px;
     border-right: solid 1px #ddd;
 }
+
+.blocks form .block fieldset .table .line .cellgradient4 { background: #0F00E5; }
+.blocks form .block fieldset .table .line .cellgradient3 { background: #2C1CEB; } 
+.blocks form .block fieldset .table .line .cellgradient2 { background: #4A39F1; } 
+.blocks form .block fieldset .table .line .cellgradient1 { background: #6855F7; } 
+.blocks form .block fieldset .table .line .cellgradient0 { background: #8672FD; } 
+
+
 .blocks form .block fieldset .table .line.answers .cell {
+    width: 12%
     text-align: center;
     font-size: 13px;
     padding: 30px 20px;
     font-weight: bolder;
-    background: #0877B0;
+    /* background: #0877B0; */
     color: #fff;
     border-right-color: #076A9D;
 }
@@ -262,9 +271,9 @@ html body {
 .blocks form .block fieldset .table .line .cell.question {
     font-size: 13px;
     padding: 5px 15px 0 0;
-    background-color: #fff;
+    /* background-color: #fff; */
     line-height: 15px;
-    width: 30%;
+    width: 40%;
 }
 .blocks form .block fieldset .table .line .cell label {
     display: block;

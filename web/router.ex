@@ -21,17 +21,20 @@ defmodule Survey.Router do
 
   scope "/", Survey do
     pipe_through :browser
-    post "/tags", TagController, :index
-    get "/tags", TagController, :index
-    get "/", PageController, :index
-    post "/tags/submit", TagController, :submit
-    post "/tags/submitajax", TagController, :submitajax
-    get "/userinfo", UserController, :info
+    get "/survey", SurveyController, :index
+    post "/survey", SurveyController, :index
+    post "/survey/submit", SurveyController, :submit
+    post "/survey/submitajax", SurveyController, :submitajax
+
+    get "/user/info", UserController, :info
+    post "/user/info", UserController, :info
+    post "/user/delete_user", UserController, :delete_user
+    post "/user/delete_survey", UserController, :delete_survey
   end
 
   scope "/", Survey do
     pipe_through :register
-    get "/register", UserController, :index
-    post "/register/submit", UserController, :submit
+    get "/user/register", UserController, :index
+    post "/user/register/submit", UserController, :submit
   end
 end

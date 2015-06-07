@@ -8,7 +8,7 @@
 </div>
 
 <div class='blocks'>
-  <%= form_for @conn, tag_path(@conn, :submit), [name: :search], fn _ -> %>
+  <%= form_for @conn, survey_path(@conn, :submit), [name: :search], fn _ -> %>
   <%# <%= raw magic_suggest("tags", data, %{placeholder: "Please input relevant tags to your education"}) %1> %>
   <%= survey %>
     <div class='navbuttons'></div>

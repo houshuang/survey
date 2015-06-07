@@ -37,5 +37,5 @@ config :survey, Survey.Repo,
 
 
 config :plug_lti,
-  lti_secret: "secret"
-  # plug_disabled: true
+  lti_secret: "secret",
+  plug_disabled: true

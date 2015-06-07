@@ -3,6 +3,7 @@ defmodule Survey.UserController do
 
   require Logger
   alias Survey.User
+  import Prelude
 
   plug :action
 
@@ -13,10 +14,6 @@ defmodule Survey.UserController do
     |> render "form.html"
   end
 
-  def info(conn, _) do
-    render conn, "info.html"
-  end
-  
   def submit(conn, params) do
     Logger.debug(inspect(conn, pretty: true))
     user = proc_register(params) 
@@ -36,6 +33,26 @@ defmodule Survey.UserController do
     end
   end
   
+  def info(conn, _) do
+    render conn, "info.html"
+  end
+  
+  def delete_user(conn, _) do
+    Repo.delete(conn.assigns.user)
+    conn
+    |> delete_session(:repo_userid)
+    |> put_flash(:info, "User deleted")
+    |> redirect to: "/user/info"
+  end
+
+  def delete_survey(conn, _) do
+    Logger.warn(inspect(conn, pretty: true))
+    user = conn.assigns.user
+    Repo.update(%{user | surveystate: 0, survey: nil })
+    conn
+    |> put_flash(:info, "Survey deleted")
+    |> redirect to: "/user/info"
+  end
   #-------------------------------------------------------------------------------- 
 
   def proc_register(params) do
@@ -51,20 +68,6 @@ defmodule Survey.UserController do
   defp yearsint(%{yearsteaching: y} = h), do: %{h | yearsteaching: string_to_int_safe(y) }
   defp yearsint(h), do: h
 
-  def string_to_int_safe(y) do
-    try do
-      String.to_integer(y)
-    rescue
-      ArgumentError -> 0
-      e -> raise e
-    end
-  end
-
-  defp atomify_map(map) do
-    Enum.map(map, fn {k,v} -> {String.to_atom(k), v} end)
-    |> Enum.into(%{})
-  end
-
   defp proc_tags(%{tags: tags} = h), do: %{h | tags: String.split(tags, "|") }
   defp proc_tags(x), do: x
 
@@ -76,22 +79,4 @@ defmodule Survey.UserController do
 
   defp proc_other_role(h), do: h
 
-  # Takes an array of params from a form. Any params of the form steam|A, steam|M 
-  # are concatenated into a list, like steam = ["A", "M"], other params are left alone
-  def proc_params(x) when is_map(x), do: Enum.reduce(x, %{}, &proc_param/2)
-
-  defp proc_param({sel, ""}, acc), do: acc
-
-  defp proc_param({sel, val}, acc) do
-    if String.contains?(sel, "|") do
-      [part, rest] = String.split(sel, "|", parts: 2)
-      append_map(acc, part, rest)
-    else
-      Map.put(acc, sel, val) 
-    end
-  end
-
-  defp append_map(map, key, val) do
-    Map.update(map, key, [val], fn x -> List.insert_at(x, 0, val) end)
-  end
 end
