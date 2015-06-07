@@ -13,12 +13,13 @@ defmodule EnsureRegistered do
 
   require Ecto.Query
   import Ecto.Query
-  require Logger
-  defmodule NoIDProvided, do:
-  defexception message: "no ID provided"
   require DogStatsd
+  require Logger
+
+  defmodule NoIDProvided, do:
+    defexception message: "no ID provided"
   defmodule UserNotInDB, do:
-  defexception message: "provided user id not found in database"
+    defexception message: "provided user id not found in database"
 
   def init([]), do: []
 
