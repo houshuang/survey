@@ -8,14 +8,12 @@ defmodule Survey.UserController do
   plug :action
 
   def index(conn, params) do
-    Logger.debug(inspect(conn, pretty: true))
     conn
     |> put_layout("minimal.html")
     |> render "form.html"
   end
 
   def submit(conn, params) do
-    Logger.debug(inspect(conn, pretty: true))
     user = proc_register(params) 
     |> Map.put(:hash, get_session(conn, :lti_userid))
     |> Repo.insert
@@ -27,7 +25,7 @@ defmodule Survey.UserController do
       conn
       |> put_flash(:info, "Successfully registered!")
       |> delete_session(:ensure_registered_redirect)
-      |> redirect to: redir
+      |> ParamSession.redirect to: redir
     else
       html conn, "Thank you for submitting"
     end
@@ -42,16 +40,15 @@ defmodule Survey.UserController do
     conn
     |> delete_session(:repo_userid)
     |> put_flash(:info, "User deleted")
-    |> redirect to: "/user/info"
+    |> ParamSession.redirect to: "/user/info"
   end
 
   def delete_survey(conn, _) do
-    Logger.debug(inspect(conn, pretty: true))
     user = conn.assigns.user
     Repo.update(%{user | surveystate: 0, survey: nil })
     conn
     |> put_flash(:info, "Survey deleted")
-    |> redirect to: "/user/info"
+    |> ParamSession.redirect to: "/user/info"
   end
   #-------------------------------------------------------------------------------- 
 

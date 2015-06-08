@@ -9,6 +9,7 @@
 
 <div class='blocks'>
   <%= form_for @conn, survey_path(@conn, :submit), [name: :search], fn _ -> %>
+  <%= ParamSession.form_session @conn %>
   <%# <%= raw magic_suggest("tags", data, %{placeholder: "Please input relevant tags to your education"}) %1> %>
   <%= survey %>
     <div class='navbuttons'></div>
@@ -17,5 +18,6 @@
 </div>
     <script src="/js/plugins.js"></script>
     <script src="/js/masked-input.js"></script>
+    <script src="/js/tag-it.min.js"></script>
     <script src="/js/main.js"></script>
     <script src="/js/remember-state.js"></script>

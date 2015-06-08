@@ -8,7 +8,7 @@
 </div>
 <div class="blocks">
   <%= form_for @conn, user_path(@conn, :submit), [name: :search], fn _ -> %>
-    <input name="_utf8" type="hidden" value="✓">
+  <%= ParamSession.form_session @conn %>
     <div class="block" style="">
       <h1>Section 1</h1>
       <h3>Welcome to the interactive features in this MOOC. First we need to ask

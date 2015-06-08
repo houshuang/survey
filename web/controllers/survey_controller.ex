@@ -28,19 +28,18 @@ defmodule Survey.SurveyController do
   end
 
   defp set_survey(conn, params, complete \\ false) do
-    Logger.warn("Saving to database")
+    Logger.info("Saving to database")
 
     user = conn.assigns.user
     user = %{user | survey: clean_survey(params["f"]) }
     if complete do
       user = %{user | surveystate: 99 }
     end
-    Logger.debug(inspect(user))
     Repo.update(user) 
   end
 
   defp clean_survey(survey) do
-    Logger.warn(inspect(survey))
+    Logger.info(inspect(survey))
     survey
     |> proc_params
     |> Enum.filter(&not_empty/1)

@@ -12,7 +12,6 @@ defmodule EnsureLti do
   def init([]), do: []
 
   def call(conn, _) do
-    conn = fetch_session(conn)
     if conn.params["oauth_signature"] || !get_session(conn, :lti_userid) do
       conn = PlugLti.call(conn, [])
       |> put_session(:lti_userid, conn.params["user_id"])

@@ -59,11 +59,10 @@ defmodule EnsureRegistered do
   end
 
   def register_user(conn) do
-    conn 
+    conn = conn 
     |> put_session(:ensure_registered_redirect, full_path(conn))
-    |> put_resp_header("location", "/user/register")
-    |> send_resp(302, "")
-    |> halt
+    |> ParamSession.redirect to: "/user/register"
+    %{conn | halted: true}
   end
 
   def log_unique(id) do

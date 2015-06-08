@@ -26,10 +26,10 @@ defmodule Survey.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
 
-  plug Plug.Session,
-    store: :cookie,
-    key: "_survey_key",
-    signing_salt: "/Z2HFeix"
+  # plug Plug.Session,
+  #   store: :cookie,
+  #   key: "_survey_key",
+  #   signing_salt: "/Z2HFeix"
 
   plug :router, Survey.Router
 end

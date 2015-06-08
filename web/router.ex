@@ -2,23 +2,19 @@ defmodule Survey.Router do
   use Survey.Web, :router
 
   pipeline :browser do
+    plug ParamSession
     plug EnsureLti
-    plug PlugExometer
     plug :accepts, ["html"]
-    plug :fetch_session
     plug :fetch_flash
-    plug :protect_from_forgery
     plug EnsureRegistered
   end
 
   # don't ensure registered, only for new users to register
   pipeline :register do
+    plug ParamSession
     plug EnsureLti
-    plug PlugExometer
     plug :accepts, ["html"]
-    plug :fetch_session
     plug :fetch_flash
-    plug :protect_from_forgery
   end
 
   scope "/", Survey do
