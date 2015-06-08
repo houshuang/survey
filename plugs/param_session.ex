@@ -6,23 +6,26 @@ defmodule ParamSession do
   require Logger
 
   alias Plug.Session.COOKIE
+  @opts Plug.Session.COOKIE.init store: :cookie,
+                                          key: "session",
+                                          encryption_salt: "fkljsdfsdif-09sdf-9834j993920092090kjj",
+                                          signing_salt: "skljdfls9980982049834fsdfsdf900d",
+                                          key_length: 64
+
+
 
   def init(_) do
-    Plug.Session.COOKIE.init store: :cookie,
-                         key: "session",
-                         encryption_salt: "fkljsdfsdif-09sdf-9834j993920092090kjj",
-                         signing_salt: "skljdfls9980982049834fsdfsdf900d",
-                         key_length: 64
   end
 
-  def call(conn, opts) do
+  def call(conn, _) do
     if sessionenc = conn.params["session"] do
-      {_, session} = COOKIE.get(conn, sessionenc, opts)
+      sessionenc = sessionenc
+      |> URI.decode_www_form
+      |> Base.decode64!
+      {_, session} = COOKIE.get(conn, sessionenc, @opts)
     else
       session = %{}
     end
-
-    Logger.warn("Session: #{inspect(session)}")
 
     conn
     |> Plug.Conn.put_private(:plug_session, session)
@@ -30,14 +33,11 @@ defmodule ParamSession do
   end
 
   def gen_cookie(conn) do
-    opts = Plug.Session.COOKIE.init store: :cookie,
-                         key: "session",
-                         encryption_salt: "fkljsdfsdif-09sdf-9834j993920092090kjj",
-                         signing_salt: "skljdfls9980982049834fsdfsdf900d",
-                         key_length: 64
-
     if conn.private[:plug_session] do
-      Plug.Session.COOKIE.put(conn, [], conn.private.plug_session, opts)
+      cookie = Plug.Session.COOKIE.put(conn, [], conn.private.plug_session, @opts)
+      cookie
+      |> Base.encode64
+      |> URI.encode_www_form
     else
       :none
     end
@@ -58,7 +58,6 @@ defmodule ParamSession do
     if to = opts[:to] do
       opts = [ {:to, url(conn, to) } | opts ]
     end
-    Logger.warn(inspect(opts))
     Phoenix.Controller.redirect(conn, opts)
   end
 end

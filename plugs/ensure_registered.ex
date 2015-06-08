@@ -59,6 +59,7 @@ defmodule EnsureRegistered do
   end
 
   def register_user(conn) do
+    Logger.warn("Session register redirect: #{inspect(conn.private.plug_session)}")
     conn = conn 
     |> put_session(:ensure_registered_redirect, full_path(conn))
     |> ParamSession.redirect to: "/user/register"
