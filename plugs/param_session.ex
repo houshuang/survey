@@ -6,13 +6,7 @@ defmodule ParamSession do
   require Logger
 
   alias Plug.Session.COOKIE
-  @opts Plug.Session.COOKIE.init store: :cookie,
-                                          key: "session",
-                                          encryption_salt: "fkljsdfsdif-09sdf-9834j993920092090kjj",
-                                          signing_salt: "skljdfls9980982049834fsdfsdf900d",
-                                          key_length: 64
-
-
+  @opts Plug.Session.COOKIE.init Application.get_all_env(:param_session) 
 
   def init(_) do
   end

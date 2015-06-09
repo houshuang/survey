@@ -37,5 +37,12 @@ config :survey, Survey.Repo,
 
 
 config :plug_lti,
-  lti_secret: "secret",
-  plug_disabled: true
+  lti_secret: "secret"
+  # plug_disabled: true
+
+config :param_session,
+  store: :cookie,  
+  key: "session",
+  encryption_salt: "fkljsdfsdif-09sdf-9834j993920092090kjj",
+  signing_salt: "skljdfls9980982049834fsdfsdf900d",
+  key_length: 64
