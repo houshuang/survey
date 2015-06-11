@@ -11,6 +11,7 @@
   <%= ParamSession.form_session @conn %>
     <div class="block" style="">
       <h1>Section 1</h1>
+      <a href="http://www.vg.no">VG</a>
       <h3>Welcome to the interactive features in this MOOC. First we need to ask
         you a few questions</h3>
       <p>To preserve your privacy, our interactive widgets do not receive any information
@@ -22,17 +23,6 @@
             to all MOOC participants.</i>
         </p>
         <input name="f[nick]" type="text">
-        <br>
-      </fieldset>
-      <fieldset>
-        <h4>Email address?:</h4>
-        <p>
-          <i>You do not have to give us your email, but if you do, we will be able
-            to send you personalized emails every week with information about the activities
-            you are a part of. You will always be able to easily turn off these notifications,
-            and we will not share your email with anyone.</i>
-        </p>
-        <input name="f[email]" type="text" class="email">
         <br>
       </fieldset>
       <fieldset>

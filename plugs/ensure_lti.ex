@@ -15,6 +15,8 @@ defmodule EnsureLti do
     conn = if conn.params["oauth_signature"] || !get_session(conn, :lti_userid) do
       conn = PlugLti.call(conn, [])
       |> put_session(:lti_userid, conn.params["user_id"])
+      |> put_session(:edx_userid, conn.params["lis_person_sourcedid"])
+      |> put_session(:edx_email, conn.params["lis_person_contact_email_primary"])
       %{conn | method: "GET"}
 
     else

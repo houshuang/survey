@@ -17,6 +17,7 @@ defmodule ParamSession do
       |> URI.decode_www_form
       |> Base.decode64!
       {_, session} = COOKIE.get(conn, sessionenc, @opts)
+      Logger.info("Session: #{inspect(session, pretty: true)}")
     else
       session = %{}
     end

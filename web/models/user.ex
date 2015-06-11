@@ -4,7 +4,8 @@ defmodule Survey.User do
   schema "users" do
     field :hash, :string
     field :nick, :string
-    field :email, :string
+    field :edx_email, :string
+    field :edx_userid, :string
     field :tags, {:array, :string}
     field :grade, {:array, :string}
     field :role, {:array, :string}
