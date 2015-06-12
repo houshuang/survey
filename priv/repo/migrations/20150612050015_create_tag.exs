@@ -4,8 +4,8 @@ defmodule Survey.Repo.Migrations.CreateTag do
   def change do
     create table(:tags) do
       add :tag, :string
-
-      timestamps
+      add :steam, :"text[]"
+      add :grade, :"text[]"
     end
 
   end
