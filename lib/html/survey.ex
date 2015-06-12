@@ -24,7 +24,11 @@ defmodule Survey.HTML.Survey do
     display = if i == 0, do: "", else: "display: none"
     sectionheader = case many do
       :single -> ""
-      :many   -> "<h1>Section #{i + 1}</h1>"
+      :many   -> if i > 0 do 
+        "<h1>Section #{i + 1}</h1>"
+      else
+        ""
+      end
     end
 
     ["<div class='block' style='#{display}'>", sectionheader, content, 
@@ -63,7 +67,7 @@ defmodule Survey.HTML.Survey do
     end
 
     ["<h4>", numstr(h), h.name, 
-      ": </h4>", desc, "<input name='#{form}[#{name(h)}]' type=text ", class, "><br>"]
+      "</h4>", desc, "<input name='#{form}[#{name(h)}]' type=text ", class, "><br>"]
   end
 
   def textbox(form, h) do
@@ -73,7 +77,7 @@ defmodule Survey.HTML.Survey do
       _ -> ""
     end
 
-    ["<h4>", numstr(h), h.name, ": </h4>", desc, "<textarea name='#{form}[#{name(h)}]'></textarea>", 
+    ["<h4>", numstr(h), h.name, "</h4>", desc, "<textarea name='#{form}[#{name(h)}]'></textarea>", 
       length]
   end
 
@@ -88,7 +92,7 @@ defmodule Survey.HTML.Survey do
           "checkbox" -> ["<label><input name='#{form}[#{name(h)}|#{[?a + i]}]'",
             "value='true' type=checkbox><span>", x, "</span></label>"]
           "radio" -> ["<label><input name='#{form}[#{name(h)}]' value='#{[?a + i]}'", 
-            "type=radio><span>", x, ": </span></label>"]
+            "type=radio><span>", x, "</span></label>"]
         end
       end)
 

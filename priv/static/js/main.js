@@ -1,5 +1,5 @@
 $(document).ready(function(){
-$("form").rememberState({objName: 'search'});
+    $("form").rememberState({objName: 'search'});
     $(".numeric").keyup(function() {
 	// Get the non Numeric char that was enetered
 	var nonNumericChars = $(this).val().replace(/[0-9]/g, '');                                  
@@ -59,7 +59,7 @@ buttons = function() {
     var txt = "";
     if (Window.counter == Window.blocksLength && Window.counter !== undefined) {
 	txt =  "<div class='stepsController prev left'><a href='#'>Previous</a></div>" + 
-	"<div class='stepsController submit right'><a href='#'>Submit</a></div>";
+	    "<div class='stepsController submit right'><a href='#'>Submit</a></div>";
     } else if (Window.counter == 1 || Window.counter === undefined) {
 	txt = "<div class='stepsController next right'><a href='#'>Next</a></div>";
     } else {
@@ -71,6 +71,7 @@ buttons = function() {
 };
 
 buttonclick = function(e) {
+    $('p.remember_state').remove();
     if(e.text == "Submit") {
 	$('form').submit();
     }

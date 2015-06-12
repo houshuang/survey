@@ -1,3 +1,6 @@
+# Survey
+para, <font color="#0877b0"><i>Dear INQ101x Learners<br><br> As we discussed with you in Teachers' Lounge videos, this course is highly collaborative when it comes to course activities. To make efficiet groups, in this survey we are asking you questions about your teaching interests so that you can find peers with similar intersts and join them in Special Interest Groups later on.<br><br> We also ask questions about your views on teaching, your access to learning technologies, and reasons why you enrolled in this course. This survey takes about 15 minutes to complete and provides us with valuable information to make this course a more relevant learning experience for you.<br><br> We truly appreciate the time you spend completing this survey.<br><br>INQ101x instructional team<br><br></i></font><hr>
+
 textbox,Why did you sign up for this course?
 meta
 	length=1000
@@ -48,7 +51,6 @@ rows
 	Hand-held computers (tablets, smart phones)
 	Classroom response system or “Clickers” 
 	Smart board
-	other (specify)
 section
 grid, How available are each of the following technologies for your students, working in small groups of 2 - 5 students?  
 choicerange
@@ -60,21 +62,20 @@ rows
 	Hand-held computers (for example: PDAs, tablets, smartphones, iPads)
 	Classroom response system or “Clickers”
 	Internet access
-	other (specify)
 
 section
 radio,How much support do teachers at your school receive for innovative use of technology?
-	teachers are very well supported
-	teachers receive some support
-	teachers are on their own, but encouraged to try new things
-	teachers are discouraged from trying new approaches
+	Teachers are very well supported
+	Teachers receive some support
+	Teachers are on their own, but encouraged to try new things
+	Teachers are discouraged from trying new approaches
 
 radio,In your school, is there a clear vision statement about technology integration for learning and assessment?
 	Yes, there is a very clear vision and teachers are actively engaged in pursuing it
 	Yes, there is a technology vision, but teachers are not supported in pursuing it
 	Yes, there is a technology vision, but it is not sufficient, or teachers do not agree with its direction. 
-	There is some support for technology integration, but no clear vision.
-	No, there is no vision statement about technology integration.
+	There is some support for technology integration, but no clear vision
+	No, there is no vision statement about technology integration
 section
 grid,How confident are you in enacting the following instructional practices? 
 choicerange
@@ -82,14 +83,14 @@ choicerange
 	highly confident
 	5
 rows
-	providing alternative explanations or examples when students are confused
-	responding to difficult questions from your students
-	adjusting your lessons to differentiate for individual student needs 
-	using a variety of assessment strategies
-	monitoring student understanding on an ongoing basis throughout a unit
-	assessing student understanding at the conclusion of a unit 
-	providing appropriate challenges for high-achieving students
-	developing lessons that combine subject matter, technologies, and teaching approaches.
+	Providing alternative explanations or examples when students are confused
+	Responding to difficult questions from your students
+	Adjusting your lessons to differentiate for individual student needs 
+	Using a variety of assessment strategies
+	Monitoring student understanding on an ongoing basis throughout a unit
+	Assessing student understanding at the conclusion of a unit 
+	Providing appropriate challenges for high-achieving students
+	Developing lessons that combine subject matter, technologies, and teaching approaches.
 
 section
 grid,Please rate the following statements as they apply to your own experiences in learning with your peers  
@@ -111,9 +112,9 @@ choicerange
 	to a large extent
 	5
 rows
-	It is important to have frequent discussions and exchanges with other students.
-	Its is important for me to explain my ideas to other students.
-	It is important to ask other students to explain their ideas to me.
-	Other students usually listened carefully to my ideas.
+	It is important to have frequent discussions and exchanges with other students
+	It is important for me to explain my ideas to other students
+	It is important to ask other students to explain their ideas to me
+	Other students usually listened carefully to my ideas
 
 
