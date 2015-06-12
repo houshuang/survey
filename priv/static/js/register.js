@@ -140,50 +140,55 @@ find_data_selectors = function() {
   })
 
   if(Window.counter==1) {
-  console.log("Recalculating suggestions")
-  var data = {};
-  $("form").serializeArray().map(function(x){data[x.name] = x.value;}); 
+    console.log("Recalculating suggestions")
+    var data = {};
+    $("form").serializeArray().map(function(x){data[x.name] = x.value;}); 
 
-  steams = []
-  if (data["f[steam|S]"]) { steams.push("S") }
-  if (data["f[steam|T]"]) { steams.push("T") }
-  if (data["f[steam|E]"]) { steams.push("E") }
-  if (data["f[steam|A]"]) { steams.push("A") }
-  if (data["f[steam|M]"]) { steams.push("M") }
-  if (data["f[steam|+]"]) { steams.push("+") }
+    steams = []
+    if (data["f[steam|S]"]) { steams.push("S") }
+    if (data["f[steam|T]"]) { steams.push("T") }
+    if (data["f[steam|E]"]) { steams.push("E") }
+    if (data["f[steam|A]"]) { steams.push("A") }
+    if (data["f[steam|M]"]) { steams.push("M") }
+    if (data["f[steam|+]"]) { steams.push("+") }
 
-  grades = []
-  if (data["f[grade|1-3]"]) { grades.push("1-3") }
-  if (data["f[grade|4-6]"]) { grades.push("4-6") }
-  if (data["f[grade|7-8]"]) { grades.push("7-8") }
-  if (data["f[grade|9-12]"]) { grades.push("9-12") }
+    grades = []
+    if (data["f[grade|1-3]"]) { grades.push("1-3") }
+    if (data["f[grade|4-6]"]) { grades.push("4-6") }
+    if (data["f[grade|7-8]"]) { grades.push("7-8") }
+    if (data["f[grade|9-12]"]) { grades.push("9-12") }
 
-  // -------------------------------------------------------
+    // -------------------------------------------------------
 
-  steamstr = {
-    "S": "Science",
-    "T": "Technology",
-    "E": "Engineering",
-    "A": "Arts",
-    "M": "Mathematics",
-    "+": "+"}
-  format_option = function(x) {
-    return "<label> <input name='f[choices|"+ x + "]' value='true' type='checkbox'> <span>"+ x +"</span> </label>"
-  }
+    steamstr = {
+      "S": "Science",
+      "T": "Technology",
+      "E": "Engineering",
+      "A": "Arts",
+      "M": "Mathematics",
+      "+": "+"}
+      format_option = function(x) {
+        return "<label> <input name='f[choices|"+ x + "]' value='true' type='checkbox'> <span>"+ x +"</span> </label>"
+      }
 
-  format_question = function(x, opts) {
-    if (opts.length===0) { return ""}
-    else{
-    return "<fieldset><h4>" + steamstr[x] + "</h4>" + opts + "</fieldset>"
-    }
-  }
+      format_question = function(x, opts) {
+        if (opts.length===0) { return ""}
+        else{
+          return "<fieldset><h4>" + steamstr[x] + "</h4>" + opts + "</fieldset>"
+        }
+      }
 
-  getages = function(ages, steam) {
-    return _.uniq(_.flatten(_.map(ages, function(x) { return _.map(Window.choices[x][steam], format_option) }))).join("")
-  }
+      getages = function(ages, steam) {
+        return _.uniq(_.flatten(_.map(ages, function(x) { 
+          return _.map(Window.choices[x][steam], format_option) }))).join("")
+      }
 
-  choices = _.map(steams, function(x) { return format_question(x, getages(grades, x)) }).join("")
- $('#choices').html(choices) 
+      choices = _.map(steams, function(x) { return format_question(x, getages(grades, x)) }).join("")
+      if(choices.length > 0) {
+        choices = "<h3>STEAM+ sub-categories</h3><p><i>Please select any specific " +
+        "sub-categories that describe your teaching</p></i>" + choices + "<hr>";
+      }
+      $('#choices').html(choices);
   }
 };
 

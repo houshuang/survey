@@ -10,13 +10,12 @@
   <%= form_for @conn, user_path(@conn, :submit), [name: :search], fn _ -> %>
   <%= ParamSession.form_session @conn %>
     <div class="block" style="">
-      <h1>Section 1</h1>
       <h3>Welcome to the interactive features in this MOOC. First we need to ask
         you a few questions</h3>
-      <p>To preserve your privacy, our interactive widgets do not receive any information
-        about you from EdX. Therefore we have to ask you these questions.</p>
+      <p>Apart from your nickname, none of this information will be shared with other students, but it will help us provide you with more relevant resources and connections. You are required to register before you access any of the course's interactive features.</p>
+      <br><p>Items with red stars are required.</p>
       <fieldset>
-        <h4>What do you want us to call you?:</h4>
+        <h4>What do you want us to call you? <font color=red>*</font></h4>
         <p>
           <i>This does not have to be your real name, and it will be publicly visible
             to all MOOC participants.</i>
@@ -27,15 +26,15 @@
       <fieldset>
         <h4>Would you like us to send you personalized emails?</h4>
         <p><i>If you give us permissions, we will send you personalized emails not more than once or twice a week. These might contain information about your contributions, resources that might be relevant to you, and reminders for events. All emails will contain a link to stop further emails. </p><br>
-          <p>       If you do not wish to receive personalized emails, you might still receive a few generic e-mails from EdX. You can control your EdX e-mail settings in the EdX.</p></i> 
+          <p>       If you do not wish to receive personalized emails, you might still receive a few generic e-mails from EdX. You can control your EdX e-mail settings in the EdX.</p></i> <br>
         <label>
           <input class='fieldlevel k12' name="f[allow_email]" value="true" type="checkbox" checked="true"> 
-          <span>Yes, I would like occasional personalized emails</span>
+          <span>Yes, I would like to receive occasional personalized emails</span>
         </label>
 
       </fieldset>
       <fieldset>
-        <h4>At what grade levels do you currently teach?</h4>
+        <h4>At what grade levels do you currently teach? <font color=red>*</font></h4>
         <label>
           <input class='fieldlevel k12' name="f[grade|K-3]" value="true" type="checkbox">
           <span>K-3</span>
@@ -58,7 +57,7 @@
         </label>
       </fieldset>
       <fieldset>
-        <h4>STEAM+</h4>
+        <h4>STEAM+ <font color=red>*</font></h4>
         <p>
           <i>Please choose one or several of the topics below as covering your own
             teaching</i>
@@ -92,15 +91,12 @@
     </div>
     <div class="block" style="display: none">
       <h1>Section 2</h1>
-      <h4>Please help us define your teaching area better</h4>
       <span id="choices"></span>
       <fieldset>
-        <p>Please enter a number of tags to describe your teaching areas. Some will
-          be automatically suggested based on your selections above, but you can
-          also add new tags. These tags will help us connect you with other people,
-          resources, and groups relevant to your interests.
-
-          Tags can have spaces. Press enter to add a new tag.</p>
+        <h3>Tags</h3>
+        <p><i>Please enter a number of tags to describe your teaching areas. These tags will help us connect you with other people, resources, and groups relevant to your interests.
+            </p><br><p>
+            While you type, you will see suggestions based on what other people with your teaching interests have entered - in this way we hope to build up a "folksonomic" tag cloud.</p><br><p> Tags can have spaces. Press enter to add a new tag.</i></p><br>
         <script src="/js/tag-it.min.js"></script>
         <input name='f[tags]' class="form-control" id="ms-suggest">
         <span id="tagit-placeholder"><p><b>Loading...</b></span>
@@ -138,7 +134,7 @@
         </label>
       </fieldset>
       <fieldset>
-        <h4>Other (Please specify?):</h4>
+        <h5>Other: <i>(please specify)</i></h5>
         <input name="f[other_role]" type="text">
         <br>
       </fieldset>
