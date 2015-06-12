@@ -25,6 +25,16 @@
         <br>
       </fieldset>
       <fieldset>
+        <h4>Would you like us to send you personalized emails?</h4>
+        <p><i>If you give us permissions, we will send you personalized emails not more than once or twice a week. These might contain information about your contributions, resources that might be relevant to you, and reminders for events. All emails will contain a link to stop further emails. </p><br>
+          <p>       If you do not wish to receive personalized emails, you might still receive a few generic e-mails from EdX. You can control your EdX e-mail settings in the EdX.</p></i> 
+        <label>
+          <input class='fieldlevel k12' name="f[allow_email]" value="true" type="checkbox" checked="true"> 
+          <span>Yes, I would like occasional personalized emails</span>
+        </label>
+
+      </fieldset>
+      <fieldset>
         <h4>At what grade levels do you currently teach?</h4>
         <label>
           <input class='fieldlevel k12' name="f[grade|K-3]" value="true" type="checkbox">

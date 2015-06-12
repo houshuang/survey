@@ -30,6 +30,8 @@ defmodule Survey.UserController do
       |> Map.put(:hash, hash)
       |> Map.put(:edx_email, get_session(conn, :edx_email))
       |> Map.put(:edx_userid, get_session(conn, :edx_userid))
+      |> Map.put(:admin, get_session(conn, :admin))
+      |> IO.inspect()
       |> Repo.insert
 
       Logger.info("#{user.id} registered.")
@@ -38,6 +40,7 @@ defmodule Survey.UserController do
       |> put_session(:repo_userid, user.id)
       |> delete_session(:edx_email)
       |> delete_session(:edx_userid)
+      |> delete_session(:admin)
     else
       Logger.info("#{user.id} tried to double-register (2).")
     end
@@ -80,10 +83,14 @@ defmodule Survey.UserController do
     |> atomify_map
     |> proc_tags
     |> Map.update(:role, [], fn x -> [x] end)
+    |> bools
     |> proc_other_role
     |> yearsint
     struct(Survey.User, register)
   end
+
+  defp bools(%{allow_email: "true"} = h), do: %{h | allow_email: true }
+  defp bools(h), do: h
 
   defp yearsint(%{yearsteaching: y} = h), do: %{h | yearsteaching: string_to_int_safe(y) }
   defp yearsint(h), do: h

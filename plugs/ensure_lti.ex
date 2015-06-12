@@ -17,12 +17,13 @@ defmodule EnsureLti do
       |> put_session(:lti_userid, conn.params["user_id"])
       |> put_session(:edx_userid, conn.params["lis_person_sourcedid"])
       |> put_session(:edx_email, conn.params["lis_person_contact_email_primary"])
+      |> put_session(:admin, conn.params["roles"] == "Instructor")
       %{conn | method: "GET"}
 
     else
       conn
     end
-    Logger.warn("PlugLti session: #{get_session(conn, :lti_userid)}")
+    Logger.info("PlugLti session: #{get_session(conn, :lti_userid)}")
     conn
   end
 end

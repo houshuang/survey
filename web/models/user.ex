@@ -13,6 +13,8 @@ defmodule Survey.User do
     field :survey, Survey.JSON
     field :yearsteaching, :integer
     field :surveystate, :integer
+    field :allow_email, :boolean
+    field :admin, :boolean
     timestamps
   end
 
