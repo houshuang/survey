@@ -34,5 +34,6 @@ defmodule Survey.Router do
     pipe_through :register
     get "/user/register", UserController, :index
     post "/user/register/submit", UserController, :submit
+    post "/user/get_tags", UserController, :get_tags
   end
 end

@@ -33,7 +33,7 @@ defmodule Survey.Tag do
     from p in query, select: p.tag
   end
 
-  def get_tag(grade, steam) when is_list(grade) and is_list(steam) do
+  def get_tags(grade, steam) when is_list(grade) and is_list(steam) do
     from(t in Tag) 
     |> and_and(:grade, grade) 
     |> and_and(:steam, steam) 

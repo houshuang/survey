@@ -38,7 +38,7 @@ config :survey, Survey.Repo,
 
 config :plug_lti,
   lti_secret: "e393a67d298df4ad508d118a65ffd1065d353887",
-  base_url: "https://cf1f9da7.ngrok.io"
+  base_url: "https://1a7a6846.ngrok.io"
   # lti_secret: "secret",
   # plug_disabled: true
 

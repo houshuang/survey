@@ -21,6 +21,14 @@ defmodule Survey.UserController do
     end
   end
 
+  def get_tags(conn, params) do
+    params = params["f"]
+    |> proc_params
+    |> atomify_map
+    |> proc_tags
+    json conn, Survey.Tag.get_tags(params.grade, params.steam)
+  end
+
   def submit(conn, params) do
     hash = get_session(conn, :lti_userid)
 
@@ -35,6 +43,9 @@ defmodule Survey.UserController do
       |> Repo.insert
 
       Logger.info("#{user.id} registered.")
+      if user.tags do
+        Survey.Tag.update_tags(user.grade, user.steam, user.tags)
+      end
 
       conn = conn
       |> put_session(:repo_userid, user.id)

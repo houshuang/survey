@@ -118,6 +118,21 @@ buttonclick = function(e) {
 };
 
 find_data_selectors = function() {
+  $.post("/user/get_tags", $("form").serialize(), function(data){
+
+  $('#ms-suggest').tagit({
+    fieldName: 'f[tags]',
+    availableTags: data,
+    autocomplete: {delay: 0, minLength: 1},
+    showAutocompleteOnFocus: true,
+    caseSensitive: false,
+    allowSpaces: true,
+    singleField: true,
+    singleFieldDelimiter: "|",
+    placeholderText: "Enter your tags"
+  });
+  })
+
   if(Window.counter==1) {
   console.log("Recalculating suggestions")
   var data = {};
@@ -136,28 +151,6 @@ find_data_selectors = function() {
   if (data["f[grade|4-6]"]) { grades.push("4-6") }
   if (data["f[grade|7-8]"]) { grades.push("7-8") }
   if (data["f[grade|9-12]"]) { grades.push("9-12") }
-
-  jsons = []
-  for (var steam in steams) {
-    for (var grade in grades) {
-      if (Window.tags[grades[grade]]) {
-        jsons.push(Window.tags[grades[grade]][steams[steam]])
-      }}
-  }
-
-  jsonsres = _.uniq(_.flatten(jsons))
-
-  $('#ms-suggest').tagit({
-    fieldName: 'f[tags]',
-    availableTags: jsonsres,
-    autocomplete: {delay: 0, minLength: 1},
-    showAutocompleteOnFocus: true,
-    caseSensitive: false,
-    allowSpaces: true,
-    singleField: true,
-    singleFieldDelimiter: "|",
-    placeholderText: "Enter your tags"
-  });
 
   // -------------------------------------------------------
 
