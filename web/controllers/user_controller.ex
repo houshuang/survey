@@ -64,6 +64,7 @@ defmodule Survey.UserController do
     |> proc_params
     |> atomify_map
     |> proc_tags
+    |> Map.update(:role, [], fn x -> [x] end)
     |> proc_other_role
     |> yearsint
     struct(Survey.User, register)
@@ -77,7 +78,7 @@ defmodule Survey.UserController do
 
   defp proc_other_role(%{other_role: other} = h) do 
     h
-    |> append_map(:other, other) 
+    |> append_map(:role, other) 
     |> Map.delete(:other_role)
   end
 

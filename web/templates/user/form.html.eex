@@ -110,19 +110,19 @@
         <h4>If you do not currently teach in a K-12 educational system, please specify
           your role.</h4>
         <label>
-          <input name="f[role|informal]" value="a" type="radio">
+          <input name="f[role]" value="informal" type="radio">
           <span>Informal education (museums, after school, etc):</span>
         </label>
         <label>
-          <input name="f[role|school_admin]" value="b" type="radio">
+          <input name="f[role]" value="school_admin" type="radio">
           <span>School administration (leadership, technology specialists, etc):</span>
         </label>
         <label>
-          <input name="f[role|highered]" value="c" type="radio">
+          <input name="f[role]" value="highered" type="radio">
           <span>Higher education (college, university, etc):</span>
         </label>
         <label>
-          <input name="f[role|adultcontinuing]" value="d" type="radio">
+          <input name="f[role]" value="continuing_ed" type="radio">
           <span>Adult and continuing education:</span>
         </label>
       </fieldset>
