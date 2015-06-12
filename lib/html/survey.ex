@@ -62,7 +62,7 @@ defmodule Survey.HTML.Survey do
       _ -> ""
     end
 
-    ["<h4>", h.name, 
+    ["<h4>", numstr(h), h.name, 
       ": </h4>", desc, "<input name='#{form}[#{name(h)}]' type=text ", class, "><br>"]
   end
 
@@ -73,7 +73,7 @@ defmodule Survey.HTML.Survey do
       _ -> ""
     end
 
-    ["<h4>", h.name, ": </h4>", desc, "<textarea name='#{form}[#{name(h)}]'></textarea>", 
+    ["<h4>", numstr(h), h.name, ": </h4>", desc, "<textarea name='#{form}[#{name(h)}]'></textarea>", 
       length]
   end
 
@@ -92,7 +92,7 @@ defmodule Survey.HTML.Survey do
         end
       end)
 
-    ["<h4>", h.name, "</h4>", desc, opts]
+    ["<h4>", numstr(h), h.name, "</h4>", desc, opts]
   end
 
   #--------------------------------------------------------------------------------
@@ -112,7 +112,8 @@ defmodule Survey.HTML.Survey do
     |> Enum.with_index
     |> Enum.map(fn {x, i} -> ["<div class='cell cellgradient#{i}'>", x, "</div>"] end)
 
-    header = ["<h4>", h.name, "</h4><div class='evaluation table'><div class='line answers'>",
+    header = ["<h4>", numstr(h), h.name, 
+      "</h4><div class='evaluation table'><div class='line answers'>",
       "<div class='cell exception'></div>", headercells, "</div>"]
     body = rows |> Enum.with_index |> Enum.map(fn x -> body_row(h, form, x, labels) end) 
     footer = "</table>"
@@ -139,6 +140,8 @@ defmodule Survey.HTML.Survey do
     %{meta: %{name: x} } -> x
     h                    -> Integer.to_string(h.number)
   end
+
+  def numstr(h), do: [Integer.to_string(h.number), ". "]
 
   mdef desc do
     %{meta: %{desc: x} } -> ["<p><i>", x, "</i></p>"]
