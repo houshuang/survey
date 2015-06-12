@@ -103,6 +103,7 @@
           Tags can have spaces. Press enter to add a new tag.</p>
         <script src="/js/tag-it.min.js"></script>
         <input name='f[tags]' class="form-control" id="ms-suggest">
+        <span id="tagit-placeholder"><p><b>Loading...</b></span>
       </fieldset>
       <hr>
     </div>

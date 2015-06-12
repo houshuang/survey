@@ -61,20 +61,20 @@ $(document).ready(function(){
 });
 
 buttons = function() {
-  Window.counter = Window.counter;
-  Window.blocksLength = Window.blocksLength;
-  var txt = "";
-  if (Window.counter == Window.blocksLength && Window.counter !== undefined) {
-    txt =  "<div class='stepsController prev left'><a href='#'>Previous</a></div>" + 
-      "<div class='stepsController submit right'><a href='#'>Submit</a></div>";
-  } else if (Window.counter == 1 || Window.counter === undefined) {
-    txt = "<div class='stepsController next right'><a href='#'>Next</a></div>";
-  } else {
-    txt = "<div class='stepsController next right'><a href='#'>Next</a></div>" +
-      "<div class='stepsController prev left'><a href='#'>Previous</a></div>";
+  if (typeof Window.submit == 'undefined') {
+    var txt = "";
+    if (Window.counter == Window.blocksLength && Window.counter !== undefined) {
+      txt =  "<div class='stepsController prev left'><a href='#'>Previous</a></div>" + 
+        "<div class='stepsController submit right'><a href='#'>Submit</a></div>";
+    } else if (Window.counter == 1 || Window.counter === undefined) {
+      txt = "<div class='stepsController next right'><a href='#'>Next</a></div>";
+    } else {
+      txt = "<div class='stepsController next right'><a href='#'>Next</a></div>" +
+        "<div class='stepsController prev left'><a href='#'>Previous</a></div>";
+    }
+    $('.navbuttons').html(txt);
+    $('.stepsController a').on('click', function() {buttonclick(this);});
   }
-  $('.navbuttons').html(txt);
-  $('.stepsController a').on('click', function() {buttonclick(this);});
 };
 
 buttonclick = function(e) {
@@ -86,6 +86,11 @@ buttonclick = function(e) {
 
     if(e.text == "Submit") {
       $('form').submit();
+
+      $('.navbuttons').html("");
+      Window.submit = true;
+
+      $('.blocks').html("<h3>Submitting and redirecting, please don't close window...</h3>")
     }
     var simbolo = "0";
     if($(e).parent().hasClass('next')){
@@ -120,17 +125,18 @@ buttonclick = function(e) {
 find_data_selectors = function() {
   $.post("/user/get_tags", $("form").serialize(), function(data){
 
-  $('#ms-suggest').tagit({
-    fieldName: 'f[tags]',
-    availableTags: data,
-    autocomplete: {delay: 0, minLength: 1},
-    showAutocompleteOnFocus: true,
-    caseSensitive: false,
-    allowSpaces: true,
-    singleField: true,
-    singleFieldDelimiter: "|",
-    placeholderText: "Enter your tags"
-  });
+    $('#tagit-placeholder').html('');
+    $('#ms-suggest').tagit({
+      fieldName: 'f[tags]',
+      availableTags: data,
+      autocomplete: {delay: 0, minLength: 1},
+      showAutocompleteOnFocus: true,
+      caseSensitive: false,
+      allowSpaces: true,
+      singleField: true,
+      singleFieldDelimiter: "|",
+      placeholderText: "Enter your tags"
+    });
   })
 
   if(Window.counter==1) {

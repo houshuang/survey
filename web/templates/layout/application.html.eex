@@ -1,7 +1,7 @@
 <!doctype html>
 <html class="no-js" lang="en-us">
   <head>
-<base target="_parent" />    <meta charset="utf-8">
+    <base target="_parent" />    <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title></title>
     <meta name="description" content="">
@@ -19,10 +19,10 @@
   <body id=top>
     <div class="container">
       <div class="header">
-    <% if get_flash(@conn, :info) || get_flash(@conn, :error) do %>
-        <p class="alert alert-info"><%= get_flash(@conn, :info) %></p>
-        <p class="alert alert-danger"><%= get_flash(@conn, :error) %></p>
-  <% end %>
+        <% if get_flash(@conn, :info) || get_flash(@conn, :error) do %>
+          <p class="alert alert-info"><%= get_flash(@conn, :info) %></p>
+          <p class="alert alert-danger"><%= get_flash(@conn, :error) %></p>
+        <% end %>
       </div>
     </div>
     <%= @inner %>
