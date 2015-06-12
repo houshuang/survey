@@ -40,7 +40,7 @@ defmodule ParamSession do
 
   def form_session(conn) do
     case gen_cookie(conn) do
-      :none -> ""
+      :none -> Phoenix.HTML.raw ""
       x -> Phoenix.HTML.raw "<input name='session' type='hidden' value='#{x}'>"
     end
   end
