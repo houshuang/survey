@@ -14,7 +14,9 @@ defmodule ParamSession do
   def call(conn, _) do
     if sessionenc = conn.params["session"] do
       sessionenc = sessionenc
-      |> URI.decode_www_form
+      |> String.replace("-", "+")
+      |> String.replace("_", "/")
+      |> String.replace(".", "=")
       |> Base.decode64!
       {_, session} = COOKIE.get(conn, sessionenc, @opts)
       Logger.info("Session: #{inspect(session, pretty: true)}")
@@ -32,7 +34,9 @@ defmodule ParamSession do
       cookie = Plug.Session.COOKIE.put(conn, [], conn.private.plug_session, @opts)
       cookie
       |> Base.encode64
-      |> URI.encode_www_form
+      |> String.replace("+", "-")
+      |> String.replace("/", "_")
+      |> String.replace("=", ".")
     else
       :none
     end
