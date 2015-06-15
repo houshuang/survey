@@ -53,19 +53,17 @@ defmodule Survey.User do
     question = @survey[String.to_integer(qid)]
     result = Ecto.Adapters.SQL.query(Survey.Repo, "SELECT count(id), survey->>'#{qid}' FROM 
       users WHERE length(survey->>'#{qid}')>0 GROUP BY survey->>'#{qid}';", [qid])
-    opts = result.rows
+    series = result.rows
     |> Enum.sort_by(fn {_, i} -> i end)
-    |> Enum.map(fn {num, key} -> 
-      {num, Enum.at(question.options, char_to_num(key))} 
-    end) 
-    |> List.insert_at(99, {survey_length - total_responses(qid), "No response"})
+    |> Enum.map(fn {num, key} -> num end)
+    |> List.insert_at(99, survey_length - total_responses(qid))
 
-    total = opts
-    |> Enum.map(fn {num, _} -> num end)
-    |> Enum.sum
+    total = series |> Enum.sum
 
-    opts 
-    |> Enum.map(fn {num, key} -> {num/total, key} end)
+    series = series 
+    |> Enum.map(fn num -> num/total end)
+
+    { series, question.options ++ ["no response"] }
   end
 
 

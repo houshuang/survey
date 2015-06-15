@@ -5,6 +5,8 @@ for x <- @questions do
   case x do
     {:text, data} -> 
       render "_text.html", data: data
+    {:radio, data} -> 
+      render "_radio.html", data: data
     {:grid, data} -> 
       render "_grid.html", data: data
   end

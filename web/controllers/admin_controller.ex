@@ -56,8 +56,9 @@ defmodule Survey.AdminController do
   def grids(conn, params) do
     # questions = 7..9 
     # |> Enum.map(&gridanswer/1)
-    questions = 1..3 |> Enum.map(&Integer.to_string/1) 
-    |> Enum.map(&textanswer/1)
+    # questions = 1..3 |> Enum.map(&Integer.to_string/1) 
+    # |> Enum.map(&textanswer/1)
+    questions = [radioanswer("5")]
 
     conn 
     |> put_layout("statistics.html")
@@ -97,6 +98,14 @@ defmodule Survey.AdminController do
     {:text, %{ answers: answers, question: question }}
   end
 
+  def radioanswer(qid) when is_binary(qid) do
+    question = survey[String.to_integer(qid)]
+
+    {series, options} = User.radio(qid)
+    labels = Poison.encode!(options)
+    series = Poison.encode!(series)
+    {:radio, %{labels: labels, series: series, question: question}}
+  end
 
   def int_to_letter(i), do: "#{[i + ?a]}"
 end

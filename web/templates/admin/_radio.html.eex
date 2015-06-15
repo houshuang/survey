@@ -12,22 +12,16 @@
       xAxis: {
         categories: <%= raw @data.labels %>
       },
-      legend: {
-        reversed: true,
-        labelFormatter: function() {
-          minmax = <%= raw @data.minmax %>;
-            return(minmax[this.index]) }
-      },
       yAxis: {
         labels: {
           formatter: function() {
-            return(this.value - 100);
+            return(this.value * 100 + "%");
           }
 
         }
       },
-      series: 
-        <%= raw @data.series %>
+      series:[{data: 
+        <%= raw @data.series %>}]
     });
   });
 </script>
