@@ -54,21 +54,25 @@ defmodule Survey.AdminController do
   end
 
   def grids(conn, params) do
-    # questions = 7..9 
-    # |> Enum.map(&gridanswer/1)
-    # questions = 1..3 |> Enum.map(&Integer.to_string/1) 
-    # |> Enum.map(&textanswer/1)
-    questions = [radioanswer("5")]
+    questions = survey
+    |> Enum.map(&do_question/1)
 
     conn 
     |> put_layout("statistics.html")
     |> render "multigrid.html", questions: questions
   end
 
+  def do_question({i, %{type: type} = question}) do
+    qid = Integer.to_string(i)
+    case type do
+      "textbox" -> textanswer(qid)
+      "grid" -> gridanswer(qid)
+      "radio" -> radioanswer(qid)
+    end
+  end
   #----------------------------------------
 
   def gridanswer(qid) do 
-    qid = Integer.to_string(qid)
     question = survey[String.to_integer(qid)]
     labels = Poison.encode!(question.rows)
     

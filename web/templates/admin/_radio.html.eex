@@ -12,10 +12,11 @@
       xAxis: {
         categories: <%= raw @data.labels %>
       },
+      legend: { enabled: false },
       yAxis: {
         labels: {
           formatter: function() {
-            return(this.value * 100 + "%");
+            return(Math.floor(this.value * 100) + "%");
           }
 
         }

@@ -49,6 +49,12 @@ defmodule Survey.User do
     end
   end
 
+  # def multi(qid) do
+  #   question = @survey[String.to_integer(qid)]
+  #   options = question.options
+
+  # end
+
   def radio(qid) do
     question = @survey[String.to_integer(qid)]
     result = Ecto.Adapters.SQL.query(Survey.Repo, "SELECT count(id), survey->>'#{qid}' FROM 
