@@ -17,6 +17,17 @@ defmodule Survey.Router do
     plug :fetch_flash
   end
 
+  pipeline :admin do
+    plug Plug.Session,
+      store: :cookie,
+      key: "_test_key",
+      signing_salt: "LMvTyOc2"
+    plug :fetch_session
+    plug VerifyAdmin
+    plug :fetch_flash
+    plug :accepts, ["html"]
+  end
+
   scope "/", Survey do
     pipe_through :browser
     get "/survey", SurveyController, :index
@@ -35,5 +46,13 @@ defmodule Survey.Router do
     get "/user/register", UserController, :index
     post "/user/register/submit", UserController, :submit
     post "/user/get_tags", UserController, :get_tags
+  end
+
+  scope "/admin", Survey do
+    pipe_through :admin
+    get "/stats", AdminController, :stats
+    get "/stats/text/:qid", AdminController, :textanswer
+    get "/stats/grid/:qid", AdminController, :gridanswer
+    post "/stats/text/:qid", AdminController, :textanswer
   end
 end

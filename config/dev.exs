@@ -38,9 +38,9 @@ config :survey, Survey.Repo,
 
 config :plug_lti,
   lti_secret: "e393a67d298df4ad508d118a65ffd1065d353887",
-  base_url: "https://1a7a6846.ngrok.io"
-  # lti_secret: "secret",
-  # plug_disabled: true
+  base_url: "https://1a7a6846.ngrok.io",
+  lti_secret: "secret",
+  plug_disabled: true
 
 config :param_session,
   store: :cookie,  
@@ -48,3 +48,6 @@ config :param_session,
   encryption_salt: "fkljsdfsdif-09sdf-9834j993920092090kjj",
   signing_salt: "skljdfls9980982049834fsdfsdf900d",
   key_length: 64
+
+config :verify_admin,
+  password: "test"

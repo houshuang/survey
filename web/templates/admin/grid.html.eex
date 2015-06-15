@@ -1,0 +1,38 @@
+<h1><%= @question.name %></h1>
+<div id=container></div>
+<script>
+  $(function () {
+    $('#container').highcharts({
+      chart: {
+        type: 'bar'
+      },
+      title: {
+        text: ''
+      },
+      xAxis: {
+        categories: <%= raw @labels %>
+      },
+      legend: {
+        reversed: true,
+        labelFormatter: function() {
+          minmax = <%= raw @minmax %>;
+            return(minmax[this.index]) }
+      },
+      yAxis: {
+        labels: {
+          formatter: function() {
+            return(this.value - 100);
+          }
+
+        }
+      },
+      plotOptions: {
+        series: {
+          stacking: 'normal'
+        }
+      },
+      series: 
+        <%= raw @series %>
+    });
+  });
+</script>

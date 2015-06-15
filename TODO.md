@@ -1,5 +1,9 @@
 TODO
 
+format labels
+check that data is correctly represented
+generate all of them, with titles
+---------------------
 
 need to handle redirect from other forms to session with link
 tidy up explanatory text on surveys

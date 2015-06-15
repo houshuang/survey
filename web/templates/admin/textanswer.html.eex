@@ -1,0 +1,20 @@
+<%= if not @all do %>
+<h1><%= @question.number %>. <%= @question.name %></h1>
+<b><%= format_percentage(@percentage_answered) %>% of all survey takers answered this question. <%= @response_count %> responses matching query.</b> 
+<%= else %>
+<h1>Searchable compilation of all text responses</h1>
+<% end %>
+
+<%= form_for @conn, "/admin/stats/text/#{@question.number}", [name: :search], fn f -> %>
+<input type='submit' style='float: right'>
+Search text contents: <input class='text' id='search' name='search' type='text' style='border: 1px; outline: 1px; border-color: black;' value=<%= @search %>>
+<%= if not @all do %>
+<span style='float: centre'><input name='all' type='checkbox'
+</input> Search across all text questions</span>
+<% end %>
+
+<hr style='margin: 10px'>
+<%= end %>
+<%= for answer <- @answers do %>
+  <li><%= answer %></li>
+<% end %>

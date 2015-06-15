@@ -164,6 +164,15 @@ defmodule Survey.HTML.Survey do
     |> concat_blocks
   end
 
+  def index_mapping(struct) do
+    Enum.reduce(struct, %{}, fn x, acc -> 
+      if is_map(x) and x[:number] do
+        Map.put acc, x.number, x
+      else
+        acc
+      end
+    end)
+  end
   #--------------------------------------------------------------------------------
   
   def remove_blank_lines(x), do: String.strip(x) != ""

@@ -1,0 +1,42 @@
+<!doctype html>
+<html class="no-js" lang="en-us">
+  <head>
+    <base target="_parent" />    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <!-- Place favicon.ico in the root directory -->
+
+    <script src="/js/jquery-1.8.3.min.js"></script>
+    <script src="/js/lodash.min.js"></script>
+    <script src="/js/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <script src="/js/highcharts.js"></script>
+    <script src="/js/modernizr-2.8.3.min.js"></script>
+    <style>
+      input.text {
+  border: 1px solid #ccc;
+  background-color: #fcc;
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  }</style>
+  </head>
+  <body id=top>
+    <div class="container">
+      <div class="header">
+        <% if get_flash(@conn, :info) || get_flash(@conn, :error) do %>
+          <p class="alert alert-info"><%= get_flash(@conn, :info) %></p>
+          <p class="alert alert-danger"><%= get_flash(@conn, :error) %></p>
+        <% end %>
+      </div>
+    </div>
+
+    <%= @inner %>
+
+  </body>
+</html>
