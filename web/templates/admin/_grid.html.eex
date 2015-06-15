@@ -1,8 +1,8 @@
-<h1><%= @question.name %></h1>
-<div id=container></div>
+<h1><%= @data.question.name %></h1>
+<div id='<%= @data.question.number %>'></div>
 <script>
   $(function () {
-    $('#container').highcharts({
+    $('#<%= @data.question.number %>').highcharts({
       chart: {
         type: 'bar'
       },
@@ -10,12 +10,12 @@
         text: ''
       },
       xAxis: {
-        categories: <%= raw @labels %>
+        categories: <%= raw @data.labels %>
       },
       legend: {
         reversed: true,
         labelFormatter: function() {
-          minmax = <%= raw @minmax %>;
+          minmax = <%= raw @data.minmax %>;
             return(minmax[this.index]) }
       },
       yAxis: {
@@ -32,7 +32,7 @@
         }
       },
       series: 
-        <%= raw @series %>
+        <%= raw @data.series %>
     });
   });
 </script>

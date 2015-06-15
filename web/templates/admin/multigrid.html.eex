@@ -1,0 +1,4 @@
+<h1>Report</h1>
+<%= for x <- @questions do
+  render "_grid.html", data: x
+end %>

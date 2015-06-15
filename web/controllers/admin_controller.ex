@@ -7,7 +7,7 @@ defmodule Survey.AdminController do
   import Ecto.Query
   require Ecto.Query
 
-#ffffff
+  #ffffff
   @colors Enum.reverse([ "#ffffff", "#d7191c", "#fdae61", "#ffffbf", 
     "#ffffbf", "#abd9e9", "#2c7bb6", "#ffffff"])
 
@@ -53,29 +53,38 @@ defmodule Survey.AdminController do
     end
   end
 
-  def gridanswer(conn, %{"qid" => qid} = params) do 
+  def grids(conn, params) do
+    questions = 7..9 
+    |> Enum.map(&gridanswer/1)
+
+    conn 
+    |> put_layout("statistics.html")
+    |> render "multigrid.html", questions: questions
+  end
+
+  def gridanswer(qid) do 
+    qid = Integer.to_string(qid)
     question = survey[String.to_integer(qid)]
     labels = Poison.encode!(question.rows)
+    
     minmax = [ "", Enum.at(question.choicerange,0), 
       "","","","",Enum.at(question.choicerange,1), ""] 
     |> Enum.reverse
     |> Poison.encode!
-    series = 0..Enum.count(question.rows)-1
-              |> Enum.map(fn x -> "#{qid}.#{int_to_letter(x)}" end)
-              |> Enum.map(&User.answers/1)
-              |> User.recast
-              |> Enum.reverse
-              |> Enum.with_index
-              |> Enum.map(fn {x, i} -> 
-                %{data: x, 
-                  color: Enum.at(@colors, i)}
-              end)
-              |> Poison.encode!
 
-    conn 
-    |> put_layout("statistics.html")
-    |> render "grid.html", series: series, labels: labels, question: question,
-      rowcount: Enum.count(question.rows), minmax: minmax
+    series = 0..Enum.count(question.rows)-1
+    |> Enum.map(fn x -> "#{qid}.#{int_to_letter(x)}" end)
+    |> Enum.map(&User.answers/1)
+    |> User.recast
+    |> Enum.reverse
+    |> Enum.with_index
+    |> Enum.map(fn {x, i} -> 
+        %{data: x, color: Enum.at(@colors, i)}
+      end)
+    |> Poison.encode!
+
+    %{ series: series, labels: labels, question: question,
+      rowcount: Enum.count(question.rows), minmax: minmax }
   end
 
   def int_to_letter(i), do: "#{[i + ?a]}"
