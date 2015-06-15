@@ -4,6 +4,10 @@ defmodule Survey.User do
   alias Survey.User
   import Ecto.Query
   alias Ecto.Query
+ 
+  import Prelude
+  alias Survey.HTML.Survey, as: S
+  @survey S.parse("data/survey.txt") |> S.index_mapping
 
   schema "users" do
     field :hash, :string
@@ -44,6 +48,26 @@ defmodule Survey.User do
       query
     end
   end
+
+  def radio(qid) do
+    question = @survey[String.to_integer(qid)]
+    result = Ecto.Adapters.SQL.query(Survey.Repo, "SELECT count(id), survey->>'#{qid}' FROM 
+      users WHERE length(survey->>'#{qid}')>0 GROUP BY survey->>'#{qid}';", [qid])
+    opts = result.rows
+    |> Enum.sort_by(fn {_, i} -> i end)
+    |> Enum.map(fn {num, key} -> 
+      {num, Enum.at(question.options, char_to_num(key))} 
+    end) 
+    |> List.insert_at(99, {survey_length - total_responses(qid), "No response"})
+
+    total = opts
+    |> Enum.map(fn {num, _} -> num end)
+    |> Enum.sum
+
+    opts 
+    |> Enum.map(fn {num, key} -> {num/total, key} end)
+  end
+
 
   def answers(qid) do
     result = Ecto.Adapters.SQL.query(Survey.Repo, "SELECT count(id), survey->>'#{qid}' FROM 

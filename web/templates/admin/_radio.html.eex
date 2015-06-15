@@ -1,0 +1,33 @@
+<h3><%= @data.question.number %>. <%= @data.question.name %></h3>
+<div id='<%= @data.question.number %>'></div>
+<script>
+  $(function () {
+    $('#<%= @data.question.number %>').highcharts({
+      chart: {
+        type: 'bar'
+      },
+      title: {
+        text: ''
+      },
+      xAxis: {
+        categories: <%= raw @data.labels %>
+      },
+      legend: {
+        reversed: true,
+        labelFormatter: function() {
+          minmax = <%= raw @data.minmax %>;
+            return(minmax[this.index]) }
+      },
+      yAxis: {
+        labels: {
+          formatter: function() {
+            return(this.value - 100);
+          }
+
+        }
+      },
+      series: 
+        <%= raw @data.series %>
+    });
+  });
+</script>
