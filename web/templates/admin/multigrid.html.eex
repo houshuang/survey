@@ -1,4 +1,12 @@
 <h1>Report</h1>
-<%= for x <- @questions do
-  render "_grid.html", data: x
-end %>
+<%= 
+IO.inspect(@questions)
+for x <- @questions do
+  case x do
+    {:text, data} -> 
+      render "_text.html", data: data
+    {:grid, data} -> 
+      render "_grid.html", data: data
+  end
+end
+%>

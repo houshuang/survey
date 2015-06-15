@@ -54,13 +54,17 @@ defmodule Survey.AdminController do
   end
 
   def grids(conn, params) do
-    questions = 7..9 
-    |> Enum.map(&gridanswer/1)
+    # questions = 7..9 
+    # |> Enum.map(&gridanswer/1)
+    questions = 1..3 |> Enum.map(&Integer.to_string/1) 
+    |> Enum.map(&textanswer/1)
 
     conn 
     |> put_layout("statistics.html")
     |> render "multigrid.html", questions: questions
   end
+
+  #----------------------------------------
 
   def gridanswer(qid) do 
     qid = Integer.to_string(qid)
@@ -83,9 +87,16 @@ defmodule Survey.AdminController do
       end)
     |> Poison.encode!
 
-    %{ series: series, labels: labels, question: question,
-      rowcount: Enum.count(question.rows), minmax: minmax }
+    {:grid, %{ series: series, labels: labels, question: question,
+      rowcount: Enum.count(question.rows), minmax: minmax }}
   end
+
+  def textanswer(qid) when is_binary(qid) do
+    answers = User.random_five_text(qid)
+    question = survey[String.to_integer(qid)]
+    {:text, %{ answers: answers, question: question }}
+  end
+
 
   def int_to_letter(i), do: "#{[i + ?a]}"
 end

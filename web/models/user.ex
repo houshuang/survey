@@ -85,6 +85,23 @@ defmodule Survey.User do
     |> Enum.map(fn x -> Enum.reverse(x) end)
   end
 
+  def random_five_text(qid) do
+    :random.seed(:os.timestamp)
+
+    # get a list of filled in answers
+    query = from p in Survey.User, select: p.id,
+      where: fragment("length(survey->>?) > 0", ^qid)
+    alternatives = query |> Repo.all 
+    textids = 0..4 
+    |> Enum.map(fn _ -> :random.uniform(Enum.count(alternatives)) end)
+    |> Enum.map(fn x -> Enum.at(alternatives, x) end)
+
+    query = from p in Survey.User, select: fragment("survey->?", ^qid),
+      where: p.id in ^textids
+    query |> Repo.all
+  end
+    
+
   def survey_length do
     query = from p in Survey.User, select: fragment("count(id)"),
       where: fragment("survey IS NOT NULL")

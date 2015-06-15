@@ -1,4 +1,4 @@
-<h1><%= @data.question.name %></h1>
+<h3><%= @data.question.number %>. <%= @data.question.name %></h3>
 <div id='<%= @data.question.number %>'></div>
 <script>
   $(function () {

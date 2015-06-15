@@ -1,17 +1,19 @@
 TODO
 
-format labels
-check that data is correctly represented
-generate all of them, with titles
----------------------
+partial for text view
+case match in main template
+lists
+radio
+sections
+non-json questions
+
+future: split by another variable
+
+---------------
 
 need to handle redirect from other forms to session with link
-tidy up explanatory text on surveys
 
-reformat survey (sections etc)
-test
-write some tests?
-deploy, test online
+add questions to survey? (how to handle numbering)
 
 include monitoring, page logging
 --------------------------------------------------
