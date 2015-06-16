@@ -46,6 +46,8 @@ defmodule Survey.Router do
     get "/user/register", UserController, :index
     post "/user/register/submit", UserController, :submit
     post "/user/get_tags", UserController, :get_tags
+    get "/user/resource", UserController, :resource
+    get "/user/resource-review", UserController, :resource_review
   end
 
   scope "/admin", Survey do

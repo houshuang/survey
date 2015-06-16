@@ -1,0 +1,23 @@
+<div class="blocks">
+  <%= form_for @conn, user_path(@conn, :submit), [name: :search], fn _ -> %>
+  <%= ParamSession.form_session @conn %>
+    <div class="block" style="">
+      <h3>WISE</h3>
+      <br>
+      <p><b>URL: </b><a href="#">WISE project</a>
+      <p><b>Description: </b>WISE is a collection of interactive physics modules which can be used in classrooms. Students can work in pairs on computers on many tasks. I have seen it when I was a teacher candidate at OISE.</p>
+      <br>
+      <i><a href="#">Improve this description</a></i>.<p>
+        <iframe width='700px' height='500px' src="https://wise.berkeley.edu/"></iframe>
+      <fieldset>
+        <h4>Tags</h4>
+        <p><i>You can add additional tags to describe the resource</i></p><br>
+        <script src="/js/tag-it.min.js"></script>
+        <input name='f[tags]' type=text class="form-control" id="ms-suggest" placeholder="physics, english"></input>
+      </fieldset>
+      Do you feel this is a useful resource for inquiry and technology in your SIG topic. 
+      <img src="http://ts2.mm.bing.net/th?id=JN.Gw%2bVjtcANzTuFmYssGYRPQ&w=220&h=47&c=7&rs=1&qlt=90&o=4&pid=1.1">
+    </div>
+    <br>
+  <% end %>
+	<div class='stepsController submit right'><a href='#'>Submit, and add another resource</a></div> 
