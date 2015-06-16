@@ -1,0 +1,44 @@
+<div class="blocks">
+  <%= form_for @conn, user_path(@conn, :submit), [name: :search], fn _ -> %>
+  <%= ParamSession.form_session @conn %>
+    <div class="block" style="">
+      <h3>Add useful resources</h3>
+      <p>These resources will be available to other students, and design groups, so the more contextual information you provide, the easier it will be for us to send it to the right people.</p>
+      <br><p>Items with red stars are required.</p>
+      <fieldset>
+        <h4>Name of resource</h4>
+        <p>
+          <i>If you see in the autocompletion that the resource has already been submitted, it will be better to choose another resource. You will get a chance to review and add information to resources submitted by other people later in the process.</i>
+        </p>
+        <input name="f[nick]" type="text">
+        <br>
+      </fieldset>
+      <fieldset>
+        <h4>URL</h4>
+        <input name="f[nick]" type="text">
+      </fieldset>
+      <fieldset>
+        <h4>Description</h4>
+        <p><i>What does the resource do, how could it be used for inquiry teaching? Have you used it yourself?</i></p><textarea></textarea>
+        <label>
+          </fieldset><fieldset>
+          <h4>What kind of a resource is it?</h4>
+        <label>
+          <input class='fieldlevel k12' name="f[allow_email]" value="true" type="radio" > 
+          <span>This resource can be used to teach many different subjects (like Pinterest) </span>
+          <input class='fieldlevel k12' name="f[allow_email]" value="true" type="radio" > 
+          <span>This is a discipline specific resource</span>
+        </label>
+      </fieldset>
+      <fieldset>
+        <h4>Tags</h4>
+        <p><i>Please enter a number of tags to describe the disciplinary focus of the resource. 
+            </p><br><p>
+            While you type, you will see suggestions based on what other people with your teaching interests have entered - in this way we hope to build up a "folksonomic" tag cloud.</p><br><p> Tags can have spaces. Press enter to add a new tag.</i></p><br>
+        <script src="/js/tag-it.min.js"></script>
+        <input name='f[tags]' type=text class="form-control" id="ms-suggest">
+      </fieldset>
+    </div>
+    <br>
+  <% end %>
+	<div class='stepsController submit right'><a href='#'>Submit, and add another resource</a></div> 
