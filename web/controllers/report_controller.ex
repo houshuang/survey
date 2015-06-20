@@ -19,6 +19,12 @@ defmodule Survey.ReportController do
   def index(conn, _) do
     questions = Report.survey
                 |> Enum.map(&do_question/1)
+    
+    questions = 
+    [ { :tags, Report.tags },
+      { :grades, Report.grades },
+      { :steams, %{steams: Report.steams, steamnumber: Report.steam_number} }
+      | questions ]
 
     conn 
     |> put_layout("report.html")
@@ -36,7 +42,13 @@ defmodule Survey.ReportController do
 
   #----------------------------------------
 
-  def textanswer(conn, %{"qid" => qid} = params) do 
+  def tags(conn, _) do
+    conn 
+    |> put_layout("report.html")
+    |> render "tags.html", data: Report.tags
+  end
+
+  def text(conn, %{"qid" => qid} = params) do 
     if qid == "" or qid == "all" or params["all"] do
       answers = Report.get_all_qids(params["search"]) 
                 |> Enum.filter(fn x -> x != nil end)

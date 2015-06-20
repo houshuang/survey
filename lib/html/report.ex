@@ -9,6 +9,10 @@ defmodule Survey.HTML.Survey.Report do
   @survey S.parse("data/survey.txt") |> S.index_mapping
   def survey, do: @survey
 
+  @steamsort %{"+" => 5, "A" => 3, "E" => 2, "M" => 4, "S" => 0, "T" => 1}
+  @gradesort %{"4-6" => 1, "7-8" => 2, "9-12" => 3, "K-3" => 0, "noK12" => 4}
+
+
   def get_qid(qid, search \\ nil) do
     query = from p in User, select: fragment("survey->? as x", ^qid)
     if search do
@@ -142,16 +146,61 @@ defmodule Survey.HTML.Survey.Report do
 
   def get_all_qids(search \\ nil) do
     text = make_search(search)
-    result = SQL.query(Survey.Repo, 
+    query = 
     "WITH k AS (SELECT x FROM (SELECT survey->>'1' AS x FROM users) a 
     UNION (SELECT survey->>'2' AS x FROM users) UNION (SELECT survey->>'3' 
     AS x FROM users) UNION (SELECT survey->>'4' AS x FROM users))
-    SELECT x FROM k WHERE x ILIKE '#{text}'", [])
-    Enum.map(result.rows, fn {x} -> x end)
+    SELECT x FROM k WHERE x ILIKE '#{text}'"
+    Enum.map(runq(query), fn {x} -> x end)
   end
 
   defp and_and(query, col, val) when is_list(val) and is_atom(col) do
     from p in query, where: fragment("? && ?", ^val, field(p, ^col))
+  end
+
+  def steam_number do
+    runq(
+    "WITH lengths AS (SELECT array_length(steam,1) AS length FROM users)
+    SELECT length, count(length) AS COUNT FROM lengths GROUP BY length ORDER BY
+    length;")
+  end
+
+  def steams do
+    runq(
+    "WITH steams AS (SELECT unnest(steam) AS steam FROM users)
+    SELECT steam, count(steam) AS COUNT FROM steams GROUP BY steam ORDER BY steam
+    desc;")
+    |> Enum.sort_by(fn {steam, x} -> @steamsort[steam] end)
+  end
+
+  def grades do
+    runq(
+    "WITH grades AS (SELECT unnest(grade) AS grade FROM users) SELECT grade,
+    count(grade) AS COUNT FROM grades GROUP BY grade ORDER BY COUNT DESC ;")
+    |> Enum.sort_by(fn {grade, x} -> @gradesort[grade] end)
+  end
+
+  def tags do
+    runq(
+    "WITH tagstmp AS (SELECT nick, unnest(tags) AS tag, steam, grade FROM
+    users), tagcount AS (SELECT tag, count(tag) AS COUNT FROM tagstmp GROUP BY
+    tag ORDER BY COUNT desc) SELECT tagcount.tag, tagcount.COUNT, tags.steam,
+    tags.grade FROM tagcount, tags WHERE tagcount.tag = tags.tag;")
+    |> Enum.map(&sort_tag_entry/1)
+  end
+
+  def sort_tag_entry({tag, count, steam, grade}) do
+    {
+      tag,
+      count,
+      Enum.sort_by(steam, fn x -> @steamsort[x] end),
+      Enum.sort_by(grade, fn x -> @gradesort[x] end),
+    }
+  end
+
+  def runq(query, opts \\ []) do
+    result = SQL.query(Survey.Repo, query, [])
+    result.rows
   end
 
   def make_search(nil), do: "%" 

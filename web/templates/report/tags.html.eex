@@ -1,0 +1,38 @@
+<style>
+#tags {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#tags td, #tags th {
+    font-size: 1em;
+    border: 1px solid #98bf21;
+    padding: 3px 7px 2px 7px;
+}
+
+#tags th {
+    font-size: 1.1em;
+    text-align: left;
+    padding-top: 5px;
+    padding-bottom: 4px;
+    background-color: #A7C942;
+    color: #ffffff;
+}
+
+#tags tr.alt td {
+    color: #000000;
+    background-color: #EAF2D3;
+}
+</style>
+<h3>Tags</h3>
+<p><br>
+<i>All tags, sorted by frequency</i>
+<br>&nbsp;
+<table id='tags'>
+  <tr><th>Tag</th><th>Frequency</th><th>STEAM+</th><th>Grade levels</th></tr>
+  <%= for {tag, count, steam, grade} <- @data do %>
+    <tr><td><%= tag %></td><td><%= count %></td><td><%= steam %></td><td><%= Enum.join(grade, ", ") %></td></tr>
+  <%= end %>
+</table>
+<hr>

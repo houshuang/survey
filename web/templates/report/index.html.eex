@@ -1,13 +1,22 @@
 <h1>Report</h1>
+<br>
 <%= 
-for x <- @questions do
-  case x do
+for x1 <- @questions do
+  case x1 do
     {:text, data} -> 
       render "_text.html", data: data
     {:radio, data} -> 
       render "_radio.html", data: data
     {:grid, data} -> 
       render "_grid.html", data: data
+    {:tags, data} ->
+      render "_tag.html", data: data |> Enum.take(5)
+    {:grades, data} ->
+      render "_grade.html", data: data
+    {:steams, data} ->
+      render "_steam.html", data: data
+    {tag, data} -> raw ""
   end
 end
+
 %>
