@@ -7,7 +7,7 @@ defmodule Survey.UserController do
 
   plug :action
 
-  def index(conn, params) do
+  def index(conn, _) do
     hash = get_session(conn, :lti_userid)
 
     user = Survey.Repo.get_by(Survey.User, hash: hash)
@@ -39,7 +39,6 @@ defmodule Survey.UserController do
       |> Map.put(:edx_email, get_session(conn, :edx_email))
       |> Map.put(:edx_userid, get_session(conn, :edx_userid))
       |> Map.put(:admin, get_session(conn, :admin))
-      |> IO.inspect()
       |> Repo.insert
 
       Logger.info("#{user.id} registered.")

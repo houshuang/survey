@@ -50,9 +50,7 @@ defmodule Survey.Router do
 
   scope "/admin", Survey do
     pipe_through :admin
-    get "/stats", AdminController, :stats
-    get "/stats/text/:qid", AdminController, :textanswer
-    get "/stats/grid/:qid", AdminController, :grids
-    post "/stats/text/:qid", AdminController, :textanswer
+    get "/report", ReportController, :index
+    get "/report/text/:qid", ReportController, :textanswer
   end
 end

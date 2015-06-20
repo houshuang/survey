@@ -1,4 +1,4 @@
-defmodule Survey.AdminView do
+defmodule Survey.ReportView do
   use Survey.Web, :view
   import ExPrintf
   def format_percentage(perc) do
