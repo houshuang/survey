@@ -117,4 +117,36 @@ rows
 	It is important to ask other students to explain their ideas to me
 	Other students usually listened carefully to my ideas
 
+section
 
+grid,Below are the six themes that we will address in this course -  one for each week.  Please indicate your level of interest for each
+choicerange
+	not important at all
+	very important
+	5
+rows
+	Inquiry and student-centred pedagogy
+	Designing activities and assessments
+	Student collaborations and peer exchange
+	Integrating handheld and mobile devices
+	Student-contributed content & collective knowledge building
+	Issues reacted to enactment of technology-enhanced inquiry
+ 
+section
+
+radio,Which of the following statements best describes the level of effort you expect to put into this course?
+	I plan to complete all the requirements including watching all videos, completing all assignments, and earn a statement of achievement.
+	I plan to watch most videos but not do the assignments.
+	I plan to watch some videos, but am unlikely to do the assignments.
+	I am not sure.
+radio,How many MOOCs have you enrolled in so far, including this one?
+	1-3
+	4-6
+	7-9
+	10 or more
+radio,How many MOOCs have you completed so far?
+	0
+	1-3
+	4-6
+	6-9
+	10 or more
