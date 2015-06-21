@@ -1,5 +1,5 @@
 <h3><%= @data.question.number %>. <%= @data.question.name %></h3>
-<font color="grey"><i>Five randomly chosen answers. <a href="/admin/stats/text/<%= @data.question.number %>" target="_blank">See all, and search</a>.</i></font><br>&nbsp;
+<font color="grey"><i>Five randomly chosen answers. <a href="/admin/report/text/<%= @data.question.number %>" target="_blank">See all, and search</a>.</i></font><br>&nbsp;
 <p>
 <%= for answer <- @data.answers do %>
 <li style='margin: 5px'><%= answer %></li>
