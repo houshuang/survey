@@ -7,6 +7,11 @@ defmodule Survey.UserController do
 
   plug :action
 
+  def test(conn, _) do
+    Logger.warn(inspect(conn, pretty: true))
+    html conn, "hi"
+  end
+
   def index(conn, _) do
     hash = get_session(conn, :lti_userid)
 

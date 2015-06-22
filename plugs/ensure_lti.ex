@@ -5,8 +5,6 @@ defmodule EnsureLti do
 
   use Behaviour
   @behaviour Plug
-  import Plug.Conn
-
   require Logger
 
   def init([]), do: []
@@ -18,6 +16,12 @@ defmodule EnsureLti do
       |> put_session(:edx_userid, conn.params["lis_person_sourcedid"])
       |> put_session(:edx_email, conn.params["lis_person_contact_email_primary"])
       |> put_session(:admin, conn.params["roles"] == "Instructor")
+
+      # check if this is a graded section, and if it is, store call-back information
+      case PlugLti.Grade.get_call_info do
+        {:ok, info} -> store_call_info(info)
+        :missing -> _
+      end
       %{conn | method: "GET"}
 
     else
@@ -25,5 +29,9 @@ defmodule EnsureLti do
     end
     Logger.info("PlugLti session: #{get_session(conn, :lti_userid)}")
     conn
+  end
+
+  def store_call_info(info) do
+
   end
 end

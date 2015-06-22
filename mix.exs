@@ -38,11 +38,7 @@ defmodule Survey.Mixfile do
       {:poison, "~> 1.4.0"},
       {:mix_test_watch, "~> 0.1.0"},
       {:multidef, github: "pragdave/mdef"},
-      # {:exrm, "~> 0.15.3"},
-      {:plug_lti, github: "houshuang/plug_lti"},
-      # {:exometer_core, github: "PSPDFKit-labs/exometer_core", override: true},
-      # {:exometer, github: "PSPDFKit-labs/exometer"},
-      # {:edown, github: "uwiger/edown", tag: "0.5", override: true},
+      {:plug_lti, path: "~/src/inquirymooc/plug_lti"},
       {:dogstatsd, "0.0.3"},
       {:exprintf, github: "parroty/exprintf"},
       {:param_session, github: "houshuang/param_session"}
