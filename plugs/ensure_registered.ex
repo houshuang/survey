@@ -15,6 +15,7 @@ defmodule EnsureRegistered do
   import Ecto.Query
   require DogStatsd
   require Logger
+  alias Plug.Conn
 
   defmodule NoIDProvided, do:
     defexception message: "no ID provided"
@@ -59,10 +60,26 @@ defmodule EnsureRegistered do
   end
 
   def register_user(conn) do
-    conn = conn 
-    |> put_session(:ensure_registered_redirect, full_path(conn))
-    |> ParamSession.redirect "/user/register"
-    %{conn | halted: true}
+    # check if we are being called by survey, and can do a transparent redirect, otherwise
+    # we need to show a page asking user to manually "redirect him/herself"
+    if get_session(conn, :edx_userid) do
+      conn 
+      |> put_session(:ensure_registered_redirect, full_path(conn))
+      |> ParamSession.redirect("/user/register")
+      |> Conn.halt
+    else
+      conn
+      |> put_resp_header("content-type", "text/html; charset=utf-8")
+      |> send_resp(Plug.Conn.Status.code(:ok), 
+      "<h1>Registration required</h1>
+      You need to register, before accessing any of the external interactive services
+      in this course. Please go to the Entry Survey in Week Zero. You can find Week Zero
+      in the menu along the left side of the screen. Completing the survey is not required
+      (although we highly encourage it), but the registration part before the survey is
+      needed. <p> Please go to register, and then come back to this activity again.
+      <p>Thank you, and apologies for the inconvenience!")
+      |> Conn.halt
+    end
   end
 
   def log_unique(id) do
