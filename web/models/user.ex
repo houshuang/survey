@@ -16,6 +16,7 @@ defmodule Survey.User do
     field :allow_email, :boolean
     field :admin, :boolean
     has_many :user_grades, Survey.UserGrade
+    belongs_to :sig, Survey.SIG
     timestamps
   end
 

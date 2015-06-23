@@ -34,6 +34,17 @@
 
       </fieldset>
       <fieldset>
+        <h4>Choose a Special Interest Group (SIG) <font color=red>*</font></h4>
+            <p>These SIGs were designed based on responses from the early students in this course. Most of the collaborative work in this MOOC will happen within your SIG, and some of the discussion forums will only be for your SIG (it might take a day for you to gain access to these).</p>
+            <br>
+              <select name='f[sig]'> 
+                <option value=noselection>Please select from this list</option>
+                <%= for sig <- sigs do %>
+                <option value=<%= sig.id %>><%= sig.name %></option>
+                <% end %>
+              </select>
+            </fieldset>
+      <fieldset>
         <h4>At what grade levels do you currently teach? <font color=red>*</font></h4>
         <label>
           <input class='fieldlevel k12' name="f[grade|K-3]" value="true" type="checkbox">
