@@ -22,6 +22,7 @@ defmodule EnsureLti do
       case PlugLti.Grade.get_call_info(conn) do
         {:ok, info} -> conn = Conn.put_session(
           conn, :lti_grade, Survey.Cache.store(info))
+        :missing -> conn
       end
       %{conn | method: "GET"}
 
