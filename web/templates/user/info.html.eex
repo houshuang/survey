@@ -2,11 +2,11 @@
 
 
 <%= form_for @conn, user_path(@conn, :delete_user), [name: :delete], fn _ -> %>
-  <%= ParamSession.form_session @conn %>
+  <%= raw ParamSession.form_session @conn %>
   <%= submit "Delete user" %> 
 <% end %>
   <%= form_for @conn, user_path(@conn, :delete_survey), [name: :delete], fn _ -> %> 
-  <%= ParamSession.form_session @conn %>
+  <%= raw ParamSession.form_session @conn %>
   <%= submit "Delete survey data" %>
 <% end %>
   <P>

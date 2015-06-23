@@ -44,7 +44,8 @@ defmodule Survey.Mixfile do
       # {:exometer, github: "PSPDFKit-labs/exometer"},
       # {:edown, github: "uwiger/edown", tag: "0.5", override: true},
       {:dogstatsd, "0.0.3"},
-      {:exprintf, github: "parroty/exprintf"}
+      {:exprintf, github: "parroty/exprintf"},
+      {:param_session, github: "houshuang/param_session"}
     ]
   end
 end

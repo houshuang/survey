@@ -60,7 +60,7 @@ defmodule Survey.UserController do
       conn
       |> put_flash(:info, "Successfully registered!")
       |> delete_session(:ensure_registered_redirect)
-      |> ParamSession.redirect to: redir
+      |> ParamSession.redirect redir
     else
       html conn, "Thank you for submitting"
     end
@@ -75,7 +75,7 @@ defmodule Survey.UserController do
     conn
     |> delete_session(:repo_userid)
     |> put_flash(:info, "User deleted")
-    |> ParamSession.redirect to: "/user/info"
+    |> ParamSession.redirect "/user/info"
   end
 
   def delete_survey(conn, _) do
@@ -83,7 +83,7 @@ defmodule Survey.UserController do
     Repo.update(%{user | surveystate: 0, survey: nil })
     conn
     |> put_flash(:info, "Survey deleted")
-    |> ParamSession.redirect to: "/user/info"
+    |> ParamSession.redirect "/user/info"
   end
   #-------------------------------------------------------------------------------- 
 

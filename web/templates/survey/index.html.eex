@@ -9,7 +9,7 @@
 
 <div class='blocks'>
   <%= form_for @conn, survey_path(@conn, :submit), [name: :search], fn _ -> %>
-  <%= ParamSession.form_session @conn %>
+  <%= raw ParamSession.form_session @conn %>
   <%= survey %>
     <div class='navbuttons'></div>
   <% end %>

@@ -61,7 +61,7 @@ defmodule EnsureRegistered do
   def register_user(conn) do
     conn = conn 
     |> put_session(:ensure_registered_redirect, full_path(conn))
-    |> ParamSession.redirect to: "/user/register"
+    |> ParamSession.redirect "/user/register"
     %{conn | halted: true}
   end
 
