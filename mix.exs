@@ -18,7 +18,7 @@ defmodule Survey.Mixfile do
   def application do
     [mod: {Survey, []},
       applications: [:phoenix, :phoenix_html, :cowboy, :logger,
-        :phoenix_ecto, :postgrex, :dogstatsd]]
+        :phoenix_ecto, :postgrex, :dogstatsd, :httpoison]]
   end
 
   # Specifies which paths to compile per environment

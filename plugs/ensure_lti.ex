@@ -6,32 +6,30 @@ defmodule EnsureLti do
   use Behaviour
   @behaviour Plug
   require Logger
+  alias Plug.Conn
 
   def init([]), do: []
 
   def call(conn, _) do
-    conn = if conn.params["oauth_signature"] || !get_session(conn, :lti_userid) do
+    conn = if conn.params["oauth_signature"] || !Conn.get_session(conn, :lti_userid) do
       conn = PlugLti.call(conn, [])
-      |> put_session(:lti_userid, conn.params["user_id"])
-      |> put_session(:edx_userid, conn.params["lis_person_sourcedid"])
-      |> put_session(:edx_email, conn.params["lis_person_contact_email_primary"])
-      |> put_session(:admin, conn.params["roles"] == "Instructor")
+      |> Conn.put_session(:lti_userid, conn.params["user_id"])
+      |> Conn.put_session(:edx_userid, conn.params["lis_person_sourcedid"])
+      |> Conn.put_session(:edx_email, conn.params["lis_person_contact_email_primary"])
+      |> Conn.put_session(:admin, conn.params["roles"] == "Instructor")
 
       # check if this is a graded section, and if it is, store call-back information
-      case PlugLti.Grade.get_call_info do
-        {:ok, info} -> store_call_info(info)
-        :missing -> _
+      case PlugLti.Grade.get_call_info(conn) do
+        {:ok, info} -> conn = Conn.put_session(
+          conn, :lti_grade, Survey.Cache.store(info))
       end
       %{conn | method: "GET"}
 
     else
       conn
     end
-    Logger.info("PlugLti session: #{get_session(conn, :lti_userid)}")
+    Logger.info("PlugLti session: #{Conn.get_session(conn, :lti_userid)}")
     conn
   end
 
-  def store_call_info(info) do
-
-  end
 end

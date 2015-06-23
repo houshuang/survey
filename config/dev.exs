@@ -43,6 +43,7 @@ config :survey, Survey.Repo,
 
 config :plug_lti,
   base_url: "http://localhost:4000",
+  lti_key: "test",
   lti_secret: "secret",
   plug_disabled: true
 

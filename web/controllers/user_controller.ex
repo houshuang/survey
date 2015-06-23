@@ -7,10 +7,12 @@ defmodule Survey.UserController do
 
   plug :action
 
-  def test(conn, _) do
-    Logger.warn(inspect(conn, pretty: true))
-    html conn, "hi"
-  end
+  # def test(conn, _) do
+  #   case Survey.Grade.submit_grade(conn, 0.8) do
+  #     :ok -> html conn, "Yes, submitted!"
+  #     {:error, err} -> html conn, inspect(err)
+  #   end
+  # end
 
   def index(conn, _) do
     hash = get_session(conn, :lti_userid)
