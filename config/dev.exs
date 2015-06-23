@@ -42,7 +42,7 @@ config :survey, Survey.Repo,
 
 
 config :plug_lti,
-  base_url: "https://e37e8a92.ngrok.io",
+  base_url: "https://mooc.encorelab.org:300",
   lti_key: "test",
   lti_secret: "secret"
   # plug_disabled: true
