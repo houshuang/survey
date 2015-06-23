@@ -1,0 +1,19 @@
+<h1>Test of grade submission functionality</h1>
+
+<h3>Hi, <%= @conn.assigns.user.nick %>! Given OISE's social constructivist bent, please choose your own grade below. Be honest! :)</h3>
+<p><i>Make sure to enter a number between 0 and 1 - it will be scaled up by EdX</i></p>
+<div class="blocks">
+  <%= form_for @conn, user_path(@conn, :gradecheck_submit), [name: :search], fn _ -> %>
+  <%= raw ParamSession.form_session @conn %> 
+    <div class="block" style="">
+<br>
+      <fieldset>
+                              <input name="grade" type="text">
+        <br>
+      </fieldset>
+      <input type="Submit">
+      </div>
+      </div>
+      <br>
+<%= end %>
+      

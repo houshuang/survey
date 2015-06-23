@@ -42,10 +42,10 @@ config :survey, Survey.Repo,
 
 
 config :plug_lti,
-  base_url: "http://localhost:4000",
+  base_url: "https://e37e8a92.ngrok.io",
   lti_key: "test",
-  lti_secret: "secret",
-  plug_disabled: true
+  lti_secret: "secret"
+  # plug_disabled: true
 
   # lti_secret: "e393a67d298df4ad508d118a65ffd1065d353887",
 
