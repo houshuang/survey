@@ -15,6 +15,7 @@ defmodule Survey.User do
     field :surveystate, :integer
     field :allow_email, :boolean
     field :admin, :boolean
+    has_many :user_grades, Survey.UserGrade
     timestamps
   end
 
