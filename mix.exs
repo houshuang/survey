@@ -41,7 +41,8 @@ defmodule Survey.Mixfile do
       {:plug_lti, github: "houshuang/plug_lti"},
       {:dogstatsd, "0.0.3"},
       {:exprintf, github: "parroty/exprintf"},
-      {:param_session, github: "houshuang/param_session"}
+      {:param_session, github: "houshuang/param_session"},
+      {:httpoison, "~> 0.7"}
     ]
   end
 end
