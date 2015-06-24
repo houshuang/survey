@@ -211,7 +211,7 @@ validate_page1 = function() {
   if(!validate_text('nick')) { warnings.push("Please enter a nickname longer than three characters") }
   if(!validate_multi('grade')) { warnings.push("Please select at least one grade level") }
   if(!validate_multi('steam')) { warnings.push("Please select at least one of STEAM+") }
-  if(!validate_select('sig')) { warnings.push("Please select a Special Interest Group (SIG)") }
+  if(!validate_select('sig_id')) { warnings.push("Please select a Special Interest Group (SIG)") }
   return warnings
 }
 

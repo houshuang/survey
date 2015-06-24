@@ -7,13 +7,6 @@ defmodule Survey.UserController do
 
   plug :action
 
-  # def test(conn, _) do
-  #   case Survey.Grade.submit_grade(conn, 0.8) do
-  #     :ok -> html conn, "Yes, submitted!"
-  #     {:error, err} -> html conn, inspect(err)
-  #   end
-  # end
-
   def index(conn, _) do
     hash = get_session(conn, :lti_userid)
 
@@ -92,6 +85,34 @@ defmodule Survey.UserController do
     |> put_flash(:info, "Survey deleted")
     |> ParamSession.redirect "/user/info"
   end
+
+  def select_sig(conn, _) do
+    hash = get_session(conn, :lti_userid)
+
+    conn
+    |> put_layout("minimal.html")
+    |> render "select_sig.html"
+  end
+
+  def select_sig_submit(conn, params) do
+    sig = params["f"]["sig_id"]
+
+    userid = get_session(conn, :repo_userid)
+    user = Repo.get(Survey.User, userid)
+
+    %{ user | sig_id: string_to_int_safe(sig) } |> Repo.update
+
+    redir = get_session(conn, :ensure_sig_redirect)
+    if redir do
+      conn
+      |> put_flash(:info, "Successfully registered!")
+      |> delete_session(:ensure_sig_redirect)
+      |> ParamSession.redirect redir
+    else
+      html conn, "Thank you for submitting"
+    end
+  end
+
   #-------------------------------------------------------------------------------- 
 
   def proc_register(params) do

@@ -7,6 +7,7 @@ defmodule Survey.Router do
     plug :accepts, ["html"]
     plug :fetch_flash
     plug EnsureRegistered
+    plug EnsureSIG
   end
 
   # don't ensure registered, only for new users to register
@@ -47,6 +48,8 @@ defmodule Survey.Router do
     get "/user/register", UserController, :index
     post "/user/register/submit", UserController, :submit
     post "/user/get_tags", UserController, :get_tags
+    get "/user/select_sig", UserController, :select_sig
+    post "/user/select_sig/submit", UserController, :select_sig_submit
   end
 
   scope "/admin", Survey do

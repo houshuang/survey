@@ -31,9 +31,5 @@
     </div>
 
     <%= @inner %>
-    <script src="/js/plugins.js"></script>
-    <script src="/js/masked-input.js"></script>
-    <script src="/js/register.js"></script>
-
   </body>
 </html>
