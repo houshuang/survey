@@ -5,7 +5,7 @@
 <h1>Searchable compilation of all text responses</h1>
 <% end %>
 
-<%= form_for @conn, "/admin/stats/text/#{@question.number}", [name: :search], fn f -> %>
+<%= form_for @conn, "/admin/report/text/#{@question.number}", [name: :search], fn f -> %>
 <input type='submit' style='float: right'>
 Search text contents: <input class='text' id='search' name='search' type='text' style='border: 1px; outline: 1px; border-color: black;' value=<%= @search %>>
 <%= if not @all do %>
