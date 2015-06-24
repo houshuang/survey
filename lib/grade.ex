@@ -18,7 +18,7 @@ defmodule Survey.Grade do
   def submit_grade(conn, component, grade) do
     if is_atom(component), do: component = Atom.to_string(component)
     if is_integer(grade), do: grade = grade * 1.0
-    if is_binary(grade), do: grade = String.to_integer(grade)
+    if is_binary(grade), do: {grade, _} = Float.parse(grade)
     if grade < 0.0 or grade > 1.0, do: raise GradeOutsideRange
 
     cache_id = Conn.get_session(conn, :lti_grade)
