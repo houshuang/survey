@@ -103,6 +103,7 @@ defmodule Survey.UserController do
     |> bools
     |> proc_other_role
     |> yearsint
+    |> sigint
     struct(Survey.User, register)
   end
 
@@ -111,6 +112,9 @@ defmodule Survey.UserController do
 
   defp yearsint(%{yearsteaching: y} = h), do: %{h | yearsteaching: string_to_int_safe(y) }
   defp yearsint(h), do: h
+
+  defp sigint(%{sig_id: y} = h), do: %{h | sig_id: string_to_int_safe(y) }
+  defp sigint(h), do: h
 
   defp proc_tags(%{tags: tags} = h), do: %{h | tags: String.split(tags, "|") }
   defp proc_tags(x), do: x
