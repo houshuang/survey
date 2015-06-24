@@ -41,6 +41,7 @@ defmodule Survey.Router do
     post "/user/info", UserController, :info
     post "/user/delete_user", UserController, :delete_user
     post "/user/delete_survey", UserController, :delete_survey
+    get "/gradecheck", UserController, :gradecheck
     post "/gradecheck", UserController, :gradecheck
     post "/gradecheck_submit", UserController, :gradecheck_submit
   end
