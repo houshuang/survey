@@ -38,7 +38,8 @@ defmodule Survey.Mixfile do
       {:poison, "~> 1.4.0"},
       {:mix_test_watch, "~> 0.1.0"},
       {:multidef, github: "pragdave/mdef"},
-      {:plug_lti, path: "~/src/inquirymooc/plug_lti"},
+      {:plug_lti, github: "houshuang/plug_lti"},
+      {:httpoison, "~> 0.7"},
       {:dogstatsd, "0.0.3"},
       {:exprintf, github: "parroty/exprintf"},
       {:param_session, github: "houshuang/param_session"}
