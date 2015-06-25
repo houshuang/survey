@@ -19,10 +19,15 @@ defmodule Survey.ResourceTag do
     from p in query, select: p.name
   end
 
+  defp alphabetize(query) do
+    from p in query, order_by: p.name
+  end
+
   def get_tags(sig) when is_integer(sig) do
     from(t in ResourceTag) 
     |> and_and(:sigs, [sig]) 
     |> only_tags 
+    |> alphabetize
     |> Repo.all
   end
 
