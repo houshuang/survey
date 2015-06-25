@@ -42,7 +42,8 @@ defmodule Survey.Mixfile do
       {:httpoison, "~> 0.7"},
       {:dogstatsd, "0.0.3"},
       {:exprintf, github: "parroty/exprintf"},
-      {:param_session, github: "houshuang/param_session"}
+      {:param_session, github: "houshuang/param_session"},
+      {:csv, "~> 1.0.0"}
     ]
   end
 end
