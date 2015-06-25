@@ -32,15 +32,24 @@ defmodule Survey.Router do
   scope "/", Survey do
     pipe_through :browser
 
+    # survey
     get "/survey", SurveyController, :index
     post "/survey", SurveyController, :index
     post "/survey/submit", SurveyController, :submit
     post "/survey/submitajax", SurveyController, :submitajax
 
+    # user info/debug
     get "/user/info", UserController, :info
     post "/user/info", UserController, :info
     post "/user/delete_user", UserController, :delete_user
     post "/user/delete_survey", UserController, :delete_survey
+
+    # resource submission/review
+    post "/resource/add", ResourceController, :resource
+    get "/resource/add", ResourceController, :resource
+
+    post "/resource/review", ResourceController, :resource_review
+    get "/resource/review", ResourceController, :resource_review
   end
 
   scope "/", Survey do
@@ -50,8 +59,6 @@ defmodule Survey.Router do
     post "/user/get_tags", UserController, :get_tags
     get "/user/select_sig", UserController, :select_sig
     post "/user/select_sig/submit", UserController, :select_sig_submit
-    get "/user/resource", UserController, :resource
-    get "/user/resource-review", UserController, :resource_review
   end
 
   scope "/admin", Survey do
@@ -59,5 +66,6 @@ defmodule Survey.Router do
     get "/report", ReportController, :index
     get "/report/text/:qid", ReportController, :textanswer
     get "/report/tags", ReportController, :tags
+    get "/resource/preview", ResourceController, :resource_preview
   end
 end

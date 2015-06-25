@@ -1,6 +1,6 @@
 <div class="blocks">
   <%= form_for @conn, user_path(@conn, :submit), [name: :search], fn _ -> %>
-  <%= ParamSession.form_session @conn %>
+  <%= raw ParamSession.form_session @conn %>
     <div class="block" style="">
       <h3>Add useful resources</h3>
       <p>These resources will be available to other students, and design groups, so the more contextual information you provide, the easier it will be for us to send it to the right people.</p>
@@ -34,11 +34,22 @@
         <h4>Tags</h4>
         <p><i>Please enter a number of tags to describe the disciplinary focus of the resource. 
             </p><br><p>
-            While you type, you will see suggestions based on what other people with your teaching interests have entered - in this way we hope to build up a "folksonomic" tag cloud.</p><br><p> Tags can have spaces. Press enter to add a new tag.</i></p><br>
+            Below the tag bar, you will see suggestions based on what other people with your teaching interests have entered - in this way we hope to build up a "folksonomic" tag cloud. Click on a tag to add it to your tag selection. </p><br><p> Tags can have spaces. Press enter to add a new tag.</i></p><br>
         <script src="/js/tag-it.min.js"></script>
         <input name='f[tags]' type=text class="form-control" id="ms-suggest">
+        <script src="/js/tag-it.min.js"></script>
+        <input name='f[tags]' class="form-control" id="ms-suggest">
+        <div id="tags">
+        <%= for tag <- @tags do %>
+          <p class='tagsuggestion' id='<%= 
+          String.replace(tag, " ", "_")
+          |> String.replace(",", "_")%>'><a href="#"><%= tag %></a></p>
+        <% end %>
+      </div>
       </fieldset>
     </div>
     <br>
   <% end %>
 	<div class='stepsController submit right'><a href='#'>Submit, and add another resource</a></div> 
+        <script src="/js/jquery.columnizer.js"></script>
+        <script src="/js/resource-add.js"></script>

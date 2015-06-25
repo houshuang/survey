@@ -21,18 +21,6 @@ defmodule Survey.UserController do
     end
   end
 
-  def resource(conn, params) do
-      conn
-      |> put_layout("minimal.html")
-      |> render "resource.html"
-  end
-
-  def resource_review(conn, params) do
-      conn
-      |> put_layout("minimal.html")
-      |> render "resource-review.html"
-  end
-
   def get_tags(conn, params) do
     params = params["f"]
     |> proc_params
