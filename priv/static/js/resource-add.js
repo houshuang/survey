@@ -81,24 +81,33 @@ check_url = function(pagevalidate) {
   url = $('input[name*=url]').val()
   if(!isUrlValid(url)) {
     not_valid("This is not a valid URL. URLs should look like this: http://example.com, or https://resource.net/math. Please try again.")
-    if(pagevalidate) { validate_page() } 
+    if(pagevalidate===true) { validate_page() } 
   } else {
     $.post("/resource/check_url",
            {url: url, session: session})
            .then(function(e) {
+             console.log(e)
              url_callback(e, pagevalidate)
            })
   }
 } 
 
 url_callback = function(valid, pagevalidate) {
-  if(valid) {
-    $("#urlverification").html('<font color=green>This URL is valid, great!</font>')
+  switch(valid.result) {
+    case "success":
+      $("#urlverification").html('<font color=green>This URL is valid, great!</font>')
     Window.valid = true
-  } else { 
-    not_valid("This URL seems unreachable, perhaps you mistyped it? Please try again, or add another resource instead.") 
+    break
+    case "not found":
+      not_valid("This URL seems unreachable, perhaps you mistyped it? Please try again, or add another resource instead.") 
+    break
+    case "exists":
+      session = $('input[name*=session]').val()
+      url = '/resource/review/' + valid.id + '?session=' + session
+      not_valid("This URL already exists. <a href=" + url + ">Click here</a> to see the existing submission, and add your comments.")
+    break
   }
-  if(pagevalidate==true) { validate_page() }
+  if(pagevalidate===true) { validate_page() }
 }
 
 

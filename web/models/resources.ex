@@ -1,5 +1,7 @@
 defmodule Survey.Resource do
   use Survey.Web, :model
+  import Ecto.Query
+  require Ecto.Query
  
   schema "resources" do
     field :name, :string
@@ -14,6 +16,13 @@ defmodule Survey.Resource do
     timestamps
   end
 
+  # returns ID of an entry with a given URL, or nil if it doesn't exist
+  def find_url(url) do
+    req = from t in Survey.Resource,
+      where: t.url == ^url,
+      select: t.id
+    req |> Survey.Repo.one
+  end
   # defp and_and(query, col, val) when is_list(val) and is_atom(col) do
   #   from p in query, where: fragment("? && ?", ^val, field(p, ^col))
   # end

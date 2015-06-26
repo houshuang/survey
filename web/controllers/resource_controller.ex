@@ -2,7 +2,7 @@ defmodule Survey.ResourceController do
   use Survey.Web, :controller
 
   require Logger
-  alias Survey.User
+  alias Survey.Resource
   import Prelude
 
   plug :action
@@ -47,17 +47,26 @@ defmodule Survey.ResourceController do
   end
 
   def check_url(conn, params) do
-    url = params["url"]
-    try do
-      %HTTPoison.Response{status_code: status} = 
+    url = params["url"] |> String.strip
+    if id = Resource.find_url(url) do
+      json conn, %{result: "exists", id: id}
+    else
+      try do
+        %HTTPoison.Response{status_code: status} = 
         HTTPoison.head!(url, timeout: 3000)
-      case status do
-        404 -> json conn, false
-        _   -> json conn, true
+        if bad_status(status) do
+          json conn, %{result: "not found"}
+        else
+          json conn, %{result: "success"}
+        end
+      rescue 
+        e -> IO.inspect(e)
+          json conn, %{result: "not found"}
       end
-    rescue 
-      e -> IO.inspect(e)
-      json conn, false
     end
+  end
+
+  defp bad_status(s) do
+    s |> Integer.to_string |> String.starts_with?("4")
   end
 end
