@@ -24,6 +24,22 @@ defmodule Survey.ResourceController do
     |> render "resource.html", tags: tags
   end
 
+  def review(conn, params) do
+    if params["f"] do
+      Logger.info("Saving new resource")
+      save_to_db(conn, params["f"])
+      # Survey.Grade.submit_grade(conn, "add_resource", 1.0)
+      conn = put_flash(conn, :info, 
+        "Thank you for submitting a resource. Your participation has already been graded. You are welcome to submit more resources, or move on to other parts of the course.")
+    end
+
+    sig = conn.assigns.user.sig_id
+    tags = Survey.ResourceTag.get_tags(sig)
+
+    conn
+    |> put_layout("minimal.html")
+    |> render "resource.html", tags: tags
+  end
 
   def preview(conn, params) do
     tags = Survey.ResourceTag.get_tags(2)
@@ -50,6 +66,8 @@ defmodule Survey.ResourceController do
 
     struct(Survey.Resource, resource)
     |> Survey.Repo.insert
+
+    Survey.ResourceTag.update_tags(conn.assigns.user.sig_id, resource.tags)
   end
 
   defp proc_tags(%{tags: tags} = h), do: %{h | tags: String.split(tags, "|") }
