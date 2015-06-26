@@ -4,7 +4,7 @@ defmodule Survey.Grade do
   alias Survey.Repo
 
   defmodule NoLTISession, do:
-    defexception message: "the session has not stored any LTI callbak info"
+    defexception message: "the session has not stored any LTI callback info"
 
   defmodule NoCacheMatch, do:
     defexception message: "the session ID did not match any database records"
