@@ -67,6 +67,7 @@ defmodule Survey.Router do
     get "/report", ReportController, :index
     get "/report/text/:qid", ReportController, :textanswer
     get "/report/tags", ReportController, :tags
+    get "/report/resource", ResourceController, :report
     get "/resource/preview", ResourceController, :preview
   end
 end

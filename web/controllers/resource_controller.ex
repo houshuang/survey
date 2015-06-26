@@ -24,6 +24,22 @@ defmodule Survey.ResourceController do
     |> render "resource.html", tags: tags
   end
 
+
+  def preview(conn, params) do
+    tags = Survey.ResourceTag.get_tags(2)
+    conn
+    |> put_layout("minimal.html")
+    |> render "resource.html", tags: tags
+  end
+
+  def report(conn, _) do
+    resources = Survey.Resource.get_all_by_sigs
+    conn
+    |> put_layout("minimal.html")
+    |> render "report.html", resources: resources
+  end
+  #---------------------------------------- 
+
   def save_to_db(conn, params) do
     resource = params
     |> Map.update("generic", false, fn x -> x == "true" end)
@@ -38,13 +54,6 @@ defmodule Survey.ResourceController do
 
   defp proc_tags(%{tags: tags} = h), do: %{h | tags: String.split(tags, "|") }
   defp proc_tags(x), do: x
-
-  def preview(conn, params) do
-    tags = Survey.ResourceTag.get_tags(2)
-    conn
-    |> put_layout("minimal.html")
-    |> render "resource.html", tags: tags
-  end
 
   def check_url(conn, params) do
     url = params["url"] |> String.strip

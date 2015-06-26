@@ -1,0 +1,12 @@
+<h1>Report of all resources, per SIG</h1>
+<%= for {sig, rs} <- @resources do %>
+  <h3><%= sig %></h3>
+  <%= for r <- rs do %>
+    <h4><%= r.name %></h4>
+    <li>URL: <a href='<%= r.url %>'><%= r.url %></a></li>
+    <li>Description: <%= r.description %></li>
+    <li>Tags: <%= if r.tags, do: Enum.join(r.tags, ", ") %></li>
+    <li>Added by: <%= r.user.nick %></li>
+    <hr>
+  <% end %>
+<% end %>

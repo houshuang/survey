@@ -9,10 +9,10 @@ defmodule Survey.Resource do
     field :tags, {:array, :string}
     field :description, :string
     field :generic, :boolean
-    field :user_id, :integer
     field :comments, {:array, Survey.JSON}
     field :score, :integer
     belongs_to :sig, Survey.SIG
+    belongs_to :user, Survey.User
     timestamps
   end
 
@@ -23,6 +23,16 @@ defmodule Survey.Resource do
       select: t.id
     req |> Survey.Repo.one
   end
+
+  def get_all_by_sigs do
+    (from t in Survey.Resource,
+    join: s in assoc(t, :sig),
+    join: u in assoc(t, :user),
+    preload: [sig: s, user: u])
+    |> Survey.Repo.all
+    |> Enum.group_by(fn x -> x.sig.name end)
+  end
+
   # defp and_and(query, col, val) when is_list(val) and is_atom(col) do
   #   from p in query, where: fragment("? && ?", ^val, field(p, ^col))
   # end
