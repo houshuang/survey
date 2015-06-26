@@ -11,7 +11,7 @@ defmodule Survey.ResourceController do
     if params["f"] do
       Logger.info("Saving new resource")
       save_to_db(conn, params["f"])
-      # Survey.Grade.submit_grade(conn, "add_resource", 1.0)
+      Survey.Grade.submit_grade(conn, "add_resource", 1.0)
       conn = put_flash(conn, :info, 
         "Thank you for submitting a resource. Your participation has already been graded. You are welcome to submit more resources, or move on to other parts of the course.")
     end
