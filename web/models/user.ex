@@ -15,6 +15,7 @@ defmodule Survey.User do
     field :surveystate, :integer
     field :allow_email, :boolean
     field :admin, :boolean
+    field :resources_seen, {:array, :integer}
     has_many :user_grades, Survey.UserGrade
     belongs_to :sig, Survey.SIG
     timestamps

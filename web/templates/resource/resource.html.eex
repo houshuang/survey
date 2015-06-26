@@ -1,44 +1,42 @@
 <div class="blocks">
-  <%= form_for @conn, user_path(@conn, :submit), [name: :search], fn _ -> %>
+  <%= form_for @conn, resource_path(@conn, :add), [name: :search], fn _ -> %>
   <%= raw ParamSession.form_session @conn %>
     <div class="block" style="">
       <h3>Add useful resources</h3>
       <p>These resources will be available to other students, and design groups, so the more contextual information you provide, the easier it will be for us to send it to the right people.</p>
       <br><p>Items with red stars are required.</p>
       <fieldset>
-        <h4>Name of resource</h4>
+        <h4>Name of resource <font color=red>*</font></h4>
         <p>
           <i>If you see in the autocompletion that the resource has already been submitted, it will be better to choose another resource. You will get a chance to review and add information to resources submitted by other people later in the process.</i>
         </p>
-        <input name="f[nick]" type="text">
+        <input name="f[name]" type="text">
         <br>
       </fieldset>
       <fieldset>
-        <h4>URL</h4>
-        <input name="f[nick]" type="text">
+        <h4>URL <font color=red>*</font></h4><span id="urlverification"></span>
+        <input name="f[url]" type="text">
       </fieldset>
       <fieldset>
-        <h4>Description</h4>
-        <p><i>What does the resource do, how could it be used for inquiry teaching? Have you used it yourself?</i></p><textarea></textarea>
+        <h4>Description <font color=red>*</font></h4>
+        <p><i>What does the resource do, how could it be used for inquiry teaching? Have you used it yourself?</i></p><textarea name='f[description]'></textarea>
         <label>
           </fieldset><fieldset>
-          <h4>What kind of a resource is it?</h4>
+          <h4>What kind of a resource is it? <font color=red>*</font></h4>
         <label>
-          <input class='fieldlevel k12' name="f[allow_email]" value="true" type="radio" > 
-          <span>This resource can be used to teach many different subjects (like Pinterest) </span>
-          <input class='fieldlevel k12' name="f[allow_email]" value="true" type="radio" > 
+          <input class='fieldlevel k12' name="f[generic]" value="true" type="radio" > 
+          <span>This resource can be used to teach many different subjects (like Pinterest) </span></label><label>
+          <input class='fieldlevel k12' name="f[generic]" value="false" type="radio" > 
           <span>This is a discipline specific resource</span>
         </label>
       </fieldset>
       <fieldset>
-        <h4>Tags</h4>
+        <h4>Tags <font color=red>*</font></h4>
         <p><i>Please enter a number of tags to describe the disciplinary focus of the resource. 
             </p><br><p>
             Below the tag bar, you will see suggestions based on what other people with your teaching interests have entered - in this way we hope to build up a "folksonomic" tag cloud. Click on a tag to add it to your tag selection. </p><br><p> Tags can have spaces. Press enter to add a new tag.</i></p><br>
         <script src="/js/tag-it.min.js"></script>
         <input name='f[tags]' type=text class="form-control" id="ms-suggest">
-        <script src="/js/tag-it.min.js"></script>
-        <input name='f[tags]' class="form-control" id="ms-suggest">
         <div id="tags">
         <%= for tag <- @tags do %>
           <p class='tagsuggestion' id='<%= 

@@ -45,11 +45,11 @@ defmodule Survey.Router do
     post "/user/delete_survey", UserController, :delete_survey
 
     # resource submission/review
-    post "/resource/add", ResourceController, :resource
-    get "/resource/add", ResourceController, :resource
+    post "/resource/add", ResourceController, :add
+    get "/resource/add", ResourceController, :add
 
-    post "/resource/review", ResourceController, :resource_review
-    get "/resource/review", ResourceController, :resource_review
+    post "/resource/review", ResourceController, :review
+    get "/resource/review", ResourceController, :review
   end
 
   scope "/", Survey do
@@ -59,6 +59,7 @@ defmodule Survey.Router do
     post "/user/get_tags", UserController, :get_tags
     get "/user/select_sig", UserController, :select_sig
     post "/user/select_sig/submit", UserController, :select_sig_submit
+    post "/resource/check_url", ResourceController, :check_url
   end
 
   scope "/admin", Survey do
@@ -66,6 +67,6 @@ defmodule Survey.Router do
     get "/report", ReportController, :index
     get "/report/text/:qid", ReportController, :textanswer
     get "/report/tags", ReportController, :tags
-    get "/resource/preview", ResourceController, :resource_preview
+    get "/resource/preview", ResourceController, :preview
   end
 end
