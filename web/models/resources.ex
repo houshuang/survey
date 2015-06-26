@@ -1,5 +1,6 @@
 defmodule Survey.Resource do
   use Survey.Web, :model
+  alias Survey.Repo
   import Ecto.Query
   require Ecto.Query
  
@@ -21,7 +22,7 @@ defmodule Survey.Resource do
     req = from t in Survey.Resource,
       where: t.url == ^url,
       select: t.id
-    req |> Survey.Repo.one
+    req |> Repo.one
   end
 
   def get_all_by_sigs do
@@ -29,7 +30,32 @@ defmodule Survey.Resource do
     join: s in assoc(t, :sig),
     join: u in assoc(t, :user),
     preload: [sig: s, user: u])
-    |> Survey.Repo.all
+    |> Repo.all
     |> Enum.group_by(fn x -> x.sig.name end)
+  end
+
+  # returns the id of a random resource fit for a given user, and adds it
+  # to that users "has seen" list
+  def get_random(user) do
+    :random.seed(:os.timestamp)
+
+    seen = user.resources_seen || []
+
+    available_ids = 
+    (from f in Survey.Resource,
+    where: not (f.id in ^seen),
+    where: not (f.user_id == ^user.id),
+    select: f.id)
+    |> Repo.all
+
+    if length(available_ids) == 0 do
+      nil
+    else
+      selected = :random.uniform(length(available_ids)) - 1
+      s_id = Enum.at(available_ids, selected)
+      %{ user | resources_seen: [ s_id | seen ]} |> Repo.update
+
+      s_id
+    end
   end
 end

@@ -49,7 +49,10 @@ defmodule Survey.Router do
     get "/resource/add", ResourceController, :add
 
     post "/resource/review", ResourceController, :review
+    post "/resource/review/submit", ResourceController, :review_submit
     get "/resource/review", ResourceController, :review
+    post "/resource/review/:id", ResourceController, :review
+    get "/resource/review/:id", ResourceController, :review
   end
 
   scope "/", Survey do

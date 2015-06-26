@@ -24,21 +24,25 @@ defmodule Survey.ResourceController do
     |> render "resource.html", tags: tags
   end
 
-  def review(conn, params) do
-    if params["f"] do
-      Logger.info("Saving new resource")
-      save_to_db(conn, params["f"])
-      # Survey.Grade.submit_grade(conn, "add_resource", 1.0)
-      conn = put_flash(conn, :info, 
-        "Thank you for submitting a resource. Your participation has already been graded. You are welcome to submit more resources, or move on to other parts of the course.")
+  def review(conn, params) do 
+    if params["id"] do
+      id = String.to_integer(params["id"])
+    else
+      id = Survey.Resource.get_random(conn.assigns.user)
     end
 
-    sig = conn.assigns.user.sig_id
-    tags = Survey.ResourceTag.get_tags(sig)
+    IO.inspect(["id", id])
+    if !id do
+      html conn, "Sorry, we could not find any new resources for you to review. Try back in a little while."
+    else
+      sig = conn.assigns.user.sig_id
+      tags = Survey.ResourceTag.get_tags(sig)
+      resource = Repo.get(Survey.Resource, id)
 
-    conn
-    |> put_layout("minimal.html")
-    |> render "resource.html", tags: tags
+      conn
+      |> put_layout("minimal.html")
+      |> render "review.html", tags: tags, resource: resource
+    end
   end
 
   def preview(conn, params) do
