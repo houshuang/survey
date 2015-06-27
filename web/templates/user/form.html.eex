@@ -28,7 +28,7 @@
         <p><i>If you give us permissions, we will send you personalized emails not more than once or twice a week. These might contain information about your contributions, resources that might be relevant to you, and reminders for events. All emails will contain a link to stop further emails. </p><br>
           <p>       If you do not wish to receive personalized emails, you might still receive a few generic e-mails from EdX. You can control your EdX e-mail settings in the EdX.</p></i> <br>
         <label>
-          <input class='fieldlevel k12' name="f[allow_email]" value="true" type="checkbox" checked="true"> 
+          <input class='fieldlevel' name="f[allow_email]" value="true" type="checkbox" checked="true"> 
           <span>Yes, I would like to receive occasional personalized emails</span>
         </label>
 
