@@ -3,8 +3,6 @@ $(document).ready(function(){
   $('tagit-placeholder').html('');
   Window.ms = $('#ms-suggest').tagit({
     fieldName: 'f[tags]',
-    autocomplete: {delay: 0, minLength: 1},
-    showAutocompleteOnFocus: true,
     caseSensitive: false,
     allowSpaces: true,
     singleField: true,
@@ -40,40 +38,49 @@ $(document).ready(function(){
 
     var T = $(this);
     var valueNum = T.next('.counter').attr('length');
-    var min = T.next('.counter').attr('min');
+    var min = parseInt(T.next('.counter').attr('min')) + 1;
     if (valueNum) {
-    T.next('.counter').text(valueNum);
-    T.on('keyup', function(){
+      T.next('.counter').text(valueNum);
+      T.on('keyup', function(){
 
-      var len = T.val().length;
-      if (len > valueNum) {
-        newValue = T.val().substring(0, valueNum);
-        T.val(newValue);
-      } else {
-        T.next('.counter').text(valueNum - len);
-      }			
-    });
+        var len = T.val().length;
+        if (len > valueNum) {
+          newValue = T.val().substring(0, valueNum);
+          T.val(newValue);
+        } else {
+          T.next('.counter').text(valueNum - len);
+        }			
+      });
     }
     if (min) {
-    T.next('.counter').html("<font color=red>At least " + min + " more words required</font>");
-    T.on('keyup', function(){
-
-      var len = T.val().trim().split(" ").length;
-      if (len >= min) {
-    T.next('.counter').html("<font color=green>✓</font>");
-      } else {
-    T.next('.counter').html("<font color=red>At least " + (min - len) + " more words required</font>");
-      }			
-    });
+      check_textarea_length(T, min)
+      T.on('keyup', function() {check_textarea_length(T, min) })
     }
   });
 });
 
+check_textarea_length = function(T, min) {
+  var len = T.val().trim().split(" ").length;
+  if (len >= min) {
+    T.next('.counter').html("<font color=green>✓</font>");
+  } else {
+    T.next('.counter').html("<font color=red>At least " + (min - len) + " more words required</font>");
+  }			
+}
+
 buttonclick = function(e) {
+  console.log("button")
   pre_validate()
 };
 
+pre_validate = function() {
+  console.log("prevalidate")
+  check_url(true)
+}
+
 post_validate = function(res) {
+  console.log("postvalidate")
+  console.log(res)
   if (res.length === 0) {
     $('.header').html("")
 
@@ -95,10 +102,6 @@ post_validate = function(res) {
   }
 }
 
-pre_validate = function() {
-  check_url(true)
-}
-
 validate_page = function(pg) {
   var warnings= []
   if(!validate_text('name')) { warnings.push("Please add a name with more than three characters") }
@@ -110,21 +113,40 @@ validate_page = function(pg) {
   post_validate(warnings)
 }
 
-// from http://stackoverflow.com/questions/2723140/validating-url-with-jquery-without-the-validate-plugin
-function isUrlValid(url) {
-  return /^(https?|s?ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(url);
-}
-
 check_url = function(pagevalidate) {
+  session = $('input[name*=session]').val()
   url = $('input[name*=url]').val()
   if(!isUrlValid(url)) {
     not_valid("This is not a valid URL. URLs should look like this: http://example.com, or https://resource.net/math. Please try again.")
+  if(pagevalidate===true) { validate_page() }
   } else {
-    valid()
+    $.post("/resource/check_url",
+           {url: url, session: session})
+           .then(function(e) {
+             console.log(e)
+             url_callback(e, pagevalidate)
+           })
   }
-
-  if(pagevalidate===true) { validate_page() } 
 } 
+
+url_callback = function(valid, pagevalidate) {
+  switch(valid.result) {
+    case "success":
+      $("#urlverification").html('<font color=green>✓</font>')
+    Window.valid = true
+    break
+    case "not found":
+      not_valid("This URL seems unreachable, perhaps you mistyped it? Please try again, or add another resource instead.") 
+    break
+    case "exists":
+      session = $('input[name*=session]').val()
+    url = '/resource/review/' + valid.id + '?session=' + session
+    not_valid("Someone else in your SIG already added this URL. Please suggest another resource instead.")
+    // not_valid("This URL already exists. <a href=" + url + ">Click here</a> to see the existing submission, and add your comments.")
+    break
+  }
+  if(pagevalidate===true) { validate_page() }
+}
 
 not_valid = function(message) {
   $("#urlverification").html('<font color=red>' + message + '</font>')
@@ -159,3 +181,9 @@ validate_radio = function(field) {
 validate_select = function(field) {
   return $('select[name*=' + field + ']').val() != "noselection"
 }
+//
+// from http://stackoverflow.com/questions/2723140/validating-url-with-jquery-without-the-validate-plugin
+function isUrlValid(url) {
+  return /^(https?|s?ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(url);
+}
+

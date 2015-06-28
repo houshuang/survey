@@ -53,6 +53,7 @@ defmodule Survey.Router do
     get "/resource/review", ResourceController, :review
     post "/resource/review/:id", ResourceController, :review
     get "/resource/review/:id", ResourceController, :review
+    post "/resource/check_url", ResourceController, :check_url
   end
 
   scope "/", Survey do
@@ -62,7 +63,6 @@ defmodule Survey.Router do
     post "/user/get_tags", UserController, :get_tags
     get "/user/select_sig", UserController, :select_sig
     post "/user/select_sig/submit", UserController, :select_sig_submit
-    post "/resource/check_url", ResourceController, :check_url
   end
 
   scope "/admin", Survey do

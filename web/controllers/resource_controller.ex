@@ -14,7 +14,7 @@ defmodule Survey.ResourceController do
     if params["f"] do
       Logger.info("Saving new resource")
       save_to_db(conn, params["f"])
-      Survey.Grade.submit_grade(conn, "add_resource", 1.0)
+      # Survey.Grade.submit_grade(conn, "add_resource", 1.0)
     end
 
     already = Resource.user_submitted_no(conn.assigns.user.id)
@@ -91,22 +91,12 @@ defmodule Survey.ResourceController do
   defp proc_tags(x), do: x
 
   def check_url(conn, params) do
+    sig = conn.assigns.user.sig_id
     url = params["url"] |> String.strip
-    if id = Resource.find_url(url) do
+    if id = Resource.find_url(url, sig) do
       json conn, %{result: "exists", id: id}
     else
-      try do
-        %HTTPoison.Response{status_code: status} = 
-        HTTPoison.head!(url, timeout: 3000)
-        if bad_status(status) do
-          json conn, %{result: "not found"}
-        else
-          json conn, %{result: "success"}
-        end
-      rescue 
-        e -> IO.inspect(e)
-          json conn, %{result: "not found"}
-      end
+      json conn, %{result: "success"}
     end
   end
 
