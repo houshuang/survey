@@ -1,0 +1,11 @@
+<div class='blocks'> <%= form_for @conn, reflection_path(@conn, :submit), [name: :search], fn _ -> %>
+  <%= raw ParamSession.form_session @conn %>
+  <%= raw @html %>
+    <div class='navbuttons'></div>
+  <% end %>
+</div>
+</div>
+    <script src="/js/masked-input.js"></script>
+    <script src="/js/reflection.js"></script>
+    <%# <script src="/js/remember-state.js"></script> %>
+

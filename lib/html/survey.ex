@@ -74,9 +74,11 @@ defmodule Survey.HTML.Survey do
     desc = desc(h)
     length = case h do
       %{meta: %{length: x} } -> ["<p class='counter' length='", x, "'></p>"]
+      %{meta: %{minwords: x} } -> ["<p class='counter' min='", x, "'></p>"]
       _ -> ""
     end
 
+    IO.inspect(length)
     ["<h4>", numstr(h), h.name, "</h4>", desc, "<textarea name='#{form}[#{name(h)}]'></textarea>", 
       length]
   end
