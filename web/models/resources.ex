@@ -29,11 +29,27 @@ defmodule Survey.Resource do
     req |> Repo.one
   end
 
+  def get_resource(id) do
+    (from t in Survey.Resource,
+    where: t.id == ^id,
+    join: u in assoc(t, :user),
+    preload: [user: u])
+    |> Repo.one
+  end
+
   # how many resources submitted by user
   def user_submitted_no(userid) do
     req = from t in Survey.Resource,
       where: t.user_id == ^userid,
       select: count(t.id)
+    req |> Repo.one
+  end
+
+  # how many resources reviewed by user
+  def user_reviewed_no(userid) do
+    req = from t in Survey.User,
+      where: t.id == ^userid,
+      select: fragment("cardinality(?)", [t.resources_seen])
     req |> Repo.one
   end
 
@@ -44,6 +60,14 @@ defmodule Survey.Resource do
     preload: [sig: s, user: u])
     |> Repo.all
     |> Enum.group_by(fn x -> x.sig.name end)
+  end
+
+  def update_seen(user, id) do
+    seen = user.resources_seen
+    if !seen, do: seen = []
+    if not id in seen do
+      %{ user | resources_seen: [ id | seen ]} |> Repo.update
+    end
   end
 
   # returns the id of a random resource fit for a given user, and adds it
@@ -57,6 +81,8 @@ defmodule Survey.Resource do
     (from f in Survey.Resource,
     where: not (f.id in ^seen),
     where: not (f.user_id == ^user.id),
+    where: (f.sig_id == ^user.sig_id) or 
+      (f.generic == true),
     select: f.id)
     |> Repo.all
 
@@ -65,7 +91,7 @@ defmodule Survey.Resource do
     else
       selected = :random.uniform(length(available_ids)) - 1
       s_id = Enum.at(available_ids, selected)
-      %{ user | resources_seen: [ s_id | seen ]} |> Repo.update
+      update_seen(user, s_id)
 
       s_id
     end

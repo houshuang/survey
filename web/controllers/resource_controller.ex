@@ -14,7 +14,7 @@ defmodule Survey.ResourceController do
     if params["f"] do
       Logger.info("Saving new resource")
       save_to_db(conn, params["f"])
-      Survey.Grade.submit_grade(conn, "add_resource", 1.0)
+      # Survey.Grade.submit_grade(conn, "add_resource", 1.0)
     end
 
     already = Resource.user_submitted_no(conn.assigns.user.id)
@@ -34,9 +34,19 @@ defmodule Survey.ResourceController do
   def resource_word(cnt) when cnt > 1, do: "resources"
   def resource_word(cnt), do: "resource"
 
+  #---------------------------------------- 
+
   def review(conn, params) do 
+    user = conn.assigns.user
+    already = Resource.user_reviewed_no(conn.assigns.user.id)
+    if already > 0 do
+      conn = put_flash(conn, :info, 
+        "Thank you for reviewing #{already} #{resource_word(already)}. Your participation has already been graded. You are welcome to review more resources, or move on to other parts of the course.")
+    end
+    
     if params["id"] do
       id = String.to_integer(params["id"])
+      Resource.update_seen(user, id)
     else
       id = Resource.get_random(conn.assigns.user)
     end
@@ -46,13 +56,41 @@ defmodule Survey.ResourceController do
     else
       sig = conn.assigns.user.sig_id
       tags = ResourceTag.get_tags(sig)
-      resource = Repo.get(Resource, id)
+      resource = Resource.get_resource(id)
+      if !resource do
+        html conn, "Resource with that ID not found"
+      else
 
-      conn
-      |> put_layout("minimal.html")
-      |> render "review.html", tags: tags, resource: resource
+        rtype = if resource.generic do
+          "generic"
+        else
+          "discipline-specific"
+        end
+
+        conn
+        |> put_layout("minimal.html")
+        |> render "review.html", tags: tags, resource: resource,
+          resourcetype: rtype
+      end
     end
   end
+
+  def review_submit(conn, params) do
+    user = conn.assigns.user
+    resource = Repo.get(Resource, params["resource_id"])
+    form = params["f"]
+    comments = resource.comments
+
+    if form["comment"] do
+      newcom = %{nick: user.nick, user_id: user.id, text: form["comment"],
+        date: Ecto.DateTime.local}
+      comments = [ newcom | comments ]
+    end
+
+    IO.inspect(params)
+    json conn, inspect(params)
+  end
+  #---------------------------------------- 
 
   def preview(conn, params) do
     tags = ResourceTag.get_tags(2)
