@@ -54,6 +54,10 @@ defmodule Survey.Router do
     post "/resource/review/:id", ResourceController, :review
     get "/resource/review/:id", ResourceController, :review
     post "/resource/check_url", ResourceController, :check_url
+
+    # reflection
+    get "/reflection/:id", ReflectionController, :index
+    post "/reflection/submission", ReflectionController, :submit
   end
 
   scope "/", Survey do
