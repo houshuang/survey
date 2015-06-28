@@ -189,6 +189,11 @@ defmodule Survey.HTML.Survey.Report do
     |> Enum.map(&sort_tag_entry/1)
   end
 
+  def sigs do
+    runq(
+    "SELECT s.name AS name, count(u.id) AS COUNT FROM users AS u LEFT JOIN sigs AS s ON u.sig_id = s.id WHERE s.name IS NOT NULL GROUP BY s.name ORDER BY COUNT desc;")
+  end
+
   def sort_tag_entry({tag, count, steam, grade}) do
     {
       tag,
