@@ -11,13 +11,13 @@ $(document).ready(function(){
     singleFieldDelimiter: "|",
     placeholderText: "Enter your tags",
     afterTagRemoved: function(event, ui) {
-      // do something special
       txt = ui.tagLabel
       id = txt.replace(/ /g,"_").replace(/,/g,"_");
       $('#' + id).html('<a href="#">' + txt + '</a>' )
     }  
   });
 
+  $('#tagfieldset').hide()
   $('.tagsuggestion').on('click', function(e) {
     txt = $(this).text()
     $(this).html(txt)
@@ -26,8 +26,47 @@ $(document).ready(function(){
   })
   $('.stepsController a').on('click', function() {buttonclick(this);});
 
+  $('.generic').on('click', function() {
+    val = $('form input[type=radio][name*=generic]:checked').val()
+    if(val == "true") { 
+      $('#tagfieldset').hide()
+    } else {
+      $('#tagfieldset').show()
+    }
+  })
 
   $('input[name*=url]').on('change', check_url)
+  $('textarea').each(function(){
+
+    var T = $(this);
+    var valueNum = T.next('.counter').attr('length');
+    var min = T.next('.counter').attr('min');
+    if (valueNum) {
+    T.next('.counter').text(valueNum);
+    T.on('keyup', function(){
+
+      var len = T.val().length;
+      if (len > valueNum) {
+        newValue = T.val().substring(0, valueNum);
+        T.val(newValue);
+      } else {
+        T.next('.counter').text(valueNum - len);
+      }			
+    });
+    }
+    if (min) {
+    T.next('.counter').html("<font color=red>At least " + min + " more words required</font>");
+    T.on('keyup', function(){
+
+      var len = T.val().trim().split(" ").length;
+      if (len >= min) {
+    T.next('.counter').html("<font color=green>✓</font>");
+      } else {
+    T.next('.counter').html("<font color=red>At least " + (min - len) + " more words required</font>");
+      }			
+    });
+    }
+  });
 });
 
 buttonclick = function(e) {
@@ -64,7 +103,7 @@ validate_page = function(pg) {
   var warnings= []
   if(!validate_text('name')) { warnings.push("Please add a name with more than three characters") }
   if(!validate_url('url')) { warnings.push("Please check your URL, it does not seem to be valid") }
-  if(!validate_textarea('description')) { warnings.push("Please add a description with more than 30 characters") }
+  if(!validate_textarea('description')) { warnings.push("Please add a description with more than 10 words") }
   if(!validate_radio('generic')) { warnings.push("Please specify whether this is a generic or a discipline-specific resource") }
   if(!validate_select('sig_id')) { warnings.push("Please select a Special Interest Group (SIG)") }
   if(!validate_tags('tags')) { warnings.push("Please add at least one tag") }
@@ -77,56 +116,41 @@ function isUrlValid(url) {
 }
 
 check_url = function(pagevalidate) {
-  session = $('input[name*=session]').val()
   url = $('input[name*=url]').val()
   if(!isUrlValid(url)) {
     not_valid("This is not a valid URL. URLs should look like this: http://example.com, or https://resource.net/math. Please try again.")
-    if(pagevalidate===true) { validate_page() } 
   } else {
-    $.post("/resource/check_url",
-           {url: url, session: session})
-           .then(function(e) {
-             console.log(e)
-             url_callback(e, pagevalidate)
-           })
+    valid()
   }
+
+  if(pagevalidate===true) { validate_page() } 
 } 
-
-url_callback = function(valid, pagevalidate) {
-  switch(valid.result) {
-    case "success":
-      $("#urlverification").html('<font color=green>This URL is valid, great!</font>')
-    Window.valid = true
-    break
-    case "not found":
-      not_valid("This URL seems unreachable, perhaps you mistyped it? Please try again, or add another resource instead.") 
-    break
-    case "exists":
-      session = $('input[name*=session]').val()
-      url = '/resource/review/' + valid.id + '?session=' + session
-      not_valid("This URL already exists. <a href=" + url + ">Click here</a> to see the existing submission, and add your comments.")
-    break
-  }
-  if(pagevalidate===true) { validate_page() }
-}
-
 
 not_valid = function(message) {
   $("#urlverification").html('<font color=red>' + message + '</font>')
   Window.valid = false
 }
 
+valid = function(message) {
+  $("#urlverification").html('')
+  Window.valid = true
+}
+
 validate_url = function() {
   return(validate_text("url") && Window.valid !== false)
 }
 validate_tags = function(field) {
-  return $('input[name*=' + field + ']').val() !== ""
+  if($('form input[type=radio][name*=generic]:checked').val() == "false") {
+    return $('input[name*=' + field + ']').val() !== "" 
+  } else {
+    return true
+  }
 }
 validate_text = function(field) {
   return $('input[name*=' + field + ']').val().length > 3
 }
 validate_textarea = function(field) {
-  return $('textarea[name*=' + field + ']').val().length > 30
+  return $('textarea[name*=' + field + ']').val().trim().split(" ").length >= 10;
 }
 validate_radio = function(field) {
   return $('form input[type=radio][name*=' + field + ']:checked').val()
