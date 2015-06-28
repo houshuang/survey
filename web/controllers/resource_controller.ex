@@ -14,7 +14,7 @@ defmodule Survey.ResourceController do
     if params["f"] do
       Logger.info("Saving new resource")
       save_to_db(conn, params["f"])
-      # Survey.Grade.submit_grade(conn, "add_resource", 1.0)
+      Survey.Grade.submit_grade(conn, "add_resource", 1.0)
     end
 
     already = Resource.user_submitted_no(conn.assigns.user.id)
