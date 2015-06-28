@@ -33,9 +33,9 @@
         <div id="tagfieldset"> 
           <fieldset >
             <h4>Tags <font color=red>*</font></h4>
-            <p><i>Please enter a number of tags to describe the disciplinary focus of the resource. 
-                </p><br><p>
-                Below the tag bar, you will see suggestions based on what other people with your teaching interests have entered - in this way we hope to build up a "folksonomic" tag cloud. Click on a tag to add it to your tag selection. </p><br><p> Tags can have spaces. Press enter to add a new tag.</i></p><br>
+          <p><i>Please enter key-word "tags" to describe the topics this resource could be used to address. Below the tag bar, you will see suggestions of topics from your SIG. Click on any of those tags to add it to your list.  
+              </p><br><p>
+              If you type a new one, please remember that you can include spaces (e.g., "graphing functions") and also remember to hit the Enter/Return key to add your tag.</p>
             <script src="/js/tag-it.min.js"></script>
             <input name='f[tags]' type=text class="form-control" id="ms-suggest">
             <div id="tags">
