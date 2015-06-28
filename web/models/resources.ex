@@ -18,10 +18,22 @@ defmodule Survey.Resource do
   end
 
   # returns ID of an entry with a given URL, or nil if it doesn't exist
-  def find_url(url) do
+  def find_url(url, sig \\ nil) do
     req = from t in Survey.Resource,
       where: t.url == ^url,
-      select: t.id
+      select: t.id,
+      limit: 1
+    if sig do
+      req = from t in req, where: t.sig_id == ^sig
+    end
+    req |> Repo.one
+  end
+
+  # how many resources submitted by user
+  def user_submitted_no(userid) do
+    req = from t in Survey.Resource,
+      where: t.user_id == ^userid,
+      select: count(t.id)
     req |> Repo.one
   end
 

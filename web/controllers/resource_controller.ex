@@ -4,6 +4,9 @@ defmodule Survey.ResourceController do
   require Logger
   alias Survey.Resource
   import Prelude
+  alias Survey.Resource
+  alias Survey.ResourceTag
+  alias Survey.Repo
 
   plug :action
 
@@ -11,33 +14,39 @@ defmodule Survey.ResourceController do
     if params["f"] do
       Logger.info("Saving new resource")
       save_to_db(conn, params["f"])
-      Survey.Grade.submit_grade(conn, "add_resource", 1.0)
+      # Survey.Grade.submit_grade(conn, "add_resource", 1.0)
+    end
+
+    already = Resource.user_submitted_no(conn.assigns.user.id)
+    if already > 0 do
       conn = put_flash(conn, :info, 
-        "Thank you for submitting a resource. Your participation has already been graded. You are welcome to submit more resources, or move on to other parts of the course.")
+        "Thank you for submitting #{already} #{resource_word(already)}. Your participation has already been graded. You are welcome to submit more resources, or move on to other parts of the course.")
     end
 
     sig = conn.assigns.user.sig_id
-    tags = Survey.ResourceTag.get_tags(sig)
+    tags = ResourceTag.get_tags(sig)
 
     conn
     |> put_layout("minimal.html")
     |> render "resource.html", tags: tags
   end
 
+  def resource_word(cnt) when cnt > 1, do: "resources"
+  def resource_word(cnt), do: "resource"
+
   def review(conn, params) do 
     if params["id"] do
       id = String.to_integer(params["id"])
     else
-      id = Survey.Resource.get_random(conn.assigns.user)
+      id = Resource.get_random(conn.assigns.user)
     end
 
-    IO.inspect(["id", id])
     if !id do
       html conn, "Sorry, we could not find any new resources for you to review. Try back in a little while."
     else
       sig = conn.assigns.user.sig_id
-      tags = Survey.ResourceTag.get_tags(sig)
-      resource = Repo.get(Survey.Resource, id)
+      tags = ResourceTag.get_tags(sig)
+      resource = Repo.get(Resource, id)
 
       conn
       |> put_layout("minimal.html")
@@ -46,14 +55,14 @@ defmodule Survey.ResourceController do
   end
 
   def preview(conn, params) do
-    tags = Survey.ResourceTag.get_tags(2)
+    tags = ResourceTag.get_tags(2)
     conn
     |> put_layout("minimal.html")
     |> render "resource.html", tags: tags
   end
 
   def report(conn, _) do
-    resources = Survey.Resource.get_all_by_sigs
+    resources = Resource.get_all_by_sigs
     conn
     |> put_layout("minimal.html")
     |> render "report.html", resources: resources
@@ -61,17 +70,21 @@ defmodule Survey.ResourceController do
   #---------------------------------------- 
 
   def save_to_db(conn, params) do
-    resource = params
-    |> Map.update("generic", false, fn x -> x == "true" end)
-    |> Map.put("user_id", conn.assigns.user.id)
-    |> Map.put("sig_id", conn.assigns.user.sig_id)
-    |> atomify_map
-    |> proc_tags
+    if !Resource.find_url(params["url"], conn.assigns.user.sig_id) do
+      resource = params
+      |> Map.update("generic", false, fn x -> x == "true" end)
+      |> Map.put("user_id", conn.assigns.user.id)
+      |> Map.put("sig_id", conn.assigns.user.sig_id)
+      |> atomify_map
+      |> proc_tags
 
-    struct(Survey.Resource, resource)
-    |> Survey.Repo.insert
+      struct(Resource, resource)
+      |> Repo.insert
 
-    Survey.ResourceTag.update_tags(conn.assigns.user.sig_id, resource.tags)
+      ResourceTag.update_tags(conn.assigns.user.sig_id, resource.tags)
+    else
+      Logger.warn("Tried inserting resource with same URL twice")
+    end
   end
 
   defp proc_tags(%{tags: tags} = h), do: %{h | tags: String.split(tags, "|") }
