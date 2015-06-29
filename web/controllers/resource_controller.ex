@@ -14,7 +14,7 @@ defmodule Survey.ResourceController do
     if params["f"] do
       Logger.info("Saving new resource")
       save_to_db(conn, params["f"])
-      # Survey.Grade.submit_grade(conn, "add_resource", 1.0)
+      Survey.Grade.submit_grade(conn, "add_resource", 1.0)
     end
 
     already = Resource.user_submitted_no(conn.assigns.user.id)
@@ -41,7 +41,7 @@ defmodule Survey.ResourceController do
     already = Resource.user_reviewed_no(conn.assigns.user.id)
     if already > 0 do
       conn = put_flash(conn, :info, 
-        "Thank you for reviewing #{already} #{resource_word(already)}. Your participation has already been graded. You are welcome to review more resources, or move on to other parts of the course.")
+        "Thank you for reviewing #{already} #{resource_word(already)}. You are welcome to review more resources, or move on to other parts of the course.")
     end
     
     if params["id"] do
