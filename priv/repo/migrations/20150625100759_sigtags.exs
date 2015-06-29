@@ -17,7 +17,7 @@ defmodule Survey.Repo.Migrations.Sigtags do
     |> Enum.map(fn x -> process_tag(x) end)
     |> Enum.filter(fn x -> x != nil end)
     |> Enum.each(fn {tag, sigs} -> 
-      %Survey.ResourceTag{name: tag, sigs: sigs} |> Survey.Repo.insert
+      %Survey.ResourceTag{name: tag, sigs: sigs} |> Survey.Repo.insert!
     end)
   end
 

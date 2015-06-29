@@ -11,6 +11,8 @@ for x1 <- @questions do
       render "_grid.html", data: data
     {:tags, data} ->
       render "_tag.html", data: data |> Enum.take(5)
+    {:sigs, data} ->
+      render "_sig.html", data: data
     {:grades, data} ->
       render "_grade.html", data: data
     {:steams, data} ->

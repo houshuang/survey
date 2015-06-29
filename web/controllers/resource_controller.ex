@@ -117,7 +117,7 @@ defmodule Survey.ResourceController do
       |> proc_tags
 
       struct(Resource, resource)
-      |> Repo.insert
+      |> Repo.insert!
 
       ResourceTag.update_tags(conn.assigns.user.sig_id, resource.tags)
     else

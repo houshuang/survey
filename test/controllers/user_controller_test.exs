@@ -32,7 +32,7 @@ defmodule Survey.UserControllerTest do
   end
 
   test "shows chosen resource", %{conn: conn} do
-    user = Repo.insert %User{}
+    user = Repo.insert! %User{}
     conn = get conn, user_path(conn, :show, user)
     assert html_response(conn, 200) =~ "Show user"
   end

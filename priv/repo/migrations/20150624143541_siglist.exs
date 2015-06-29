@@ -12,7 +12,7 @@ defmodule Survey.Repo.Migrations.SigList do
   end
 
   def add_sig(sig) do
-    %Survey.SIG{name: sig} |> Survey.Repo.insert
+    %Survey.SIG{name: sig} |> Survey.Repo.insert!
   end
 end
 

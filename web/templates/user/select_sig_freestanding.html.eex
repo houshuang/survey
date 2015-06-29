@@ -1,0 +1,24 @@
+<div class="blocks">
+  <%= form_for @conn, user_path(@conn, :select_sig_submit), [name: :search], fn _ -> %>
+  <%= raw ParamSession.form_session @conn %>
+    <div class="block" style="">
+
+      <fieldset>
+        <h4>Choose a Special Interest Group (SIG) <font color=red>*</font></h4>
+        <%= if @sig do %>
+          You are currently a member of <b><%= @sig %></b>, if you would like to change SIGs, please choose another one below. Note that when you change SIGs, you will be put in a different discussion forum cohort, see different design groups, have access to different resources, etc. Updating the forum settings might take up to a day.
+        <% else %>
+        <p>Before you can continue with any of the interactive activities, you first need to select a SIG.  These SIGs were designed based on responses from the early students in this course. Most of the collaborative work in this MOOC will happen within your SIG, and some of the discussion forums will only be for your SIG (it might take a day for you to gain access to these).</p>
+      <% end %>
+            <br>
+              <select name='f[sig_id]'> 
+                <option value=noselection>Please select from this list</option>
+                <%= for sig <- sigs do %>
+                <option value=<%= sig.id %>><%= sig.name %></option>
+                <% end %>
+              </select>
+            </fieldset>
+            <br>
+      <div class='stepsController prev right'><a href='#'>Submit</a></div>
+            <% end %>
+            <script src="/js/select_sig.js"></script>

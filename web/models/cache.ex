@@ -15,7 +15,7 @@ defmodule Survey.Cache do
   end
 
   defp insert(blob) do
-    %{id: id} = %Survey.Cache{blob: blob}  |> Repo.insert
+    %{id: id} = %Survey.Cache{blob: blob}  |> Repo.insert!
     id
   end
 
