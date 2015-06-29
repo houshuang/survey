@@ -66,7 +66,7 @@ defmodule Survey.Resource do
     seen = user.resources_seen
     if !seen, do: seen = []
     if not id in seen do
-      %{ user | resources_seen: [ id | seen ]} |> Repo.update
+      %{ user | resources_seen: [ id | seen ]} |> Repo.update!
     end
   end
 
