@@ -11,7 +11,10 @@ defmodule Survey.Resource do
     field :description, :string
     field :generic, :boolean
     field :comments, {:array, Survey.JSON}
-    field :score, :integer
+    field :old_desc, {:array, Survey.JSON}
+    field :old_tags, {:array, Survey.JSON}
+    field :score, :float
+    field :old_score, {:array, Survey.JSON}
     belongs_to :sig, Survey.SIG
     belongs_to :user, Survey.User
     timestamps

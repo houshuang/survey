@@ -8,7 +8,7 @@ $(document).ready(function(){
   $('#edit_desc').on('click', function() {
     text = $('#description').text()
     $('#edit_button').html('')
-    $('#description').html('<textarea name="f[description]">' + text + '</textarea>')
+    $('#description').html('<textarea name="f[description]">' + $.trim(text) + '</textarea>')
     return false;
   })
 

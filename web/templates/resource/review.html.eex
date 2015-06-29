@@ -11,8 +11,7 @@
     Added by: <%= @resource.user.nick %>
     <fieldset>
       <h4>Description</h4>
-      <p id="description"><%= @resource.description %>
-        <div id='edit_button'><i><a href="#" id="edit_desc">
+      <p id="description"><%= @resource.description %><div id='edit_button'><i><a href="#" id="edit_desc">
               (Improve this)</a></i></p><br></div>
     </fieldset>
     <fieldset>
