@@ -55,8 +55,10 @@ defmodule Survey.Router do
     get "/resource/review/:id", ResourceController, :review
     post "/resource/check_url", ResourceController, :check_url
   
-    get "/user/select_sig_freestanding", UserController, :select_sig
-    post "/user/select_sig_freestanding", UserController, :select_sig
+    get "/user/select_sig_freestanding", UserController, 
+      :select_sig_freestanding
+    post "/user/select_sig_freestanding", UserController, 
+      :select_sig_freestanding
   end
 
   scope "/", Survey do
