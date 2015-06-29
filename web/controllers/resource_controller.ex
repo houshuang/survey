@@ -122,22 +122,24 @@ defmodule Survey.ResourceController do
 
     # TAGS
     tags = resource.tags
-    old_tags = resource.old_tags
-    raw_tags = String.split(form["tags"], "|")
-    new_tags = set_difference(raw_tags, tags)
-    if !Enum.empty?(new_tags) do
-      
-      tags = raw_tags
-      cur = %{tags: new_tags, user_id: user.id, 
-        date: Ecto.DateTime.local}
+    if !resource.generic || !form["tags"] || form["tags"] == "" do
+      old_tags = resource.old_tags
+      raw_tags = String.split(form["tags"], "|")
+      new_tags = set_difference(raw_tags, tags)
+      if !Enum.empty?(new_tags) do
+        
+        tags = raw_tags
+        cur = %{tags: new_tags, user_id: user.id, 
+          date: Ecto.DateTime.local}
 
-      # either append, or create old_desc with orig as first entry
-      if old_tags do
-        old_tags = [ cur | old_tags ]
-      else
-        orig = %{tags: resource.tags, 
-          user_id: resource.user_id, date: resource.inserted_at}
-        old_tags = [cur, orig]
+        # either append, or create old_desc with orig as first entry
+        if old_tags do
+          old_tags = [ cur | old_tags ]
+        else
+          orig = %{tags: resource.tags, 
+            user_id: resource.user_id, date: resource.inserted_at}
+          old_tags = [cur, orig]
+        end
       end
     end
     
