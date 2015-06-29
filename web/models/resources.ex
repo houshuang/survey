@@ -65,7 +65,7 @@ defmodule Survey.Resource do
     else
       selected = :random.uniform(length(available_ids)) - 1
       s_id = Enum.at(available_ids, selected)
-      %{ user | resources_seen: [ s_id | seen ]} |> Repo.update
+      %{ user | resources_seen: [ s_id | seen ]} |> Repo.update!
 
       s_id
     end

@@ -47,10 +47,10 @@ defmodule Survey.Grade do
         grade: grade,
         submitted: false,
         cache_id: cache_id}
-      |> Repo.insert
+      |> Repo.insert!
 
       case res = PlugLti.Grade.call(lti, grade) do
-        :ok -> Repo.update(%{dbentry | submitted: true})
+        :ok -> Repo.update!(%{dbentry | submitted: true})
         {:error, message} -> Logger.warn(
         "Not able to submit grade, UserGrade id #{dbentry.id}, message: #{inspect(message)}")
       end

@@ -39,7 +39,7 @@ defmodule Survey.UserController do
       |> Map.put(:edx_email, get_session(conn, :edx_email))
       |> Map.put(:edx_userid, get_session(conn, :edx_userid))
       |> Map.put(:admin, get_session(conn, :admin))
-      |> Repo.insert
+      |> Repo.insert!
 
       Logger.info("#{user.id} registered.")
       if user.tags do
@@ -71,7 +71,7 @@ defmodule Survey.UserController do
   end
   
   def delete_user(conn, _) do
-    Repo.delete(conn.assigns.user)
+    Repo.delete!(conn.assigns.user)
     conn
     |> delete_session(:repo_userid)
     |> put_flash(:info, "User deleted")
@@ -80,7 +80,7 @@ defmodule Survey.UserController do
 
   def delete_survey(conn, _) do
     user = conn.assigns.user
-    Repo.update(%{user | surveystate: 0, survey: nil })
+    Repo.update!(%{user | surveystate: 0, survey: nil })
     conn
     |> put_flash(:info, "Survey deleted")
     |> ParamSession.redirect "/user/info"
@@ -113,7 +113,7 @@ defmodule Survey.UserController do
     userid = get_session(conn, :repo_userid)
     user = Repo.get(Survey.User, userid)
 
-    %{ user | sig_id: string_to_int_safe(sig) } |> Repo.update
+    %{ user | sig_id: string_to_int_safe(sig) } |> Repo.update!
 
     redir = get_session(conn, :ensure_sig_redirect)
     if redir do
