@@ -3,6 +3,10 @@
 <%= 
 for x1 <- @questions do
   case x1 do
+    {:signup, data} -> 
+      render "_signup.html", data: data
+    {:general, data} -> 
+      render "_general.html", data: data
     {:text, data} -> 
       render "_text.html", data: data
     {:radio, data} -> 
