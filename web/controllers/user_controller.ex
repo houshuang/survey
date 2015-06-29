@@ -94,6 +94,19 @@ defmodule Survey.UserController do
     |> render "select_sig.html"
   end
 
+  def select_sig_freestanding(conn, _) do
+    sig = Map.get(conn.assigns.user, :sig_id, nil)
+    signame = if sig do
+      Repo.get(Survey.SIG, sig).name
+    else
+      nil
+    end
+
+    conn
+    |> put_layout("minimal.html")
+    |> render "select_sig_freestanding.html", sig: signame
+  end
+
   def select_sig_submit(conn, params) do
     sig = params["f"]["sig_id"]
 
@@ -105,11 +118,10 @@ defmodule Survey.UserController do
     redir = get_session(conn, :ensure_sig_redirect)
     if redir do
       conn
-      |> put_flash(:info, "Successfully registered!")
       |> delete_session(:ensure_sig_redirect)
       |> ParamSession.redirect redir
     else
-      html conn, "Thank you for submitting"
+      html conn, "Thank you for submitting. Your SIG choice has been updated."
     end
   end
 
