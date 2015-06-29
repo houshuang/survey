@@ -21,7 +21,10 @@ defmodule Survey.ReportController do
                 |> Enum.map(&do_question/1)
     
     questions = 
-    [ { :sigs, Report.sigs },
+    [ 
+      { :general, Report.general_numbers },
+      { :signup, Report.signup },
+      { :sigs, Report.sigs },
       { :tags, Report.tags },
       { :grades, Report.grades },
       { :steams, %{steams: Report.steams, steamnumber: Report.steam_number} }

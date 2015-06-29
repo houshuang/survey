@@ -1,0 +1,1 @@
+<b><%= @data["survey"] %> learners have taken the survey, <%= @data["nosurvey"] %> learners have registered but not taken the survey, for a total of <%= @data["survey"] + @data["nosurvey"] %> registrants.<b><p><br>
