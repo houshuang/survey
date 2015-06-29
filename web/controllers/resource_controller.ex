@@ -122,7 +122,7 @@ defmodule Survey.ResourceController do
 
     # TAGS
     tags = resource.tags
-    if !resource.generic || !form["tags"] || form["tags"] == "" do
+    if !(resource.generic || !form["tags"] || form["tags"] == "") do
       old_tags = resource.old_tags
       raw_tags = String.split(form["tags"], "|")
       new_tags = set_difference(raw_tags, tags)
