@@ -109,7 +109,7 @@ defmodule Survey.ResourceController do
     end
 
     # SCORE
-    score = resource.score || 0
+    score = resource.score || 0.0
     old_score = resource.old_score || []
     if form["rating"] != "" do
       {newscore, _} = Float.parse(form["rating"])
