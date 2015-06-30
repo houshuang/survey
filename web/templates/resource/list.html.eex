@@ -51,7 +51,7 @@
 <br>
 <h3>Resources from your SIG</h3>
 <ul>
-  <%= for resource <- (@resources.true || []) do %>
+  <%= for resource <- (@resources[:true] || []) do %>
   <li><a href="<%= 
       ParamSession.gen_url(@conn, "/resource/review/#{resource.id}?list=true")
       %>"><%= resource.name %></a></li>
