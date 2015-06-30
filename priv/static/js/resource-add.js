@@ -115,7 +115,8 @@ validate_page = function(pg) {
 
 check_url = function(pagevalidate) {
   session = $('input[name*=session]').val()
-  url = $('input[name*=url]').val()
+  url = $.trim($('input[name*=url]').val())
+  $('input[name*=url]').val(url)
   if(!isUrlValid(url)) {
     not_valid("This is not a valid URL. URLs should look like this: http://example.com, or https://resource.net/math. Please try again.")
   if(pagevalidate===true) { validate_page() }
