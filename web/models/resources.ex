@@ -107,7 +107,7 @@ defmodule Survey.Resource do
   end
 
   def user_seen?(user, resourceid) do
-    user[:resources_seen] && Enum.member?(user.resources_seen, resourceid)
+    user.resources_seen && Enum.member?(user.resources_seen, resourceid)
   end
 
   defp and_and(query, col, val) when is_list(val) and is_atom(col) do
