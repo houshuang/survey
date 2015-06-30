@@ -36,7 +36,39 @@ defmodule Survey.ResourceController do
 
   #---------------------------------------- 
 
+  def tag_cloud(conn, params) do
+    sig = conn.assigns.user.sig_id
+    if params["all"], do: sig = nil
+    tagfreq = Resource.tag_freq(sig)
+    conn
+    |> put_layout("minimal.html")
+    |> render "tag_cloud.html", tagfreq: tagfreq
+  end
+  
+  def list(conn, params) do
+    sig = conn.assigns.user.sig_id
+    if params["tag"] do
+      tag = params["tag"]
+      resources = Resource.resource_list(sig, params["tag"])
+    else
+      tag = nil
+      resources = Resource.resource_list(sig)
+    end
+
+    conn
+    |> put_layout("minimal.html")
+    |> render "list.html", resources: resources, tag: tag
+  end
+  #---------------------------------------- 
+
   def review(conn, params) do 
+    if params["list"] do
+      conn = put_session(conn, :review_redirect, true)
+      redirect = :list
+    else
+      redirect = :next
+      conn = delete_session(conn, :review_redirect)
+    end
     user = conn.assigns.user
     already = Resource.user_reviewed_no(conn.assigns.user.id)
     if already > 0 do
@@ -70,7 +102,7 @@ defmodule Survey.ResourceController do
         conn
         |> put_layout("minimal.html")
         |> render "review.html", tags: tags, resource: resource,
-          resourcetype: rtype
+          resourcetype: rtype, redirect: redirect
       end
     end
   end
@@ -148,9 +180,15 @@ defmodule Survey.ResourceController do
       tags: tags, old_tags: old_tags, score: score, old_score: old_score,
       description: description, old_desc: old_desc, comments: comments}
     |> Repo.update!
+
+    redir_url = if get_session(conn, :review_redirect) do
+      "/resource/list"
+    else
+      "/resource/review"
+    end
     
     conn
-    |> ParamSession.redirect "/resource/review"
+    |> ParamSession.redirect redir_url
   end
   #---------------------------------------- 
 

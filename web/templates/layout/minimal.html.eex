@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="/css/normalize.css">
     <link rel="stylesheet" href="/css/reset.css">
     <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/jcloud.css">
     <link rel="stylesheet" href="/css/jquery.tagit.css">
     <link rel="stylesheet" href="/css/tagit.ui-zendesk.css">
     <script src="/js/modernizr-2.8.3.min.js"></script>

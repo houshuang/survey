@@ -1,0 +1,66 @@
+<style>
+  .btn {
+  background: #3498db;
+  background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+  background-image: -moz-linear-gradient(top, #3498db, #2980b9);
+  background-image: -ms-linear-gradient(top, #3498db, #2980b9);
+  background-image: -o-linear-gradient(top, #3498db, #2980b9);
+  background-image: linear-gradient(to bottom, #3498db, #2980b9);
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 20px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+}
+
+.btn:hover {
+  background: #3cb0fd;
+  background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+  text-decoration: none;
+  }</style>
+<%= if @tag do %>
+<h1>tag: <%= @tag %></h1>
+<br>
+<a href='<%=
+  ParamSession.gen_url(@conn, "/resource/tag-cloud")
+  %>' class="btn">Back to tag cloud</a><br><br><br>
+<ul>
+<%= for resource <- @resources.true do %>
+<li><a href="<%= 
+    ParamSession.gen_url(@conn, "/resource/review/#{resource.id}?list=true")
+    %>"><%= resource.name %></a></li>
+<% end %>
+</ul>
+<%= else %>
+<h1>Resources contributed by MOOC learners</h1>
+<br>
+<a href="<%= 
+    ParamSession.gen_url(@conn, "/resource/tag-cloud")
+    %>" class="btn">See resources from my SIG in a tag cloud</a>
+<br>
+<br>
+<h3>Resources from your SIG</h3>
+<ul>
+<%= for resource <- @resources.true do %>
+<li><a href="<%= 
+    ParamSession.gen_url(@conn, "/resource/review/#{resource.id}?list=true")
+    %>"><%= resource.name %></a></li>
+<% end %>
+</ul>
+<br><br>
+<h3>Generic resources from other SIGs</h3>
+<ul>
+<%= for resource <- @resources.false do %>
+<li><a href="<%= 
+    ParamSession.gen_url(@conn, "/resource/review/#{resource.id}?list=true")
+    %>"><%= resource.name %></a></li>
+<% end %>
+</ul>
+<% end %>

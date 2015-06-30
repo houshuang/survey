@@ -68,6 +68,11 @@
   <br>
 <% end %>
 <div class='stepsController submit right'><a href='#'>
-    Store any changes, and review another resource</a></div> 
+    <%=
+    case @redirect do
+      :list -> "Store any changes, and return to resource listing"
+      :next -> "Store any changes, and review another resource"
+    end
+    %></a></div> 
 <script src="/js/jquery.rateit.min.js"></script>
 <script src="/js/resource-review.js"></script>

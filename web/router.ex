@@ -54,7 +54,10 @@ defmodule Survey.Router do
     post "/resource/review/:id", ResourceController, :review
     get "/resource/review/:id", ResourceController, :review
     post "/resource/check_url", ResourceController, :check_url
-  
+    get "/resource/tag-cloud", ResourceController, :tag_cloud
+    get "resource/list", ResourceController, :list
+
+    # sig
     get "/user/select_sig_freestanding", UserController, 
       :select_sig_freestanding
     post "/user/select_sig_freestanding", UserController, 
