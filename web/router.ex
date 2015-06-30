@@ -1,6 +1,10 @@
 defmodule Survey.Router do
   use Survey.Web, :router
 
+  socket "/ws", Chat do
+    channel "rooms:*", RoomChannel
+  end
+
   pipeline :browser do
     plug ParamSession
     plug EnsureLti
@@ -77,5 +81,6 @@ defmodule Survey.Router do
     get "/report/tags", ReportController, :tags
     get "/report/resource", ResourceController, :report
     get "/resource/preview", ResourceController, :preview
+    get "/chat", ChatController, :index
   end
 end
