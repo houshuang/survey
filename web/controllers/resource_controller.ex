@@ -96,9 +96,9 @@ defmodule Survey.ResourceController do
       else
 
         rtype = if resource.generic do
-          "generic"
+          "NOTE: This is a GENERIC Resource, meaning that the person who added it felt that it would be applicable to more than one SIG"
         else
-          "discipline-specific"
+          ""
         end
 
         conn

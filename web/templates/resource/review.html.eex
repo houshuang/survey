@@ -4,8 +4,19 @@
   <%= raw ParamSession.form_session @conn %>
   <input type='hidden' value=<%= @resource.id %> name='resource_id'>
   <div class="block" style="">
-    <h1>Review <%= @resourcetype %> resource</h1>
-    <h3><%= @resource.name %></h3>
+    <h1>Review resource</h1>
+    <font size=-1><i><%= @resourcetype %></i></font>
+    <fieldset>
+      <span style="
+        font-family: 'dosisextralight', sans-serif;
+        color: #0877b0; line-height: 1.3;
+        font-size: 24px;">
+        Name:</span><span style="
+        font-family: 'dosisextralight', sans-serif;
+        color: #00000; line-height: 1.3;
+        font-size: 30px;">
+        <%= @resource.name %></span><br><br>
+  </fieldset>
     <i><a href='<%= @resource.url %>' target='_blank'><%= @resource.url %>
     </a></i><br>
     Added by: <%= @resource.user.nick %>
@@ -16,6 +27,7 @@
     </fieldset>
     <fieldset>
       <h4>Lesson topics ideas</h4>
+      <i><p>Can you think of any ways in which this technology might be used for an inquiry activity that helped students in your SIG area to represent their ideas and collaborate with peers, in order to learn about topics?</P></i>
       <%= if @resource.comments do %>
         <%= for comment <- @resource.comments do %>
           <p><%= comment["text"] %>
@@ -27,7 +39,7 @@
       <label>Add “lesson topic ideas” that describe ways you think 
         it could be used for an inquiry lesson:
         <textarea name='f[comment]'></textarea>
-        <p class='counter' min='10'>
+        <p class='counter' length='500'>
         </fieldset>
         <%= if !@seen do %>
         <fieldset>
