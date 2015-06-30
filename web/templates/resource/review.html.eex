@@ -45,8 +45,7 @@
         <fieldset>
           <h4>Rate resource</h4>
         </fieldset>
-        <label>1 = not very useful or engaging for students; 
-          5 = very useful or engaging for students: 
+        <label>How would you rate this resource, in terms of its likely application for inquiry curriculum in K-12 classrooms or informal learning environments (field trips, museums, etc)?  Choose 1 for a low rating and 5 for a high rating</label>
           <input type="range" min="0" max="5" value="0" step="0.5" id="rating"><br>
           <input type='hidden' name='f[rating]' id='rating_input'>
           <div id='rateit' class="rateit" data-rateit-backingfld="#rating"></div>

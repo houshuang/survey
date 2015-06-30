@@ -89,11 +89,11 @@ defmodule Survey.ResourceController do
       sig = conn.assigns.user.sig_id
       tags = ResourceTag.get_tags(sig)
       resource = Resource.get_resource(id)
-      seen = Resource.user_seen?(user, resource.id)
 
       if !resource do
-        html conn, "Resource with that ID not found"
+        ParamSession.redirect(conn, "/resource/review")
       else
+      seen = Resource.user_seen?(user, resource.id)
 
         rtype = if resource.generic do
           "NOTE: This is a GENERIC Resource, meaning that the person who added it felt that it would be applicable to more than one SIG"
