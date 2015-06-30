@@ -28,6 +28,7 @@
     <fieldset>
       <h4>Lesson topics ideas</h4>
       <i><p>Can you think of any ways in which this technology might be used for an inquiry activity that helped students in your SIG area to represent their ideas and collaborate with peers, in order to learn about topics?</P></i>
+      <hr style='margin: 10px 10px 10px 0;'>
       <%= if @resource.comments do %>
         <%= for comment <- @resource.comments do %>
           <p><%= comment["text"] %>
@@ -35,9 +36,10 @@
           <br>
         <% end %>
       <% end %>
+      <hr style='margin: 10px 10px 10px 0;'>
 
-      <label>Add “lesson topic ideas” that describe ways you think 
-        it could be used for an inquiry lesson:
+      <label><i>Add “lesson topic ideas” that describe ways you think 
+          it could be used for an inquiry lesson:</label>
         <textarea name='f[comment]'></textarea>
         <p class='counter' length='500'>
         </fieldset>
