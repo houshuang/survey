@@ -90,7 +90,8 @@ defmodule Survey.Resource do
   end
 
   def resource_list(sig, tag \\ nil) do 
-    query = from t in Survey.Resource
+    query = from t in Survey.Resource,
+    order_by: [fragment("coalesce(?, -999)", t.score), asc: t.score, asc: t.name]
 
     if sig do
       query = from t in query, where: (t.sig_id == ^sig) or (t.generic == true)
