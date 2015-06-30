@@ -32,7 +32,7 @@
   ParamSession.gen_url(@conn, "/resource/tag-cloud")
   %>' class="btn">Back to tag cloud</a><br><br><br>
 <ul>
-  <%= for resource <- (@resources.true || []) do %>
+  <%= for resource <- (@resources[:true] || []) do %>
   <li><a href="<%= 
       ParamSession.gen_url(@conn, "/resource/review/#{resource.id}?list=true")
       %>"><%= resource.name %></a></li>
@@ -60,7 +60,7 @@
 <br><br>
 <h3>Generic resources from other SIGs</h3>
 <ul>
-  <%= for resource <- (@resources.false || []) do %>
+  <%= for resource <- (@resources[:false] || []) do %>
   <li><a href="<%= 
       ParamSession.gen_url(@conn, "/resource/review/#{resource.id}?list=true")
       %>"><%= resource.name %></a></li>
