@@ -1,0 +1,8 @@
+<%= if @resource.score && @resource.score > 0.0 do %>
+<input type="range" min="0" max="5" value="<%= @resource.score || 0 %>" step="0.5" id="<%= @resource.id %>"><br>
+<div data-rateit-readonly="true" data-rateit-value="<%= @resource.score %>" id='rateit' class="rateit" data-rateit-backingfld="#<%= @resource.id %>"></div>
+
+<%= else %>
+<input type="range" min="0" max="5" value="5" step="0.5" id="<%= @resource.id %>"><br>
+<div data-rateit-readonly="true" data-rateit-ispreset="true" data-rateit-value="<%= @resource.score %>" id='rateit' class="rateit" data-rateit-backingfld="#<%= @resource.id %>"></div>
+<% end %>

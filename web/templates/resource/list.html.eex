@@ -31,13 +31,11 @@
 <a href='<%=
   ParamSession.gen_url(@conn, "/resource/tag-cloud")
   %>' class="btn">Back to tag cloud</a><br><br><br>
-<ul>
   <%= for resource <- (@resources[:true] || []) do %>
-  <li><a href="<%= 
+  <%= render "_stars.html", resource: resource %><a href="<%= 
       ParamSession.gen_url(@conn, "/resource/review/#{resource.id}?list=true")
-      %>"><%= resource.name %></a></li>
+      %>"><%= resource.name %></a>
   <% end %>
-</ul>
 
 <% #--------------------------------------------------------------- %>
 
@@ -50,20 +48,18 @@
 <br>
 <br>
 <h3>Resources from your SIG</h3>
-<ul>
   <%= for resource <- (@resources[:true] || []) do %>
-  <li><a href="<%= 
+  <%= render "_stars.html", resource: resource %><a href="<%= 
       ParamSession.gen_url(@conn, "/resource/review/#{resource.id}?list=true")
-      %>"><%= resource.name %></a></li>
+      %>"><%= resource.name %></a>
   <% end %>
 </ul>
 <br><br>
 <h3>Generic resources from other SIGs</h3>
-<ul>
   <%= for resource <- (@resources[:false] || []) do %>
-  <li><a href="<%= 
+  <%= render "_stars.html", resource: resource %><a href="<%= 
       ParamSession.gen_url(@conn, "/resource/review/#{resource.id}?list=true")
-      %>"><%= resource.name %></a></li>
+      %>"><%= resource.name %></a>
   <% end %>
-</ul>
 <% end %>
+<script src="/js/jquery.rateit.min.js"></script>
