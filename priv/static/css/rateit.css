@@ -74,6 +74,10 @@
     background: white;
 }
 
+  tr:nth-child(even) .rateit .rateit-preset
+{
+    background: #eeeeee;
+}
 .rateit .rateit-preset-rtl
 {
     background: bullet_toggle_plus.png;
