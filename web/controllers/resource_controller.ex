@@ -89,6 +89,8 @@ defmodule Survey.ResourceController do
       sig = conn.assigns.user.sig_id
       tags = ResourceTag.get_tags(sig)
       resource = Resource.get_resource(id)
+      seen = Resource.user_seen?(user, resource.id)
+
       if !resource do
         html conn, "Resource with that ID not found"
       else
@@ -102,7 +104,7 @@ defmodule Survey.ResourceController do
         conn
         |> put_layout("minimal.html")
         |> render "review.html", tags: tags, resource: resource,
-          resourcetype: rtype, redirect: redirect
+          resourcetype: rtype, redirect: redirect, seen: seen
       end
     end
   end
@@ -145,7 +147,7 @@ defmodule Survey.ResourceController do
     # SCORE
     score = resource.score || 0.0
     old_score = resource.old_score || []
-    if form["rating"] != "" do
+    if string_param_exists(form["rating"]) do
       {newscore, _} = Float.parse(form["rating"])
       new_old_score = %{ "user" => user.id, "score" => newscore, 
         "date" => Ecto.DateTime.local }

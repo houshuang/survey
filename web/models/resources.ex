@@ -105,6 +105,11 @@ defmodule Survey.Resource do
     |> Enum.group_by(fn x -> x.sig_id == sig end)
   end
 
+  def user_seen?(user, resourceid) do
+    IO.inspect(user)
+    Enum.member?(user.resources_seen, resourceid)
+  end
+
   defp and_and(query, col, val) when is_list(val) and is_atom(col) do
     from p in query, where: fragment("? && ?", ^val, field(p, ^col))
   end

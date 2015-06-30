@@ -29,6 +29,7 @@
         <textarea name='f[comment]'></textarea>
         <p class='counter' min='10'>
         </fieldset>
+        <%= if !@seen do %>
         <fieldset>
           <h4>Rate resource</h4>
         </fieldset>
@@ -38,6 +39,7 @@
           <input type='hidden' name='f[rating]' id='rating_input'>
           <div id='rateit' class="rateit" data-rateit-backingfld="#rating"></div>
         </fieldset>
+      <% end %>
         <%= if !@resource.generic do %>
           <fieldset>
             <h4>Tags <font color=red>*</font></h4>
