@@ -77,5 +77,6 @@ defmodule Survey.Router do
     get "/report/tags", ReportController, :tags
     get "/report/resource", ResourceController, :report
     get "/resource/preview", ResourceController, :preview
+    get "/cohorts", AdminController, :cohorts
   end
 end

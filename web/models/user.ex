@@ -1,6 +1,10 @@
 defmodule Survey.User do
   use Survey.Web, :model
- 
+  import Ecto.Query
+  require Ecto.Query
+  alias Survey.Repo
+  alias Survey.User
+
   schema "users" do
     field :hash, :string
     field :nick, :string
@@ -21,18 +25,15 @@ defmodule Survey.User do
     timestamps
   end
 
-  @required_fields ~w(hash nick)
-  @optional_fields ~w()
-
-  @doc """
-  Creates a changeset based on the `model` and `params`.
-
-  If `params` are nil, an invalid changeset is returned
-  with no validation performed.
-  """
-  def changeset(model, params \\ :empty) do
-    model
-    |> cast(params, @required_fields, @optional_fields)
+  def cohorts_csv do
+    csv = (from t in User, 
+    where: fragment("? is not null", t.sig_id),
+    select: [t.edx_userid, t.edx_email, t.sig_id])
+    |> Repo.all
+    |> CSV.Encoder.encode
+    |> Enum.to_list
+    |> Enum.join("")
+    
+    "username,email,cohort\r\n" <> csv
   end
-
 end
