@@ -110,11 +110,13 @@ defmodule Survey.ResourceController do
   def review_submit(conn, params) do
     user = conn.assigns.user
     resource = Repo.get(Resource, params["resource_id"])
-    form = params["f"]
+    form = params["f"] 
+    |> Enum.map(fn {k, v} -> {k, String.strip(v)} end)
+    |> Enum.into(%{})
 
     # COMMENTS
     comments = resource.comments || []
-    if form["comment"] do
+    if string_param_exists(form["comment"]) do
       newcom = %{nick: user.nick, user_id: user.id, text: form["comment"],
         date: Ecto.DateTime.local}
       comments = [ newcom | comments ]
@@ -123,7 +125,7 @@ defmodule Survey.ResourceController do
     # DESCRIPTION
     description = resource.description
     old_desc = resource.old_desc
-    if form["description"] && 
+    if string_param_exists(form["description"]) &&
       String.strip(form["description"]) != String.strip(resource.description) do
       description = String.strip(form["description"])
 
@@ -145,11 +147,13 @@ defmodule Survey.ResourceController do
     old_score = resource.old_score || []
     if form["rating"] != "" do
       {newscore, _} = Float.parse(form["rating"])
-      new_old_score = %{ user: user.id, score: newscore, 
-        date: Ecto.DateTime.local }
+      new_old_score = %{ "user" => user.id, "score" => newscore, 
+        "date" => Ecto.DateTime.local }
       old_score = [ new_old_score | old_score ]
-      scorelen = length(old_score) * 1.0
-      score = ((score * (scorelen - 1)) + newscore / scorelen)
+      score_sum = old_score
+      |> Enum.map(fn x -> x["score"] end)
+      |> Enum.sum
+      score = score_sum / length(old_score)
     end
 
     # TAGS
@@ -253,5 +257,9 @@ defmodule Survey.ResourceController do
 
   defp bad_status(s) do
     s |> Integer.to_string |> String.starts_with?("4")
+  end
+
+  defp string_param_exists(s) do
+    s && String.strip(s) != ""
   end
 end
