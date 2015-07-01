@@ -64,6 +64,13 @@ defmodule Survey.Router do
       :select_sig_freestanding
     post "/user/select_sig_freestanding", UserController, 
       :select_sig_freestanding
+
+    # review lesson designs
+    post "/lessondesigns/index", UserController, :lesson_design_index
+    get "/lessondesigns/index", UserController, :lesson_design_index
+    post "/lessondesigns/:id", UserController, :lesson_design
+    get "/lessondesigns/:id", UserController, :lesson_design
+
   end
 
   scope "/", Survey do

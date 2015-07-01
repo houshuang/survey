@@ -107,6 +107,27 @@ defmodule Survey.UserController do
     |> render "select_sig_freestanding.html", sig: signame
   end
 
+  def lesson_design_index(conn, _) do
+    conn
+    |> put_layout(:none)
+    |> render "lesson_design"
+  end
+
+  def lesson_design(conn, params) do
+    id = params["id"]
+    category = id 
+    |> String.split("-") 
+    |> Enum.take(2) 
+    |> Enum.join("-")
+
+    header = "<html><head>
+        <link rel='stylesheet' href='/lessonplans/css/#{category}.css'>
+        </head><body>"
+
+    lesson = File.read!("priv/static/lessonplans/#{id}.html")
+    html conn, header <> lesson
+  end
+
   def select_sig_submit(conn, params) do
     sig = params["f"]["sig_id"]
 
