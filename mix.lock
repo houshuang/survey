@@ -26,6 +26,7 @@
   "phoenix_html": {:hex, :phoenix_html, "1.2.1"},
   "phoenix_live_reload": {:hex, :phoenix_live_reload, "0.4.2"},
   "plug": {:hex, :plug, "0.13.0"},
+  "plug_accesslog": {:git, "git://github.com/houshuang/plug_accesslog.git", "d900acde31af180088284ecd77dcf2768f096b26", []},
   "plug_lti": {:git, "git://github.com/houshuang/plug_lti.git", "80967899bc5d7a7de3c7529bc3a85f0e7c91cb3d", []},
   "poison": {:hex, :poison, "1.4.0"},
   "poolboy": {:hex, :poolboy, "1.5.1"},
@@ -33,4 +34,6 @@
   "postgrex": {:hex, :postgrex, "0.8.4"},
   "ranch": {:hex, :ranch, "1.0.0"},
   "setup": {:git, "git://github.com/uwiger/setup.git", "51ee7c9f64d2bbe9dcbb58c278e8fbfd4d0ca5e2", [tag: "1.4"]},
-  "ssl_verify_hostname": {:hex, :ssl_verify_hostname, "1.0.5"}}
+  "ssl_verify_hostname": {:hex, :ssl_verify_hostname, "1.0.5"},
+  "timex": {:hex, :timex, "0.15.0"},
+  "tzdata": {:hex, :tzdata, "0.1.6"}}
