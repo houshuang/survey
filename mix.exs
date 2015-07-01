@@ -18,7 +18,7 @@ defmodule Survey.Mixfile do
   def application do
     [mod: {Survey, []},
       applications: [:phoenix, :phoenix_html, :cowboy, :logger,
-        :phoenix_ecto, :postgrex, :dogstatsd, :httpoison]]
+        :phoenix_ecto, :postgrex, :dogstatsd, :httpoison, :plug_accesslog ]]
   end
 
   # Specifies which paths to compile per environment
@@ -43,7 +43,9 @@ defmodule Survey.Mixfile do
       {:dogstatsd, "0.0.3"},
       {:exprintf, github: "parroty/exprintf"},
       {:param_session, github: "houshuang/param_session"},
-      {:csv, "~> 1.0.0"}
+      {:csv, "~> 1.0.0"},
+      {:plug_accesslog, github: "houshuang/plug_accesslog_survey"}
+      # {:plug_accesslog, github: "houshuang/plug_accesslog"}
     ]
   end
 end
