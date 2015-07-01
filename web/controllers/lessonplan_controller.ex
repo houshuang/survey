@@ -22,6 +22,7 @@ defmodule Survey.LessonplanController do
   def detail(conn, params) do
     id = params["id"]
     comments = Survey.Commentstream.get("lessonplan", id)
+    Survey.Grade.submit_grade(conn, "design_critique", 1.0)
     css = id 
     |> String.split("-") 
     |> Enum.take(2) 
