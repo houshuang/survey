@@ -94,6 +94,12 @@ defmodule Survey.Router do
 
     # commentstream
     post "/commentstream/submit", CommentstreamController, :submit
+
+    # assessment
+    post "/assessment", ReflectionController, :assessment
+    get "/assessment", ReflectionController, :assessment
+    post "/assessment/submit", ReflectionController, :assessment_submit
+    get "/assessment/submit", ReflectionController, :assessment_submit
   end
 
   scope "/", Survey do

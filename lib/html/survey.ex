@@ -178,7 +178,7 @@ defmodule Survey.HTML.Survey do
   
   def remove_blank_lines(x) do
     x = String.strip(x)
-    x != "" && !String.starts_with?(x, "#")
+    x != "" && !String.starts_with?(x, "!")
   end
 
   mdef classify_line_types do

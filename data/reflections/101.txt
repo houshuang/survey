@@ -1,0 +1,6 @@
+# Discussion Self Assessment.
+
+radio,Which of the following describes your participation in this week's online discussion forum(s).
+	I did not participate in the online discussions this week.
+	I added one comment to the forums, and read some comments from my peers.
+	I added multiple comments to the forums, at least one of which responded to a peer's comment.
