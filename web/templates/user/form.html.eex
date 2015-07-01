@@ -39,7 +39,7 @@
             <br>
               <select name='f[sig_id]'> 
                 <option value=noselection>Please select from this list</option>
-                <%= for sig <- @sigs do %>
+                <%= for sig <- sigs do %>
                 <option value=<%= sig.id %>><%= sig.name %></option>
                 <% end %>
               </select>
