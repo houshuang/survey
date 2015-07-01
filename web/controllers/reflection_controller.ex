@@ -11,7 +11,12 @@ defmodule Survey.ReflectionController do
   plug :action
 
   def index(conn, params) do
-    prompt = Repo.get(Prompt, params["id"])
+    if !params["id"] do
+      id = 1
+    else 
+      id = params["id"]
+    end
+    prompt = Repo.get(Prompt, id)
     reflection = Reflection.get(conn.assigns.user.id, prompt.id)
     if reflection do
       conn = put_flash(conn, :info, 
