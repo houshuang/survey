@@ -1,6 +1,7 @@
 @charset "UTF-8";
 /* CSS Document */
 
+html {overflow-x: hidden; overflow-y: auto;}
 body {font-family: Calibri, Verdana, Geneva, sans-serif; padding:1em}
 h2 {font-family: Calibri; font-size:3em; color:#538135; text-transform:uppercase; font-weight:lighter; line-height:1em; margin:0.7em 0}
 h3  {font-family: Calibri; font-size:1.1em; text-transform:uppercase; font-weight:lighter; letter-spacing:0.2em; margin-bottom:-0.5em}

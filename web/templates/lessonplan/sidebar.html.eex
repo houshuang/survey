@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="/lessonplans/css/reset.css">
         <link rel="stylesheet" href="/lessonplans/css/overview.css">
                 <script src="/lessonplans/js/vendor/modernizr-2.8.3.min.js"></script>
-  <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+  <script src="https://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
   <script src="/lessonplans/js/accordion.js" type="text/javascript"></script>  
                 
     </head>
@@ -28,27 +28,27 @@
 <li><a><h4>Science</h4></a>
 <ul>
 <li>
-  <a href="<%= ParamSession.gen_url(@conn, "/lessondesigns/GR1-5-06") %>" target="maincontent" class="lessontitle">The Human Body System</a><br> 
+  <a href="<%= ParamSession.gen_url(@conn, "/lessondesigns/GR1-5-06") %>"  class="lessontitle">The Human Body System</a><br> 
 <p class="category">Elementary School, Middle School</p>
 <p class="description">Students learn the structures and functions of the human body systems, specifically the digestive system and its interactions with other systems.</p>
 </li>
 <li>
-  <a href="<%= ParamSession.gen_url(@conn, "/lessondesigns/GR6-8-05") %>" target="maincontent" class="lessontitle">Water Systems: Freshwater systems, Saltwater systems, Estuaries</a><br> 
+  <a href="<%= ParamSession.gen_url(@conn, "/lessondesigns/GR6-8-05") %>"  class="lessontitle">Water Systems: Freshwater systems, Saltwater systems, Estuaries</a><br> 
 <p class="category">Middle School, High School</p>
 <p class="description">Students are provided with a thorough understanding of the differences between saltwater and freshwater as well as the organisms which thrive in each system.</p>
 </li>
 <li>
-  <a href="<%= ParamSession.gen_url(@conn, "/lessondesigns/GR9-12-04") %>" target="maincontent" class="lessontitle">Mitosis and Cancer</a><br> 
+  <a href="<%= ParamSession.gen_url(@conn, "/lessondesigns/GR9-12-04") %>"  class="lessontitle">Mitosis and Cancer</a><br> 
 <p class="category">High School, Adult and Higher Education</p>
 <p class="description">This lesson plan introduces the cell cycle, process of mitosis, and its importance in life and growth.</p>
 </li>
 <li>
-  <a href="<%= ParamSession.gen_url(@conn, "/lessondesigns/GR9-12-07") %>" target="maincontent" class="lessontitle">Kinetic, Thermal, and Potential Energy</a><br> 
+  <a href="<%= ParamSession.gen_url(@conn, "/lessondesigns/GR9-12-07") %>"  class="lessontitle">Kinetic, Thermal, and Potential Energy</a><br> 
 <p class="category">High School, Adult and Higher Education</p>
 <p class="description">Students will qualitatively and quantitatively analyze situations involving work, gravitational potential, kinetic, and thermal energy and its transfer using the law of conservation of energy.</p>
 </li>
 <li>
-  <a href="<%= ParamSession.gen_url(@conn, "/lessondesigns/GR9-12-08") %>" target="maincontent" class="lessontitle">Anatomy of Mammals</a><br> 
+  <a href="<%= ParamSession.gen_url(@conn, "/lessondesigns/GR9-12-08") %>"  class="lessontitle">Anatomy of Mammals</a><br> 
 <p class="category">High School, Adult and Higher Education</p>
 <p class="description">Using online tools, dissections, and cumulative work students will interact with the various mammalian systems and learn their purposes and interactions with each other.</p>
 </li>
@@ -59,17 +59,17 @@
 <li><a><h4>Technology</h4></a>
 <ul>
 <li>
-  <a href="<%= ParamSession.gen_url(@conn, "/lessondesigns/GR1-5-01") %>" target="maincontent" class="lessontitle">Data Management</a><br> 
+  <a href="<%= ParamSession.gen_url(@conn, "/lessondesigns/GR1-5-01") %>"  class="lessontitle">Data Management</a><br> 
 <p class="category">Elementary School</p>
 <p class="description">In this lesson students will be introduced to data management through pictographs.</p>
 </li>
 <li>
-  <a href="<%= ParamSession.gen_url(@conn, "/lessondesigns/GR1-5-03") %>" target="maincontent" class="lessontitle">Learning Data Entry with Excel</a><br> 
+  <a href="<%= ParamSession.gen_url(@conn, "/lessondesigns/GR1-5-03") %>"  class="lessontitle">Learning Data Entry with Excel</a><br> 
 <p class="category">Elementary School</p>
 <p class="description">Students will be introduced to basic data entry and organization using Excel.</p>
 </li>
 <li>
-  <a href="<%= ParamSession.gen_url(@conn, "/lessondesigns/GR9-12-05") %>" target="maincontent" class="lessontitle">Understanding Algorithms: Flowcharting</a><br> 
+  <a href="<%= ParamSession.gen_url(@conn, "/lessondesigns/GR9-12-05") %>"  class="lessontitle">Understanding Algorithms: Flowcharting</a><br> 
 <p class="category">High School, Adult and Higher Education</p>
 <p class="description">Students learn how to visually represent algorithms using flowchart tools.</p>
 </li>
@@ -79,32 +79,32 @@
 <li><a><h4>English, History, Social Studies</h4></a>
 <ul>
 <li>
-  <a href="<%= ParamSession.gen_url(@conn, "/lessondesigns/GR1-5-04") %>" target="maincontent" class="lessontitle">Creating A Story With Comics</a><br> 
+  <a href="<%= ParamSession.gen_url(@conn, "/lessondesigns/GR1-5-04") %>"  class="lessontitle">Creating A Story With Comics</a><br> 
 <p class="category">Elementary School, Middle School</p>
 <p class="description">Students learn the elements of a story, how to effectively narrative a story, and how to visually communicate their stories.</p>
 </li>
 <li>
-  <a href="<%= ParamSession.gen_url(@conn, "/lessondesigns/GR1-5-02") %>" target="maincontent" class="lessontitle">Nunavut: A Look Into Canada’s North</a><br> 
+  <a href="<%= ParamSession.gen_url(@conn, "/lessondesigns/GR1-5-02") %>"  class="lessontitle">Nunavut: A Look Into Canada’s North</a><br> 
 <p class="category">Elementary School, Middle School</p>
 <p class="description">Students will develop an understanding of Canada and its regions, learn how the environment affects people’s lives, and discover the ways in which different community needs are met.</p>
 </li>
 <li>
-  <a href="<%= ParamSession.gen_url(@conn, "/lessondesigns/GR1-5-05") %>" target="maincontent" class="lessontitle">Quebec and Quebecois Culture</a><br> 
+  <a href="<%= ParamSession.gen_url(@conn, "/lessondesigns/GR1-5-05") %>"  class="lessontitle">Quebec and Quebecois Culture</a><br> 
 <p class="category">Elementary School, Middle School</p>
 <p class="description">Students are introduced to francophone culture, specifically Franco-Quebecois culture. Note: This lesson plan includes the participation of a sister-school in Quebec via Skype.</p>
 </li>
 <li>
-  <a href="<%= ParamSession.gen_url(@conn, "/lessondesigns/GR6-8-02") %>" target="maincontent" class="lessontitle">Heritage and Identity</a><br> 
+  <a href="<%= ParamSession.gen_url(@conn, "/lessondesigns/GR6-8-02") %>"  class="lessontitle">Heritage and Identity</a><br> 
 <p class="category">Middle School, High School</p>
 <p class="description">Students will develop the skills necessary to critically think about the cultures they see and are apart of.</p>
 </li>
 <li>
-  <a href="<%= ParamSession.gen_url(@conn, "/lessondesigns/GR9-12-02") %>" target="maincontent" class="lessontitle">World War II</a><br> 
+  <a href="<%= ParamSession.gen_url(@conn, "/lessondesigns/GR9-12-02") %>"  class="lessontitle">World War II</a><br> 
 <p class="category">High School, Adult and Higher Education</p>
 <p class="description">This lesson plan aims to give students an opportunity to understand the various perspectives that emerged throughout World War II.</p>
 </li>
 <li>
-  <a href="<%= ParamSession.gen_url(@conn, "/lessondesigns/GR9-12-09") %>" target="maincontent" class="lessontitle">Romeo and Juliet</a><br> 
+  <a href="<%= ParamSession.gen_url(@conn, "/lessondesigns/GR9-12-09") %>"  class="lessontitle">Romeo and Juliet</a><br> 
 <p class="category">High School, Adult and Higher Education</p>
 <p class="description">By incorporating video, online, and social technologies into the learning process, this lesson aims to break down the challenging language of Shakespeare.</p>
 </li>
@@ -114,17 +114,17 @@
 <li><a><h4>Art, Music, Design</h4></a>
 <ul>
 <li>
-  <a href="<%= ParamSession.gen_url(@conn, "/lessondesigns/GR6-8-01") %>" target="maincontent" class="lessontitle">Music and Emotion</a><br> 
+  <a href="<%= ParamSession.gen_url(@conn, "/lessondesigns/GR6-8-01") %>"  class="lessontitle">Music and Emotion</a><br> 
 <p class="category">Middle School, High School</p>
 <p class="description">This lesson is designed to combine poetry, media literacy, and music to allow students to create quality multimedia presentations.</p>
 </li>
 <li>
-  <a href="<%= ParamSession.gen_url(@conn, "/lessondesigns/GR6-8-03") %>" target="maincontent" class="lessontitle">Composing and Performing</a><br> 
+  <a href="<%= ParamSession.gen_url(@conn, "/lessondesigns/GR6-8-03") %>"  class="lessontitle">Composing and Performing</a><br> 
 <p class="category">Middle School, High School</p>
 <p class="description">Students will compose and perform an art piece around the topic of Environmental Awareness and green living.</p>
 </li>
 <li>
-  <a href="<%= ParamSession.gen_url(@conn, "/lessondesigns/GR9-12-01") %>" target="maincontent" class="lessontitle">Architectural Design</a><br> 
+  <a href="<%= ParamSession.gen_url(@conn, "/lessondesigns/GR9-12-01") %>"  class="lessontitle">Architectural Design</a><br> 
 <p class="category">High School, Adult and Higher Education</p>
 <p class="description">Through creatively designing a bungalow, students will study house layout, building materials, furniture, and landscape components.</p>
 </li>
@@ -134,17 +134,17 @@
 <li><a><h4>Math</h4></a>
 <ul>
 <li>
-  <a href="<%= ParamSession.gen_url(@conn, "/lessondesigns/GR6-8-06") %>" target="maincontent" class="lessontitle">Fractions</a><br> 
+  <a href="<%= ParamSession.gen_url(@conn, "/lessondesigns/GR6-8-06") %>"  class="lessontitle">Fractions</a><br> 
 <p class="category">Elementary School, Middle School, Adult and Higher Education</p>
 <p class="description">This lesson plan focuses on all four operations of fractions: addition, subtraction, multiplication, and division.</p>
 </li>
 <li>
-  <a href="<%= ParamSession.gen_url(@conn, "/lessondesigns/GR9-12-03") %>" target="maincontent" class="lessontitle">Quadratic Functions In The Vertex Form</a><br> 
+  <a href="<%= ParamSession.gen_url(@conn, "/lessondesigns/GR9-12-03") %>"  class="lessontitle">Quadratic Functions In The Vertex Form</a><br> 
 <p class="category">High School, Adult and Higher Education</p>
 <p class="description">This plan focuses on quadratic functions. The vertex form, y=a(x-h)2+k, will be broken down into its components and each component will be introduced individually.</p>
 </li>
 <li>
-  <a href="<%= ParamSession.gen_url(@conn, "/lessondesigns/GR9-12-06") %>" target="maincontent" class="lessontitle">Financial Accounting Fundamentals</a><br> 
+  <a href="<%= ParamSession.gen_url(@conn, "/lessondesigns/GR9-12-06") %>"  class="lessontitle">Financial Accounting Fundamentals</a><br> 
 <p class="category">High School, Adult and Higher Education</p>
 <p class="description">Students gain hands on experience with accounting software and apply accounting practices in a computerized environment.</p>
 </li>
@@ -154,12 +154,12 @@
 <li><a><h4>Languages</h4></a>
 <ul>
 <li>
-  <a href="<%= ParamSession.gen_url(@conn, "/lessondesigns/GR6-8-04") %>" target="maincontent" class="lessontitle">Personal Descriptive Adjectives</a><br> 
+  <a href="<%= ParamSession.gen_url(@conn, "/lessondesigns/GR6-8-04") %>"  class="lessontitle">Personal Descriptive Adjectives</a><br> 
 <p class="category">Middle School, High School</p>
 <p class="description">Students will learn how to introduce themselves and describe an e-pal using personal descriptive adjectives. Note: This lesson plan spans the entirety of a unit/school year and  includes an optional field trip.</p>
 </li>
 <li>
-  <a href="<%= ParamSession.gen_url(@conn, "/lessondesigns/GR9-12-10") %>" target="maincontent" class="lessontitle">Le Passé Composé</a><br> 
+  <a href="<%= ParamSession.gen_url(@conn, "/lessondesigns/GR9-12-10") %>"  class="lessontitle">Le Passé Composé</a><br> 
 <p class="category">High School, Adult and Higher Education</p>
 <p class="description">This lesson is designed to teach students le passé composé (past tense) in French, integrating verbs (regular & irregular) and specific vocabulary.</p>
 </li>

@@ -66,12 +66,14 @@ defmodule Survey.Router do
       :select_sig_freestanding
 
     # review lesson designs
-    post "/lessondesigns/index", LessonplanController, :index
-    get "/lessondesigns/index", LessonplanController, :index
-    get "/lessondesigns/overview", LessonplanController, :overview
+    # entrypoint:
     get "/lessondesigns/sidebar", LessonplanController, :sidebar
-    post "/lessondesigns/:id", LessonplanController, :detail
+    post "/lessondesigns/sidebar", LessonplanController, :sidebar
+
+    get "/lessondesigns/overview", LessonplanController, :overview
+    post "/lessondesigns/overview", LessonplanController, :overview
     get "/lessondesigns/:id", LessonplanController, :detail
+    post "/lessondesigns/:id", LessonplanController, :detail
 
   end
 

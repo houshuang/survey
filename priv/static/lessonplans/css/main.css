@@ -196,7 +196,7 @@ li{
 	padding: 20px;
 	float:right;
 	height: calc(100vh - 150px);
-	overflow-x:hidden;
+	overflow-x: hidden;
 }
 .lessontitle{
 	font-size:15px;

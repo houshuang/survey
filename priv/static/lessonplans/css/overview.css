@@ -148,6 +148,7 @@ hr {
 }
 a {
 	color:#002f65;
+	cursor: pointer;
 }
 a:hover{
 	color:#56aad6;

@@ -1,6 +1,8 @@
     <html><head>
             <link rel='stylesheet' href='/lessonplans/css/<%= raw @css %>.css'>
         </head><body>
+        <div style="width:100%; height:20px; background-color:#002f65; color:#FFF; padding:10px">
+            <a href="<%= ParamSession.gen_url(@conn, "/lessondesigns/sidebar") %>" style="color:#fff">Back to the list of lesson plans</a></div>
         <%= raw @lesson %>
     </body>
 </html>
