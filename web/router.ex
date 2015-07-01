@@ -75,6 +75,8 @@ defmodule Survey.Router do
     get "/lessondesigns/:id", LessonplanController, :detail
     post "/lessondesigns/:id", LessonplanController, :detail
 
+    # commentstream
+    post "/commentstream/submit", CommentstreamController, :submit
   end
 
   scope "/", Survey do

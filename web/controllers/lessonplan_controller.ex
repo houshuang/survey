@@ -21,6 +21,7 @@ defmodule Survey.LessonplanController do
 
   def detail(conn, params) do
     id = params["id"]
+    comments = Survey.Commentstream.get("lessonplan", id)
     css = id 
     |> String.split("-") 
     |> Enum.take(2) 
@@ -30,7 +31,7 @@ defmodule Survey.LessonplanController do
 
     conn
     |> put_layout(false)
-    |> render "detail.html", css: css, lesson: lesson
+    |> render "detail.html", css: css, lesson: lesson, comments: comments
   end
 
 end
