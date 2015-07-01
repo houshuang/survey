@@ -1,4 +1,4 @@
-<%= if @reflection.response do %>
+<%= if @reflection && @reflection.response do %>
 <script>var response=<%= raw Poison.encode!(@reflection.response) %></script>
 <% end %>
 <div class='blocks'> <%= form_for @conn, reflection_path(@conn, :submit), [name: :search], fn _ -> %>
