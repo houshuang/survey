@@ -71,6 +71,7 @@ defmodule Survey.Router do
 
     # reflection
     get "/reflection/:id", ReflectionController, :index
+    post "/reflection/:id", ReflectionController, :index
     post "/reflection/submission", ReflectionController, :submit
 
     # sig
