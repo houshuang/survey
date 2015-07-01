@@ -5,12 +5,12 @@ meta
 textbox,What was Jennifer’s role, during the WISE lesson?  What new opportunities came a result of using WISE?  
 meta
 	minwords=10
-grid,Self-assessment of your learning
-choicerange
-	not at all
-	to a large extent
-	5
-rows
-	This topic is relevant to my teaching
-	I learnt from my peers this week
-	I contributed something useful to the community this week
+#grid,Self-assessment of your learning
+#choicerange
+#	not at all
+#	to a large extent
+#	5
+#rows
+#	This topic is relevant to my teaching
+#	I learnt from my peers this week
+#	I contributed something useful to the community this week
