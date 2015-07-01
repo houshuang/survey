@@ -23,7 +23,7 @@ defmodule Survey.ReflectionController do
         "Thank you for submitting your reflection this week, you have already been graded. Feel free to modify and submit again.")
     end
 
-    render conn, "index.html", html: prompt.html, id: params["id"],
+    render conn, "index.html", html: prompt.html, id: id,
       reflection: reflection
   end
 

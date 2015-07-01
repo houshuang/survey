@@ -70,11 +70,11 @@ defmodule Survey.Router do
     get "resource/list", ResourceController, :list
 
     # reflection
+    post "/reflection/submission", ReflectionController, :submit
     get "/reflection/:id", ReflectionController, :index
     post "/reflection/:id", ReflectionController, :index
     post "/reflection", ReflectionController, :index
     get "/reflection", ReflectionController, :index
-    post "/reflection/submission", ReflectionController, :submit
 
     # sig
     get "/user/select_sig_freestanding", UserController, 
