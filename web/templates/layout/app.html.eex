@@ -19,9 +19,9 @@
   <body id=top>
     <div class="container">
       <div class="header">
-        <% if get_flash(@conn, :info) || get_flash(@conn, :error) do %>
-          <p class="alert alert-info"><%= get_flash(@conn, :info) %></p>
-          <p class="alert alert-danger"><%= get_flash(@conn, :error) %></p>
+
+        <%= if get_flash(@conn, :info) || get_flash(@conn, :error) do %>
+          <p class="alert alert-success"><%= get_flash(@conn, :info) %></p>
         <% end %>
       </div>
     </div>
