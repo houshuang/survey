@@ -78,7 +78,6 @@ defmodule Survey.HTML.Survey do
       _ -> ""
     end
 
-    IO.inspect(length)
     ["<h4>", numstr(h), h.name, "</h4>", desc, "<textarea name='#{form}[#{name(h)}]'></textarea>", 
       length]
   end
