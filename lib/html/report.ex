@@ -13,6 +13,29 @@ defmodule Survey.HTML.Survey.Report do
   @gradesort %{"4-6" => 1, "7-8" => 2, "9-12" => 3, "K-3" => 0, "noK12" => 4}
 
 
+  def general_numbers do
+    (from t in Survey.User, 
+      select: %{"count" => count(t.id), "state" => t.surveystate},
+      group_by: t.surveystate) 
+  |> Survey.Repo.all    
+  |> Enum.reduce(%{}, fn %{"count" => count, "state" => state}, acc -> 
+    case state do
+      nil -> Map.put(acc, "nosurvey", count)
+      99  -> Map.put(acc, "survey", count)
+    end
+  end)
+  end
+  
+  def signup do
+    data = runq("
+      WITH u AS (SELECT extract(doy FROM inserted_at)-163 
+      AS DAY, id FROM users) SELECT count(id), 
+      DAY FROM u GROUP BY DAY ORDER BY day;")
+    labels = Enum.map(data, fn {x, y} -> y end)
+    series = Enum.map(data, fn {x, y} -> x end)
+    %{series: Poison.encode!(series), labels: Poison.encode!(labels) }
+  end
+
   def get_qid(qid, search \\ nil) do
     query = from p in User, select: fragment("survey->? as x", ^qid)
     if search do
@@ -187,6 +210,11 @@ defmodule Survey.HTML.Survey.Report do
     tag ORDER BY COUNT desc) SELECT tagcount.tag, tagcount.COUNT, tags.steam,
     tags.grade FROM tagcount, tags WHERE tagcount.tag = tags.tag;")
     |> Enum.map(&sort_tag_entry/1)
+  end
+
+  def sigs do
+    runq(
+    "SELECT s.name AS name, count(u.id) AS COUNT FROM users AS u LEFT JOIN sigs AS s ON u.sig_id = s.id WHERE s.name IS NOT NULL GROUP BY s.name ORDER BY COUNT desc;")
   end
 
   def sort_tag_entry({tag, count, steam, grade}) do

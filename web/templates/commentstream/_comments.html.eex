@@ -1,0 +1,32 @@
+<div id="comments">
+  <div class="blocks">
+    <%= form_for @conn, commentstream_path(@conn, :submit), [name: :search], 
+    fn _ -> %> 
+    <div class="block">
+      <%= raw ParamSession.form_session @conn %>
+      <input type='hidden' name='f[resourcetype]' value='<%= @comments.resourcetype %>'>
+      <input type='hidden' name='f[identifier]' value='<%= @comments.identifier %>'>
+      <fieldset>
+        <h3>Comments</h3>
+        <div id="commentlist">
+        <%= if @comments.comments && !Enum.empty?(@comments.comments) do %>
+          <%= for comment <- Enum.reverse(@comments.comments) do %>
+            <p><%= comment["text"] %>
+              <i>(<%= comment["nick"] %>)</i></p>
+          <% end %>
+        <% end %>
+      </div>
+        <label id="addnew"><i>Add new comment</i></label>
+        <hr style='margin: 10px 10px 10px 0;'>
+
+        <span id="textbox">
+          <textarea id="comment_area" name='f[comment]'></textarea></span>
+        <p class='counter' length='500'>
+          <div class='stepsController submit right' id="submit"><a href='#comments'>Submit comment</a></div>
+        </fieldset>
+      <% end %>
+    </div>
+  </div>
+</div>
+<script>var nick='<%= @conn.assigns.user.nick %>'</script>
+<script src="/js/commentstream.js"></script>

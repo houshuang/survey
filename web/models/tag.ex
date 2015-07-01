@@ -52,10 +52,10 @@ defmodule Survey.Tag do
       nsteam = merge_lists(tag.steam, steam)
       ngrade = merge_lists(tag.grade, grade)
       ntag = %{tag | steam: nsteam, grade: ngrade} 
-      if ntag != tag, do: Repo.update(ntag)
+      if ntag != tag, do: Repo.update!(ntag)
     else
       %Tag{tag: tagstr, grade: grade, steam: steam}
-      |> Repo.insert
+      |> Repo.insert!
     end
   end
 

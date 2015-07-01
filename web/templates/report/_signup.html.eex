@@ -1,0 +1,21 @@
+<h3>LTI registrations over time</h3>
+<div id='signups'></div>
+<script>
+  $(function () {
+    $('#signups').highcharts({
+      chart: {
+        type: 'line'
+      },
+      title:  { text: "" },
+      yAxis: { title: { text: "Number of new registrants" }},
+      xAxis: {
+        categories: <%= raw @data.labels %>,
+          title: { text: "Days from the start of the course"}
+      },
+      legend: { enabled: false },
+      series:[{name: "Registrants", data: 
+        <%= raw @data.series %>}]
+    });
+  });
+</script>
+<hr>

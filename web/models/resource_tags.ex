@@ -41,10 +41,10 @@ defmodule Survey.ResourceTag do
     if tag = Repo.get_by(ResourceTag, name: tagstr) do
       nsig = merge_lists(tag.sigs, [sig])
       ntag = %{tag | sigs: nsig} 
-      if ntag != tag, do: Repo.update(ntag)
+      if ntag != tag, do: Repo.update!(ntag)
     else
       %ResourceTag{name: tagstr, sigs: [sig]}
-      |> Repo.insert
+      |> Repo.insert!
     end
   end
 

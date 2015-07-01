@@ -1,0 +1,11 @@
+    <html><head>
+            <link rel='stylesheet' href='/lessonplans/css/<%= raw @css %>.css'>
+    <link rel="stylesheet" href="/css/main.css">
+    <script src="/js/jquery-1.8.3.min.js"></script>
+        </head><body>
+<div style="width:100%; height:20px; background-color:#002f65; color:#FFF; padding:10px"><a href="<%= ParamSession.gen_url(@conn, "/lessondesigns/sidebar") %>" style="color:#fff">Back to the list of lesson plans</a> | <a href="#comments" style="color:#fff">Jump to comments</a></div>
+        <%= raw @lesson %>
+
+        <%= render Survey.CommentstreamView, "_comments.html", comments: @comments, conn: @conn %>
+    </body>
+</html>

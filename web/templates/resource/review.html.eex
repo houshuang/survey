@@ -1,30 +1,93 @@
 <div class="blocks">
-  <%= form_for @conn, resource_path(@conn, :review_submit), [name: :search], fn _ -> %>
+  <%= form_for @conn, resource_path(@conn, :review_submit), [name: :search], 
+  fn _ -> %>
   <%= raw ParamSession.form_session @conn %>
-    <div class="block" style="">
-      <h3><a href='<%= @resource.url %>' target='_blank'><%= @resource.name %></a></h3>
-      <fieldset>
-        <h4>Description</h4>
-        <p><%= @resource.description %>
-          </fieldset><fieldset>
-        <h4>Tags <font color=red>*</font></h4>
-        <p><i>Please enter a number of tags to describe the disciplinary focus of the resource. 
-            </p><br><p>
-            Below the tag bar, you will see suggestions based on what other people with your teaching interests have entered - in this way we hope to build up a "folksonomic" tag cloud. Click on a tag to add it to your tag selection. </p><br><p> Tags can have spaces. Press enter to add a new tag.</i></p><br>
+  <input type='hidden' value=<%= @resource.id %> name='resource_id'>
+  <div class="block" style="">
+    <h1>Review resource</h1>
+    <font size=-1><i><%= @resourcetype %></i></font>
+    <fieldset>
+      <span style="
+        font-family: 'dosisextralight', sans-serif;
+        color: #0877b0; line-height: 1.3;
+        font-size: 24px;">
+        Name:</span><span style="
+        font-family: 'dosisextralight', sans-serif;
+        color: #00000; line-height: 1.3;
+        font-size: 30px;">
+        <%= @resource.name %></span><br><br>
+  </fieldset>
+    <i><a href='<%= @resource.url %>' target='_blank'><%= @resource.url %>
+    </a></i><br>
+    Added by: <%= @resource.user.nick %>
+    <fieldset>
+      <h4>Description</h4>
+      <p id="description"><%= @resource.description %><div id='edit_button'><i><a href="#" id="edit_desc">
+              (Improve this)</a></i></p><br></div>
+    </fieldset>
+    <fieldset>
+      <h4>Lesson topics ideas</h4>
+      <i><p>Can you think of any ways in which this technology might be used for an inquiry activity that helped students in your SIG area to represent their ideas and collaborate with peers, in order to learn about topics?</P></i>
+      <hr style='margin: 10px 10px 10px 0;'>
+      <%= if @resource.comments do %>
+        <%= for comment <- @resource.comments do %>
+          <p><%= comment["text"] %>
+            <i>(<%= comment["nick"] %>)</i></p>
+          <br>
+        <% end %>
+      <% end %>
+      <hr style='margin: 10px 10px 10px 0;'>
+
+      <label><i>Add “lesson topic ideas” that describe ways you think 
+          it could be used for an inquiry lesson:</label>
+        <textarea name='f[comment]'></textarea>
+        <p class='counter' length='500'>
+        </fieldset>
+        <%= if !@seen do %>
+        <fieldset>
+          <h4>Rate resource</h4>
+        </fieldset>
+        <label>How would you rate this resource, in terms of its likely application for inquiry curriculum in K-12 classrooms or informal learning environments (field trips, museums, etc)?  Choose 1 for a low rating and 5 for a high rating</label>
+          <input type="range" min="0" max="5" value="0" step="0.5" id="rating"><br>
+          <input type='hidden' name='f[rating]' id='rating_input'>
+          <div id='rateit' class="rateit" data-rateit-backingfld="#rating"></div>
+        </fieldset>
+      <% end %>
+        <%= if !@resource.generic do %>
+          <fieldset>
+            <h4>Tags <font color=red>*</font></h4>
+            Feel free to add additional tags to the ones already associated 
+            with this resource.</i></p><br>
         <script src="/js/tag-it.min.js"></script>
-        <input name='f[tags]' type=text class="form-control" id="ms-suggest">
+        <input name='f[tags]' type=text class="form-control" 
+        id="ms-suggest" value='<%= if @resource.tags, 
+        do: Enum.join(@resource.tags, "|") %>'>
         <div id="tags">
-        <%= for tag <- @tags do %>
-          <p class='tagsuggestion' id='<%= 
-          String.replace(tag, " ", "_")
-          |> String.replace(",", "_")%>'><a href="#"><%= tag %></a></p>
+          <%= for tag <- @tags do %>
+            <p class='tagsuggestion' id='<%= 
+            String.replace(tag, " ", "_")
+            |> String.replace(",", "_")%>'><a href="#"><%= tag %></a></p>
         <% end %>
       </div>
-      </fieldset>
-    </div>
-    <br>
-  <% end %>
-	<div class='stepsController submit right'><a href='#'>Submit, and add another resource</a></div> 
-        <script src="/js/jquery.columnizer.js"></script>
-        <script src="/js/resource-add.js"></script>
-
+      <script src="/js/jquery.columnizer.js"></script>
+      <script>Window.tags = [<%= raw(
+        if @resource.tags do
+          @resource.tags 
+          |> Enum.map(fn x -> "\"#{x}\"" end)
+          |> Enum.join(",") 
+        end)
+      %>]</script>
+  </fieldset>
+<% end %>
+  </div>
+  <br>
+<% end %>
+<div class='stepsController submit right'><a href='#'>
+    <%=
+    case @redirect do
+      :list -> "Store any changes, and return to resource listing"
+      :next -> "Store any changes, and review another resource"
+    end
+    %></a></div> 
+<script src="/js/jquery.rateit.min.js"></script>
+<script src="/js/resource-review.js"></script>

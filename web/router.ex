@@ -55,9 +55,33 @@ defmodule Survey.Router do
     get "/resource/review/:id", ResourceController, :review
     post "/resource/check_url", ResourceController, :check_url
 
+    post "/resource/tag-cloud", ResourceController, :tag_cloud
+    post "resource/list", ResourceController, :list
+    get "/resource/tag-cloud", ResourceController, :tag_cloud
+    get "resource/list", ResourceController, :list
+
     # reflection
     get "/reflection/:id", ReflectionController, :index
     post "/reflection/submission", ReflectionController, :submit
+
+    # sig
+    get "/user/select_sig_freestanding", UserController, 
+      :select_sig_freestanding
+    post "/user/select_sig_freestanding", UserController, 
+      :select_sig_freestanding
+
+    # review lesson designs
+    # entrypoint:
+    get "/lessondesigns/sidebar", LessonplanController, :sidebar
+    post "/lessondesigns/sidebar", LessonplanController, :sidebar
+
+    get "/lessondesigns/overview", LessonplanController, :overview
+    post "/lessondesigns/overview", LessonplanController, :overview
+    get "/lessondesigns/:id", LessonplanController, :detail
+    post "/lessondesigns/:id", LessonplanController, :detail
+
+    # commentstream
+    post "/commentstream/submit", CommentstreamController, :submit
   end
 
   scope "/", Survey do
@@ -76,5 +100,6 @@ defmodule Survey.Router do
     get "/report/tags", ReportController, :tags
     get "/report/resource", ResourceController, :report
     get "/resource/preview", ResourceController, :preview
+    get "/cohorts", AdminController, :cohorts
   end
 end

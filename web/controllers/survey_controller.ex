@@ -35,7 +35,7 @@ defmodule Survey.SurveyController do
     if complete do
       user = %{user | surveystate: 99 }
     end
-    Repo.update(user) 
+    Repo.update!(user) 
   end
 
   defp clean_survey(survey) do

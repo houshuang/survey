@@ -3,6 +3,10 @@
 <%= 
 for x1 <- @questions do
   case x1 do
+    {:signup, data} -> 
+      render "_signup.html", data: data
+    {:general, data} -> 
+      render "_general.html", data: data
     {:text, data} -> 
       render "_text.html", data: data
     {:radio, data} -> 
@@ -11,6 +15,8 @@ for x1 <- @questions do
       render "_grid.html", data: data
     {:tags, data} ->
       render "_tag.html", data: data |> Enum.take(5)
+    {:sigs, data} ->
+      render "_sig.html", data: data
     {:grades, data} ->
       render "_grade.html", data: data
     {:steams, data} ->
