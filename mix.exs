@@ -44,8 +44,7 @@ defmodule Survey.Mixfile do
       {:exprintf, github: "parroty/exprintf"},
       {:param_session, github: "houshuang/param_session"},
       {:csv, "~> 1.0.0"},
-      {:plug_accesslog, github: "houshuang/plug_accesslog_survey"}
-      # {:plug_accesslog, github: "houshuang/plug_accesslog"}
+      {:plug_accesslog, github: "houshuang/plug_accesslog"}
     ]
   end
 end
