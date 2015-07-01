@@ -1,0 +1,6 @@
+    <html><head>
+            <link rel='stylesheet' href='/lessonplans/css/<%= raw @css %>.css'>
+        </head><body>
+        <%= raw @lesson %>
+    </body>
+</html>
