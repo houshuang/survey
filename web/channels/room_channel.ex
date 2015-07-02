@@ -11,24 +11,21 @@ defmodule Survey.RoomChannel do
     {:ok, socket}
   end
   def join("rooms:" <> _private_subtopic, _message, _socket) do
-    IO.puts("join")
     :ignore
   end
 
   def handle_info({:after_join, msg}, socket) do
-    Logger.debug "> join #{socket.topic}"
     broadcast! socket, "user:entered", %{user: msg["user"]}
     push socket, "join", %{status: "connected"}
     {:noreply, socket}
   end
+
   def handle_info(:ping, socket) do
-    IO.inspect(["ping", socket])
     push socket, "new:msg", %{user: "SYSTEM", body: "ping"}
     {:noreply, socket}
   end
 
   def terminate(reason, socket) do
-    Logger.debug"> leave #{inspect reason}"
     :ok
   end
 

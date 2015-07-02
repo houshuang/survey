@@ -1,7 +1,7 @@
 defmodule Survey.Router do
   use Survey.Web, :router
 
-  socket "/ws", Chat do
+  socket "/ws", Survey do
     channel "rooms:*", RoomChannel
   end
 
