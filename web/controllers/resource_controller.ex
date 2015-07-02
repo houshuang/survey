@@ -74,6 +74,7 @@ defmodule Survey.ResourceController do
     if already > 0 do
       conn = put_flash(conn, :info, 
         "Thank you for reviewing #{already} #{resource_word(already)}. You are welcome to review more resources, or move on to other parts of the course.")
+      Survey.Grade.submit_grade(conn, "review_resource", 1.0)
     end
     
     if params["id"] do
@@ -192,6 +193,7 @@ defmodule Survey.ResourceController do
     else
       "/resource/review"
     end
+    Survey.Grade.submit_grade(conn, "review_resource", 1.0)
     
     conn
     |> ParamSession.redirect redir_url
