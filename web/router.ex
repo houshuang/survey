@@ -4,9 +4,9 @@ defmodule Survey.Router do
   pipeline :browser do
     plug ParamSession
     plug EnsureLti
-    plug Plug.AccessLog,
-      format: :clf,
-      file: "log/access_log"
+    # plug Plug.AccessLog,
+    #   format: :clf,
+    #   file: "log/access_log"
     plug :accepts, ["html"]
     plug :fetch_flash
     plug EnsureRegistered
@@ -17,9 +17,9 @@ defmodule Survey.Router do
   pipeline :register do
     plug ParamSession
     plug EnsureLti
-    plug Plug.AccessLog,
-      format: :clf,
-      file: "log/access_log"
+    # plug Plug.AccessLog,
+    #   format: :clf,
+    #   file: "log/access_log"
     plug :accepts, ["html"]
     plug :fetch_flash
   end
@@ -31,9 +31,9 @@ defmodule Survey.Router do
       signing_salt: "LMvTyOc2"
     plug :fetch_session
     plug VerifyAdmin
-    plug Plug.AccessLog,
-      format: :clf,
-      file: "log/access_log"
+    # plug Plug.AccessLog,
+    #   format: :clf,
+    #   file: "log/access_log"
     plug :fetch_flash
     plug :accepts, ["html"]
   end
