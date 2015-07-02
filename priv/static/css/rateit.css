@@ -71,12 +71,16 @@
 
 .rateit .rateit-preset
 {
-    background: url(star.gif) left -48px;
+    background: white;
 }
 
+  tr:nth-child(even) .rateit .rateit-preset
+{
+    background: #eeeeee;
+}
 .rateit .rateit-preset-rtl
 {
-    background: url(star.gif) left -48px;
+    background: bullet_toggle_plus.png;
 }
 
 .rateit button.rateit-reset

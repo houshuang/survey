@@ -74,6 +74,7 @@ defmodule Survey.HTML.Survey do
     desc = desc(h)
     length = case h do
       %{meta: %{length: x} } -> ["<p class='counter' length='", x, "'></p>"]
+      %{meta: %{minwords: x} } -> ["<p class='counter' min='", x, "'></p>"]
       _ -> ""
     end
 
@@ -175,7 +176,10 @@ defmodule Survey.HTML.Survey do
   end
   #--------------------------------------------------------------------------------
   
-  def remove_blank_lines(x), do: String.strip(x) != ""
+  def remove_blank_lines(x) do
+    x = String.strip(x)
+    x != "" && !String.starts_with?(x, "!")
+  end
 
   mdef classify_line_types do
     "#"<>rest     -> {:header, rest}

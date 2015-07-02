@@ -1,0 +1,37 @@
+@charset "UTF-8";
+/* CSS Document */
+
+html {overflow-x: hidden; overflow-y: auto;}
+body {font-family: Calibri, Verdana, Geneva, sans-serif; padding:1em}
+h2 {font-family: Calibri; font-size:3em; color:#538135; text-transform:uppercase; font-weight:lighter; line-height:1em; margin:0.7em 0}
+h3  {font-family: Calibri; font-size:1.1em; text-transform:uppercase; font-weight:lighter; letter-spacing:0.2em; margin-bottom:-0.5em}
+
+.duration {float:right; background-color:#70AD47; color:#FFF; padding:0.2em 1em; font-size:0.9em}
+.leftcolumn {width:65%; float:left; margin-bottom:2em}
+.rightcolumn {width:30%; float:right; margin-bottom:2em}
+.maincontent {margin-bottom:3em}
+
+.box1 {background-color:#E2F0D9; padding:1em}
+.box2 {background-color:#E7E6E6; padding:1em}
+
+.image {margin:-16px 0; padding:0px}
+
+ul.checkmark li {
+    background: url("../img/checkmark.png") no-repeat 0 50%;
+	background-position:top left;
+    padding-left: 26px;
+	margin-left: -26px;
+}
+
+ul.checkmark {
+    list-style-type: none;
+}
+
+li {margin-bottom: 10px;}
+
+table {margin-top:1em}
+td {vertical-align:top}
+td p {margin:0; padding:5px}
+.table {clear:both;}
+.tableheader1 {background-color:#E2F0D9}
+.tableheader2 {background-color:#FBE4D5; text-align:center}

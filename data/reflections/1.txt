@@ -1,0 +1,16 @@
+# Reflection week 1
+textbox,What are some aspects of the WISE activity that you thought were most effective, in terms of helping students learn the topics?
+meta
+	minwords=10
+textbox,What was Jennifer’s role, during the WISE lesson?  What new opportunities came a result of using WISE?  
+meta
+	minwords=10
+!grid,Self-assessment of your learning
+!choicerange
+!	not at all
+!	to a large extent
+!	5
+!rows
+!	This topic is relevant to my teaching
+!	I learnt from my peers this week
+!	I contributed something useful to the community this week

@@ -58,3 +58,6 @@ config :param_session,
 
 config :verify_admin,
   password: "test"
+
+config :grade,
+  dont_submit: true

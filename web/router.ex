@@ -8,6 +8,9 @@ defmodule Survey.Router do
   pipeline :browser do
     plug ParamSession
     plug EnsureLti
+    plug Plug.AccessLog,
+      format: :clf,
+      file: "log/access_log"
     plug :accepts, ["html"]
     plug :fetch_flash
     plug EnsureRegistered
@@ -18,6 +21,9 @@ defmodule Survey.Router do
   pipeline :register do
     plug ParamSession
     plug EnsureLti
+    plug Plug.AccessLog,
+      format: :clf,
+      file: "log/access_log"
     plug :accepts, ["html"]
     plug :fetch_flash
   end
@@ -29,6 +35,9 @@ defmodule Survey.Router do
       signing_salt: "LMvTyOc2"
     plug :fetch_session
     plug VerifyAdmin
+    plug Plug.AccessLog,
+      format: :clf,
+      file: "log/access_log"
     plug :fetch_flash
     plug :accepts, ["html"]
   end
@@ -58,11 +67,43 @@ defmodule Survey.Router do
     post "/resource/review/:id", ResourceController, :review
     get "/resource/review/:id", ResourceController, :review
     post "/resource/check_url", ResourceController, :check_url
-  
+
+    post "/resource/tag-cloud", ResourceController, :tag_cloud
+    post "resource/list", ResourceController, :list
+    get "/resource/tag-cloud", ResourceController, :tag_cloud
+    get "resource/list", ResourceController, :list
+
+    # reflection
+    post "/reflection/submission", ReflectionController, :submit
+    get "/reflection/:id", ReflectionController, :index
+    post "/reflection/:id", ReflectionController, :index
+    post "/reflection", ReflectionController, :index
+    get "/reflection", ReflectionController, :index
+
+    # sig
     get "/user/select_sig_freestanding", UserController, 
       :select_sig_freestanding
     post "/user/select_sig_freestanding", UserController, 
       :select_sig_freestanding
+
+    # review lesson designs
+    # entrypoint:
+    get "/lessondesigns/sidebar", LessonplanController, :sidebar
+    post "/lessondesigns/sidebar", LessonplanController, :sidebar
+
+    get "/lessondesigns/overview", LessonplanController, :overview
+    post "/lessondesigns/overview", LessonplanController, :overview
+    get "/lessondesigns/:id", LessonplanController, :detail
+    post "/lessondesigns/:id", LessonplanController, :detail
+
+    # commentstream
+    post "/commentstream/submit", CommentstreamController, :submit
+
+    # assessment
+    post "/assessment", ReflectionController, :assessment
+    get "/assessment", ReflectionController, :assessment
+    post "/assessment/submit", ReflectionController, :assessment_submit
+    get "/assessment/submit", ReflectionController, :assessment_submit
   end
 
   scope "/", Survey do
@@ -81,6 +122,9 @@ defmodule Survey.Router do
     get "/report/tags", ReportController, :tags
     get "/report/resource", ResourceController, :report
     get "/resource/preview", ResourceController, :preview
+
     get "/chat", ChatController, :index
+
+    get "/cohorts", AdminController, :cohorts
   end
 end

@@ -4,8 +4,19 @@
   <%= raw ParamSession.form_session @conn %>
   <input type='hidden' value=<%= @resource.id %> name='resource_id'>
   <div class="block" style="">
-    <h1>Review <%= @resourcetype %> resource</h1>
-    <h3><%= @resource.name %></h3>
+    <h1>Review resource</h1>
+    <font size=-1><i><%= @resourcetype %></i></font>
+    <fieldset>
+      <span style="
+        font-family: 'dosisextralight', sans-serif;
+        color: #0877b0; line-height: 1.3;
+        font-size: 24px;">
+        Name:</span><span style="
+        font-family: 'dosisextralight', sans-serif;
+        color: #00000; line-height: 1.3;
+        font-size: 30px;">
+        <%= @resource.name %></span><br><br>
+  </fieldset>
     <i><a href='<%= @resource.url %>' target='_blank'><%= @resource.url %>
     </a></i><br>
     Added by: <%= @resource.user.nick %>
@@ -16,6 +27,8 @@
     </fieldset>
     <fieldset>
       <h4>Lesson topics ideas</h4>
+      <i><p>Can you think of any ways in which this technology might be used for an inquiry activity that helped students in your SIG area to represent their ideas and collaborate with peers, in order to learn about topics?</P></i>
+      <hr style='margin: 10px 10px 10px 0;'>
       <%= if @resource.comments do %>
         <%= for comment <- @resource.comments do %>
           <p><%= comment["text"] %>
@@ -23,21 +36,23 @@
           <br>
         <% end %>
       <% end %>
+      <hr style='margin: 10px 10px 10px 0;'>
 
-      <label>Add “lesson topic ideas” that describe ways you think 
-        it could be used for an inquiry lesson:
+      <label><i>Add “lesson topic ideas” that describe ways you think 
+          it could be used for an inquiry lesson:</label>
         <textarea name='f[comment]'></textarea>
-        <p class='counter' min='10'>
+        <p class='counter' length='500'>
         </fieldset>
+        <%= if !@seen do %>
         <fieldset>
           <h4>Rate resource</h4>
         </fieldset>
-        <label>1 = not very useful or engaging for students; 
-          5 = very useful or engaging for students: 
+        <label>How would you rate this resource, in terms of its likely application for inquiry curriculum in K-12 classrooms or informal learning environments (field trips, museums, etc)?  Choose 1 for a low rating and 5 for a high rating</label>
           <input type="range" min="0" max="5" value="0" step="0.5" id="rating"><br>
           <input type='hidden' name='f[rating]' id='rating_input'>
           <div id='rateit' class="rateit" data-rateit-backingfld="#rating"></div>
         </fieldset>
+      <% end %>
         <%= if !@resource.generic do %>
           <fieldset>
             <h4>Tags <font color=red>*</font></h4>
@@ -68,6 +83,11 @@
   <br>
 <% end %>
 <div class='stepsController submit right'><a href='#'>
-    Store any changes, and review another resource</a></div> 
+    <%=
+    case @redirect do
+      :list -> "Store any changes, and return to resource listing"
+      :next -> "Store any changes, and review another resource"
+    end
+    %></a></div> 
 <script src="/js/jquery.rateit.min.js"></script>
 <script src="/js/resource-review.js"></script>
