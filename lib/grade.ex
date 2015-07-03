@@ -62,7 +62,7 @@ defmodule Survey.Grade do
         end
         res
       else
-        Logger.warn("Already submitted grade for #{user_id} in #{component}")
+        Logger.info("Already submitted grade for #{user_id} in #{component}")
         :ok
       end
     end
