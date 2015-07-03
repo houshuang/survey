@@ -74,7 +74,7 @@ defmodule Survey.ResourceController do
     if already > 0 do
       conn = put_flash(conn, :info, 
         "Thank you for reviewing #{already} #{resource_word(already)}. You are welcome to review more resources, or move on to other parts of the course.")
-      if get_session(conn, :lti_grade, cache) do
+      if get_session(conn, :lti_grade) do
         Survey.Grade.submit_grade(conn, "review_resource", 1.0)
       end
     end
@@ -195,7 +195,7 @@ defmodule Survey.ResourceController do
     else
       "/resource/review"
     end
-    if get_session(conn, :lti_grade, cache) do
+    if get_session(conn, :lti_grade) do
       Survey.Grade.submit_grade(conn, "review_resource", 1.0)
     end
     
