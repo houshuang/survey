@@ -2,9 +2,11 @@ defmodule Survey.RoomChannel do
   use Phoenix.Channel
   require Logger
   alias Survey.ChatPresence
+  import Prelude
+  alias Survey.Chat
 
   def join("rooms:" <> room, message, socket) do
-    IO.inspect(message)
+    room = string_to_int_safe(room)
     Process.flag(:trap_exit, true)
     :timer.send_interval(5000, :ping)
     send(self, {:after_join, {message, room}})
@@ -16,7 +18,8 @@ defmodule Survey.RoomChannel do
     broadcast! socket, "user:entered", %{user: msg["user"]}
     ChatPresence.add_user(room, msg["user"], socket)
     users = ChatPresence.get(room)
-    push socket, "join", %{status: "connected", presence: users}
+    previous = Chat.get(room, nil)
+    push socket, "join", %{status: "connected", presence: users, previous: previous}
     {:noreply, socket}
   end
 
@@ -32,7 +35,13 @@ defmodule Survey.RoomChannel do
   end
 
   def handle_in("new:msg", msg, socket) do
-    broadcast! socket, "new:msg", %{user: msg["user"], body: msg["body"]}
+    time = Ecto.DateTime.to_string(Ecto.DateTime.utc)
+    broadcast! socket, "new:msg", %{
+      user: msg["user"], 
+      body: msg["body"],
+      time: time}
+    {room, _} = ChatPresence.get_user(socket)
+    Survey.Chat.insert(msg, room)
     {:reply, :ok, assign(socket, :user, msg["user"])}
   end
 
@@ -40,4 +49,5 @@ defmodule Survey.RoomChannel do
     broadcast! socket, "color", msg
     {:reply, :ok, assign(socket, :user, msg["user"])}
   end
+
 end

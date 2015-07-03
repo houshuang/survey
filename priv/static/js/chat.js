@@ -9,6 +9,7 @@ Window.presence = []
   chan.on('join', function(e) { 
     Window.presence = e.presence
     render_presence() 
+    _.each(e.previous, function(x) { add_msg(x) })
   })
   chan.on('user:entered', function(e) {
     Window.presence.push(e.user)
@@ -46,7 +47,7 @@ Window.presence = []
   })
 })
 add_msg = function(e) { 
-  add_chat(e.body + " (<i>" + e.user + "</i>)") 
+  add_chat(e.time + ": " + e.body + " (<i>" + e.user + "</i>)") 
 }
 
 render_presence = function() {
