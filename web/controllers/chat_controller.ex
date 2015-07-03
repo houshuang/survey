@@ -6,6 +6,7 @@ defmodule Survey.ChatController do
   def index(conn, params) do
     id = params["id"]
     user = params["user"]
-    render conn, "index.html", id: id, user: user
+    conn
+    |> render "index.html", id: id, user: user
   end
 end

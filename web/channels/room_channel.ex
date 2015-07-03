@@ -4,6 +4,7 @@ defmodule Survey.RoomChannel do
   alias Survey.ChatPresence
 
   def join("rooms:" <> room, message, socket) do
+    IO.inspect(message)
     Process.flag(:trap_exit, true)
     :timer.send_interval(5000, :ping)
     send(self, {:after_join, {message, room}})
@@ -32,6 +33,6 @@ defmodule Survey.RoomChannel do
 
   def handle_in("new:msg", msg, socket) do
     broadcast! socket, "new:msg", %{user: msg["user"], body: msg["body"]}
-    {:reply, {:ok, %{msg: msg["body"]}, assign(socket, :user, msg["user"])}}
+    {:reply, :ok, assign(socket, :user, msg["user"])}
   end
 end
