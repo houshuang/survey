@@ -1,0 +1,68 @@
+    <body>
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        <div class="blocks">
+
+            <%= form_for @conn, design_group_path(@conn, :add_idea_submit), 
+            [name: :search], fn _ -> %>
+                <%= raw ParamSession.form_session(@conn) %>            
+                
+
+                    <h1>Propose your lesson idea</h1>
+                <div class="block" id="section1">
+                    
+                    <fieldset>
+                        
+                        <h4>Topics to be addressed:</h4>
+                        <input type="text" name="f[topics]">
+
+                    </fieldset>
+
+                    <fieldset>
+                        
+                        <h4>Short description of the basic inquiry approach:</h4>
+                        <textarea name="f[description]"></textarea>
+                        <p class="counter" min='10'></p><!-- do not remove -->
+                    </fieldset>
+
+                    <fieldset>
+                        
+                        <h4>How can technology help students to build their own ideas and collaborate with peers?</h4>
+                        <textarea name="f[howtech]"></textarea>
+                        <p class="counter" min='10'></p><!-- do not remove -->
+                    </fieldset>
+
+                    <hr>
+
+                    <div class="stepsController prev right"><a href="#">Submit</a></div>
+
+                </div>
+    <div class="block" style="display: none" id="section2">
+                
+                    <fieldset>
+                        
+                        <h4>Please, give your lesson idea a creative but meaningful title:</h4>
+                        <input type="text" name="f[title]">
+                    </fieldset>
+
+                    <hr>
+
+                    <div class="stepsController prev left"><a href="#">Back</a></div>
+                    <div class="stepsController prev right"><a href="#">Submit</a></div>
+
+                </div>
+
+            </div>
+                <%= end %>
+
+        </div>
+
+        <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script-->
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.3.min.js"><\/script>')</script>
+        <script src="/js/add_design_group.js"></script>
+        <script src="/js/plugins.js"></script>
+        <script src="/js/masked-input.js"></script>
+
+    </body>
