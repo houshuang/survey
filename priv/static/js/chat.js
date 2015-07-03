@@ -8,7 +8,7 @@ Window.presence = []
   chan.on('join', function(e) { 
     Window.presence = e.presence
     render_presence() 
-    #("#history").html("")
+    $("#history").html("")
     _.each(e.previous, function(x) { add_msg(x) })
   })
   chan.on('user:entered', function(e) {
