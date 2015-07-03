@@ -123,7 +123,7 @@ defmodule Survey.Router do
     get "/report/resource", ResourceController, :report
     get "/resource/preview", ResourceController, :preview
 
-    get "/chat", ChatController, :index
+    get "/chat/:id", ChatController, :index
 
     get "/cohorts", AdminController, :cohorts
   end

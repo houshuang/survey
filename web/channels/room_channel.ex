@@ -3,15 +3,18 @@ defmodule Survey.RoomChannel do
   require Logger
 
   def join("rooms:lobby", message, socket) do
-    IO.inspect(["join", message, socket])
     Process.flag(:trap_exit, true)
     :timer.send_interval(5000, :ping)
     send(self, {:after_join, message})
 
     {:ok, socket}
   end
-  def join("rooms:" <> _private_subtopic, _message, _socket) do
-    :ignore
+  def join("rooms:" <> private_subtopic, message, socket) do
+    Process.flag(:trap_exit, true)
+    :timer.send_interval(5000, :ping)
+    send(self, {:after_join, message})
+
+    {:ok, socket}
   end
 
   def handle_info({:after_join, msg}, socket) do
@@ -21,7 +24,11 @@ defmodule Survey.RoomChannel do
   end
 
   def handle_info(:ping, socket) do
-    push socket, "new:msg", %{user: "SYSTEM", body: "ping"}
+    push socket, "ping", %{user: "SYSTEM", body: "ping"}
+    {:noreply, socket}
+  end
+  def handle_in("heartbeat", msg, socket) do
+    IO.inspect([:heartbeat, socket])
     {:noreply, socket}
   end
 
@@ -30,8 +37,7 @@ defmodule Survey.RoomChannel do
   end
 
   def handle_in("new:msg", msg, socket) do
-    IO.inspect(["new", msg, socket])
     broadcast! socket, "new:msg", %{user: msg["user"], body: msg["body"]}
-    {:reply, {:ok, msg["body"]}, assign(socket, :user, msg["user"])}
+    {:reply, {:ok, %{msg: msg["body"]}, assign(socket, :user, msg["user"])}}
   end
 end

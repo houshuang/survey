@@ -3,7 +3,8 @@ defmodule Survey.ChatController do
 
   plug :action
 
-  def index(conn, _params) do
-    render conn, "index.html"
+  def index(conn, params) do
+    id = params["id"]
+    render conn, "index.html", id: id
   end
 end

@@ -1,2 +1,6 @@
+          <input id="username" type="text" class="form-control" placeholder="username">
+        <input id="input" class="form-control" placeholder="message" />
+        <div id='messages'></div>
+<script>id = '<%= @id %>'</script>
 <script src="/js/phoenix.js"></script>
 <script src="/js/chat.js"></script>
