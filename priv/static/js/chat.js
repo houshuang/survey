@@ -1,8 +1,7 @@
 $(document).ready(function() {
 Window.presence = []
   P = window.Phoenix
-  socket = new P.Socket("/ws", {
-  logger: function(kind, msg, data) { if (! msg.match("phx") && (! msg.match("error")) && (! msg.match("ping"))) { console.log(`${kind}: ${msg}`, data)} }})
+  socket = new P.Socket("/ws")
   socket.connect()
   chan = socket.chan("rooms:" + id, {user: user})
   chan.join()
