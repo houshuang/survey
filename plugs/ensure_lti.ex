@@ -20,8 +20,10 @@ defmodule EnsureLti do
 
       # check if this is a graded section, and if it is, store call-back information
       case PlugLti.Grade.get_call_info(conn) do
-        {:ok, info} -> conn = Conn.put_session(
-          conn, :lti_grade, Survey.Cache.store(info))
+        {:ok, info} -> 
+          cache = Survey.Cache.store(info)
+          conn = Conn.put_session( conn, :lti_grade, cache)
+          Logger.info("Storing grade callback info cache #{cache}")
         :missing -> conn
       end
       %{conn | method: "GET"}
