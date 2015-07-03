@@ -54,9 +54,11 @@ defmodule Survey.Grade do
         |> Repo.insert!
 
         case res = PlugLti.Grade.call(lti, grade) do
-          :ok -> Repo.update!(%{dbentry | submitted: true})
+          :ok -> 
+            Repo.update!(%{dbentry | submitted: true})
+            Logger.info("Submitted grade for #{component}")
           {:error, message} -> Logger.warn(
-          "Not able to submit grade, UserGrade id #{dbentry.id}, message: #{inspect(message)}")
+            "Not able to submit grade, UserGrade id #{dbentry.id}, message: #{inspect(message)}")
         end
         res
       else
