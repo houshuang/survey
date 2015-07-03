@@ -40,7 +40,7 @@ defmodule EnsureRegistered do
       end
 
       log_unique(user.id)
-
+      Logger.metadata([id: user.id])
       conn 
       |> put_session(:repo_userid, user.id)
       |> assign(:user, user)
