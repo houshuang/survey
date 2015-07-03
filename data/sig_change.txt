@@ -1,0 +1,60 @@
+1. High ed and online learning (keep name the same)
+2. Foreign language (keep name the same)
+3. COMBINE HS science and MS science, RENAME as "Secondary science"
+4. COMBINE HS Math and MS Math, RENAME as "Secondary math"
+5. COMBINE HS English, etc and MS English, etc. RENAME as "Secondary English, etc
+6. COMBINE HS Technology and MS Technology, etc. RENAME as "Secondary Technology Instruction"
+7. COMBINE all three arts - ReNAME as "arts, media and design"
+8. COMBINE Elementary math, Elem science, and Elem technology Rename as "Elementary Math, Science and Technology"
+9. Keep Informal learning
+
+#2 + 8 -> Secondary science
+#1 + 7 -> Secondary math
+#4 + 10 -> Secondary English
+#5 + 11 -> Secondary Technology Instruction
+#3 + 9 + 14 -> Arts, media and design
+12 + #13 + 16 -> Elementary Math, Science and Technology
+
+2: Secondary Math and Science
+3: Arts, Music and Design"
+4. Secondary English, History, Social Studies
+5: Secondary Technology Instruction
+6: Foreign Languages and English as Second Language
+
+13: Elementary Math, Science and Technology instruction
+15: Elementary English, History and Social Studies
+17: Informal Learning in Museum and Out-of-School Settings
+18: High ed and online learning (keep name the same)
+
+-----------------------------------------------------------
+UPDATE users SET sig_id=2 WHERE sig_id=8;
+UPDATE users SET sig_id=1 WHERE sig_id=7;
+UPDATE users SET sig_id=4 WHERE sig_id=10;
+UPDATE users SET sig_id=5 WHERE sig_id=11;
+UPDATE users SET sig_id=3 WHERE sig_id=any('{9, 14}');
+UPDATE users SET sig_id=13 WHERE sig_id=any('{12, 16}');
+
+UPDATE resources SET sig_id=2 WHERE sig_id=8;
+UPDATE resources SET sig_id=1 WHERE sig_id=7;
+UPDATE resources SET sig_id=4 WHERE sig_id=10;
+UPDATE resources SET sig_id=5 WHERE sig_id=11;
+UPDATE resources SET sig_id=3 WHERE sig_id=any('{9, 14}');
+UPDATE resources SET sig_id=13 WHERE sig_id=any('{12, 16}');
+
+UPDATE resource_tags SET sigs = array_append(array_remove(sigs, 8), 2);
+UPDATE resource_tags SET sigs = array_append(array_remove(sigs, 7), 1);
+UPDATE resource_tags SET sigs = array_append(array_remove(sigs, 10), 4);
+UPDATE resource_tags SET sigs = array_append(array_remove(sigs, 11), 5);
+UPDATE resource_tags SET sigs = array_append(array_remove(sigs, 9), 3);
+UPDATE resource_tags SET sigs = array_append(array_remove(sigs, 14), 3);
+UPDATE resource_tags SET sigs = array_append(array_remove(sigs, 12), 13);
+UPDATE resource_tags SET sigs = array_append(array_remove(sigs, 16), 13);
+
+update sigs SET name='Secondary Science' WHERE id=2;
+update sigs SET name='Secondary Math' WHERE id=1;
+update sigs SET name='Secondary English' WHERE id=4;
+update sigs SET name='Secondary Technology Instruction' WHERE id=5;
+update sigs SET name='Arts, Media and Design' WHERE id=3;
+update sigs SET name='Elementary Math, Science and Technology' WHERE id=13;
+
+delete from sigs where id=any('{8, 7, 10, 11, 9, 14, 12, 16}');
