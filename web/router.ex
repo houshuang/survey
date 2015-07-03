@@ -42,6 +42,19 @@ defmodule Survey.Router do
     plug :accepts, ["html"]
   end
 
+  pipeline :public do
+    plug Plug.Session,
+      store: :cookie,
+      key: "_test_key",
+      signing_salt: "LMvTyOc2"
+    plug :fetch_session
+    # plug Plug.AccessLog,
+    #   format: :clf,
+    #   file: "log/access_log"
+    plug :fetch_flash
+    plug :accepts, ["html"]
+  end
+
   scope "/", Survey do
     pipe_through :browser
 
@@ -123,8 +136,12 @@ defmodule Survey.Router do
     get "/report/resource", ResourceController, :report
     get "/resource/preview", ResourceController, :preview
 
-    get "/chat/:id", ChatController, :index
-
     get "/cohorts", AdminController, :cohorts
+  end
+
+  scope "/", Survey do
+    pipe_through :public
+
+    get "/chat/:id", ChatController, :index
   end
 end

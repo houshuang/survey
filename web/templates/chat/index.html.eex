@@ -1,5 +1,10 @@
-<h1>Chat</h1>
+<h1 id="header">Chat</h1>
 You are now in <b>room <%= @id %></b>, and you are known as <b><%= @user %></b>.
+<br>
+<a class=color href="#">Red</a>
+<a class=color href="#">Blue</a>
+<a class=color href="#">Green</a>
+<a class=color href="#">White</a>
 <div class=blocks><form><div class="block">
 <fieldset>
         <hr>

@@ -6,7 +6,11 @@ defmodule Survey.ChatController do
   def index(conn, params) do
     id = params["id"]
     user = params["user"]
-    conn
-    |> render "index.html", id: id, user: user
+    if !user do
+      html conn, "Please supply a user as a URL parameter, for example /chat/1?user=stian"
+    else
+      conn
+      |> render "index.html", id: id, user: user
+    end
   end
 end

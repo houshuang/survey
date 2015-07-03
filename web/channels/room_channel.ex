@@ -35,4 +35,9 @@ defmodule Survey.RoomChannel do
     broadcast! socket, "new:msg", %{user: msg["user"], body: msg["body"]}
     {:reply, :ok, assign(socket, :user, msg["user"])}
   end
+
+  def handle_in("color", msg, socket) do
+    broadcast! socket, "color", msg
+    {:reply, :ok, assign(socket, :user, msg["user"])}
+  end
 end
