@@ -31,7 +31,10 @@ config :survey, Survey.Endpoint,
 # disk for the key and cert.
 
 # Do not print debug messages in production
-config :logger, level: :info
+config :logger, :console, 
+  level: :info,
+  format: "$date $time $metadata[$level] $message\n",
+  metadata: [:id]
 
 # ## Using releases
 #
