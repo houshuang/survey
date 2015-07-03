@@ -14,9 +14,9 @@
     <script src="/js/lodash.min.js"></script>
     <script src="/js/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
     <link rel="stylesheet" href="/css/rateit.css">
+    <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/normalize.css">
     <link rel="stylesheet" href="/css/reset.css">
-    <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/jcloud.css">
     <link rel="stylesheet" href="/css/jquery.tagit.css">
     <link rel="stylesheet" href="/css/tagit.ui-zendesk.css">
