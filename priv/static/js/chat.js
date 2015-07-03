@@ -1,10 +1,10 @@
 $(document).ready(function() {
-  heartbeatTimer = setInterval(sendHeartbeat, 5000);
 
   P = window.Phoenix
-  socket = new P.Socket("/ws")
+  socket = new P.Socket("/ws", {
+  logger: function(kind, msg, data) { console.log(`${kind}: ${msg}`, data) }})
   socket.connect()
-  chan = socket.chan("rooms:" + id, {})
+  chan = socket.chan("rooms:" + id, {user: user})
   chan.join()
   chan.on('new:msg', function(e) {add_msg(e)})
     $("#input").on("keypress", function(e)  {
@@ -15,10 +15,8 @@ $(document).ready(function() {
         add_msg(payload)
       }
     })
+  chan.on("", function(e) { console.log(e) })
 
 })
 add_msg = function(e) { $("#messages").append("<li>" + e.body + " (<i>" + e.user + "</i>)</li>") }
-sendHeartbeat = function() {
-  chan.push("heartbeat", {})
-}
 
