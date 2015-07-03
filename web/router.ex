@@ -1,6 +1,10 @@
 defmodule Survey.Router do
   use Survey.Web, :router
 
+  socket "/ws", Survey do
+    channel "rooms:*", RoomChannel
+  end
+
   pipeline :browser do
     plug ParamSession
     plug EnsureLti
@@ -31,6 +35,19 @@ defmodule Survey.Router do
       signing_salt: "LMvTyOc2"
     plug :fetch_session
     plug VerifyAdmin
+    # plug Plug.AccessLog,
+    #   format: :clf,
+    #   file: "log/access_log"
+    plug :fetch_flash
+    plug :accepts, ["html"]
+  end
+
+  pipeline :public do
+    plug Plug.Session,
+      store: :cookie,
+      key: "_test_key",
+      signing_salt: "LMvTyOc2"
+    plug :fetch_session
     # plug Plug.AccessLog,
     #   format: :clf,
     #   file: "log/access_log"
@@ -122,6 +139,13 @@ defmodule Survey.Router do
     get "/report/tags", ReportController, :tags
     get "/report/resource", ResourceController, :report
     get "/resource/preview", ResourceController, :preview
+
     get "/cohorts", AdminController, :cohorts
+  end
+
+  scope "/", Survey do
+    pipe_through :public
+
+    get "/chat/:id", ChatController, :index
   end
 end

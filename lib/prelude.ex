@@ -1,7 +1,10 @@
 defmodule Prelude do
   def string_to_int_safe(y) do
     try do
-      String.to_integer(y)
+      case y do
+        y when is_integer(y) -> y
+        y when is_binary(y) -> String.to_integer(y)
+      end
     rescue
       ArgumentError -> 0
       e -> raise e
