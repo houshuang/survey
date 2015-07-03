@@ -104,7 +104,6 @@ defmodule Survey.Router do
     # designgroups
     post "/design_groups/add_idea", DesignGroupController, :add_idea
     get "/design_groups/add_idea", DesignGroupController, :add_idea
-    get "/design_groups/add_idea/submit", DesignGroupController, :add_idea_submit
   end
 
   scope "/", Survey do

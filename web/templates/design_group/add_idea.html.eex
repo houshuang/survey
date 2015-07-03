@@ -5,7 +5,7 @@
 
         <div class="blocks">
 
-            <%= form_for @conn, design_group_path(@conn, :add_idea_submit), 
+            <%= form_for @conn, design_group_path(@conn, :add_idea), 
             [name: :search], fn _ -> %>
                 <%= raw ParamSession.form_session(@conn) %>            
                 
@@ -48,7 +48,7 @@
                     </fieldset>
 
                     <hr>
-
+                    <br>
                     <div class="stepsController prev left"><a href="#">Back</a></div>
                     <div class="stepsController prev right"><a href="#">Submit</a></div>
 
