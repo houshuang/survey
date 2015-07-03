@@ -28,9 +28,9 @@
 <h3>SIGs</h3>
 <p><br>
 <table id='tags'>
-  <tr><th>SIG</th><th>Number of learners</tr>
-  <%= for {grade, count} <- @data do %>
-    <tr><td><%= grade %></td><td><%= count %></td></tr>
+  <tr><th>ID</th><th>SIG</th><th>Number of learners</tr>
+  <%= for {sid, grade, count} <- @data do %>
+    <tr><td><%= sid %></td><td><%= grade %></td><td><%= count %></td></tr>
   <%= end %>
 </table>
 <hr>
