@@ -35,3 +35,19 @@ td p {margin:0; padding:5px}
 .table {clear:both;}
 .tableheader1 {background-color:#FBE4D5}
 .tableheader2 {background-color:#F7CAAC; text-align:center}
+
+.stepsController {}
+.stepsController a, form input[type="submit"] {
+    display: block;
+    float: right;
+    text-decoration: none;
+    padding: 10px 30px;
+    font-size: 15px;
+    background: #0877B0;
+    color: #fff;
+    border-radius: 5px;
+}
+
+form input[type="submit"] {
+    background: #66B008;
+}

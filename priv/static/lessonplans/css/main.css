@@ -190,13 +190,13 @@ li{
 	height: calc(100vh - 150px);
 	float:left;
 }
-.maincontent{
+.maincontentiframe{
 	width:66%;
 	background-color:#f9f9f9;
 	padding: 20px;
-	float:right;
+	/* float:right; */
 	height: calc(100vh - 150px);
-	overflow-x: hidden;
+	/* overflow-x: hidden; */
 }
 .lessontitle{
 	font-size:15px;
