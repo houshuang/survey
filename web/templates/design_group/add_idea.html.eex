@@ -17,6 +17,7 @@
                         
                         <h4>Topics to be addressed:</h4>
                         <input type="text" name="f[topics]">
+                        <p class="helptext"> (some examples: gravity, orbits and free fall; solving word problems; messages in advertising; essay composition; residential schools in Canadian history)</p>
 
                     </fieldset>
 

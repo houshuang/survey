@@ -19,5 +19,29 @@ defmodule Survey.DesignGroup do
     where: f.user_id == ^uid)
     |> Repo.one
   end
+
+  def list(sig) do
+    (from f in DesignGroup,
+    where: f.sig_id == ^sig)
+    |> Repo.all
+  end
+
+  def get(id) when is_integer(id) do
+    Repo.get(DesignGroup, id)
+  end
+
+  def insert_once(struct) do
+    req = (from f in DesignGroup,
+    where: f.user_id == ^struct.user_id,
+    where: f.title == ^struct.title)
+    |> Repo.all
+
+    if req do
+      :already
+    else
+      struct |> Repo.insert!
+      :success
+    end
+  end
 end
 
