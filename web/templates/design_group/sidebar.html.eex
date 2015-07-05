@@ -20,11 +20,16 @@
 <ul>
     <li><a><h4>Lesson Designs available for SIG <%= @sig %></h4></a>
 <ul>
-    <%= for design <- @designs do %>
+    <%= for {id, count, title, description} <- @designs do %>
 <li>
-    <a href="<%= ParamSession.gen_url(@conn, "/design_groups/select/detail/#{design.id}") %>" target="maincontent"><%= design.title %></a><br> 
-    <p class="category"><%= design.description && design.description["topics"] %></p>
-    <p class="description"><%= design.description && design.description["description"] %></p>
+    <a href="<%= ParamSession.gen_url(@conn, "/design_groups/select/detail/#{id}") %>" target="maincontent"><%= title %></a> (<%= 
+    if count >= 6 do
+            "FULL"
+        else
+            count
+        end%>)<br> 
+    <p class="category"><%= description && description["topics"] %></p>
+    <p class="description"><%= description && description["description"] %></p>
 </li>
 <% end %>
 </ul>

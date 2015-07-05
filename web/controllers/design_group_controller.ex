@@ -18,8 +18,6 @@ defmodule Survey.DesignGroupController do
         sig_id: user.sig_id,
         user_id: user.id }
       |> DesignGroup.insert_once
-      conn = put_flash(conn, :info, 
-        "You have already submitted a resource with this name.")
     end
 
     already = DesignGroup.submitted_count(user.id)
@@ -65,9 +63,10 @@ defmodule Survey.DesignGroupController do
     if !design do
       html conn, "Design idea not found"
     else
+      userlen = length(DesignGroup.get_members(design))
       conn
       |> put_layout(false)
-      |> render "detail.html", design: design
+      |> render "detail.html", design: design, userlen: userlen
     end
   end
 

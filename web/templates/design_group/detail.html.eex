@@ -33,9 +33,10 @@
                 <p><%= @design.description && @design.description["howtech"] %></p>
             </div>
             <hr>
+            <%= if @userlen < 6 do %>
 
             <input type="submit" value="Join the design team of this lesson" class="right" target="_top">
-
+        <% end %>
         </div>
 
 

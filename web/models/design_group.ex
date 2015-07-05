@@ -6,6 +6,7 @@ defmodule Survey.DesignGroup do
   alias Survey.DesignGroup
   alias Survey.User
   alias Ecto.Adapters.SQL
+  require Logger
 
   schema "designgroups" do
     field :description, Survey.JSON
@@ -22,10 +23,13 @@ defmodule Survey.DesignGroup do
     |> Repo.one
   end
 
+  def get(id) do
+    Repo.get(DesignGroup, id)
+  end
+
   def list(sig) do
     runq(
-  "WITH usercount AS (SELECT count(id) AS count, design_group_id AS design FROM users WHERE design_group_id IS NOT NULL GROUP BY design_group_id) SELECT u.count, d.title, d.description FROM designgroups d JOIN usercount u ON d.id = u.design WHERE d.sig_id=4 order by u.count desc;")
-  |> Enum.group_by(fn {count, title, description} -> count >= 6 end)
+  "WITH usercount AS (SELECT count(id) AS count, design_group_id AS design FROM users WHERE design_group_id IS NOT NULL GROUP BY design_group_id) SELECT d.id, u.count, d.title, d.description FROM designgroups d JOIN usercount u ON d.id = u.design WHERE d.sig_id=4 ORDER BY (CASE WHEN u.count>6 THEN -99 ELSE u.count end) desc;")
   end
 
   def runq(query, opts \\ []) do
@@ -46,8 +50,9 @@ defmodule Survey.DesignGroup do
     where: f.title == ^struct.title)
     |> Repo.all
 
-    if req do
+    if !Enum.empty?(req) do
       :already
+      Logger.info("Already saved this resource")
     else
       struct |> Repo.insert!
       :success
