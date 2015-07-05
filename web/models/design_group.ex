@@ -29,11 +29,11 @@ defmodule Survey.DesignGroup do
 
   def list(sig) do
     runq(
-  "WITH usercount AS (SELECT count(id) AS count, design_group_id AS design FROM users WHERE design_group_id IS NOT NULL GROUP BY design_group_id) SELECT d.id, u.count, d.title, d.description FROM designgroups d LEFT JOIN usercount u ON d.id = u.design WHERE d.sig_id=4 ORDER BY (CASE WHEN u.count>6 THEN -99 ELSE u.count end) desc;")
+  "WITH usercount AS (SELECT count(id) AS count, design_group_id AS design FROM users WHERE design_group_id IS NOT NULL GROUP BY design_group_id) SELECT d.id, u.count, d.title, d.description FROM designgroups d LEFT JOIN usercount u ON d.id = u.design WHERE d.sig_id=$1 ORDER BY (CASE WHEN u.count>6 THEN -99 ELSE u.count end) desc;", [sig])
   end
 
   def runq(query, opts \\ []) do
-    result = SQL.query(Survey.Repo, query, [])
+    result = SQL.query(Survey.Repo, query, opts)
     result.rows
   end
 
