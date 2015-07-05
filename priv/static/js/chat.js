@@ -21,14 +21,14 @@ $(document).ready(function() {
     console.log("User entered", e, Window.presence)
     render_presence() 
     if(e.userid != userid) {
-      add_chat("<li><b>" + e.usernick + " joined</li></b>")
+    add_chat(info_line({msg: e.usernick + " joined"}))
     }
   })
   chan.on('user:left', function(e) {
     console.log("User left", e, Window.presence)
     Window.presence = _.compact(_.without(Window.presence, e.userid))
     render_presence() 
-    add_chat("<b>" + e.user + " left")
+    add_chat(info_line({msg: e.usernick + " left"}))
   })
   chan.on('color', function(e) {
     $("#header").css('background', e.color)
@@ -61,7 +61,7 @@ send_msg = function() {
   $('#input').selectRange(0);
   $("#input").val("")
 }
-
+var info_line = _.template('<li class="message"> <span class="info"><span class="time"><%= moment().format("h:mm a UTC") %> - <%= msg %></span> </li>')
 var message_line = _.template('<li class="message"> <span class="info"><span class="time"><%= moment(time).format("h:mm a UTC") %> - </span><span class="name"><%= user %>: </span></span><span class="messagetext"><%= body %></span> </li>')
 
 var date_line = _.template(' <li class="date"> <span class="info"><%= date %></span></li>')
