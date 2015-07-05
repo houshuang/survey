@@ -35,13 +35,15 @@ defmodule Survey.RoomChannel do
   end
 
   def handle_in("new:msg", msg, socket) do
-    time = Ecto.DateTime.to_string(Ecto.DateTime.utc)
-    broadcast! socket, "new:msg", %{
-      user: msg["user"], 
-      body: msg["body"],
-      time: time}
-    {room, _} = ChatPresence.get_user(socket)
-    Survey.Chat.insert(msg, room)
+    if msg["body"] != "" do
+      time = Ecto.DateTime.to_string(Ecto.DateTime.utc)
+      broadcast! socket, "new:msg", %{
+        user: msg["user"], 
+        body: msg["body"],
+        time: time}
+      {room, _} = ChatPresence.get_user(socket)
+      Survey.Chat.insert(msg, room)
+    end
     {:reply, :ok, assign(socket, :user, msg["user"])}
   end
 

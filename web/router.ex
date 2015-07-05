@@ -131,7 +131,7 @@ defmodule Survey.Router do
     # collaborative workbench
     post "/collab", CollabController, :index
     get "/collab", CollabController, :index
-
+    post "/collab/leave", CollabController, :leave
   end
 
   scope "/", Survey do

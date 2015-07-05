@@ -37,7 +37,7 @@ $(document).ready(function() {
   })
 
   chan.on('new:msg', function(e) {add_msg(e)})
-  $("form").on("submit", function() { 
+  $("form#textentry").on("submit", function() { 
     send_msg()
     return false 
   })

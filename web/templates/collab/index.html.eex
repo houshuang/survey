@@ -106,10 +106,11 @@
         <li class="context-tab ui-state-default"><a href="#ui-tabs-2">Explore resources</a></li>
         <li class="context-tab ui-state-default"><a href="#ui-tabs-3">Etherpad</a></li>
     </ul>
-<form>
-	<%# <fieldset> %>
+              <%= form_for @conn, collab_path(@conn, :leave), [name: :search], fn _ -> %>
+                <%= raw ParamSession.form_session @conn %>
+
        <input type="submit" class="right" value="LEAVE GROUP">
-	<%# </fieldset> %>
+   <% end %>
 </form>
 
 

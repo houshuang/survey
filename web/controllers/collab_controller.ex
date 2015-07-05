@@ -2,6 +2,7 @@ defmodule Survey.CollabController do
   use Survey.Web, :controller
   alias Survey.DesignGroup
   alias Survey.Etherpad
+  require Logger
 
   def index(conn, _) do
     user = conn.assigns.user
@@ -19,6 +20,12 @@ defmodule Survey.CollabController do
         etherpad: etherpad,
         members: members
     end
+  end
+
+  def leave(conn, _) do
+    Logger.info("User left design group")
+    %{ conn.assigns.user | design_group_id: nil } |> Repo.update!
+    ParamSession.redirect(conn, "/design_groups/select")
   end
 end
 

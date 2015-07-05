@@ -41,9 +41,13 @@ defmodule Survey.DesignGroupController do
   end
 
   def select(conn, params) do
-    conn
-    |> put_layout(false)
-    |> render "select.html"
+    if Survey.DesignGroup.get_by_user(conn.assigns.user.id).design_group_id do
+      ParamSession.redirect(conn, "/collab")
+    else
+      conn
+      |> put_layout(false)
+      |> render "select.html"
+    end
   end
 
   def select_sidebar(conn, params) do
