@@ -70,5 +70,13 @@ defmodule Survey.DesignGroupController do
   def overview(conn, _) do
     html conn, "Please select a group on the left"
   end
+
+  def submit(conn, params) do
+    id = string_to_int_safe(params["id"])
+    Logger.info("Joined design group #{id}")
+    %{ conn.assigns.user | design_group_id: id } |> Repo.update!
+    
+    ParamSession.redirect(conn, "/collab")
+  end
 end
 

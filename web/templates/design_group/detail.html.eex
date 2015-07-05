@@ -14,37 +14,37 @@
         <link rel="stylesheet" href="/lessonplans/css/GR1-5.css">
     </head>
 
-        <div class="blocks">
+    <div class="blocks">
 
-            <form>
-                
-                
-                <h2><%= @design.title %></h2>
-<br>
-<p>Topics: <span class="category"><%= @design.description && @design.description["topics"] %></span></p>
+  <%= form_for @conn, design_group_path(@conn, :submit), [name: :search, target: "_parent"], fn _ -> %>
+  <%= raw ParamSession.form_session @conn %>
+  <input type='hidden' name='id' value='<%= @design.id %>'>
+            <h2><%= @design.title %></h2>
+            <br>
+            <p>Topics: <span class="category"><%= @design.description && @design.description["topics"] %></span></p>
 
-<div class="maincontent">
-<h3>Short description of the basic inquiry approach</h3>
-<p><%= @design.description && @design.description["description"] %></p>
-</div>
+            <div class="maincontent">
+                <h3>Short description of the basic inquiry approach</h3>
+                <p><%= @design.description && @design.description["description"] %></p>
+            </div>
 
-<div class="maincontent">
-<h3>How can technology help students to build their own ideas and collaborate with peers?</h3>
-<p><%= @design.description && @design.description["howtech"] %></p>
-</div>
-                    <hr>
+            <div class="maincontent">
+                <h3>How can technology help students to build their own ideas and collaborate with peers?</h3>
+                <p><%= @design.description && @design.description["howtech"] %></p>
+            </div>
+            <hr>
 
-                    <input type="submit" value="Join the design team of this lesson" class="right">
-
-                </div>
-                
-
-            </form>
+            <input type="submit" value="Join the design team of this lesson" class="right" target="_top">
 
         </div>
 
-        <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script-->
-        <script>window.jQuery || document.write('<script src="/jsjquery-1.11.3.min.js"><\/script>')</script>
-        </script>
+
+    <% end %>
+
+</div>
+
+<!--script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script-->
+<script>window.jQuery || document.write('<script src="/jsjquery-1.11.3.min.js"><\/script>')</script>
+</script>
     </body>
 </html>
