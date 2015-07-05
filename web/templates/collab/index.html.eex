@@ -61,7 +61,7 @@
     </fieldset>
     <br>
     <div>
-            <input type="submit" value="submit" id="submit" class="right">
+            <input type="submit" value="Chat" id="submit" class="right">
     </form>
 </div>
 
