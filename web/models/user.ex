@@ -22,6 +22,7 @@ defmodule Survey.User do
     field :resources_seen, {:array, :integer}
     has_many :user_grades, Survey.UserGrade
     belongs_to :sig, Survey.SIG
+    belongs_to :design_group, Survey.DesignGroup
     timestamps
   end
 

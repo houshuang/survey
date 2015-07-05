@@ -12,9 +12,20 @@ defmodule Prelude do
   end
 
   def atomify_map(map) do
-    Enum.map(map, fn {k,v} -> {String.to_atom(k), v} end)
+    Enum.map(map, fn {k,v} -> {safe_to_string(k), v} end)
     |> Enum.into(%{})
   end
+
+  def stringify_map(map) do
+    Enum.map(map, fn {k,v} -> {safe_to_string(k), v} end)
+    |> Enum.into(%{})
+  end
+  
+  def safe_to_atom(x) when is_atom(x), do: x
+  def safe_to_atom(x) when is_binary(x), do: String.to_atom(x)
+  def safe_to_string(x) when is_atom(x), do: Atom.to_string(x)
+  def safe_to_string(x) when is_binary(x), do: x
+  
 
   def append_map(map, key, val) do
     Map.update(map, key, [val], fn x -> List.insert_at(x, 0, val) end)

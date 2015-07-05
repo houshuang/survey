@@ -1,3 +1,123 @@
+/*! HTML5 Boilerplate v5.2.0 | MIT License | https://html5boilerplate.com/ */
+
+/*
+ * What follows is the result of much research on cross-browser styling.
+ * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
+ * Kroc Camen, and the H5BP dev community and team.
+ */
+
+/* ==========================================================================
+   Base styles: opinionated defaults
+   ========================================================================== */
+
+@font-face {
+font-family: 'dosisextralight';
+src: url('../fonts/dosis-extralight-webfont.eot');
+src: url('../fonts/dosis-extralight-webfont.eot?#iefix') format('embedded-opentype'),
+     url('../fonts/dosis-extralight-webfont.woff2') format('woff2'),
+     url('../fonts/dosis-extralight-webfont.woff') format('woff'),
+     url('../fonts/dosis-extralight-webfont.ttf') format('truetype'),
+     url('../fonts/dosis-extralight-webfont.svg#dosisextralight') format('svg');
+font-weight: normal;
+font-style: normal;
+
+}
+
+
+@font-face {
+font-family: 'dosislight';
+src: url('../fonts/dosis-light-webfont.eot');
+src: url('../fonts/dosis-light-webfont.eot?#iefix') format('embedded-opentype'),
+     url('../fonts/dosis-light-webfont.woff2') format('woff2'),
+     url('../fonts/dosis-light-webfont.woff') format('woff'),
+     url('../fonts/dosis-light-webfont.ttf') format('truetype'),
+     url('../fonts/dosis-light-webfont.svg#dosislight') format('svg');
+font-weight: normal;
+font-style: normal;
+
+}
+
+html {
+    color: #222;
+    font-size: 1em;
+    line-height: 1.4;
+}
+
+/*
+ * Remove text-shadow in selection highlight:
+ * https://twitter.com/miketaylr/status/12228805301
+ *
+ * These selection rule sets have to be separate.
+ * Customize the background color to match your design.
+ */
+
+::-moz-selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+::selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+/*
+ * A better looking default horizontal rule
+ */
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 40px 0;
+    padding: 0;
+}
+
+/*
+ * Remove the gap between audio, canvas, iframes,
+ * images, videos and the bottom of their containers:
+ * https://github.com/h5bp/html5-boilerplate/issues/440
+ */
+
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+    vertical-align: middle;
+}
+
+/*
+ * Remove default fieldset styles.
+ */
+
+fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+/*
+ * Allow only vertical resizing of textareas.
+ */
+
+textarea {
+    resize: vertical;
+}
+
+/* ==========================================================================
+   Browser Upgrade Prompt
+   ========================================================================== */
+
+.browserupgrade {
+    margin: 0.2em 0;
+    background: #ccc;
+    color: #000;
+    padding: 0.2em 0;
+}
+
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
@@ -21,86 +141,46 @@ h3{
 }
 h4{
 	color:#3b8cb6;
-	font-size:20px;
+	font-size:24px;
 }
 hr {
     margin: 40px 40px 40px 0;
 }
 a {
 	color:#002f65;
+    cursor: pointer;
 }
 a:hover{
 	color:#56aad6;
 }
+html {
+}
+html body {
+    margin: 0 auto;
+	padding: 20px;
+    color: #444;
+    font-size: 15px;
+	min-height:100%;
+	font-family:Verdana, Geneva, sans-serif;
+}
+p{
+	line-height:2em !important;
+}
 ul{
 	font-family:Verdana, Geneva, sans-serif;
 	line-height:1.3;
+	margin-bottom:4em;
+}
+#cssmenu ul ul {
+	display: none;
 }
 li{
-	margin:20px;
-}
-
-.chatarea {
-	font-family:Verdana, Geneva, sans-serif;
-	font-size:14px;
-}
-
-.chatarea li{
+	margin:20px 20px 40px 20px;
 	list-style:none;
-}
-.people ul{
-	margin-top:40px;
-}
-.people ul li{
-	float: left;
-	line-height:10px;
-	margin:5px 20px;
-}
-.online{
-	list-style-image:url(../img/online.png);
-}
-.standby{
-	list-style-image:url(../img/standby.png);
-}
-.offline{
-	list-style-image:url(../img/offline.png);
-}
-.info, .name {
-	font-size:11px;
-	text-transform:uppercase;
-	color:#9c9c9c;
-}
-.date .info{
-	text-align:center;
-	display:block;
-	margin:40px;
-}
-.messagetext{
-	line-height:1.7em;
-}
-#chatmessages{
-	width:100%;
-	height:490px;
-	margin:20px 0 0 0;
-}
-#textentry{
-	width:100%;
-	height:100px;
-	margin:0px;
-}
-#textentry fieldset textarea{
-	width: 100%;
-	height: 200px;
-	background-color: #e4e4e4;
-	padding: 20px 30px 50px 30px;
-	line-height:1.7em;
-	-webkit-box-shadow: inset 3px 3px 3px 0px #c5c5c5;
-    -moz-box-shadow: inset 3px 3px 3px 0px #c5c5c5;
-    box-shadow: inset 3px 3px 3px 0px #c5c5c5;
 }
 .top {
 	background-color:#002f65;
-	background-image:url(../img/logo_uoft.gif);
+	background-image:url(file:../img/logo_uoft.gif);
 	background-position:right;
 	background-repeat:no-repeat;
 	height:80px;
@@ -122,7 +202,7 @@ li{
 	padding: 20px;
 	float:right;
 	height: calc(100vh - 150px);
-	overflow-x: hidden;
+	overflow-x:hidden;
 }
 .lessontitle{
 	font-size:15px;
@@ -271,9 +351,6 @@ li{
 
 form input[type="submit"] {
     background: #66B008;
-	top: -50px;
-right: 20px;
-position: relative;
 }
 
 

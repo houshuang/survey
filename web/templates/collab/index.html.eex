@@ -1,0 +1,159 @@
+<!doctype html>
+<html class="no-js" lang="en-us">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <!-- Place favicon.ico in the root directory -->
+
+        <script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
+        <link rel="stylesheet" href="css/normalize.css">
+        
+        <script type="text/javascript" src="/js/jquery-ui.min.js"></script>
+        <link rel="stylesheet" href="/css/reset.css">
+        <link rel="stylesheet" href="/css/collab-main.css">
+        <link rel="stylesheet" href="/css/chat.css">
+
+        <link rel="stylesheet" href="/css/jquery-ui.css">
+        
+        
+        
+
+		  
+        
+        <script src="/js/modernizr-2.8.3.min.js"></script>
+        
+ <script>
+  $(function() {
+    $( "#tabs" ).tabs();
+    $("#tabs").show();
+  });
+        </script>
+    </head>
+    <body>
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <script>
+            user = <%= @user.nick %>
+            id = <%= @group.id %>
+        </script>
+<div class="top">
+<h2>Collaborative Workbench</h2>
+<h1>INQ101x - Teaching with Technology and Inquiry</h1>
+</div>
+
+<div class="content">
+
+<div class="groupname">
+
+<h3>Here goes the group name</h3>
+
+<form>
+	<fieldset>
+       <input type="submit" value="JOIN">
+	</fieldset>
+</form>
+
+</div>
+<div class="sidebar" name="sidebar">
+<div class="people">
+
+<h4>Chat</h4>
+
+<ul>
+<li class="online">
+<span class="name">Peter</span>
+</li>
+<li class="online">
+<span class="name">John</span>
+</li>
+<li class="standby">
+<span class="name">Susan</span>
+</li>
+<li class="standby">
+<span class="name">Maria</span>
+</li>
+<li class="offline">
+<span class="name">Ricardo</span>
+</li>
+<li class="offline">
+<span class="name">Ahmed</span>
+</li>
+</ul>
+
+</div>
+
+<div class="chatarea">
+
+<ul>
+<li class="message">
+<span class="info"><span class="time">10:36 AM UTC - </span><span class="name">Susan: </span></span><span class="messagetext">Students learn the structures and functions of the human body systems, specifically the digestive system and its interactions with other systems.</span>
+</li>
+<li class="message">
+<span class="info"><span class="time">10:34 AM UTC - </span><span class="name">Susan: </span></span><span class="messagetext">Students learn the structures and functions of the human body systems, specifically the digestive system and its interactions with other systems.</span>
+</li>
+<li class="message">
+<span class="info"><span class="time">10:30 AM UTC - </span><span class="name">Susan: </span></span><span class="messagetext">Students learn the structures and functions of the human body systems, specifically the digestive system and its interactions with other systems.</span>
+</li>
+<li class="message">
+<span class="info"><span class="time">9:26 AM UTC - </span><span class="name">Ahmed: </span></span><span class="messagetext">Students learn the structures and functions of the human body systems, specifically the digestive system and its interactions with other systems.</span>
+</li>
+<li class="date">
+<span class="info">Wednesday, July 8</span>
+</li>
+<li class="message">
+<span class="info"><span class="time">11:36 PM UTC - </span><span class="name">Maria: </span></span><span class="messagetext">Students learn the structures and functions of the human body systems, specifically the digestive system and its interactions with other systems.</span>
+</li>
+<li class="message">
+<span class="info"><span class="time">10:06 PM UTC - </span><span class="name">John: </span></span><span class="messagetext">Students learn the structures and functions of the human body systems, specifically the digestive system and its interactions with other systems.</span>
+</li>
+<li class="message">
+<span class="info"><span class="time">9:44 PM UTC - </span><span class="name">Peter: </span></span><span class="messagetext">Students learn the structures and functions of the human body systems, specifically the digestive system and its interactions with other systems.</span>
+</li>
+<li class="message">
+<span class="info"><span class="time">10:21 AM UTC - </span><span class="name">Maria: </span></span><span class="messagetext">Students learn the structures and functions of the human body systems, specifically the digestive system and its interactions with other systems.</span>
+</li>
+<li class="date">
+<span class="info">Tuesday, July 7</span>
+</li>
+</ul>
+
+
+</div>
+<form id="textentry">
+                    <fieldset>
+                        
+                        <textarea>Write your message here.</textarea>
+                        <input type="submit" value="submit" class="right">
+
+                    </fieldset>
+</form>
+
+<script>id=1; user="stian";
+                            </script>
+                            <script src="/js/lodash.js"></script>
+                            <script src="/js/phoenix.js"></script>
+                            <script src="/js/chat.js"></script>
+                        </div>
+<div class="maincontent">
+<div id="tabs" class="ui-tabs ui-widget ui-widget-content" style="display: none;">
+
+<!--To add new tabs, simply add a <li> in this list, using the same structure and following the link sequence. Then, add a new <iframe>, also using the same structure.--> 
+
+    <ul style="padding: 0; margin: 0;" class="ui-tabs-nav ui-helper-reset ui-helper-clearfix">
+        <li class="context-tab ui-state-default"><a href="#ui-tabs-1">Etherpad</a></li>
+        <li class="context-tab ui-state-default"><a href="#ui-tabs-2">Wiki</a></li>
+        <li class="context-tab ui-state-default"><a href="#ui-tabs-3">Another tab</a></li>
+    </ul>
+    <div id="ui-tabs-1"><iframe class="ui-tabs-panel ui-widget-content" src="https://etherpad.mooc.encorelab.org/p/<%= @etherpad %>?userName=<%= @user.nick %>"></iframe></div><div id="ui-tabs-2">      <iframe class="ui-tabs-panel ui-widget-content ui-tabs-hide" src="http://utsc.utoronto.ca"></iframe></div><div id="ut-tabs-3"> <iframe class="ui-tabs-panel ui-widget-content ui-tabs-hide" src="http://www.encorelab.org"></iframe></div>
+
+</div>
+</div>
+
+
+</html>

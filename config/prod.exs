@@ -36,6 +36,9 @@ config :logger, :console,
   format: "$date $time $metadata[$level] $message\n",
   metadata: [:id]
 
+config :week,
+  current: 1
+
 # ## Using releases
 #
 # If you are doing OTP releases, you need to instruct Phoenix
