@@ -5,6 +5,7 @@ defmodule Survey.DesignGroup do
   require Ecto.Query
   alias Survey.DesignGroup
   alias Survey.User
+  alias Ecto.Adapters.SQL
 
   schema "designgroups" do
     field :description, Survey.JSON
@@ -22,13 +23,14 @@ defmodule Survey.DesignGroup do
   end
 
   def list(sig) do
-    (from f in DesignGroup,
-    where: f.sig_id == ^sig)
-    |> Repo.all
+    runq(
+  "WITH usercount AS (SELECT count(id) AS count, design_group_id AS design FROM users WHERE design_group_id IS NOT NULL GROUP BY design_group_id) SELECT u.count, d.title, d.description FROM designgroups d JOIN usercount u ON d.id = u.design WHERE d.sig_id=4 order by u.count desc;")
+  |> Enum.group_by(fn {count, title, description} -> count >= 6 end)
   end
 
-  def get(id) when is_integer(id) do
-    Repo.get(DesignGroup, id)
+  def runq(query, opts \\ []) do
+    result = SQL.query(Survey.Repo, query, [])
+    result.rows
   end
 
   def get_by_user(id) when is_integer(id) do
