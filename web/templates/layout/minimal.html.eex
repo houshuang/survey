@@ -27,7 +27,7 @@
       <div class="header">
 
         <%= if get_flash(@conn, :info) || get_flash(@conn, :error) do %>
-          <p class="alert alert-success"><%= get_flash(@conn, :info) %></p>
+          <p class="alert alert-success"><%= raw get_flash(@conn, :info) %></p>
         <% end %>
       </div>
     </div>

@@ -20,9 +20,7 @@ $(document).ready(function() {
     Window.presence = _.compact(_.intersection(Window.presence))
     console.log("User entered", e, Window.presence)
     render_presence() 
-    if(e.userid != userid) {
     add_chat(info_line({msg: e.usernick + " joined"}))
-    }
   })
   chan.on('user:left', function(e) {
     console.log("User left", e, Window.presence)
