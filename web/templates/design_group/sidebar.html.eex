@@ -23,11 +23,15 @@
     <%= for {id, count, title, description} <- @designs do %>
 <li>
     <a href="<%= ParamSession.gen_url(@conn, "/design_groups/select/detail/#{id}") %>" target="maincontent"><%= title %></a> (<%= 
-    if count >= 6 do
+    if !count do
+        0
+    else
+        if count >= 6 do
             "FULL"
         else
             count
-        end%>)<br> 
+        end
+    end%>)<br> 
     <p class="category"><%= description && description["topics"] %></p>
     <p class="description"><%= description && description["description"] %></p>
 </li>
