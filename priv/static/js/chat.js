@@ -61,7 +61,7 @@ send_msg = function() {
   $('#input').selectRange(0);
   $("#input").val("")
 }
-var info_line = _.template('<li class="message"> <span class="info"><span class="time"><%= moment().format("h:mm a UTC") %> - <%= msg %></span> </li>')
+var info_line = _.template('<li class="message"> <span class="info"><span class="time"><%= moment.utc().format("h:mm a UTC") %> - <%= msg %></span> </li>')
 var message_line = _.template('<li class="message"> <span class="info"><span class="time"><%= moment(time).format("h:mm a UTC") %> - </span><span class="name"><%= user %>: </span></span><span class="messagetext"><%= body %></span> </li>')
 
 var date_line = _.template(' <li class="date"> <span class="info"><%= date %></span></li>')
