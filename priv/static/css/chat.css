@@ -57,13 +57,13 @@ li{
 	margin:5px 20px;
 }
 .online{
-	list-style-image:url(../img/online.png);
+	list-style-image:url(/img/online.png);
 }
 .standby{
-	list-style-image:url(../img/standby.png);
+	list-style-image:url(/img/standby.png);
 }
 .offline{
-	list-style-image:url(../img/offline.png);
+	list-style-image:url(./img/offline.png);
 }
 .info, .name {
 	font-size:11px;
@@ -85,15 +85,15 @@ li{
 }
 #textentry{
 	width:100%;
-	height:100px;
+	height:20px;
 	margin:0px;
 }
 #textentry fieldset textarea{
-	width: 100%;
-	height: 200px;
+	width: 60%;
+	height: 20px;
 	background-color: #e4e4e4;
 	padding: 20px 30px 50px 30px;
-	line-height:1.7em;
+	line-height:1em;
 	-webkit-box-shadow: inset 3px 3px 3px 0px #c5c5c5;
     -moz-box-shadow: inset 3px 3px 3px 0px #c5c5c5;
     box-shadow: inset 3px 3px 3px 0px #c5c5c5;
@@ -108,21 +108,6 @@ li{
 }
 .content {
 	width:100%;
-}
-.sidebar {
-	width:34%;
-	background-color:#EAEAEA;
-	padding: 20px 17px;
-	height: calc(100vh - 150px);
-	float:left;
-}
-.maincontent{
-	width:66%;
-	background-color:#f9f9f9;
-	padding: 20px;
-	float:right;
-	height: calc(100vh - 150px);
-	overflow-x: hidden;
 }
 .lessontitle{
 	font-size:15px;

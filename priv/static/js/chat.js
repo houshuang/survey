@@ -1,26 +1,32 @@
 $(document).ready(function() {
-Window.presence = []
+  $('#input').selectRange(0);
+  $("#input").val("")
+  Window.presence = []
   P = window.Phoenix
   socket = new P.Socket("/ws")
   socket.connect()
-  chan = socket.chan("rooms:" + id, {user: user})
+  chan = socket.chan("rooms:" + Window.groupid, 
+                     {usernick: Window.usernick, userid: Window.userid})
   chan.join()
   chan.on('join', function(e) { 
-    Window.presence = e.presence
+    console.log("join", e)
+    Window.presence = _.map(e.presence, function(x) { return x.userid })
     render_presence() 
     $("#history").html("")
     _.each(e.previous, function(x) { add_msg(x) })
   })
   chan.on('user:entered', function(e) {
-    Window.presence.push(e.user)
-    Window.presence = _.intersection(Window.presence)
+    Window.presence.push(e.userid)
+    Window.presence = _.compact(_.intersection(Window.presence))
+    console.log("User entered", e, Window.presence)
     render_presence() 
-    if(e.user != user) {
-      add_chat("<b>" + e.user + " joined")
+    if(e.userid != userid) {
+      add_chat("<li><b>" + e.usernick + " joined</li></b>")
     }
   })
   chan.on('user:left', function(e) {
-    Window.presence = _.without(Window.presence, e.user)
+    console.log("User left", e, Window.presence)
+    Window.presence = _.compact(_.without(Window.presence, e.userid))
     render_presence() 
     add_chat("<b>" + e.user + " left")
   })
@@ -31,13 +37,15 @@ Window.presence = []
   })
 
   chan.on('new:msg', function(e) {add_msg(e)})
-  $("form").on("submit", function() { return false })
+  $("form").on("submit", function() { 
+    send_msg()
+    return false 
+  })
+
   $("#input").on("keypress", function(e)  {
     if (e.keyCode == 13) {
-      payload = {user: user, body: $("#input").val()}
-      chan.push("new:msg", payload)
-      $("#input").val("")
-      // add_msg(payload)
+      send_msg()
+      return false
     }
   })
   $(".color").on("click", function(e) { 
@@ -46,22 +54,61 @@ Window.presence = []
     return false
   })
 })
+
+send_msg = function() {
+  payload = {user: user, body: $("#input").val()}
+  chan.push("new:msg", payload)
+  $('#input').selectRange(0);
+  $("#input").val("")
+}
+
+var message_line = _.template('<li class="message"> <span class="info"><span class="time"><%= moment(time).format("h:mm a UTC") %> - </span><span class="name"><%= user %>: </span></span><span class="messagetext"><%= body %></span> </li>')
+
+var date_line = _.template(' <li class="date"> <span class="info"><%= date %></span></li>')
+old_date = ""
+
 add_msg = function(e) { 
-  add_chat(e.time + ": " + e.body + " (<i>" + e.user + "</i>)") 
+  console.log(e)
+  new_date = moment(e.time).format("MMMM Do, YYYY")
+  if(old_date != new_date) {
+    add_chat(date_line({date: new_date}))
+    old_date = new_date
+  }
+  add_chat(message_line(e))
 }
 
 render_presence = function() {
-  pres = Window.presence
-  txt = _.map(pres, function(x) { return "<li>" + x + "</li>" }).join("")
-  console.log(txt)
-  $("#presence").html(txt)
+  pres = _.map(Window.presence, function(x) { return x + "" } )
+
+  $('.presence').each(function() { 
+    if(~pres.indexOf(this.id)) {
+      $(this).addClass('online').removeClass('offline')
+    } else {
+      $(this).removeClass('online').addClass('offline')
+    }
+  })
 }
 
 last_chat = ""
 add_chat = function(chat) {
   if (!(last_chat == chat)) {
-    $("#history").prepend("<li>" + chat + "</li>")
+    $(".chatarea").prepend(chat)
     last_chat = chat
   }
 }
 
+$.fn.selectRange = function(start, end) {
+  if(!end) end = start; 
+  return this.each(function() {
+    if (this.setSelectionRange) {
+      this.focus();
+      this.setSelectionRange(start, end);
+    } else if (this.createTextRange) {
+      var range = this.createTextRange();
+      range.collapse(true);
+      range.moveEnd('character', end);
+      range.moveStart('character', start);
+      range.select();
+    }
+  });
+};

@@ -15,8 +15,8 @@ defmodule Survey.RoomChannel do
   end
 
   def handle_info({:after_join, {msg, room}}, socket) do
-    broadcast! socket, "user:entered", %{user: msg["user"]}
-    ChatPresence.add_user(room, msg["user"], socket)
+    broadcast! socket, "user:entered", msg
+    ChatPresence.add_user(room, msg, socket)
     users = ChatPresence.get(room)
     previous = Chat.get(room, nil)
     push socket, "join", %{status: "connected", presence: users, previous: previous}
@@ -30,7 +30,7 @@ defmodule Survey.RoomChannel do
 
   def terminate(reason, socket) do
     user = ChatPresence.remove_user(socket)
-    broadcast! socket, "user:left", %{user: user}
+    broadcast! socket, "user:left", user
     :ok
   end
 

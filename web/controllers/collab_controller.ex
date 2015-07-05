@@ -14,7 +14,10 @@ defmodule Survey.CollabController do
 
       conn
       |> put_layout(false)
-      |> render "index.html", user: user, group: group.design_group, etherpad: etherpad
+      |> render "index.html", user: user, 
+        group: group.design_group, 
+        etherpad: etherpad,
+        members: members
     end
   end
 end
