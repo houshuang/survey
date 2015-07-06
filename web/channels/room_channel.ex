@@ -16,6 +16,7 @@ defmodule Survey.RoomChannel do
 
   def handle_info({:after_join, {msg, room}}, socket) do
     broadcast! socket, "user:entered", msg
+    Survey.Endpoint.broadcast "admin", "user:entered", %{msg: msg, room: room}
     Logger.info("User entered room")
     ChatPresence.add_user(room, msg, socket)
     users = ChatPresence.get(room)
@@ -30,8 +31,9 @@ defmodule Survey.RoomChannel do
   end
 
   def terminate(reason, socket) do
-    user = ChatPresence.remove_user(socket)
-    Logger.info("User entered room")
+    {room, user} = ChatPresence.remove_user(socket)
+    Logger.info("User left room")
+    Survey.Endpoint.broadcast "admin", "user:left", %{user: user, room: room}
     broadcast! socket, "user:left", user
     :ok
   end
@@ -39,11 +41,13 @@ defmodule Survey.RoomChannel do
   def handle_in("new:msg", msg, socket) do
     if msg["body"] != "" do
       time = Ecto.DateTime.to_string(Ecto.DateTime.utc)
-      broadcast! socket, "new:msg", %{
+      msgstruct = %{
         user: msg["user"], 
         body: msg["body"],
         time: time}
+      broadcast! socket, "new:msg", msgstruct
       {room, _} = ChatPresence.get_user(socket)
+      Survey.Endpoint.broadcast "admin", "new:msg", %{room: room, msgstruct: msgstruct}
       Survey.Chat.insert(msg, room)
     end
     {:reply, :ok, assign(socket, :user, msg["user"])}

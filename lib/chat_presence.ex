@@ -36,7 +36,7 @@ defmodule Survey.ChatPresence do
       fn set -> Set.delete(set, user) end), 
     Dict.delete(user_store, socket)}
     end)
-    user
+    {room, user}
   end
 
   def get_all_users do

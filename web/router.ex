@@ -4,6 +4,7 @@ defmodule Survey.Router do
 
   socket "/ws", Survey do
     channel "rooms:*", RoomChannel
+    channel "admin", AdminChannel
   end
 
   pipeline :browser do
@@ -150,6 +151,7 @@ defmodule Survey.Router do
     get "/report/text/:qid", ReportController, :textanswer
     get "/report/tags", ReportController, :tags
     get "/report/resource", ResourceController, :report
+    get "/report/designgroups", DesignGroupController, :report
     get "/resource/preview", ResourceController, :preview
 
     get "/cohorts", AdminController, :cohorts
