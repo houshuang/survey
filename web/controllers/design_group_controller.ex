@@ -22,7 +22,7 @@ defmodule Survey.DesignGroupController do
 
     already = DesignGroup.submitted_count(user.id)
     if already && already > 0 do
-      url = ParamSession.gen_url(conn, "/collab")
+      url = ParamSession.gen_url(conn, "/design_groups/select")
       conn = put_flash(conn, :info, 
         "Thank you for submitting #{already} #{resource_word(already)}. You are welcome to submit more ideas, or move on to <a href='#{url}' target='_blank'>select a design group to join</a>, and begin co-designing a lesson plan with other students.")
     end
