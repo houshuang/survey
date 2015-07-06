@@ -39,6 +39,13 @@ defmodule Survey.ChatPresence do
     user
   end
 
+  def get_all_users do
+    Agent.get(__MODULE__, fn {room_store, _} -> 
+      room_store
+    end)
+    |> Enum.map(fn {num, hset} -> {num, Enum.to_list(hset)} end)
+  end
+
   def dump do
     Agent.get(__MODULE__, fn x -> x end)
   end
