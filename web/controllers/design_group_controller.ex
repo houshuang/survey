@@ -64,7 +64,7 @@ defmodule Survey.DesignGroupController do
     if !design do
       html conn, "Design idea not found"
     else
-      userlen = length(DesignGroup.get_members(design))
+      userlen = length(DesignGroup.get_members(design.id || 0))
       conn
       |> put_layout(false)
       |> render "detail.html", design: design, userlen: userlen
