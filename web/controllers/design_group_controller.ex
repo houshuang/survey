@@ -72,7 +72,7 @@ defmodule Survey.DesignGroupController do
   end
 
   def overview(conn, _) do
-    html conn, "Please select a group on the left"
+    html conn, "Please select a group on the left. If there are no groups listed, users in your SIG have not added any ideas yet. You can go to the previous section in EdX and add design group ideas, and then come back here to select one to work on."
   end
 
   def submit(conn, params) do
