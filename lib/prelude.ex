@@ -12,7 +12,7 @@ defmodule Prelude do
   end
 
   def atomify_map(map) do
-    Enum.map(map, fn {k,v} -> {safe_to_string(k), v} end)
+    Enum.map(map, fn {k,v} -> {safe_to_atom(k), v} end)
     |> Enum.into(%{})
   end
 
