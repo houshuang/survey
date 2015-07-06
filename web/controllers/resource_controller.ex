@@ -246,7 +246,7 @@ defmodule Survey.ResourceController do
 
       ResourceTag.update_tags(conn.assigns.user.sig_id, resource.tags)
     else
-      Logger.warn("Tried inserting resource with same URL twice")
+      Logger.info("Tried inserting resource with same URL twice")
     end
   end
 

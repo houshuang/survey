@@ -15,7 +15,6 @@ defmodule Survey.Chat do
   end
 
   def insert(obj, room) do
-    Logger.warn("Inserting into DB")
     %Chat{nick: obj["user"], body: obj["body"], room: room} |> Repo.insert! 
   end
 
