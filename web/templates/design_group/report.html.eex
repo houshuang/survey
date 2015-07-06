@@ -1,0 +1,32 @@
+<style>
+    .online { color: green; }
+    .offline { color: black; }
+</style>
+<%= for {sig, rest} <- @groups do %>
+    <h3><%= @sigmap[sig] %></h3>
+    <%= for {design, users} <- rest do %>
+        <%= if design do %>
+            <% {sig, design, title, user, id} = Enum.at(users, 0) %>
+            <h4><%= title %></h4>
+            <p>Members: 
+                <%= for {sig, design, title, user, id} <- users do %>
+                    <span class=presence id=<%= id %>><%= user %></span> | 
+                <% end %>
+                <div id=<%= design %> style='overflow: auto; outline: #555 dotted thin;' class="chat"></div>
+            </p>
+        <% end %>
+        <br>
+    <% end %>
+
+    <h4>Design ideas without any members</h4>
+    <%= for {design, users} <- rest do %>
+        <%= if !design do %>
+            <% {sig, design, title, user, id} = Enum.at(users, 0) %>
+            <li><%= title %></li>
+        <% end %>
+    <% end %>
+    <br><hr><br>
+<% end %>
+<script src="/js/phoenix.js"></script>
+<script src="/js/designgroup_report.js"></script>
+<script src="/js/moment.min.js"></script>

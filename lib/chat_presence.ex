@@ -43,7 +43,9 @@ defmodule Survey.ChatPresence do
     Agent.get(__MODULE__, fn {room_store, _} -> 
       room_store
     end)
-    |> Enum.map(fn {num, hset} -> {num, Enum.to_list(hset)} end)
+    |> Enum.map(fn {num, hset} -> Enum.to_list(hset) end)
+    |> List.flatten
+    |> Enum.map(fn %{"userid" => uid, "usernick" => nick} -> uid end)
   end
 
   def dump do

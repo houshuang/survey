@@ -65,5 +65,14 @@ defmodule Survey.DesignGroup do
     select: [f.id, f.nick])
     |> Repo.all
   end
+
+  def get_all do
+    runq(
+  "WITH u AS (SELECT nick, design_group_id AS design, id FROM users WHERE design_group_id IS NOT NULL) SELECT d.sig_id, u.design, d.title, u.nick, u.id  FROM u FULL JOIN designgroups d ON d.id = u.design;")
+  |> Enum.group_by(fn {sig, design, title, nick, id} -> sig end)
+  |> Enum.map(fn {y, x} -> {y, Enum.group_by(x, fn {sig, design, title, nick, id} -> design end)} end)
+    
+  end
+
 end
 

@@ -82,5 +82,13 @@ defmodule Survey.DesignGroupController do
     
     ParamSession.redirect(conn, "/collab")
   end
-end
 
+  def report(conn, params) do
+    groups = DesignGroup.get_all
+    sigmap = Survey.SIG.map
+
+    conn
+    |> put_layout("minimal.html")
+    |> render "report.html", groups: groups, sigmap: sigmap
+  end
+end
