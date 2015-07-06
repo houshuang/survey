@@ -36,9 +36,7 @@ ul{
 	font-family:Verdana, Geneva, sans-serif;
 	line-height:1.3;
 }
-li{
-	margin:20px;
-}
+li {margin 20px 0px}
 
 .chatarea {
 	font-family:Verdana, Geneva, sans-serif;

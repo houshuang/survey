@@ -207,7 +207,7 @@ li{
 	width:100%;
 }
 .sidebar {
-	width:27%;
+	width:25%;
 	background-color:#EAEAEA;
 	padding: 20px 17px;
 	height: calc(100vh - 150px);
@@ -215,13 +215,14 @@ li{
 	overflow: auto;
 }
 .maincontent{
-	width:73%;
+	width:75%;
 	background-color:#f9f9f9;
 	float:right;
 	height: calc(100vh - 100px);
 	overflow-x: hidden;
 	margin-top:-50px;
 }
+div#ui-tabs-1 {padding: 0px 30px !important; font-size: 14px; line-height: 2em}
 #tabs{
 	/*float:right; 
 	background-color:#F00; */
