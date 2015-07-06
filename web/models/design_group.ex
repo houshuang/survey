@@ -59,9 +59,9 @@ defmodule Survey.DesignGroup do
     end
   end
 
-  def get_members(group) do
+  def get_members(id) do
     req = (from f in User,
-    where: f.design_group_id == ^group.id,
+    where: f.design_group_id == ^id,
     select: [f.id, f.nick])
     |> Repo.all
   end

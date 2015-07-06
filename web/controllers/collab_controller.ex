@@ -10,7 +10,7 @@ defmodule Survey.CollabController do
     if !group.design_group_id do
       html conn, "You are not part of a design group"
     else
-      members = DesignGroup.get_members(group.design_group)
+      members = DesignGroup.get_members(group.design_group_id)
       etherpad = Etherpad.ensure_etherpad(group.design_group_id)
 
       conn
