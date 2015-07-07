@@ -67,4 +67,25 @@ defmodule Survey.Grade do
       end
     end
   end
+
+  def resubmit_all_grades(component \\ nil) do
+    query = (from f in Survey.UserGrade,
+    select: [f.cache_id, f.grade])
+    if component do
+      query = from f in query, where: f.component == ^component
+    end
+    query 
+    |> Repo.all
+    |> Enum.map(&simple_submit/1)
+  end
+
+  def simple_submit([cache_id, grade]) do
+    case PlugLti.Grade.call(Survey.Cache.get(cache_id), grade) do
+      :ok -> 
+        Logger.info("Submitted grade for #{cache_id}")
+      {:error, message} -> Logger.warn(
+        "Not able to submit grade, cache id #{cache_id}, message: #{inspect(message)}")
+    end
+  end
+
 end
