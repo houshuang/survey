@@ -51,6 +51,7 @@ $(document).ready(function() {
     chan.push("color", {user: user, color: color})
     return false
   })
+
 })
 
 send_msg = function() {

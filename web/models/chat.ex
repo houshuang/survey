@@ -35,4 +35,20 @@ defmodule Survey.Chat do
       time: Ecto.DateTime.to_string(date)} 
     end)
   end
+
+  def get_each do
+    query = (from t in Chat,
+    order_by: [asc: t.inserted_at],
+    select: [t.room, t.nick, t.body, t.inserted_at])
+    |> Repo.all
+    |> Enum.map(fn [room, user, body, date] -> %{
+      room: room,
+      user: user, 
+      body: body, 
+      time: Ecto.DateTime.to_string(date)} 
+    end)
+    |> Enum.group_by(fn x -> x.room end)
+    |> Enum.map(fn {id, list} -> Enum.take(list, 3) end)
+    |> List.flatten
+  end
 end

@@ -86,6 +86,7 @@ defmodule Survey.DesignGroupController do
   def report(conn, params) do
     groups = DesignGroup.get_all
     sigmap = Survey.SIG.map
+    chats = Survey.Chat.get_each
 
     conn
     |> put_layout("minimal.html")

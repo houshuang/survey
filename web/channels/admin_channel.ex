@@ -4,6 +4,7 @@ defmodule Survey.AdminChannel do
   alias Survey.ChatPresence
   import Prelude
   alias Survey.Chat
+  import Prelude
 
   def join("admin", message, socket) do
     Process.flag(:trap_exit, true)
@@ -16,6 +17,10 @@ defmodule Survey.AdminChannel do
     Logger.info("User entered admin room")
     room_users = ChatPresence.get_all_users
     push socket, "join", %{status: "connected", room_users: room_users}
+
+    chats = Chat.get_each
+    |> Enum.each(fn x -> 
+      push socket, "new:msg", %{room: x.room, msgstruct: x} end)
     {:noreply, socket}
   end
 
@@ -26,6 +31,14 @@ defmodule Survey.AdminChannel do
 
   def terminate(reason, socket) do
     :ok
+  end
+
+  def handle_in("send:all", msg, socket) do
+    room = string_to_int_safe(msg["room"])
+    Chat.get(room, nil)
+    |> Enum.each(fn x -> 
+      push socket, "new:msg", %{room: room, msgstruct: x} end)
+    {:reply, :ok, assign(socket, :user, msg["user"])}
   end
 
   def handle_in(topic, msg, socket) do

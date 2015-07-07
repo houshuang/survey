@@ -12,7 +12,7 @@
                 <%= for {sig, design, title, user, id} <- users do %>
                     <span class=presence id=<%= id %>><%= user %></span> | 
                 <% end %>
-                <div id=<%= design %> style='overflow: auto; outline: #555 dotted thin;' class="chat"></div>
+                <div id=<%= design %> style='overflow: auto; outline: #555 dotted thin;' class="chat"><P><a href="#" class='getall' id=<%= design %>>...</a></div>
             </p>
         <% end %>
         <br>

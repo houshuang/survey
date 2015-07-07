@@ -44,6 +44,12 @@ $(document).ready(function() {
     chan.push("color", {user: user, color: color})
     return false
   })
+  $('.getall').on('click', function(e) {
+    id = $(this).attr('id')
+    $(".chat#" + id).html('')
+    chan.push("send:all", {room: id})
+    return false;
+  })
 })
 
 send_msg = function() {
