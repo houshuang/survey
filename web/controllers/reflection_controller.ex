@@ -7,6 +7,7 @@ defmodule Survey.ReflectionController do
   alias Survey.Repo
   alias Survey.Prompt
   alias Survey.Reflection
+  import Prelude
 
   plug :action
 
@@ -14,8 +15,8 @@ defmodule Survey.ReflectionController do
     if !params["id"] do
       id = 1
     else 
-      id = params["id"]
-      end
+      id = char_to_num(params["id"]) + 1
+    end
     prompt = Repo.get(Prompt, id)
     reflection = Reflection.get(conn.assigns.user.id, prompt.id)
     if reflection do

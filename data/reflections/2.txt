@@ -1,0 +1,7 @@
+# Reflection week 2
+textbox,How is Shawn’s lesson design process similar to or different from your own?
+meta
+	minwords=10
+textbox,What are some of the greatest challenges in designing an inquiry lesson for your classroom?
+meta
+	minwords=10

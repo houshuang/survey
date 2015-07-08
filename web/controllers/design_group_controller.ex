@@ -60,6 +60,7 @@ defmodule Survey.DesignGroupController do
 
   def select_detail(conn, params) do
     id = string_to_int_safe(params["id"])
+    embedded = if params["embedded"], do: true, else: false
     design = DesignGroup.get(id || 0)
     if !design do
       html conn, "Design idea not found"
@@ -67,7 +68,7 @@ defmodule Survey.DesignGroupController do
       userlen = length(DesignGroup.get_members(design.id || 0))
       conn
       |> put_layout(false)
-      |> render "detail.html", design: design, userlen: userlen
+      |> render "detail.html", design: design, userlen: userlen, embedded: embedded
     end
   end
 
