@@ -89,15 +89,15 @@ li {margin 20px 0px}
 	height:20px;
 	margin:0px;
 }
-#textentry fieldset textarea{
-	width: 60%;
-	height: 20px;
-	background-color: #e4e4e4;
-	padding: 20px 30px 50px 30px;
-	line-height:1em;
-	-webkit-box-shadow: inset 3px 3px 3px 0px #c5c5c5;
-    -moz-box-shadow: inset 3px 3px 3px 0px #c5c5c5;
-    box-shadow: inset 3px 3px 3px 0px #c5c5c5;
+
+#textentry fieldset textarea {
+    background-color: #E4E4E4;
+    box-shadow: 3px 3px 3px 0 #C5C5C5 inset;
+    color: #000000;
+    line-height: 1em;
+    /* padding: 20px 30px 50px; */
+    width: 100%;
+    height: 100px;
 }
 .top {
 	background-color:#002f65;
@@ -256,12 +256,18 @@ li {margin 20px 0px}
 }
 
 form input[type="submit"] {
-    background: #66B008;
-	top: -50px;
-right: 20px;
-position: relative;
+    background: none repeat scroll 0 0 #66B008;
+    margin-bottom: 30px;
+    /* position: relative;
+    right: 20px;
+    top: -50px; */
 }
 
+#leavebutton {
+    position: relative;
+    right: 20px;
+    top: -50px
+}
 
 .image {text-align: center;}
 
