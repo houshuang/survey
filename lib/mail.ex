@@ -39,6 +39,8 @@ defmodule Mail.Contents do
   alias Survey.Resource
   alias Survey.Commentstream
 
+  def add(lst, item), do: List.insert_at(lst, 0, item)
+
   def generate(id) do
     user = User.get(id)
     if !user, do: raise "No user"
@@ -48,12 +50,14 @@ defmodule Mail.Contents do
     text = "Hi, and welcome to week 2! We wanted to give you a small update on what's been
     happening in the course. "
     activity = []
-    if comments > 0, do: ["submitting #{comments} comments on archived lesson plans"|activity]
-    if x = design_group_submit, do: ["submitting #{x} resources"|activity]
-    if y = user.resources_seen && !Enum.empty?(user.resources_seen), do: ["reviewing #{x} resources"|activity]
-    if x = design_group_submit, do: ["submitting #{x} design group ideas"|activity]
+    if comments > 0, do: activty = add(activity, "submitting #{comments} comments on archived lesson plans")
+    if x = design_group_submit, do: activity = add(activity, "submitting #{x} resources")
+    if y = user.resources_seen && !Enum.empty?(user.resources_seen) do
+      activity = add activity, "reviewing #{x} resources"
+    end
+    if x = design_group_submit, do: activity = add(activity, "submitting #{x} design group ideas")
     if !Enum.empty?(activity) do
-      text = text <> "Thank you for all your activity - #{Enum.join(activity, ", ")}!"
+      text = text <> "Thank you for all your activity - #{Enum.join(activity, ", ")}! "
     end
 
     design = if user.design_group_id do
