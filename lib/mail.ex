@@ -8,11 +8,11 @@ defmodule Mail do
 
   def user_mail(id) do
     subject = "Welcome to Week 2!"
-    text = Mail.Contents.generate(id)
+    {text, email} = Mail.Contents.generate(id)
     %Mailman.Email{
       subject: subject,
       from: "shaklev@gmail.com",
-      to: [ "shaklev@gmail.com" ],
+      to: [ email ],
       text: text,
       html: Templates.common(subject, text)
     }
@@ -50,12 +50,12 @@ defmodule Mail.Contents do
     text = "Hi, and welcome to week 2! We wanted to give you a small update on what's been
     happening in the course. "
     activity = []
-    if comments > 0, do: activty = add(activity, "submitting #{comments} comments on archived lesson plans")
-    if x = design_group_submit, do: activity = add(activity, "submitting #{x} resources")
-    if y = user.resources_seen && !Enum.empty?(user.resources_seen) do
+    if comments > 0, do: activity = add(activity, "submitting #{comments} comments on archived lesson plans")
+    if (x = resource_submit) > 0, do: activity = add(activity, "submitting #{x} resources")
+    if user.resources_seen && length(user.resources_seen) > 0 do
       activity = add activity, "reviewing #{x} resources"
     end
-    if x = design_group_submit, do: activity = add(activity, "submitting #{x} design group ideas")
+    if (x = design_group_submit) > 0, do: activity = add(activity, "submitting #{x} design group ideas")
     if !Enum.empty?(activity) do
       text = text <> "Thank you for all your activity - #{Enum.join(activity, ", ")}! "
     end
@@ -73,6 +73,7 @@ defmodule Mail.Contents do
       #{groups_in_sig} available design ideas in your SIG #{signame}."
     end
     text = text <> design
+    {text, user.edx_email}
     
   end
 end
