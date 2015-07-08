@@ -43,4 +43,8 @@ defmodule Survey.User do
     where: f.edx_userid == ^edx)
     |> Repo.one
   end
+
+  def get(id) do
+    Repo.get(User, id)
+  end
 end

@@ -36,6 +36,15 @@ defmodule Survey.Commentstream do
     comments = [ newcomments | resource.comments ]
 
     %{ resource | comments: comments } |> Repo.update!
-    
+  end
+
+  def get_by_userid(id) do
+    runq(
+    "WITH comments AS (SELECT unnest(comments) AS comment, id FROM commentstreams) SELECT id, comment FROM comments WHERE comment->>'userid' = '#{id}';")
+  end
+
+  def runq(query, opts \\ []) do
+    result = Ecto.Adapters.SQL.query(Survey.Repo, query, opts)
+    result.rows
   end
 end

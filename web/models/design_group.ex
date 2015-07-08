@@ -27,6 +27,12 @@ defmodule Survey.DesignGroup do
     Repo.get(DesignGroup, id)
   end
 
+  def get_by_sig(sigid) do
+    (from f in DesignGroup,
+    where: f.sig_id == ^sigid)
+    |> Repo.all
+  end
+
   def list(sig) do
     runq(
   "WITH usercount AS (SELECT count(id) AS count, design_group_id AS design FROM users WHERE design_group_id IS NOT NULL GROUP BY design_group_id) SELECT d.id, u.count, d.title, d.description FROM designgroups d LEFT JOIN usercount u ON d.id = u.design WHERE d.sig_id=$1 ORDER BY (CASE WHEN u.count>6 THEN -99 WHEN u.count IS NULL THEN 0 ELSE u.count end) desc;", [sig])
