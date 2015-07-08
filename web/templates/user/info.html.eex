@@ -1,15 +1,5 @@
 <h3>Welcome to user info for <%= @user.nick %></h3>
 
-
-<%= form_for @conn, user_path(@conn, :delete_user), [name: :delete], fn _ -> %>
-  <%= raw ParamSession.form_session @conn %>
-  <%= submit "Delete user" %> 
-<% end %>
-  <%= form_for @conn, user_path(@conn, :delete_survey), [name: :delete], fn _ -> %> 
-  <%= raw ParamSession.form_session @conn %>
-  <%= submit "Delete survey data" %>
-<% end %>
-  <P>
     <h3>Survey data</h3>
     <span id=survey></span>
     <p><br>

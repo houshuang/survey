@@ -66,12 +66,6 @@ defmodule Survey.Router do
     post "/survey/submit", SurveyController, :submit
     post "/survey/submitajax", SurveyController, :submitajax
 
-    # user info/debug
-    get "/user/info", UserController, :info
-    post "/user/info", UserController, :info
-    post "/user/delete_user", UserController, :delete_user
-    post "/user/delete_survey", UserController, :delete_survey
-
     # resource submission/review
     post "/resource/add", ResourceController, :add
     get "/resource/add", ResourceController, :add
@@ -155,6 +149,11 @@ defmodule Survey.Router do
     get "/resource/preview", ResourceController, :preview
 
     get "/cohorts", AdminController, :cohorts
+    
+    # user info/debug
+    get "/userinfo", UserController, :info
+    post "/userinfo", UserController, :info
+
   end
 
   scope "/", Survey do

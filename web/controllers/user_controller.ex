@@ -66,8 +66,14 @@ defmodule Survey.UserController do
     end
   end
   
-  def info(conn, _) do
-    render conn, "info.html"
+  def info(conn, params) do
+    userid = params["userid"]
+    user = User.get_by_edxid(userid)
+    if !user do
+      html conn, "No such user #{userid}"
+    else
+      render conn, "info.html", user: user
+    end
   end
   
   def delete_user(conn, _) do
