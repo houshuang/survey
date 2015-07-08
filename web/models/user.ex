@@ -41,7 +41,6 @@ defmodule Survey.User do
   def get_by_edxid(edx) do
     (from f in User,
     where: f.edx_userid == ^edx)
-    |> preload([:sig, :design_group, :user_grades])
     |> Repo.one
   end
 end

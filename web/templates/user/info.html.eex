@@ -1,18 +1,27 @@
 <h3>Welcome to user info for <%= @user.nick %></h3>
 
-    <h3>Survey data</h3>
-    <span id=survey></span>
+    <h3>Grade data</h3>
+    <table><tr><th>Component</th><th>Grade</th></tr>
+    <%= for [component, grade] <- @grades do %>
+
+      <tr><td><%= component %></td><td><%= grade %></td></tr>
+    <% end %>
+  </table>
     <p><br>
     <h3>Registration data</h3>
     <span id=regdata></span>
+    <p><br>
+    <h3>Survey data</h3>
+    <span id=survey></span>
 
       <script src="/js/prettyprint.js"></script>
       <script> 
         input=<%=raw Poison.encode!(@user) %>;
         survey=<%=raw Poison.encode!(@user.survey) %>;
+        grades=<%=raw Poison.encode!(@grades) %>;
         $(document).on('ready', function() {
           $('#regdata').html(prettyPrint(input, {expanded: false}));
-          $('#survey').html(prettyPrint(survey, {expanded: true}));
+          $('#grade').html(prettyPrint(grades, {expanded: true}));
         })
       </script>
 

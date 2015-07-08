@@ -72,7 +72,7 @@ defmodule Survey.UserController do
     if !user do
       html conn, "No such user #{userid}"
     else
-      render conn, "info.html", user: user
+      render conn, "info.html", user: user, grades: Survey.UserGrade.get(user.id)
     end
   end
   
