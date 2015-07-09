@@ -34,17 +34,15 @@ defmodule Survey.Grade do
 
       # store in db before calling callback url
       user_id = Conn.get_session(conn, :repo_userid)
-      exists = (from t in Survey.UserGrade,
+      dbentry = (from t in Survey.UserGrade,
       where:
       t.user_id == ^user_id and
       t.component == ^component and
       t.grade == ^grade and
-      t.submitted == true and
-      t.cache_id == ^cache_id,
-      select: count(t.id))
+      t.cache_id == ^cache_id)
       |> Repo.one
 
-      if exists == 0 do
+      if !dbentry do
         dbentry = %Survey.UserGrade{
           user_id: user_id,
           component: component,
@@ -52,13 +50,16 @@ defmodule Survey.Grade do
           submitted: false,
           cache_id: cache_id}
         |> Repo.insert!
+      end
 
+      if !dbentry.submitted do
         case res = PlugLti.Grade.call(lti, grade) do
           :ok -> 
             Repo.update!(%{dbentry | submitted: true})
             Logger.info("Submitted grade for #{component}")
           {:error, message} -> Logger.warn(
-            "Not able to submit grade, UserGrade id #{dbentry.id}, message: #{inspect(message)}")
+            "Not able to submit grade, UserGrade id #{dbentry.id}, " <>
+            "message: #{inspect(message)}")
         end
         res
       else
@@ -79,12 +80,23 @@ defmodule Survey.Grade do
     |> Enum.map(&simple_submit/1)
   end
 
-  def simple_submit([cache_id, grade]) do
-    case PlugLti.Grade.call(Survey.Cache.get(cache_id), grade) do
+  def resubmit_failing(component \\ nil) do
+    query = (from f in Survey.UserGrade,
+    where: f.submitted == false)
+    if component do
+      query = from f in query, where: f.component == ^component
+    end
+    query 
+    |> Repo.all
+    |> Enum.map(&simple_submit/1)
+  end
+
+  def simple_submit(usergrade) do
+    case PlugLti.Grade.call(Survey.Cache.get(usergrade.cache_id), usergrade.grade) do
       :ok -> 
-        Logger.info("Submitted grade for #{cache_id}")
+        Logger.info("Submitted grade for #{usergrade.cache_id}")
       {:error, message} -> Logger.warn(
-        "Not able to submit grade, cache id #{cache_id}, message: #{inspect(message)}")
+        "Not able to submit grade, cache id #{usergrade.cache_id}, message: #{inspect(message)}")
     end
   end
 
