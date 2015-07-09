@@ -34,8 +34,17 @@
             </div>
             <hr>
             <%= if @userlen < 6 && !@embedded do %>
-
-            <input type="submit" value="Join the design team of this lesson" class="right" target="_top">
+              <% 
+              did = @design.id
+              text = case @already do
+                x when is_nil(x) ->
+               "Join the design team of this lesson"
+                ^did -> 
+                "You are a member of this group, click to open it"
+                _ ->
+                "Leave your current design team, and join this design team"
+              end %>
+              <input type="submit" value="<%= text %>" class="right" target="_top">
         <% end %>
         </div>
 

@@ -40,13 +40,11 @@ defmodule Survey.DesignGroupController do
   end
 
   def select(conn, params) do
-    if Survey.DesignGroup.get_by_user(conn.assigns.user.id).design_group_id do
-      ParamSession.redirect(conn, "/collab")
-    else
-      conn
-      |> put_layout(false)
-      |> render "select.html"
-    end
+    designgroup = DesignGroup.get_by_user(conn.assigns.user.id).design_group_id
+
+    conn
+    |> put_layout(false)
+    |> render "select.html", designgroup: designgroup
   end
 
   def select_sidebar(conn, params) do
@@ -61,6 +59,7 @@ defmodule Survey.DesignGroupController do
   def select_detail(conn, params) do
     id = string_to_int_safe(params["id"])
     embedded = if params["embedded"], do: true, else: false
+    already = DesignGroup.get_by_user(conn.assigns.user.id).design_group_id
     design = DesignGroup.get(id || 0)
     if !design do
       html conn, "Design idea not found"
@@ -68,12 +67,28 @@ defmodule Survey.DesignGroupController do
       userlen = length(DesignGroup.get_members(design.id || 0))
       conn
       |> put_layout(false)
-      |> render "detail.html", design: design, userlen: userlen, embedded: embedded
+      |> render "detail.html", design: design, userlen: userlen, 
+        embedded: embedded, already: already
     end
   end
 
   def overview(conn, _) do
-    html conn, "Please select a group on the left. If there are no groups listed, users in your SIG have not added any ideas yet. You can go to the previous section in EdX and add design group ideas, and then come back here to select one to work on."
+    d_id = DesignGroup.get_by_user(conn.assigns.user.id).design_group_id
+    text = if d_id do
+      title = DesignGroup.get(d_id).title
+      url = ParamSession.gen_url(conn, collab_path(conn, :index))
+      "You are already a member of the group <b>#{title}</b>. 
+      <a href='#{url}' target='_blank'>Click here</a> to go to the
+      collaborative workbench for your group. You can also browse the other
+      groups in your SIG, and decide to join one of those groups. In that case,
+      you will automatically leave your current group."
+    else
+      "Please select a group on the left. If there are no groups listed, users
+      in your SIG have not added any ideas yet. You can go to the previous
+      section in EdX and add design group ideas, and then come back here to
+      select one to work on."
+    end
+    html conn, text
   end
 
   def submit(conn, params) do
