@@ -33,7 +33,7 @@
                 <p><%= @design.description && @design.description["howtech"] %></p>
             </div>
             <hr>
-            <%= if @userlen < 6 && !@embedded do %>
+            <%= if (@userlen < 6 || @mine) && !@embedded do %>
               <% 
               did = @design.id
               text = case @already do
