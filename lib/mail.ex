@@ -18,7 +18,8 @@ defmodule Mail do
         if !Survey.User.is_unsubscribed?(id, "collab") do
           generate_notification(conn, entered, design, [id, nick])
           |> Survey.Mailer.deliver
-          Logger.info("Sent email")
+
+          Logger.info("Sent email to #{id}")
         end
       end)
     end)
@@ -38,7 +39,7 @@ defmodule Mail do
     %Mailman.Email{
       subject: "#{entered} entered the collaborative workbench",
       from: "noreply@mooc.encorelab.org",
-      to: ["shaklev@gmail.com"],
+      to: email,
       text: text,
       html: html }
   end
