@@ -51,16 +51,19 @@ defmodule Survey.DesignGroupController do
     sig = conn.assigns.user.sig_id
     designs = DesignGroup.list(sig)
     signame = Survey.SIG.name(sig)
+    userid = conn.assigns.user.id
     conn
     |> put_layout(false)
-    |> render "sidebar.html", sig: signame, designs: designs
+    |> render "sidebar.html", sig: signame, designs: designs, userid: userid
   end
 
   def select_detail(conn, params) do
+    userid = conn.assigns.user.id 
     id = string_to_int_safe(params["id"])
     embedded = if params["embedded"], do: true, else: false
-    already = DesignGroup.get_by_user(conn.assigns.user.id).design_group_id
+    already = DesignGroup.get_by_user(userid).design_group_id
     design = DesignGroup.get(id || 0)
+    mine = design.user_id == userid
     if !design do
       html conn, "Design idea not found"
     else
@@ -68,7 +71,7 @@ defmodule Survey.DesignGroupController do
       conn
       |> put_layout(false)
       |> render "detail.html", design: design, userlen: userlen, 
-        embedded: embedded, already: already
+        embedded: embedded, already: already, mine: mine
     end
   end
 
