@@ -180,11 +180,12 @@ li{
 	height:80px;
 	padding:28px 17px;
 }
-.groupname{
-	width:34%;
-	min-height: 65px;
-	padding-top:26px;
-	padding-left:20px;
+.groupname {
+    width: 100%;
+    min-height: 125px; /* Change to 125px if there are titles that still 
+    don’t fit in the space and need two lines to be displayed */
+    padding-top: 26px;
+    padding-left: 20px;
 }
 .groupname h3{
 	display:inline;
