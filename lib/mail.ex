@@ -49,7 +49,7 @@ defmodule Mail do
     %Mailman.Email{
       subject: "#{entered} entered the collaborative workbench",
       from: "noreply@mooc.encorelab.org",
-      to: ["shaklev@gmail.com"],
+      to: email,
       text: text,
       html: html }
   end
