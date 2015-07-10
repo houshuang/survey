@@ -14,7 +14,9 @@ font-style: normal;
 --></style>
 <div style="background-image: url('http://mooc.encorelab.org/img/bgemail01.jpg'); background-position: center top; padding: 80px 15px 15px 15px;">
   <div style="background-color: #fff; padding: 30px 15px;">
+    <%= if !is_nil(title) do %>
     <h3 style="font-family: 'dosisextralight', sans-serif; font-weight: normal; font-size: 32px; color: #c81e68;"><%= title %></h3>
+  <% end %>
     <p style="line-height: 30px;"><%= content %></p>
     <h2 style="line-height: 30px;"></h2>
   </div>

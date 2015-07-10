@@ -11,9 +11,8 @@ defmodule Survey do
       supervisor(Survey.Endpoint, []),
       # Start the Ecto repository
       worker(Survey.Repo, []),
-      worker(Survey.ChatPresence, [])
-      # Here you could define other workers and supervisors as children
-      # worker(Survey.Worker, [arg1, arg2, arg3]),
+      worker(Survey.ChatPresence, []),
+      supervisor(Task.Supervisor, [[name: :email_sup]])
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html

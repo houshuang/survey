@@ -1,0 +1,7 @@
+Hi, <%= name %>. <%= entered_name %> just entered your design group <%= design_name %>. Use this URL to open your design group, and join in the design work: <%= basename %>/email/unsubscribe/collab?session=<%= cookie %>
+
+Please don't respond to this email, replies will not be received. Add a message in the Tech issues thread in the forum, if you have any concerns.
+
+Use this URL to unsubscribe from design group notifications: <%= basename %>/email/unsubscribe/collab?session=<%= cookie %>
+
+And this URL to unsubscribe from all notifications: <%= basename %>/email/Unsubscribe/all?session=<%= cookie %>

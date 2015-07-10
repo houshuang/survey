@@ -1,17 +1,59 @@
 defmodule Mail.Templates do
   require EEx
   EEx.function_from_file :def, :common, "data/mailtemplates/common.eex", [:title, :content]
+  EEx.function_from_file :def, :collab_notification_html, "data/mailtemplates/collab_notification.html.eex", [:name, :entered_name, :design_name, :cookie, :basename]
+  EEx.function_from_file :def, :collab_notification_text, "data/mailtemplates/collab_notification.txt.eex", [:name, :entered_name, :design_name, :cookie, :basename]
 end
 
 defmodule Mail do
   alias Mail.Templates
+  require Logger
+  import Ecto.Query
+  require Ecto.Query
+  @basename Application.get_env(:mailer, :basename)
+
+  def send_notification(conn, entered, design, userids) when is_list(userids) do
+    Task.Supervisor.start_child(:email_sup, fn ->
+      Enum.each(userids, fn [id, nick] -> 
+        if !Survey.User.is_unsubscribed?(id, "collab") do
+          generate_notification(conn, entered, design, [id, nick])
+          |> Survey.Mailer.deliver
+          Logger.info("Sent email")
+        end
+      end)
+    end)
+  end
+
+  def generate_notification(conn, entered, design, [id, nick]) do
+    email = Survey.User.get_email(id)
+
+    fakeconn = Plug.Conn.put_session(conn, :repo_userid, id)
+    cookie = ParamSession.gen_cookie(fakeconn)
+
+    text = Templates.collab_notification_text(nick, entered, design, 
+      cookie, @basename)
+    html = Templates.collab_notification_html(nick, entered, design, 
+      cookie, @basename)
+
+    %Mailman.Email{
+      subject: "#{entered} entered the collaborative workbench",
+      from: "noreply@mooc.encorelab.org",
+      to: ["shaklev@gmail.com"],
+      text: text,
+      html: html }
+  end
+
+  def gen_url(conn, id, url) do
+    tmp_conn = Plug.Conn.put_session(conn, :edx_userid, id)
+    ParamSession.gen_url(tmp_conn, @basename <> url)
+  end
 
   def user_mail(id) do
     subject = "Welcome to Week 2!"
     {text, email} = Mail.Contents.generate(id)
     %Mailman.Email{
       subject: subject,
-      from: "shaklev@gmail.com",
+      from: "noreply@mooc.encorelab.org",
       to: [ email ],
       text: text,
       html: Templates.common(subject, text)

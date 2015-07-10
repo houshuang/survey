@@ -20,6 +20,7 @@ defmodule Survey.User do
     field :allow_email, :boolean
     field :admin, :boolean
     field :resources_seen, {:array, :integer}
+    field :unsubscribe, {:array, :string}
     has_many :user_grades, Survey.UserGrade
     belongs_to :sig, Survey.SIG
     belongs_to :design_group, Survey.DesignGroup
@@ -46,5 +47,27 @@ defmodule Survey.User do
 
   def get(id) do
     Repo.get(User, id)
+  end
+
+  def get_email(id) do
+    (from f in Survey.User, 
+    where: f.id == ^id,
+    select: [f.edx_email])
+    |> Repo.one
+  end
+
+  def unsubscribe(user, component) do
+    unsub = if !user.unsubscribe do
+      [component]
+    else
+      [ component | user.unsubscribe ]
+    end
+    %{ user | unsubscribe: unsub } |> Repo.update!
+  end
+
+  def is_unsubscribed?(id, component) do
+    user = get(id)
+    user.unsubscribe && (Enum.member?(user.unsubscribe, "all") ||
+      Enum.member?(user.unsubscribe, component))
   end
 end

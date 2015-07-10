@@ -1,0 +1,5 @@
+Hi, <%= name %>. <%= entered_name %> just entered your design group <b><%= design_name %></b>. <a href='<%= basename %>/collab?session=<%= cookie %>'>Click here</a> to open your design group, and join in the design work.<P><br>
+
+  <p>Please don't respond to this email, replies will not be received. Add a message in the Tech issues thread in the forum, if you have any concerns.</p>
+
+<a href='<%= basename %>/email/unsubscribe/collab?session=<%= cookie %>'>Unsubscribe from design group notifications</a> | <a href='<%= basename %>/email/unsubscribe/all?session=<%= cookie %>'>Unsubscribe from all personalized emails</a>

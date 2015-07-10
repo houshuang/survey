@@ -128,6 +128,11 @@ defmodule Survey.Router do
     post "/collab", CollabController, :index
     get "/collab", CollabController, :index
     post "/collab/leave", CollabController, :leave
+
+    # email notification control
+    get "/email/unsubscribe/all", EmailController, :unsubscribe
+    get "/email/unsubscribe/collab", EmailController, :unsubscribe_collab
+
   end
 
   scope "/", Survey do
