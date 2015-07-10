@@ -12,14 +12,15 @@ defmodule Mail do
   require Ecto.Query
   @basename Application.get_env(:mailer, :basename)
 
-  def send_notification(conn, entered, design, userids) when is_list(userids) do
+  def send_notification(conn, room, entered, design, userids) when is_list(userids) do
     Task.Supervisor.start_child(:email_sup, fn ->
       Enum.each(userids, fn [id, nick] -> 
-        if !Survey.User.is_unsubscribed?(id, "collab") do
-          generate_notification(conn, entered, design, [id, nick])
-          |> Survey.Mailer.deliver
+        if !Survey.User.is_unsubscribed?(id, "collab") &&
+          Survey.ChatPresence.not_online?(room, id) do
+            generate_notification(conn, entered, design, [id, nick])
+            |> Survey.Mailer.deliver
 
-          Logger.info("Sent email to #{id}")
+            Logger.info("Sent email to #{id}")
         end
       end)
     end)
@@ -39,7 +40,7 @@ defmodule Mail do
     %Mailman.Email{
       subject: "#{entered} entered the collaborative workbench",
       from: "noreply@mooc.encorelab.org",
-      to: email,
+      to: ["shaklev@gmail.com"],
       text: text,
       html: html }
   end

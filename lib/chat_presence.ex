@@ -39,6 +39,12 @@ defmodule Survey.ChatPresence do
     {room, user}
   end
 
+  def not_online?(room, user) do
+    get(room)
+    |> Enum.filter(fn %{"userid" => userid} -> userid == user end)
+    |> Enum.empty?
+  end
+
   def get_all_users do
     Agent.get(__MODULE__, fn {room_store, _} -> 
       room_store
