@@ -13,8 +13,7 @@ use Mix.Config
 # which you typically run after static files are built.
 config :survey, Survey.Endpoint,
   http: [port: {:system, "PORT"}],
-  url: [host: "example.com"],
-  cache_static_manifest: "priv/static/manifest.json"
+  url: [host: "example.com"]
 
 # ## SSL Support
 #
