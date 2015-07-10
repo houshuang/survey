@@ -10,27 +10,36 @@ defmodule Mail do
   require Logger
   import Ecto.Query
   require Ecto.Query
+  alias Plug.Conn
+
   @basename Application.get_env(:mailer, :basename)
 
   def send_notification(conn, room, entered, design, userids) when is_list(userids) do
-    Task.Supervisor.start_child(:email_sup, fn ->
-      Enum.each(userids, fn [id, nick] -> 
-        if !Survey.User.is_unsubscribed?(id, "collab") &&
-          Survey.ChatPresence.not_online?(room, id) do
-            generate_notification(conn, entered, design, [id, nick])
-            |> Survey.Mailer.deliver
+    if Application.get_env(:mailer, :disabled) do
+      Logger.warn("Emailing disabled")
+    else
+      Task.Supervisor.start_child(:email_sup, fn ->
+        Enum.each(userids, fn [id, nick] -> 
+          if !Survey.User.is_unsubscribed?(id, "collab") &&
+            Survey.ChatPresence.not_online?(room, id) do
+              generate_notification(conn, entered, design, [id, nick])
+              |> Survey.Mailer.deliver
 
-            Logger.info("Sent email to #{id}")
-        end
+              Logger.info("Sent email to #{id}")
+          end
+        end)
       end)
-    end)
+    end
   end
 
   def generate_notification(conn, entered, design, [id, nick]) do
     email = Survey.User.get_email(id)
 
-    fakeconn = Plug.Conn.put_session(conn, :repo_userid, id)
-    cookie = ParamSession.gen_cookie(fakeconn)
+    cookie = conn
+    |> Conn.clear_session
+    |> Conn.put_session(:repo_userid, id)
+    |> Conn.put_session(:email, true)
+    |> ParamSession.gen_cookie
 
     text = Templates.collab_notification_text(nick, entered, design, 
       cookie, @basename)

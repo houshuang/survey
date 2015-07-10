@@ -40,9 +40,14 @@ defmodule Survey.ChatPresence do
   end
 
   def not_online?(room, user) do
-    get(room)
-    |> Enum.filter(fn %{"userid" => userid} -> userid == user end)
-    |> Enum.empty?
+    roomusers = get(room)
+    if !roomusers do
+      true
+    else
+      roomusers
+      |> Enum.filter(fn %{"userid" => userid} -> userid == user end)
+      |> Enum.empty?
+    end
   end
 
   def get_all_users do

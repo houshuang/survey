@@ -6,6 +6,10 @@ defmodule Survey.CollabController do
 
   def index(conn, _) do
     user = conn.assigns.user
+    if !is_nil(get_session(conn, :email)) do
+      Logger.info("#{user.id} arrived through email link")
+    end
+
     group = DesignGroup.get_by_user(user.id)
     if !group.design_group_id do
       html conn, "You are not part of a design group"
