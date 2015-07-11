@@ -33,11 +33,14 @@ defmodule Mail do
   end
 
   def generate_notification(conn, entered, design, [id, nick]) do
-    email = Survey.User.get_email(id)
-
+    [email, hash] = (from f in Survey.User,
+    where: f.id == ^id,
+    select: [f.edx_email, f.hash]) |> Survey.Repo.one
+    
     cookie = conn
     |> Conn.clear_session
     |> Conn.put_session(:repo_userid, id)
+    |> Conn.put_session(:lti_userid, hash)
     |> Conn.put_session(:email, true)
     |> ParamSession.gen_cookie
 
@@ -49,7 +52,7 @@ defmodule Mail do
     %Mailman.Email{
       subject: "#{entered} entered the collaborative workbench",
       from: "noreply@mooc.encorelab.org",
-      to: email,
+      to: [email],
       text: text,
       html: html }
   end
