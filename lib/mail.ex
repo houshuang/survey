@@ -65,7 +65,7 @@ defmodule Mail do
       from: "noreply@mooc.encorelab.org",
       text: File.read!("data/mailtemplates/to_design_wk1.txt.eex"),
     }
-    Enum.map(Survey.DesignGroup.get, fn x -> 
+    Enum.map(Survey.DesignGroup.all_involved, fn x -> 
       Task.Supervisor.start_child(:email_sup, fn ->
         send_wk1_individ(conn, template, x)
       end)
