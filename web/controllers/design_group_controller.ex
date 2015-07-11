@@ -111,4 +111,12 @@ defmodule Survey.DesignGroupController do
     |> put_layout("minimal.html")
     |> render "report.html", groups: groups, sigmap: sigmap
   end
+
+  def submit_edit(conn, params) do
+    group = DesignGroup.get(params["id"])
+    item = params["item"]
+    desc = Map.put(group.description, item, params["value"])
+    %{ group | description: desc } |> Repo.update!
+    json conn, "Success"
+  end
 end

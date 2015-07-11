@@ -19,9 +19,15 @@ defmodule Survey.RoomChannel do
     Survey.Endpoint.broadcast "admin", "user:entered", %{msg: msg, room: room}
     Logger.info("User entered room")
     ChatPresence.add_user(room, msg, socket)
+
     users = ChatPresence.get(room)
     previous = Chat.get(room, nil)
     push socket, "join", %{status: "connected", presence: users, previous: previous}
+
+    ChatPresence.get_locks(room)
+    |> Enum.each(fn {_, topic, %{"usernick" => nick}} -> 
+      push socket, "edit:lock", %{topic: topic, user: nick} end)
+
     {:noreply, socket}
   end
 
@@ -32,6 +38,13 @@ defmodule Survey.RoomChannel do
 
   def terminate(reason, socket) do
     {room, user} = ChatPresence.remove_user(socket)
+    
+    locks = Survey.ChatPresence.close_locks(socket)
+    if locks do
+      {_, topic, _} = locks
+      broadcast! socket, "edit:open", %{user: user["usernick"], topic: topic,
+        msg: " has left ", save: true}
+    end
     Logger.info("User left room")
     Survey.Endpoint.broadcast "admin", "user:left", %{user: user, room: room}
     broadcast! socket, "user:left", user
@@ -53,9 +66,17 @@ defmodule Survey.RoomChannel do
     {:reply, :ok, assign(socket, :user, msg["user"])}
   end
 
-  def handle_in("color", msg, socket) do
-    broadcast! socket, "color", msg
+  def handle_in("edit:lock", msg, socket) do
+    broadcast! socket, "edit:lock", msg
+    {room, user} = ChatPresence.get_user(socket)
+    Survey.ChatPresence.lock(room, msg["topic"], socket, user)
     {:reply, :ok, assign(socket, :user, msg["user"])}
   end
 
+  def handle_in("edit:open", msg, socket) do
+    broadcast! socket, "edit:open", msg
+    Logger.warn(inspect(msg))
+    Survey.ChatPresence.open(socket)
+    {:reply, :ok, assign(socket, :user, msg["user"])}
+  end
 end

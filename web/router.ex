@@ -124,6 +124,8 @@ defmodule Survey.Router do
     get "/design_groups/select/overview", DesignGroupController, :overview
     post "/design_groups/select/submit", DesignGroupController, :submit
 
+    post "/design_groups/submit_edit", DesignGroupController, :submit_edit
+
     # collaborative workbench
     post "/collab", CollabController, :index
     get "/collab", CollabController, :index

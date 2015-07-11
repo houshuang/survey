@@ -10,8 +10,16 @@
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
         <!-- Place favicon.ico in the root directory -->
 
-        <link rel="stylesheet" href="css/reset.css">
         <link rel="stylesheet" href="/lessonplans/css/GR1-5.css">
+<%= if @embedded do %>
+  <script src="/js/jquery-1.8.3.min.js"></script>
+  <script src="/js/lodash.js"></script>
+  <script>
+    session = '<%= raw ParamSession.gen_cookie(@conn) %>'
+    designid = <%= @design.id %>
+  </script>
+  <script src="/js/design_detail.js"></script>
+<% end %>
     </head>
 
     <div class="blocks">
@@ -21,16 +29,33 @@
   <input type='hidden' name='id' value='<%= @design.id %>'>
             <h2><%= @design.title %></h2>
             <br>
-            <p>Topics: <span class="category"><%= @design.description && @design.description["topics"] %></span></p>
+            <h3>Topics</h3><p id='topics'><span class="category"><%= @design.description && @design.description["topics"] %></span></p>
+            <%= if @embedded do %>
+              
+              <div id="edit_topics"><a href="#" class='edit topics'>Edit this</a></div><div id="save_topics" style='display: none;'><a href="#" class='save topics'>Save</a></div>
+                             <div id="otheredit_topics"></div>
+ 
+            <% end %>
+
 
             <div class="maincontent">
                 <h3>Short description of the basic inquiry approach</h3>
-                <p><%= @design.description && @design.description["description"] %></p>
+                <p id='description'><%= @design.description && @design.description["description"] %></p>
+                <%= if @embedded do %>
+                  
+                  <div id="edit_description"><a href="#" class='edit description'>Edit this</a></div><div id="save_description" style='display: none;'><a href="#" class='save description'>Save</a></div>
+                  <div id="otheredit_description"></div>
+                <% end %>
             </div>
 
             <div class="maincontent">
                 <h3>How can technology help students to build their own ideas and collaborate with peers?</h3>
-                <p><%= @design.description && @design.description["howtech"] %></p>
+                <p id='howtech'><%= @design.description && @design.description["howtech"] %></p>
+                <%= if @embedded do %>
+                  
+                  <div id="edit_howtech"><a href="#" class='edit howtech'>Edit this</a></div><div id="save_howtech" style='display: none;'><a href="#" class='save howtech'>Save</a></div>
+                  <div id="otheredit_howtech"></div>
+                <% end %>
             </div>
             <hr>
             <%= if (@userlen < 6 || @mine) && !@embedded do %>
@@ -52,6 +77,5 @@
     <% end %>
 
 </div>
-
     </body>
 </html>

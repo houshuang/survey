@@ -1,4 +1,11 @@
 $(document).ready(function() {
+  topics = {
+    "topics": "Topics", 
+    "description": "Short description...", 
+    "howtech": "How can technology help..."
+  }
+  Window.detail_ready = false
+  Window.detail_queue = []
   $('#input').selectRange(0);
   $("#input").val("")
   Window.presence = []
@@ -9,7 +16,7 @@ $(document).ready(function() {
                      {usernick: Window.usernick, userid: Window.userid})
   chan.join()
   chan.on('join', function(e) { 
-    console.log("join", e)
+    // console.log("join", e)
     Window.presence = _.map(e.presence, function(x) { return x.userid })
     render_presence() 
     $("#history").html("")
@@ -18,20 +25,31 @@ $(document).ready(function() {
   chan.on('user:entered', function(e) {
     Window.presence.push(e.userid)
     Window.presence = _.compact(_.intersection(Window.presence))
-    console.log("User entered", e, Window.presence)
+    // console.log("User entered", e, Window.presence)
     render_presence() 
     add_chat(info_line({msg: e.usernick + " joined"}))
   })
   chan.on('user:left', function(e) {
-    console.log("User left", e, Window.presence)
+    // console.log("User left", e, Window.presence)
     Window.presence = _.compact(_.without(Window.presence, e.userid))
     render_presence() 
     add_chat(info_line({msg: e.usernick + " left"}))
   })
-  chan.on('color', function(e) {
-    $("#header").css('background', e.color)
-    if (e.color == "White") { back = "; background-color: black;" } else { back = ";" }
-    add_chat("<p style='color: " + e.color + back + "'>" + e.user + " changed the color</font>") 
+  chan.on('edit:lock', function(e) {
+    console.log("edit:lock", e)
+    if(e.user != Window.usernick) {
+      sendFrame(e)
+      if(e.msg) {
+        add_chat(info_line({ msg: "<b>" + e.user + e.msg + topics[e.topic] + "</b>" }))
+      }
+    }
+  })
+  chan.on('edit:open', function(e) {
+    console.log("edit:open", e.data)
+    if(e.user != Window.usernick) {
+      add_chat(info_line({ msg: "<b>" + e.user + e.msg + topics[e.topic] + "</b>" }))
+      $("#detail_iframe")[0].contentWindow.postMessage(e, "*")
+    }
   })
 
   chan.on('new:msg', function(e) {add_msg(e)})
@@ -46,13 +64,40 @@ $(document).ready(function() {
       return false
     }
   })
-  $(".color").on("click", function(e) { 
-    color = $(this).text()
-    chan.push("color", {user: user, color: color})
-    return false
-  })
+  //
+// Create IE + others compatible event handler
+  var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
+  var eventer = window[eventMethod];
+  var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
 
+  // Listen to message from child window
+  eventer(messageEvent,function(e) {
+    if(e.data.ready) {
+      Window.detail_ready = true; sendFrameQueued() 
+    } else {
+      if(e.data.save) { kind = "edit:open" } else { kind = "edit:lock" }
+      console.log(kind, e.data)
+      chan.push(kind, $.extend({user: user}, e.data),false); 
+    }
+  })
 })
+
+function sendFrame(e) {
+  if (Window.detail_ready) {
+    console.log("Window ready")
+    $("#detail_iframe")[0].contentWindow.postMessage(e, "*")
+  } else {
+    console.log("Queueing")
+    Window.detail_queue.push(e)
+  }
+}
+
+function sendFrameQueued() {
+  console.log("Sending ready", Window.detail_queue)
+  _.each(Window.detail_queue, function(x) {
+    sendFrame(x)
+  })
+}
 
 send_msg = function() {
   payload = {user: user, body: $("#input").val()}
@@ -67,7 +112,7 @@ var date_line = _.template(' <li class="date"> <span class="info"><%= date %></s
 old_date = ""
 
 add_msg = function(e) { 
-  console.log(e)
+  // console.log(e)
   new_date = moment(e.time).format("MMMM Do, YYYY")
   if(old_date != new_date) {
     add_chat(date_line({date: new_date}))
