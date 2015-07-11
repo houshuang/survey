@@ -89,6 +89,7 @@ defmodule Mail do
       to: [email],
       html: Templates.notification_wk1(cookie, @basename) }
     |> Survey.Mailer.deliver
+    Logger.info("Sent email")
   end
 
 
