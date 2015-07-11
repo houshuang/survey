@@ -1,0 +1,31 @@
+Dear MOOC designers, 
+<p>
+We are sending this note out to all participants who have commenced the design strand, in the hopes of helping you find a team to work with.  Many of you have joined your own project, presumably in the hopes that others will come along and join you.  We are now realizing that we have many such "islands" of 1 member, and trying to figure out a way to help get some pairs and triples organized.  
+<p>
+First, lets try to get into teams, if possible:
+<p><ul>
+    <li>if you created a lesson design and haven't yet joined a team, please return to the second unit under "Design strand week 1") and click the button that says "Select a design idea and go to the collaborative workbench".  There, you will see a list of design ideas in your SIG, and you can join one and start contributing.
+
+      <li>if you are all alone on your own lesson team, (and no partners have yet come along to join),  but you really like your idea and want to design it no matter what: then just stay where you are!  Hopefully this email will motivate another collaborator or two to visit and join
+
+        <li>if you have joined your own lesson design team, but think you might be just as happy to pair up with another team, please click back on the second unit, to see the list again, if you select one, you can click "Join this team" and you will be un-joined from your current team (don't worry - you can always go back and re-join your previous design if you decide to).
+        </ul>
+          <p>
+<a href='<%= basename %>/collab?session=<%= cookie %>'>Click here</a> to open your design group, and join in the design work. Or <a href='<%= basename %>/design_groups/select?session=<%= cookie %>'>click here</a> to open the list of design groups, and perhaps choose another group, if you are currently a group of one.<P>
+
+          <p>
+            Second, we will be sending your basic design idea out for review - so please go to the second tab in the workbench, called "Design Group Description" and update your details based on your Etherpad notes.  This is what is currently the "public view" of your team (shows up in the list), and it is what the MOOC community will offer comments about.<p>
+              When you click on "Edit" under one of the three questions, that question will be "locked", and only you can edit it, until you either save it, or close the web browser. Others will see a notification in the chat window that you are editing the question, and will not be able to edit it. Please make sure to <b>Save</b> as soon as you are done, so others can take their turn. <i>Note that this is new technology that might be temperamental, let us know if it doesn't seem to work.</i>
+              <p>
+                You will also notice that you have begun to receive notification emails whenever somoene enters your design group. This is to help you coordinate - it's more fun to be online at the same time, be able to discuss, etc. If you find the emails annoying, you can always turn them off through the link at the bottom.
+              <p>
+Thanks very much, and if there are any questions, please go to the Design Strand discussion forum that we have opened under Discussions.  We will reply promptly.
+<p>
+  Sincerely, <br>
+Jim, Rosemary and the MOOC design team 
+<hr>
+  <p>Please don't respond to this email, replies will not be received. Add a message in the Tech issues thread in the forum, if you have any concerns.</p>
+
+<a href='<%= basename %>/email/unsubscribe/collab?session=<%= cookie %>'>Unsubscribe from design group notifications</a> | <a href='<%= basename %>/email/unsubscribe/all?session=<%= cookie %>'>Unsubscribe from all personalized emails</a>
+
+<a href='<%= basename %>/email/unsubscribe/all?session=<%= cookie %>'>Unsubscribe from all personalized emails</a>

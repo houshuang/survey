@@ -50,6 +50,13 @@ defmodule Survey.DesignGroup do
     |> Repo.one
   end
 
+
+  def all_involved do
+    runq(
+    "(SELECT user_id AS id FROM designgroups) UNION (SELECT id FROM users WHERE design_group_id IS NOT null);")
+    |> Enum.map(fn {x} -> x end)
+  end
+
   def insert_once(struct) do
     req = (from f in DesignGroup,
     where: f.user_id == ^struct.user_id,

@@ -3,6 +3,8 @@ defmodule Mail.Templates do
   EEx.function_from_file :def, :common, "data/mailtemplates/common.eex", [:title, :content]
   EEx.function_from_file :def, :collab_notification_html, "data/mailtemplates/collab_notification.html.eex", [:name, :entered_name, :design_name, :cookie, :basename]
   EEx.function_from_file :def, :collab_notification_text, "data/mailtemplates/collab_notification.txt.eex", [:name, :entered_name, :design_name, :cookie, :basename]
+  EEx.function_from_file :def, :notification_wk1, "data/mailtemplates/to_design_wk1.html.eex", 
+  [:cookie, :basename]
 end
 
 defmodule Mail do
@@ -56,6 +58,39 @@ defmodule Mail do
       text: text,
       html: html }
   end
+  
+  def send_wk1(conn) do
+    template = %Mailman.Email{
+      subject: "Update on design groups",
+      from: "noreply@mooc.encorelab.org",
+      text: File.read!("data/mailtemplates/to_design_wk1.txt.eex"),
+    }
+    Enum.map(Survey.DesignGroup.get, fn x -> 
+      Task.Supervisor.start_child(:email_sup, fn ->
+        send_wk1_individ(conn, template, x)
+      end)
+    end)
+  end
+
+  def send_wk1_individ(conn, template, id) do
+    [email, hash] = (from f in Survey.User,
+    where: f.id == ^id,
+    select: [f.edx_email, f.hash]) |> Survey.Repo.one
+
+    cookie = conn
+    |> Conn.clear_session
+    |> Conn.put_session(:repo_userid, id)
+    |> Conn.put_session(:lti_userid, hash)
+    |> Conn.put_session(:email, true)
+    |> ParamSession.gen_cookie
+
+    
+    %{ template | 
+      to: [email],
+      html: Templates.notification_wk1(cookie, @basename) }
+    |> Survey.Mailer.deliver
+  end
+
 
   def gen_url(conn, id, url) do
     tmp_conn = Plug.Conn.put_session(conn, :edx_userid, id)

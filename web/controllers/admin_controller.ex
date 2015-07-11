@@ -7,4 +7,9 @@ defmodule Survey.AdminController do
     cohorts = Survey.User.cohorts_csv
     text conn, cohorts
   end
+
+  def wk1(conn, _) do
+    Mail.send_wk1(conn)
+    html conn, "OK"
+  end
 end
