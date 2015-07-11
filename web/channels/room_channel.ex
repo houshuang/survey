@@ -79,4 +79,8 @@ defmodule Survey.RoomChannel do
     Survey.ChatPresence.open(socket)
     {:reply, :ok, assign(socket, :user, msg["user"])}
   end
+
+  def handle_in("phx_join", msg, socket) do
+    :ok
+  end
 end
