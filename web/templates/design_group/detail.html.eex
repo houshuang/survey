@@ -58,6 +58,9 @@
                 <% end %>
             </div>
             <hr>
+            <%= if @already != @design.id do %>
+              <input type="submit" name="review" value="Comment on this lesson design" class="right" target="_top">
+            <% end %>
             <%= if (@userlen < 6 || @mine) && !@embedded  && !@review do %>
               <% 
               did = @design.id
@@ -69,7 +72,6 @@
                 _ ->
                 "Leave your current design team, and join this design team"
               end %>
-              <input type="submit" name="review" value="Comment on this lesson design" class="right" target="_top">
               <input type="submit" name="join" value="<%= text %>" class="right" target="_top">
         <% end %>
         </div>
