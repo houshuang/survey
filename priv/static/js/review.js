@@ -74,7 +74,6 @@ validate_page = function(pg) {
   if(!validate_textarea('1')) { warnings.push("Please write more than ten words in the first textbox") }
   if(!validate_textarea('2')) { warnings.push("Please write more than ten words in the second textbox") }
   if(!validate_textarea('3')) { warnings.push("Please write more than ten words in the third textbox") }
-  if(!validate_textarea('4')) { warnings.push("Please write more than ten words in the fourth textbox") }
   return warnings;
 }
 

@@ -60,8 +60,8 @@
                 <%= raw ParamSession.form_session @conn %>
                 <%= raw @form %>
                 <input type=hidden name=id value=<%= @group.id %>>
-<div class='stepsController submit right'><a href='#'>Comment on this lesson design</a></div>
-<div class='stepsController cancel right'><a href='#'>Cancel and return to list page</a></div>
+<div class='stepsController submit right'><a href='#'>Submit your comments</a></div>
+<div class='stepsController cancel right'><a href='#'>Cancel and return to list</a></div>
    <% end %>
 </div>
 </div>
