@@ -43,7 +43,7 @@ config :survey, Survey.Repo,
   size: 10 # The amount of database connections in the pool
 
 config :plug_lti,
-  base_url: "http://localhost:4000",
+  base_url: "http://localhost:8000",
   lti_key: "test",
   lti_secret: "secret",
   plug_disabled: true

@@ -84,10 +84,12 @@ defmodule Survey.Router do
 
     # reflection
     post "/reflection/submission", ReflectionController, :submit
-    get "/reflection/:id", ReflectionController, :index
-    post "/reflection/:id", ReflectionController, :index
     post "/reflection", ReflectionController, :index
     get "/reflection", ReflectionController, :index
+    post "/reflectionb", ReflectionController, :index_b
+    get "/reflectionb", ReflectionController, :index_b
+    get "/reflection/:id", ReflectionController, :index
+    post "/reflection/:id", ReflectionController, :index
 
     # sig
     get "/user/select_sig_freestanding", UserController, 
@@ -111,6 +113,8 @@ defmodule Survey.Router do
     # assessment
     post "/assessment", ReflectionController, :assessment
     get "/assessment", ReflectionController, :assessment
+    post "/assessmentb", ReflectionController, :assessment_b
+    get "/assessmentb", ReflectionController, :assessment_b
     post "/assessment/submit", ReflectionController, :assessment_submit
     get "/assessment/submit", ReflectionController, :assessment_submit
     post "/assessment/:id", ReflectionController, :assessment
