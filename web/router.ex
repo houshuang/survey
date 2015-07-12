@@ -171,6 +171,7 @@ defmodule Survey.Router do
     get "/cohorts", AdminController, :cohorts
     
     get "/email/send_wk1", AdminController, :wk1
+    get "/email/send_wk2", AdminController, :wk2
     # user info/debug
     get "/userinfo", UserController, :info
     post "/userinfo", UserController, :info

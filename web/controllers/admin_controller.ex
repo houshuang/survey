@@ -12,4 +12,9 @@ defmodule Survey.AdminController do
     Mail.send_wk1(conn)
     html conn, "OK"
   end
+
+  def wk2(conn, _) do
+    Mail.send_wk2(conn)
+    html conn, "OK"
+  end
 end

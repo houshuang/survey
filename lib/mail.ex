@@ -1,12 +1,3 @@
-defmodule Mail.Templates do
-  require EEx
-  EEx.function_from_file :def, :common, "data/mailtemplates/common.eex", [:title, :content]
-  EEx.function_from_file :def, :collab_notification_html, "data/mailtemplates/collab_notification.html.eex", [:name, :entered_name, :design_name, :cookie, :basename]
-  EEx.function_from_file :def, :collab_notification_text, "data/mailtemplates/collab_notification.txt.eex", [:name, :entered_name, :design_name, :cookie, :basename]
-  EEx.function_from_file :def, :notification_wk1, "data/mailtemplates/to_design_wk1.html.eex", 
-  [:cookie, :basename]
-end
-
 defmodule Mail do
   alias Mail.Templates
   require Logger
@@ -59,6 +50,32 @@ defmodule Mail do
       html: html }
   end
   
+  def send_wk2(conn) do
+    template = %Mailman.Email{
+      subject: "Welcome to Week 2",
+      from: "noreply@mooc.encorelab.org",
+    }
+    # Enum.map(Survey.Repo.all(Survey.User), fn x -> 
+    Enum.map([Survey.Repo.get(Survey.User, 647)], fn x -> 
+      Task.Supervisor.start_child(:email_sup, fn ->
+        send_wk2_individ(conn, template, x)
+      end)
+    end)
+  end
+
+  def send_wk2_individ(conn, template, user) do
+    {subj, html} = Mail.Contents.get_data(user)
+    |> Mail.Contents.generate(conn)
+    html = Templates.common(subj, html)
+
+    %{ template | 
+      to: [user.edx_email],
+      html: html ,
+      text: html}
+    |> Survey.Mailer.deliver
+    Logger.info("Sent email")
+  end
+
   def send_wk1(conn) do
     template = %Mailman.Email{
       subject: "Update on design groups",
@@ -92,10 +109,13 @@ defmodule Mail do
     Logger.info("Sent email")
   end
 
-
-  def gen_url(conn, id, url) do
-    tmp_conn = Plug.Conn.put_session(conn, :edx_userid, id)
-    ParamSession.gen_url(tmp_conn, @basename <> url)
+  def gen_url(conn, user, url) do
+    conn
+    |> Conn.clear_session
+    |> Conn.put_session(:repo_userid, user.id)
+    |> Conn.put_session(:lti_userid, user.hash)
+    |> Conn.put_session(:email, true)
+    ParamSession.gen_url(@basename <> url)
   end
 
   def user_mail(id) do
@@ -124,48 +144,3 @@ defmodule Mail do
   def count_success({_, _}, {succ, fail}), do: {succ, fail + 1}
 end
 
-defmodule Mail.Contents do
-  alias Survey.User
-  alias Survey.SIG
-  alias Survey.DesignGroup
-  alias Survey.Resource
-  alias Survey.Commentstream
-
-  def add(lst, item), do: List.insert_at(lst, 0, item)
-
-  def generate(id) do
-    user = User.get(id)
-    if !user, do: raise "No user"
-    resource_submit = Resource.user_submitted_no(id)
-    design_group_submit = DesignGroup.submitted_count(id)
-    comments = length(Commentstream.get_by_userid(id))
-    text = "Hi, and welcome to week 2! We wanted to give you a small update on what's been
-    happening in the course. "
-    activity = []
-    if comments > 0, do: activity = add(activity, "submitting #{comments} comments on archived lesson plans")
-    if (x = resource_submit) > 0, do: activity = add(activity, "submitting #{x} resources")
-    if user.resources_seen && length(user.resources_seen) > 0 do
-      activity = add activity, "reviewing #{x} resources"
-    end
-    if (x = design_group_submit) > 0, do: activity = add(activity, "submitting #{x} design group ideas")
-    if !Enum.empty?(activity) do
-      text = text <> "Thank you for all your activity - #{Enum.join(activity, ", ")}! "
-    end
-
-    design = if user.design_group_id do
-      group = DesignGroup.get(user.design_group_id)
-      membercount = length(DesignGroup.get_members(group.id))
-      "It's great that you joined the design group #{group.title}. 
-      The group already has #{membercount} members, and we look forward to see what
-      you come up with!"
-    else
-      groups_in_sig = length(DesignGroup.get_by_sig(user.sig_id || 0))
-      signame = SIG.name(user.sig_id || 0)
-      "You haven't joined a design group yet - perhaps you can have a look at the 
-      #{groups_in_sig} available design ideas in your SIG #{signame}."
-    end
-    text = text <> design
-    {text, user.edx_email}
-    
-  end
-end
