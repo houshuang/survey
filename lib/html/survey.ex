@@ -6,6 +6,16 @@ defmodule Survey.HTML.Survey do
   
   def gen_survey(file, form) do
     parse(file)
+    |> do_gen(form)
+  end
+
+  def gen_survey_from_struct(struct, form) do
+    struct
+    |> do_gen(form)
+  end
+
+  def do_gen(struct, form) do
+    struct 
     |> sectionify
     |> Enum.with_index
     |> proc_sections(form)
