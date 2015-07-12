@@ -159,6 +159,16 @@ defmodule Survey.HTML.Survey do
 
   def parse(file) do
     File.stream!(file)
+    |> do_parse
+  end
+
+  def string_parse(str) do
+    String.split(str, "\n")
+    |> do_parse
+  end
+
+  def do_parse(input) do
+    input
     |> Stream.filter(&remove_blank_lines/1)
     |> Stream.map(&String.rstrip/1)
     |> Stream.map(&classify_line_types/1)
