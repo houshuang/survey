@@ -23,13 +23,17 @@ defmodule Survey.HTML.Reflections do
   end
 
   def gen_struct({i, file}) do
+    struct = Survey.parse(file)
+    questions = Survey.question_def(struct)
+    html = Survey.gen_survey_from_struct(struct, :f)
     IO.puts("Parsing and storing #{file}")
     %Prompt{
       name: file,
       id: String.to_integer(i),
       definition: File.read!(file),
-      html: Survey.gen_survey(file, :f)}
-    |> Repo.insert
+      html: html,
+      question_def: questions}
+    |> Repo.insert!
   end
 
   def get_file_list do
