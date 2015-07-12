@@ -5,3 +5,11 @@ meta
 textbox,What are some of the greatest challenges in designing an inquiry lesson for your classroom?
 meta
 	minwords=10
+radio,How did you feel about Jim’s short lecture video this week (impromptu, not scripted) vs. last week’s (scripted, read to the camera, shorter and more efficient).
+	I preferred the more personable version this week, even though it was longer.
+	I preferred the shorter, scripted version last week, even though it wasn’t quite as personable.
+multi,If you did NOT join a design team, what were your main reasons?
+	Not enough time to get into it
+	Worried that I did not have enough expertise to contribute
+	Was not interested in collaborating
+	Did not understand the technology

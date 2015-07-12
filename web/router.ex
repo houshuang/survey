@@ -113,6 +113,8 @@ defmodule Survey.Router do
     get "/assessment", ReflectionController, :assessment
     post "/assessment/submit", ReflectionController, :assessment_submit
     get "/assessment/submit", ReflectionController, :assessment_submit
+    post "/assessment/:id", ReflectionController, :assessment
+    get "/assessment/:id", ReflectionController, :assessment
 
     # designgroups
     post "/design_groups/add_idea", DesignGroupController, :add_idea

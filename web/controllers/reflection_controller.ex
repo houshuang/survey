@@ -17,7 +17,11 @@ defmodule Survey.ReflectionController do
     else 
       id = char_to_num(params["id"]) + 1
     end
-    prompt = Repo.get(Prompt, id)
+    prompt = Prompt.get(id)
+    questions = prompt.question_def
+    |> Enum.map(fn {k, v} -> {Integer.to_string(k), v} end)
+    |> Enum.into(%{})
+
     reflection = Reflection.get(conn.assigns.user.id, prompt.id)
     if reflection do
       conn = put_flash(conn, :info, 
@@ -25,20 +29,24 @@ defmodule Survey.ReflectionController do
     end
 
     render conn, "index.html", html: prompt.html, id: id,
-      reflection: reflection
+      reflection: reflection, questions: questions
   end
 
   def submit(conn, params) do
-    id = params["reflection_id"]
+    id = params["id"]
     form = params["f"]
+    |> proc_params
     Reflection.store(conn.assigns.user.id, String.to_integer(id), form)
     Survey.Grade.submit_grade(conn, "reflection_#{id}", 1.0)
     html conn, "Thank you for submitting!"
-
   end
 
-  def assessment(conn, _) do
-    id = 101
+  def assessment(conn, params) do
+    if !params["id"] do
+      id = 101
+    else 
+      id = char_to_num(params["id"]) + 101
+    end
     prompt = Repo.get(Prompt, id)
     reflection = Reflection.get(conn.assigns.user.id, prompt.id)
     if reflection do
@@ -50,7 +58,7 @@ defmodule Survey.ReflectionController do
   end
 
   def assessment_submit(conn, params) do
-    id = params["reflection_id"]
+    id = params["id"]
     form = params["f"]
     Reflection.store(conn.assigns.user.id, String.to_integer(id), form)
     grade = case form["1"] do
