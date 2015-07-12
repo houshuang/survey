@@ -41,10 +41,11 @@ defmodule Survey.DesignGroupController do
 
   def select(conn, params) do
     designgroup = DesignGroup.get_by_user(conn.assigns.user.id).design_group_id
+    submitted = if params["submitted"], do: "?submitted=true", else: ""
 
     conn
     |> put_layout(false)
-    |> render "select.html", designgroup: designgroup
+    |> render "select.html", designgroup: designgroup, submitted: submitted
   end
 
   def select_sidebar(conn, params) do
@@ -61,6 +62,7 @@ defmodule Survey.DesignGroupController do
     userid = conn.assigns.user.id 
     id = string_to_int_safe(params["id"])
     embedded = if params["embedded"], do: true, else: false
+    review = if params["review"], do: true, else: false
     already = DesignGroup.get_by_user(userid).design_group_id
     design = DesignGroup.get(id || 0)
     mine = design.user_id == userid
@@ -71,11 +73,11 @@ defmodule Survey.DesignGroupController do
       conn
       |> put_layout(false)
       |> render "detail.html", design: design, userlen: userlen, 
-        embedded: embedded, already: already, mine: mine
+        embedded: embedded, already: already, mine: mine, review: review
     end
   end
 
-  def overview(conn, _) do
+  def overview(conn, params) do
     d_id = DesignGroup.get_by_user(conn.assigns.user.id).design_group_id
     text = if d_id do
       title = DesignGroup.get(d_id).title
@@ -84,22 +86,40 @@ defmodule Survey.DesignGroupController do
       <a href='#{url}' target='_blank'>Click here</a> to go to the
       collaborative workbench for your group. You can also browse the other
       groups in your SIG, and decide to join one of those groups. In that case,
-      you will automatically leave your current group."
+      you will automatically leave your current group.
+      <P>You can also select a group on the left and add useful comments that
+      will help them in their design work."
     else
       "Please select a group on the left. If there are no groups listed, users
       in your SIG have not added any ideas yet. You can go to the previous
       section in EdX and add design group ideas, and then come back here to
-      select one to work on."
+      select one to work on.
+      <P>You can also select a group on the left and add useful comments that
+      will help them in their design work."
     end
+
+    submitted = if params["submitted"], do: true, else: false
+    if submitted do
+      text = "Thank you for submitting your review, you have already been graded. " <> 
+        "Feel free to choose another group to review.<p>" <> text
+    end
+
     html conn, text
   end
 
-  def submit(conn, params) do
+  # join a group
+  def submit(conn, params = %{"join" => _}) do
     id = string_to_int_safe(params["id"])
     Logger.info("Joined design group #{id}")
     %{ conn.assigns.user | design_group_id: id } |> Repo.update!
     
     ParamSession.redirect(conn, "/collab")
+  end
+
+  # review a group
+  def submit(conn, params = %{"review" => _, "id" => id}) do
+    
+    ParamSession.redirect(conn, "/review/#{id}")
   end
 
   def report(conn, params) do

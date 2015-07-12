@@ -58,7 +58,7 @@
                 <% end %>
             </div>
             <hr>
-            <%= if (@userlen < 6 || @mine) && !@embedded do %>
+            <%= if (@userlen < 6 || @mine) && !@embedded  && !@review do %>
               <% 
               did = @design.id
               text = case @already do
@@ -69,7 +69,8 @@
                 _ ->
                 "Leave your current design team, and join this design team"
               end %>
-              <input type="submit" value="<%= text %>" class="right" target="_top">
+              <input type="submit" name="review" value="Comment on this lesson design" class="right" target="_top">
+              <input type="submit" name="join" value="<%= text %>" class="right" target="_top">
         <% end %>
         </div>
 

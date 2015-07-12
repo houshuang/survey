@@ -33,7 +33,7 @@
 <h3>Lesson Design Ideas</h3>
 </div>
 <iframe class="sidebar" name="sidebar" src="<%= ParamSession.gen_url(@conn, "/design_groups/select/sidebar") %>"></iframe>
-<iframe class="maincontentiframe" name="maincontent" src="<%= ParamSession.gen_url(@conn, "/design_groups/select/overview") %>"></iframe>
+<iframe class="maincontentiframe" name="maincontent" src="<%= ParamSession.gen_url(@conn, "/design_groups/select/overview#{@submitted}") %>"></iframe>
 
 </div>
 

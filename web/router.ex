@@ -141,6 +141,13 @@ defmodule Survey.Router do
     get "/email/unsubscribe/all", EmailController, :unsubscribe
     get "/email/unsubscribe/collab", EmailController, :unsubscribe_collab
 
+    # review
+    post "/review/submit", ReviewController, :submit
+    get "/review/cancel", ReviewController, :cancel
+    post "/review/cancel", ReviewController, :cancel
+    post "/review/:id", ReviewController, :index
+    get "/review/:id", ReviewController, :index
+    
   end
 
   scope "/", Survey do

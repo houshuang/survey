@@ -1,0 +1,35 @@
+<!doctype html>
+<html class="no-js" lang="en-us">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <!-- Place favicon.ico in the root directory -->
+
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/reset.css">
+        <link rel="stylesheet" href="css/overview.css">
+        <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+<div>
+<p>
+On the left are some lesson designs created by students in a University of Toronto course with a similar theme to this MOOC. We recognize that these lessons are not a perfect fit for every classroom, but they should provide an interesting opportunity for critique and reflection. These are different from the WISE activity, which was pre-made, tested, and packaged together with a technology environment.  These lessons use off-the-shelf technologies, and were thoughtfully design to engage students in working with ideas and collaborating with peers. While they were designed for a particular age level, we suggest that, with some adaptations, many could be applied for a younger or older audience. Please choose one or more lesson, and add a comment about how you feel the lesson would succeed with your students, or how it could be modified to improve its effectiveness.  
+</p>
+</div>
+
+        <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script-->
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.3.min.js"><\/script>')</script>
+        <script src="js/plugins.js"></script>
+        <script src="js/masked-input.js"></script>
+        <script src="js/main.js"></script>
+    </body>
+</html>
