@@ -20,7 +20,7 @@ defmodule Survey.CollabController do
       others = members
       |> Enum.filter(fn [x, _] -> x != user.id end)
 
-      Mail.send_notification(conn, group.design_group_id, user.nick, 
+      Mail.send_notification(group.design_group_id, user.nick, 
         group.design_group.title, others)
       conn
       |> put_layout(false)
