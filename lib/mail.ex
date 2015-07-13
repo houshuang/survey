@@ -66,6 +66,7 @@ defmodule Mail do
       to: [user.edx_email],
       html: html ,
       text: text}
+    Logger.info("Sending wk2 mail to #{user.id}")
     |> Survey.Mailer.deliver
   end
 
