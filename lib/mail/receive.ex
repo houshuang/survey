@@ -1,4 +1,5 @@
 defmodule Mail.Receive do
+  require Logger
   def receive_message(from, to, data) do
     Logger.warn("Message received: " <> inspect([from, to, data], pretty: true))
     # %{ template | 
