@@ -45,7 +45,7 @@ defmodule Survey.Mixfile do
       {:param_session, github: "houshuang/param_session"},
       {:csv, "~> 1.0.0"},
       {:plug_accesslog, github: "houshuang/plug_accesslog"},
-      {:mailman, "~> 0.1.0"},
+      {:mailman, github: "houshuang/mailman"},
       {:eiconv, github: "zotonic/eiconv"},
       {:hashids, "~> 2.0"}
     ]
