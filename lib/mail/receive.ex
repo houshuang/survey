@@ -7,6 +7,6 @@ defmodule Mail.Receive do
 
     t = %{ email | to: ["shaklev@gmail.com"], from: "relay@mooc.encorelab.org" }
     |> Survey.Mailer.deliver
-    {:ok, _} = Task.Await(t)
+    {:ok, _} = Task.await(t)
   end
 end
