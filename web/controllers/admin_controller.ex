@@ -14,7 +14,7 @@ defmodule Survey.AdminController do
   end
 
   def wk2(conn, _) do
-    Mail.send_wk2(conn)
+    Mail.send_wk2
     html conn, "OK"
   end
 end
