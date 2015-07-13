@@ -4,8 +4,8 @@ defmodule Mail.SMTPServer do
 
     def init(hostname, session_count, address, options) do
 	if session_count > 40 do
-	    Logger.warn("SMTP server connection limit exceeded")
-	    {:stop, :normal, ["421 ", hostname, " is too busy to accept mail right now"]}
+	    Logger.warn('SMTP server connection limit exceeded')
+	    {:stop, :normal, ['421 ', hostname, ' is too busy to accept mail right now']}
 	else
 	    banner = [hostname, " ESMTP"]
 	    state = %{}
@@ -16,7 +16,7 @@ defmodule Mail.SMTPServer do
     def handle_HELO(hostname, state), do: {:ok, state}
 
     def handle_EHLO(hostname, extensions, state) do
-	my_extensions = extensions ++ [{"AUTH", "PLAIN LOGIN CRAM-MD5"}, {"STARTTLS", true}]
+	my_extensions = extensions ++ [{'AUTH', 'PLAIN LOGIN CRAM-MD5'}, {'STARTTLS', true}]
 	{:ok, my_extensions, state}
     end
 
