@@ -202,6 +202,10 @@ handle_STARTTLS(State) ->
     io:format("TLS Started~n"),
     State.
 
+%% keeps complaining about not being able to handle info
+handle_info(Info, State) ->
+	{noreply, State}.
+
 -spec code_change(OldVsn :: any(), State :: #state{}, Extra :: any()) -> {ok, #state{}}.
 code_change(_OldVsn, State, _Extra) ->
 	{ok, State}.
