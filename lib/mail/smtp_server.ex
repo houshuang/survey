@@ -7,7 +7,7 @@ defmodule Mail.SMTPServer do
 	    Logger.warn('SMTP server connection limit exceeded')
 	    {:stop, :normal, ['421 ', hostname, ' is too busy to accept mail right now']}
 	else
-	    banner = [hostname, " ESMTP"]
+	    banner = [hostname, ' ESMTP']
 	    state = %{}
 	    {:ok, banner, state}
 	end
@@ -30,17 +30,17 @@ defmodule Mail.SMTPServer do
 
     def handle_DATA(from, to, data, state) do
 	Mail.Receive.receive_message(from, to, data)
-	{:ok, "", state}
+	{:ok, '', state}
     end
 
     def handle_RSET(state), do: state
 
     def handle_VRFY(_, state) do
-	{:error, "252 VRFY disabled by policy, just send some mail", state}
+	{:error, '252 VRFY disabled by policy, just send some mail', state}
     end
 
     def handle_other(verb, _, state) do
-	{["500 Error: command not recognized : '", verb, "'"], state}
+	{['500 Error: command not recognized : \'', verb, '\''], state}
     end
 
     def handle_STARTTLS(state), do: state
