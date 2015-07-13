@@ -12,7 +12,7 @@ defmodule Mail.Contents do
   def generate(data) do
     url = fn x -> Mail.gen_url(data.user.id, x) end
 
-    text = "This email will give you a short update on the MOOC. We have been learning a lot about how to organize this kind of course, and how to support groups of teachers working on curriculum design. Here is a personalized update on your participation so far: <p>"
+    text = "<p>This email will give you a short update on the MOOC. We have been learning a lot about how to organize this kind of course, and how to support groups of teachers working on curriculum design. Here is a personalized update on your participation so far: <p>"
     
     reflection = if data.reflection_submit do 
       "You have not yet submitted your weekly reflection
@@ -39,7 +39,7 @@ defmodule Mail.Contents do
     the 3 inquiry activities. <p>#{design_group}<p>Thank you very much
     for your participation, and we look forward to seeing you online.  <p> Jim,
     Rosemary and the MOOC design team<p>
-      <p>Please don't respond to this email, replies will not be received. Add a message in the Tech issues thread in the forum, if you have any concerns. (Note that there was a bug in the email code, which led to some of you being unable to unsubscribe. It should be fixed, so please try again).</p>
+      <p><i>Please don't respond to this email, replies will not be received. Add a message in the Tech issues thread in the forum, if you have any concerns. (Note that there was a bug in the email code, which led to some of you being unable to unsubscribe. It should be fixed, so please try again).</i></p>
 
   <a href='#{url.("/email/unsubscribe/collab}")}'>Unsubscribe from design group notifications</a> | <a href='#{url.("/email/unsubscribe/all")}'>Unsubscribe from all personalized emails</a>"}
   end

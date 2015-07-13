@@ -49,6 +49,9 @@ defmodule Mail do
       subject: "Welcome to Week 2",
       from: "noreply@mooc.encorelab.org",
     }
+
+    # Enum.map((from f in Survey.User, where: f.id == 647) |> Survey.Repo.all, fn x -> 
+
     Enum.map((from Survey.User) |> Survey.Repo.all, fn x -> 
       Task.Supervisor.start_child(:email_sup, fn ->
         :timer.sleep(:random.uniform(100000))
@@ -64,10 +67,11 @@ defmodule Mail do
 
     %{ template | 
       to: [user.edx_email],
-      html: html ,
+      html: html,
       text: text}
-    Logger.info("Sending wk2 mail to #{user.id}")
     |> Survey.Mailer.deliver
+
+    Logger.info("Sending wk2 mail to #{user.id}")
   end
 
   def gen_url(id, url) do
