@@ -41,7 +41,7 @@ defmodule Mail.Contents do
     Rosemary and the MOOC design team<p>
       <p><i>Please don't respond to this email, replies will not be received. Add a message in the Tech issues thread in the forum, if you have any concerns. (Note that there was a bug in the email code, which led to some of you being unable to unsubscribe. It should be fixed, so please try again).</i></p>
 
-  <a href='#{url.("/email/unsubscribe/collab}")}'>Unsubscribe from design group notifications</a> | <a href='#{url.("/email/unsubscribe/all")}'>Unsubscribe from all personalized emails</a>"}
+  <a href='#{url.("/email/unsubscribe/collab")}'>Unsubscribe from design group notifications</a> | <a href='#{url.("/email/unsubscribe/all")}'>Unsubscribe from all personalized emails</a>"}
   end
 
   def get_data(user) do

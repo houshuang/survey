@@ -16,7 +16,7 @@ defmodule Survey.EmailController do
   end
 
   def redirect(conn, %{"hash" => hash}) do
-    {:ok, [id]} = Hashids.decode(@hashid, hash)
+    {:ok, [id]} = Hashids.decode(@hashid, String.strip(hash))
     IO.inspect(id)
     struct = Survey.Cache.get(id)
     hash = (from f in Survey.User, 
@@ -25,7 +25,7 @@ defmodule Survey.EmailController do
     conn 
     |> put_session(:repo_id, struct.userid)
     |> put_session(:lti_userid, hash)
-    |> ParamSession.redirect(struct.url)
+    |> ParamSession.redirect(String.replace(struct.url, "}", ""))
   end 
 
 end
