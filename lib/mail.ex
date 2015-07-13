@@ -8,7 +8,7 @@ defmodule Mail do
   @basename Application.get_env(:mailer, :basename)
   @hashid Hashids.new(salt: Application.get_env(:mailer, :hashid_salt))
 
-  def send_notification(conn, room, entered, design, userids) when is_list(userids) do
+  def send_notification(room, entered, design, userids) when is_list(userids) do
     if Application.get_env(:mailer, :disabled) do
       Logger.warn("Emailing disabled")
     else
@@ -16,7 +16,7 @@ defmodule Mail do
         Enum.each(userids, fn [id, nick] -> 
           if !Survey.User.is_unsubscribed?(id, "collab") &&
             Survey.ChatPresence.not_online?(room, id) do
-              generate_notification(conn, entered, design, [id, nick])
+              generate_notification(entered, design, [id, nick])
               |> Survey.Mailer.deliver
 
               Logger.info("Sent email to #{id}")
@@ -26,22 +26,15 @@ defmodule Mail do
     end
   end
 
-  def generate_notification(conn, entered, design, [id, nick]) do
-    [email, hash] = (from f in Survey.User,
+  def generate_notification(entered, design, [id, nick]) do
+    email = (from f in Survey.User,
     where: f.id == ^id,
-    select: [f.edx_email, f.hash]) |> Survey.Repo.one
+    select: f.edx_email) |> Survey.Repo.one
     
-    cookie = conn
-    |> Conn.clear_session
-    |> Conn.put_session(:repo_userid, id)
-    |> Conn.put_session(:lti_userid, hash)
-    |> Conn.put_session(:email, true)
-    |> ParamSession.gen_cookie
-
     text = Templates.collab_notification_text(nick, entered, design, 
-      cookie, @basename)
+      id, @basename)
     html = Templates.collab_notification_html(nick, entered, design, 
-      cookie, @basename)
+      id, @basename)
 
     %Mailman.Email{
       subject: "#{entered} entered the collaborative workbench",
