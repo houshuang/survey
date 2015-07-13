@@ -49,7 +49,7 @@ defmodule Mail do
       subject: "Welcome to Week 2",
       from: "noreply@mooc.encorelab.org",
     }
-    Enum.map(Survey.Repo.all(Survey.User), fn x -> 
+    Enum.map((from Survey.User) |> Survey.Repo.all, fn x -> 
       Task.Supervisor.start_child(:email_sup, fn ->
         :timer.sleep(:random.uniform(100000))
         send_wk2_individ(template, x)
