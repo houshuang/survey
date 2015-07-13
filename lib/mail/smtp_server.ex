@@ -13,24 +13,30 @@ defmodule Mail.SMTPServer do
 	end
     end
 
-    def handle_HELO(hostname, state), do: {:ok, state}
-
-    def handle_EHLO(hostname, extensions, state) do
-	my_extensions = extensions ++ [{'AUTH', 'PLAIN LOGIN CRAM-MD5'}, {'STARTTLS', true}]
-	{:ok, my_extensions, state}
-    end
-
+    # possibility of rejecting based on _from_ address
     def handle_MAIL(from, state) do
 	{:ok, state}
     end
 
+    # possibility of rejecting based on _to_ address
     def handle_RCPT(to, state) do
 	{:ok, state}
     end
 
+    # getting the actual mail. all the relevant stuff is in data.
     def handle_DATA(from, to, data, state) do
 	Mail.Receive.receive_message(from, to, data)
-	{:ok, '', state}
+	{:ok, UUID.uuid5(:dns, "mooc.encorelab.org", :default), state}
+    end
+
+    # --------------------------------------------------------------------------------
+    # less relevant stuff
+
+    def handle_HELO(hostname, state), do: {:ok, state}
+
+    def handle_EHLO(hostname, extensions, state) do
+	my_extensions = [ {'STARTTLS', true} | extensions ]
+	{:ok, my_extensions, state}
     end
 
     def handle_RSET(state), do: state
