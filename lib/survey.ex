@@ -13,7 +13,7 @@ defmodule Survey do
       worker(Survey.Repo, []),
       worker(Survey.ChatPresence, []),
       worker(:gen_smtp_server, [Mail.SMTPServer,
-        [[{:port, Application.get_env(:mailer, :port)}]]]),
+        Application.get_env(:mailer, :smtp_opts)]),
       supervisor(Task.Supervisor, [[name: :email_sup]])
     ]
 
