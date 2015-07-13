@@ -136,8 +136,7 @@ handle_DATA(From, To, Data, State) ->
 	case proplists:get_value(relay, State#state.options, false) of
 		true -> relay(From, To, Data);
 		false ->
-			io:format("message from ~s to ~p queued as ~s, body length ~p~n", [From, To, Reference, byte_size(Data)]),
-			elixir:mail:receive:receive_message(From, To, Data)
+			'Elixir.Mail.Receive':receive_message(From, To, Data)
 			case proplists:get_value(parse, State#state.options, false) of
 				false -> ok;
 				true ->
