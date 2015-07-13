@@ -81,6 +81,6 @@ defmodule Survey.RoomChannel do
   end
 
   def handle_in("phx_join", msg, socket) do
-    :ok
+    {:noreply, socket}
   end
 end
