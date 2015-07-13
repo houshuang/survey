@@ -6,6 +6,7 @@ defmodule Mail do
   alias Plug.Conn
 
   @basename Application.get_env(:mailer, :basename)
+  @hashid Hashids.new(salt: Application.get_env(:mailer, :hashid_salt))
 
   def send_notification(conn, room, entered, design, userids) when is_list(userids) do
     if Application.get_env(:mailer, :disabled) do
@@ -109,13 +110,11 @@ defmodule Mail do
     Logger.info("Sent email")
   end
 
-  def gen_url(conn, user, url) do
-    conn
-    |> Conn.clear_session
-    |> Conn.put_session(:repo_userid, user.id)
-    |> Conn.put_session(:lti_userid, user.hash)
-    |> Conn.put_session(:email, true)
-    ParamSession.gen_url(@basename <> url)
+  def gen_url(id, url) do
+    term = %{url: url, userid: id}
+    id = Survey.Cache.store(term)
+    hash = Hashids.encode(@hashid, id)
+    @basename <> "/email/" <> hash
   end
 
   def user_mail(id) do

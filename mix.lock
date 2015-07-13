@@ -18,6 +18,7 @@
   "gen_smtp": {:hex, :gen_smtp, "0.9.0"},
   "goldrush": {:git, "git://github.com/DeadZen/goldrush.git", "71e63212f12c25827e0c1b4198d37d5d018a7fec", [tag: "0.1.6"]},
   "hackney": {:hex, :hackney, "1.1.0"},
+  "hashids": {:hex, :hashids, "2.0.0"},
   "httpoison": {:hex, :httpoison, "0.7.0"},
   "idna": {:hex, :idna, "1.0.2"},
   "lager": {:git, "git://github.com/basho/lager.git", "b6b6cebcb27ccff8acc59ae775acebc2f52e4926", [tag: "2.0.3"]},

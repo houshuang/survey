@@ -1,4 +1,7 @@
 defmodule Prelude do
+  import Ecto.Query
+  require Ecto.Query
+
   def string_to_int_safe(y) do
     try do
       case y do

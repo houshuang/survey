@@ -181,6 +181,7 @@ defmodule Survey.Router do
   scope "/", Survey do
     pipe_through :public
 
-    get "/chat/:id", ChatController, :index
+    get "/email/:hash", EmailController, :redirect
+    post "/email/:hash", EmailController, :redirect
   end
 end

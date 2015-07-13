@@ -46,7 +46,8 @@ defmodule Survey.Mixfile do
       {:csv, "~> 1.0.0"},
       {:plug_accesslog, github: "houshuang/plug_accesslog"},
       {:mailman, "~> 0.1.0"},
-      {:eiconv, github: "zotonic/eiconv"}
+      {:eiconv, github: "zotonic/eiconv"},
+      {:hashids, "~> 2.0"}
     ]
   end
 end
