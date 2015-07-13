@@ -5,7 +5,7 @@ defmodule Mail.Receive do
     |> Mailman.Email.parse!
     Logger.warn(inspect(email, pretty: true))
 
-    %{ email | to: ["shaklev@gmail.com"] , html: email.text }
+    %{ email | to: ["shaklev@gmail.com"], from: "relay@mooc.encorelab.org" }
     |> Survey.Mailer.deliver
   end
 end
