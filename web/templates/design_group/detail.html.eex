@@ -58,7 +58,7 @@
                 <% end %>
             </div>
             <hr>
-            <%= if @already != @design.id && Conn.get_session(@conn, :lti_grade) do %>
+            <%= if @already != @design.id && Plug.Conn.get_session(@conn, :lti_grade) do %>
               <input type="submit" name="review" value="Comment on this lesson design" class="right" target="_top">
             <% end %>
             <%= if (@userlen < 6 || @mine) && !@embedded  && !@review do %>
