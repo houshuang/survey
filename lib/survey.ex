@@ -12,7 +12,7 @@ defmodule Survey do
       # Start the Ecto repository
       worker(Survey.Repo, []),
       worker(Survey.ChatPresence, []),
-      worker(:gen_smtp_server, [:smtp_server_survey, 
+      worker(:gen_smtp_server, [Mail.SMTPServer,
         [[{:port, Application.get_env(:mailer, :port)}]]]),
       supervisor(Task.Supervisor, [[name: :email_sup]])
     ]
