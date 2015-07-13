@@ -3,6 +3,10 @@ defmodule Survey.Mailer do
     Mailman.deliver(email, config)
   end
 
+  def deliver_sync(email) do
+    {:ok, _} = Task.await(Mailman.deliver(email, config))
+  end
+
   def config do
     %Mailman.Context{
       config: %Mailman.SmtpConfig{
