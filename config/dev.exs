@@ -27,10 +27,18 @@ config :survey, Survey.Endpoint,
     reloadable_paths: ["web", "lib"]
   ]
 
-
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, 
   format: "$date $time $metadata[$level] $message\n",
+  metadata: [:id]
+
+config :logger, 
+  backends: [:console, Logger.Backends.ErrorMail]
+
+config :logger, :error_mail,
+  format: "$date $time $metadata[$level] $message\n",
+  from: "error-log@mooc.encorelab.org",
+  to_list: ["shaklev@gmail.com"],
   metadata: [:id]
 
 # Configure your database
