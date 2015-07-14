@@ -19,6 +19,14 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
+config :jobs,
+  groups: %{},
+  default: %{
+    max_tries: 20,
+    worker_maxtime: 60 * 5,
+    strategy: :backoff
+  }
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"
