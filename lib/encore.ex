@@ -1,8 +1,9 @@
 defmodule Survey.Encore do
   def login do
-    url = "https://www.encorewiki.org/rpc/xmlrpc"
+    url = Application.get_env(:confluence, :url)
     request_body = %XMLRPC.MethodCall{method_name: "confluence2.login", 
-      params: [uname,pwd]}
+      params: [Application.get_env(:confluence, :username), Application.get_env(:confluence, :password)]}
+    |> IO.inspect
     |> XMLRPC.encode!
 
     response = HTTPoison.post!(url, request_body).body
