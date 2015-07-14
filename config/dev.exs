@@ -27,7 +27,6 @@ config :survey, Survey.Endpoint,
     reloadable_paths: ["web", "lib"]
   ]
 
-
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, 
   format: "$date $time $metadata[$level] $message\n",

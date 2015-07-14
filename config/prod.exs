@@ -28,11 +28,19 @@ config :survey, Survey.Endpoint,
 #
 # Where those two env variables point to a file on
 # disk for the key and cert.
+config :logger, 
+  backends: [:console, Logger.Backends.ErrorMail]
 
 # Do not print debug messages in production
 config :logger, :console, 
   level: :info,
   format: "$date $time $metadata[$level] $message\n",
+  metadata: [:id]
+
+config :logger, :error_mail,
+  format: "$date $time $metadata[$level] $message\n",
+  from: "error-log@mooc.encorelab.org",
+  to_list: ["shaklev@gmail.com"],
   metadata: [:id]
 
 config :week,
