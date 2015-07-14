@@ -13,7 +13,6 @@ defmodule Survey.ReportController do
     "#ffffbf", "#abd9e9", "#2c7bb6", "#ffffff"])
   @survey Report.survey
 
-  plug :action
   #----------------------------------------
 
   def index(conn, _) do

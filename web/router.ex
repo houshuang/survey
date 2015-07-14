@@ -167,6 +167,8 @@ defmodule Survey.Router do
     get "/report/resource", ResourceController, :report
     get "/report/designgroups", DesignGroupController, :report
     get "/resource/preview", ResourceController, :preview
+    get "/report/reflections", AdminController, :reflections
+    get "/report/reflections/:id", AdminController, :reflections
 
     get "/cohorts", AdminController, :cohorts
     

@@ -1,0 +1,7 @@
+<h1>Reflections</h1>
+
+(1, 2 are reflections, 101, 102 are assessments)
+<p>
+  <%= for ref <- @reflections do %>
+  <li><a href="/admin/report/reflections/<%= ref.id %>"><%= ref.id %></a></li>
+  <% end %>
