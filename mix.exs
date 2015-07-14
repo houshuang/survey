@@ -49,7 +49,8 @@ defmodule Survey.Mixfile do
       {:xmlrpc, "~> 0.6"},
       {:mailman, "~> 0.1.0"},
       {:eiconv, github: "zotonic/eiconv"},
-      {:hashids, "~> 2.0"}
+      {:hashids, "~> 2.0"},
+      {:exactor, "~> 2.1.2"}
     ]
   end
 end
