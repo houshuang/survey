@@ -32,15 +32,6 @@ config :logger, :console,
   format: "$date $time $metadata[$level] $message\n",
   metadata: [:id]
 
-config :logger, 
-  backends: [:console, Logger.Backends.ErrorMail]
-
-config :logger, :error_mail,
-  format: "$date $time $metadata[$level] $message\n",
-  from: "error-log@mooc.encorelab.org",
-  to_list: ["shaklev@gmail.com"],
-  metadata: [:id]
-
 # Configure your database
 config :survey, Survey.Repo,
   adapter: Ecto.Adapters.Postgres,
