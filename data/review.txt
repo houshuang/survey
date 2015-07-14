@@ -1,0 +1,11 @@
+# Feedback to design group
+textbox,What are the strengths of this lesson idea?  
+meta
+	minwords=10
+textbox,Have you ever heard about any other inquiry designs that addressed this topic?
+meta
+	minwords=10
+textbox,Can you think of any technology tools or environments that could be a good fit to this lesson? For reference, we've included your SIG's list of resources in another tab on the right.
+meta
+	minwords=10
+textbox,Any other suggestions for this design team?

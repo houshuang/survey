@@ -42,24 +42,19 @@ config :survey, Survey.Repo,
   extensions: [{Extensions.JSON, library: Poison}],
   size: 10 # The amount of database connections in the pool
 
-
 config :plug_lti,
-  base_url: "http://localhost:4000",
+  base_url: "http://localhost:8000",
   lti_key: "test",
   lti_secret: "secret",
   plug_disabled: true
-
-  # lti_secret: "e393a67d298df4ad508d118a65ffd1065d353887",
-
-config :param_session,
-  store: :cookie,  
-  key: "session",
-  encryption_salt: "fkljsdfsdif-09sdf-9834j993920092090kjj",
-  signing_salt: "skljdfls9980982049834fsdfsdf900d",
-  key_length: 64
 
 config :verify_admin,
   password: "test"
 
 config :grade,
   dont_submit: true
+
+config :week,
+  current: 1
+
+import_config "dev.secret.exs"

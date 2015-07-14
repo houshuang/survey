@@ -1,0 +1,84 @@
+<!doctype html>
+<html class="no-js" lang="en-us">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <!-- Place favicon.ico in the root directory -->
+
+        <link rel="stylesheet" href="/lessonplans/css/GR1-5.css">
+<%= if @embedded do %>
+  <script src="/js/jquery-1.8.3.min.js"></script>
+  <script src="/js/lodash.js"></script>
+  <script>
+    session = '<%= raw ParamSession.gen_cookie(@conn) %>'
+    designid = <%= @design.id %>
+  </script>
+  <script src="/js/design_detail.js"></script>
+<% end %>
+    </head>
+
+    <div class="blocks">
+
+  <%= form_for @conn, design_group_path(@conn, :submit), [name: :search, target: "_parent"], fn _ -> %>
+  <%= raw ParamSession.form_session @conn %>
+  <input type='hidden' name='id' value='<%= @design.id %>'>
+            <h2><%= @design.title %></h2>
+            <br>
+            <h3>Topics</h3><p id='topics'><span class="category"><%= @design.description && @design.description["topics"] %></span></p>
+            <%= if @embedded do %>
+              
+              <div id="edit_topics"><a href="#" class='edit topics'>Edit this</a></div><div id="save_topics" style='display: none;'><a href="#" class='save topics'>Save</a></div>
+                             <div id="otheredit_topics"></div>
+ 
+            <% end %>
+
+
+            <div class="maincontent">
+                <h3>Short description of the basic inquiry approach</h3>
+                <p id='description'><%= @design.description && @design.description["description"] %></p>
+                <%= if @embedded do %>
+                  
+                  <div id="edit_description"><a href="#" class='edit description'>Edit this</a></div><div id="save_description" style='display: none;'><a href="#" class='save description'>Save</a></div>
+                  <div id="otheredit_description"></div>
+                <% end %>
+            </div>
+
+            <div class="maincontent">
+                <h3>How can technology help students to build their own ideas and collaborate with peers?</h3>
+                <p id='howtech'><%= @design.description && @design.description["howtech"] %></p>
+                <%= if @embedded do %>
+                  
+                  <div id="edit_howtech"><a href="#" class='edit howtech'>Edit this</a></div><div id="save_howtech" style='display: none;'><a href="#" class='save howtech'>Save</a></div>
+                  <div id="otheredit_howtech"></div>
+                <% end %>
+            </div>
+            <hr>
+            <%= if @already != @design.id && Plug.Conn.get_session(@conn, :lti_grade) do %>
+              <input type="submit" name="review" value="Comment on this lesson design" class="right" target="_top">
+            <% end %>
+            <%= if (@userlen < 6 || @mine) && !@embedded  && !@review do %>
+              <% 
+              did = @design.id
+              text = case @already do
+                x when is_nil(x) ->
+               "Join the design team of this lesson"
+                ^did -> 
+                "You are a member of this group, click to open it"
+                _ ->
+                "Leave your current design team, and join this design team"
+              end %>
+              <input type="submit" name="join" value="<%= text %>" class="right" target="_top">
+        <% end %>
+        </div>
+
+
+    <% end %>
+
+</div>
+    </body>
+</html>

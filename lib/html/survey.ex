@@ -6,6 +6,16 @@ defmodule Survey.HTML.Survey do
   
   def gen_survey(file, form) do
     parse(file)
+    |> do_gen(form)
+  end
+
+  def gen_survey_from_struct(struct, form) do
+    struct
+    |> do_gen(form)
+  end
+
+  def do_gen(struct, form) do
+    struct 
     |> sectionify
     |> Enum.with_index
     |> proc_sections(form)
@@ -159,6 +169,16 @@ defmodule Survey.HTML.Survey do
 
   def parse(file) do
     File.stream!(file)
+    |> do_parse
+  end
+
+  def string_parse(str) do
+    String.split(str, "\n")
+    |> do_parse
+  end
+
+  def do_parse(input) do
+    input
     |> Stream.filter(&remove_blank_lines/1)
     |> Stream.map(&String.rstrip/1)
     |> Stream.map(&classify_line_types/1)
@@ -174,6 +194,17 @@ defmodule Survey.HTML.Survey do
       end
     end)
   end
+  
+  def question_def(struct) do
+    Enum.reduce(struct, %{}, fn x, acc -> 
+      if is_map(x) and x[:number] do
+        Map.put acc, x.number, %{type: x.type, name: x.name}
+      else
+        acc
+      end
+    end)
+  end
+
   #--------------------------------------------------------------------------------
   
   def remove_blank_lines(x) do

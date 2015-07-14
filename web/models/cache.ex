@@ -3,11 +3,10 @@ defmodule Survey.Cache do
   alias Survey.Repo
 
   schema "cache" do
-    field :blob, :binary
+    field :blob, Survey.Term
   end
 
-  def store(term) do
-    blob = :erlang.term_to_binary(term)
+  def store(blob) do
     case Repo.get_by(Survey.Cache, blob: blob) do
       %{id: id} -> id
       nil -> insert(blob)
@@ -21,7 +20,7 @@ defmodule Survey.Cache do
 
   def get(id) do
     case Repo.get(Survey.Cache, id) do
-      %{blob: blob} -> :erlang.binary_to_term(blob)
+      %{blob: blob} -> blob
       nil           -> nil
     end
   end

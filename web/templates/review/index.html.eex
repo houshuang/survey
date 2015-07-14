@@ -1,0 +1,90 @@
+
+<!doctype html>
+<html class="no-js" lang="en-us">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Review Design Group</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <!-- Place favicon.ico in the root directory -->
+
+        <script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
+        <link rel="stylesheet" href="/css/normalize.css">
+        
+        <script type="text/javascript" src="/js/jquery-ui.min.js"></script>
+        <link rel="stylesheet" href="/css/jquery-ui-collab.css">
+        <link rel="stylesheet" href="/css/reset.css">
+        <link rel="stylesheet" href="/css/review-main.css">
+        <link rel="stylesheet" href="/css/review-chat.css">
+
+        
+        <script src="/js/modernizr-2.8.3.min.js"></script>
+        <script src="/js/lodash.js"></script>
+        <script src="/js/review.js"></script>
+ <script>
+   session = '<%= raw ParamSession.gen_cookie(@conn) %>'
+     $('document').ready(function() {
+    $( "#tabs" ).tabs();
+    $("#tabs").show();
+  })
+        </script>
+    </head>
+    <body>
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+<div class="top">
+<h2>Review Design Group</h2>
+<h1>INQ101x - Teaching with Technology and Inquiry</h1>
+</div>
+
+<div class="content">
+
+<div class="groupname">
+
+    <h3 class="title"><%= @group.title %></h3>
+
+
+</div>
+<!-- --------------------------------------------------------- --!>
+<div class="sidebar" name="sidebar">
+  <span id="top"></span>
+    <div class="container">
+      <div class="header">
+    </div></div>
+  <div class='blocks'>
+              <%= form_for @conn, review_path(@conn, :submit), [name: :search], fn _ -> %>
+                <%= raw ParamSession.form_session @conn %>
+                <%= raw @form %>
+                <input type=hidden name=id value=<%= @group.id %>>
+<div class='stepsController submit right'><a href='#'>Submit your comments</a></div>
+<div class='stepsController cancel right'><a href='#'>Cancel and return to list</a></div>
+   <% end %>
+</div>
+</div>
+<!-- --------------------------------------------------------- --!>
+
+<div class="maincontent">
+<div id="tabs" class="ui-tabs ui-widget ui-widget-content" style="display: none;">
+
+<!--To add new tabs, simply add a <li> in this list, using the same structure and following the link sequence. Then, add a new <iframe>, also using the same structure.--> 
+
+    <ul style="padding: 0; margin: 0;" class="ui-tabs-nav ui-helper-reset ui-helper-clearfix">
+        <li class="context-tab ui-state-default"><a href="#ui-tabs-1">Design Group description</a></li>
+        <li class="context-tab ui-state-default"><a href="#ui-tabs-2">Resources</a></li>
+    </ul>
+</form>
+
+
+                    <div id="ui-tabs-1"> <iframe id="detail_iframe" src="<%= ParamSession.gen_url(@conn, design_group_path(@conn, :select_detail, @group.id, review: true)) %>"></iframe></div>
+
+<div id="ui-tabs-2"> <iframe src="<%= ParamSession.gen_url(@conn, "/resource/list") %>"></iframe></div>
+
+</div>
+</div>
+
+
+</html>

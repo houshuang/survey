@@ -1,0 +1,45 @@
+<!doctype html>
+<html class="no-js" lang="en-us">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <!-- Place favicon.ico in the root directory -->
+
+        <link rel="stylesheet" href="/css/reset.css">
+        <link rel="stylesheet" href="/lessonplans/css/overview.css">
+
+
+                
+    </head>
+    <body style="background-color:#eaeaea">
+<ul>
+    <li><a><h4>Lesson Designs available for SIG <%= @sig %></h4></a>
+<ul>
+    <%= for {id, count, title, description, user_id} <- @designs do %>
+<li>
+    <a href="<%= ParamSession.gen_url(@conn, "/design_groups/select/detail/#{id}") %>" target="maincontent"><%= title %></a> (<%= 
+    if !count do
+        0
+    else
+        if count >= 6 && user_id != @userid do
+            "FULL"
+        else
+            count
+        end
+    end%>)<br> 
+    <p class="category"><%= description && description["topics"] %></p>
+    <p class="description"><%= description && description["description"] %></p>
+</li>
+<% end %>
+</ul>
+</li>
+
+
+</body>
+</html>
+

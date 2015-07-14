@@ -1,0 +1,442 @@
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'dosisextralight', sans-serif;
+    line-height: 1;
+	text-transform:uppercase;
+	font-size:18px;
+}
+h1{
+	color:#4b9fd1;
+}
+h2{
+	color:#fff;
+}
+h3{
+	color:#fff;
+	font-size:24px;
+	margin:35px 17px 13px 17px;
+}
+h4{
+	color:#3b8cb6;
+	font-size:20px;
+}
+hr {
+    margin: 40px 40px 40px 0;
+}
+a {
+	color:#002f65;
+}
+a:hover{
+	color:#56aad6;
+}
+ul{
+	font-family:Verdana, Geneva, sans-serif;
+	line-height:1.3;
+}
+li {margin 20px 0px}
+
+.chatarea {
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:14px;
+	clear: both; padding-top: 20px;
+}
+
+.people {clear:both}
+
+.chatarea li{
+	list-style:none;
+}
+.people ul{
+	margin-top:40px;
+}
+.people ul li{
+	float: left;
+	line-height:10px;
+	margin:5px 20px;
+}
+.online{
+	list-style-image:url(/img/online.png);
+}
+.standby{
+	list-style-image:url(/img/standby.png);
+}
+.offline{
+	list-style-image:url(./img/offline.png);
+}
+.info, .name {
+	font-size:11px;
+	text-transform:uppercase;
+	color:#9c9c9c;
+}
+.date .info{
+	text-align:center;
+	display:block;
+	margin:40px;
+}
+.messagetext{
+	line-height:1.7em;
+}
+#chatmessages{
+	width:100%;
+	height:490px;
+	margin:20px 0 0 0;
+}
+#textentry{
+	width:100%;
+	height:20px;
+	margin:0px;
+}
+
+#textentry fieldset textarea {
+    background-color: #E4E4E4;
+    box-shadow: 3px 3px 3px 0 #C5C5C5 inset;
+    color: #000000;
+    line-height: 1em;
+    /* padding: 20px 30px 50px; */
+    width: 100%;
+    height: 100px;
+}
+.top {
+	background-color:#002f65;
+	background-image:url(../img/logo_uoft.gif);
+	background-position:right;
+	background-repeat:no-repeat;
+	height:80px;
+	padding:28px 17px;
+}
+.content {
+	width:100%;
+}
+.lessontitle{
+	font-size:15px;
+}
+.category{
+	text-transform:uppercase;
+	font-size:11px;
+	margin-bottom:5px;
+	color:#3b8cb6;
+}
+.description{
+	font-size:13px;
+	line-height:1.7em !important;
+}
+.stepsbar {
+    margin: 10px 0 20px 0;
+}
+.stepsbar .bar {
+    height: 3px;
+    background-color: #eee;
+}
+.stepsbar .bar .progress {
+    width: 0;
+    height: 100%;
+    background-color: rgb(240, 111, 111);
+    text-align: center;
+    position: relative;
+}
+.stepsbar .bar .progress span {
+    position: absolute;
+    
+    right: 0;
+    font-size: 13px;
+    top: -20px;
+}
+
+.blocks {}
+.blocks form {
+    overflow: hidden;
+}
+.blocks form .block {}
+.blocks form .block > h3 {text-transform: uppercase;}
+.blocks form .block fieldset {}
+.blocks form .block fieldset fieldset {padding: 10px 20px 0px 30px; border-left: solid 2px #ccc; margin: 10px 20px;}
+.blocks form .block fieldset fieldset p {margin: 20px 0 10px 0;}
+.blocks form .block fieldset h4 {
+    margin: 30px 0 10px 0;
+    color: #0877b0;
+}
+.blocks form .block fieldset h5 {
+    color: #0877b0;
+    margin: 0px 0px 10px 0px;
+}
+
+.blocks form .block fieldset input[type="text"], .blocks form .block fieldset input[type="email"] {
+    width: 100%;
+    border: solid 1px #ccc;
+} 
+.blocks form .block fieldset textarea {
+    border: solid 1px #ccc;
+    width: 100%;
+    height: 100px;
+    overflow-y: auto;
+}
+.blocks form .block fieldset > label {
+    display: block;
+    padding: 10px 20px;
+}
+.blocks form .block fieldset > label:hover {
+    background: #ddd;
+    cursor:pointer;
+}
+.blocks form .block fieldset > label input[type="radio"], .blocks form .block fieldset > label input[type="checkbox"] {
+    float: left;
+    margin: 0 10px 0 0;
+}
+.blocks form .block fieldset > label input[type="radio"] + span, .blocks form .block fieldset > label input[type="checkbox"] + span {
+    display: block;
+}
+.blocks form .block fieldset .table {
+    margin: 30px 0 0 0;
+    width: 760px;
+    overflow: hidden;
+}
+.blocks form .block fieldset .table .line {
+    overflow: auto;
+}
+.blocks form .block fieldset .table .line:hover {background: #eee;}
+.blocks form .block fieldset .table .line .cell {
+    float: left;
+    width: 13%;
+    height: 90px;
+    border-right: solid 1px #ddd;
+}
+.blocks form .block fieldset .table .line.answers .cell {
+    text-align: center;
+    font-size: 13px;
+    padding: 30px 20px;
+    font-weight: bolder;
+    background: #0877B0;
+    color: #fff;
+    border-right-color: #076A9D;
+}
+.blocks form .block fieldset .table .line.answers .cell.exception {
+    background: #fff;
+    width: 40%;
+}
+
+
+.blocks form .block fieldset .table .line .cell.answer {
+    border-bottom: solid 1px #ddd;
+}
+.blocks form .block fieldset .table .line .cell.answer:hover {
+    background: #ccc;
+}
+
+.blocks form .block fieldset .table .line .cell.question {
+    font-size: 13px;
+    padding: 5px 15px 0 0;
+    background-color: #fff;
+    line-height: 15px;
+    width: 30%;
+}
+.blocks form .block fieldset .table .line .cell label {
+    display: block;
+    text-align: center;
+    height: 100%;
+    padding: 35px 0;
+    cursor: pointer;
+}
+.blocks form .block fieldset .table .line .cell label input[type="radio"] {
+    cursor: pointer;
+}
+.blocks form .block fieldset .table .line .cell label input[type="radio"] + span {
+}
+
+.stepsController {}
+.stepsController a, form input[type="submit"] {
+    display: block;
+    text-decoration: none;
+    padding: 10px 30px;
+    background: #0877B0;
+    color: #fff;
+    border-radius: 5px;
+}
+
+form input[type="submit"] {
+    background: none repeat scroll 0 0 #66B008;
+    margin-bottom: 30px;
+    /* position: relative;
+    right: 20px;
+    top: -50px; */
+}
+
+#leavebutton {
+    position: relative;
+    right: 20px;
+    top: -50px
+}
+
+.image {text-align: center;}
+
+input.masked {width:50px !important}
+
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+
+/*
+ * Hide visually and from screen readers:
+ */
+
+.hidden {
+    display: none !important;
+}
+
+/*
+ * Hide only visually, but have it available for screen readers:
+ * http://snook.ca/archives/html_and_css/hiding-content-for-accessibility
+ */
+
+.visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+/*
+ * Extends the .visuallyhidden class to allow the element
+ * to be focusable when navigated to via the keyboard:
+ * https://www.drupal.org/node/897638
+ */
+
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+    clip: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    position: static;
+    width: auto;
+}
+
+/*
+ * Hide visually and from screen readers, but maintain layout
+ */
+
+.invisible {
+    visibility: hidden;
+}
+
+/*
+ * Clearfix: contain floats
+ *
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    `contenteditable` attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that receive the `clearfix` class.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+
+.clearfix:before,
+.clearfix:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+/* ==========================================================================
+   EXAMPLE Media Queries for Responsive Design.
+   These examples override the primary ('mobile first') styles.
+   Modify as content requires.
+   ========================================================================== */
+
+@media only screen and (min-width: 35em) {
+    /* Style adjustments for viewports that meet the condition */
+}
+
+@media print,
+       (-webkit-min-device-pixel-ratio: 1.25),
+       (min-resolution: 1.25dppx),
+       (min-resolution: 120dpi) {
+    /* Style adjustments for high resolution devices */
+}
+
+/* ==========================================================================
+   Print styles.
+   Inlined to avoid the additional HTTP request:
+   http://www.phpied.com/delay-loading-your-print-css/
+   ========================================================================== */
+
+@media print {
+    *,
+    *:before,
+    *:after {
+        background: transparent !important;
+        color: #000 !important; /* Black prints faster:
+                                   http://www.sanbeiji.com/archives/953 */
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    a,
+    a:visited {
+        text-decoration: underline;
+    }
+
+    a[href]:after {
+        content: " (" attr(href) ")";
+    }
+
+    abbr[title]:after {
+        content: " (" attr(title) ")";
+    }
+
+    /*
+     * Don't show links that are fragment identifiers,
+     * or use the `javascript:` pseudo protocol
+     */
+
+    a[href^="#"]:after,
+    a[href^="javascript:"]:after {
+        content: "";
+    }
+
+    pre,
+    blockquote {
+        border: 1px solid #999;
+        page-break-inside: avoid;
+    }
+
+    /*
+     * Printing Tables:
+     * http://css-discuss.incutio.com/wiki/Printing_Tables
+     */
+
+    thead {
+        display: table-header-group;
+    }
+
+    tr,
+    img {
+        page-break-inside: avoid;
+    }
+
+    img {
+        max-width: 100% !important;
+    }
+
+    p,
+    h2,
+    h3 {
+        orphans: 3;
+        widows: 3;
+    }
+
+    h2,
+    h3 {
+        page-break-after: avoid;
+    }
+}

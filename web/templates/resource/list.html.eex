@@ -1,4 +1,5 @@
 <style>
+  td {padding:15px; line-height:1.5em}
   .btn {
     background: #3498db;
     background-image: -webkit-linear-gradient(top, #3498db, #2980b9);

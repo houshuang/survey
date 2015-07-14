@@ -1,0 +1,14 @@
+# Lesson design ideas
+text,Title
+meta
+	desc=Please give your lesson idea a create but meaningful title
+textbox,Topic to be addressed
+meta
+	minwords=10
+textbox,Short description of the basic inquiry approach
+meta
+	minwords=10
+textbox,How can technology help students to build their own ideas and collaborate with peers?
+meta
+	minwords=10
+

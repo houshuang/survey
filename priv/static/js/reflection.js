@@ -2,8 +2,7 @@
 //
 $(document).ready(function(){
   // preload old values
-  _.forOwn(response, function(item,i) {$("textarea[name='f[" + i + "]']").val(item)} );
-
+  _.forOwn(response, function(item,i) { restore(item, i, questions[i].type) })
 
   $('textarea').each(function(){
 
@@ -30,6 +29,24 @@ $(document).ready(function(){
   });
 
 });
+
+// Still need text input and grid 
+function restore(item, i, type) {
+  switch(type) {
+    case "textbox":
+      $("textarea[name='f[" + i + "]']").val(item)
+      break;
+    case "radio":
+      $("input[name='f["+ i +"]'][value='"+ item +"']").prop('checked', true)
+      break;
+    case "multi":
+      _.each(item, function(e) {
+        $("input[name='f["+ i +"|" + e +"]']").prop('checked', true)
+      })
+      break
+  }
+}
+
 
 $('.stepsController a').on('click', function() {validate()});
 

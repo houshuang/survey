@@ -1,0 +1,28 @@
+<h1 id="header">Chat</h1>
+You are now in <b>room <%= @id %></b>, and you are known as <b><%= @user %></b>.
+<br>
+<a class=color href="#">Red</a>
+<a class=color href="#">Blue</a>
+<a class=color href="#">Green</a>
+<a class=color href="#">White</a>
+<div class=blocks><form><div class="block">
+<fieldset>
+        <hr>
+<h4>Presence</h4>
+<div id="presence"></div>
+<hr>
+</fieldset>
+<fieldset>
+<input type='text' name='chat' id='input' placeholder='Say something'></input>
+</fieldset>
+<fieldset>
+<h4>Chat history</h4>
+<div id='history'></div>
+</div></div></form>
+<script>
+        id = '<%= @id %>'
+        user = '<%= @user %>'
+</script>
+<script src="/js/lodash.js"></script>
+<script src="/js/phoenix.js"></script>
+<script src="/js/chat.js"></script>

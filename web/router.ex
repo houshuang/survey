@@ -1,12 +1,18 @@
 defmodule Survey.Router do
   use Survey.Web, :router
+  @logformat "%u %t %m \"%U\" %>s %b %D"
+
+  socket "/ws", Survey do
+    channel "rooms:*", RoomChannel
+    channel "admin", AdminChannel
+  end
 
   pipeline :browser do
     plug ParamSession
     plug EnsureLti
-    # plug Plug.AccessLog,
-    #   format: :clf,
-    #   file: "log/access_log"
+    plug Plug.AccessLog,
+      format: @logformat, 
+      file: "log/access_log"
     plug :accepts, ["html"]
     plug :fetch_flash
     plug EnsureRegistered
@@ -17,9 +23,9 @@ defmodule Survey.Router do
   pipeline :register do
     plug ParamSession
     plug EnsureLti
-    # plug Plug.AccessLog,
-    #   format: :clf,
-    #   file: "log/access_log"
+    plug Plug.AccessLog,
+      format: @logformat, 
+      file: "log/access_log"
     plug :accepts, ["html"]
     plug :fetch_flash
   end
@@ -31,9 +37,22 @@ defmodule Survey.Router do
       signing_salt: "LMvTyOc2"
     plug :fetch_session
     plug VerifyAdmin
-    # plug Plug.AccessLog,
-    #   format: :clf,
-    #   file: "log/access_log"
+    plug Plug.AccessLog,
+      format: @logformat, 
+      file: "log/access_log"
+    plug :fetch_flash
+    plug :accepts, ["html"]
+  end
+
+  pipeline :public do
+    plug Plug.Session,
+      store: :cookie,
+      key: "_test_key",
+      signing_salt: "LMvTyOc2"
+    plug :fetch_session
+    plug Plug.AccessLog,
+      format: @logformat, 
+      file: "log/access_log"
     plug :fetch_flash
     plug :accepts, ["html"]
   end
@@ -46,12 +65,6 @@ defmodule Survey.Router do
     post "/survey", SurveyController, :index
     post "/survey/submit", SurveyController, :submit
     post "/survey/submitajax", SurveyController, :submitajax
-
-    # user info/debug
-    get "/user/info", UserController, :info
-    post "/user/info", UserController, :info
-    post "/user/delete_user", UserController, :delete_user
-    post "/user/delete_survey", UserController, :delete_survey
 
     # resource submission/review
     post "/resource/add", ResourceController, :add
@@ -71,10 +84,12 @@ defmodule Survey.Router do
 
     # reflection
     post "/reflection/submission", ReflectionController, :submit
-    get "/reflection/:id", ReflectionController, :index
-    post "/reflection/:id", ReflectionController, :index
     post "/reflection", ReflectionController, :index
     get "/reflection", ReflectionController, :index
+    post "/reflectionb", ReflectionController, :index_b
+    get "/reflectionb", ReflectionController, :index_b
+    get "/reflection/:id", ReflectionController, :index
+    post "/reflection/:id", ReflectionController, :index
 
     # sig
     get "/user/select_sig_freestanding", UserController, 
@@ -98,8 +113,41 @@ defmodule Survey.Router do
     # assessment
     post "/assessment", ReflectionController, :assessment
     get "/assessment", ReflectionController, :assessment
+    post "/assessmentb", ReflectionController, :assessment_b
+    get "/assessmentb", ReflectionController, :assessment_b
     post "/assessment/submit", ReflectionController, :assessment_submit
     get "/assessment/submit", ReflectionController, :assessment_submit
+    post "/assessment/:id", ReflectionController, :assessment
+    get "/assessment/:id", ReflectionController, :assessment
+
+    # designgroups
+    post "/design_groups/add_idea", DesignGroupController, :add_idea
+    get "/design_groups/add_idea", DesignGroupController, :add_idea
+    post "/design_groups/select", DesignGroupController, :select
+    get "/design_groups/select", DesignGroupController, :select
+    get "/design_groups/select/sidebar", DesignGroupController, :select_sidebar
+    get "/design_groups/select/detail/:id", DesignGroupController, :select_detail
+    get "/design_groups/select/overview", DesignGroupController, :overview
+    post "/design_groups/select/submit", DesignGroupController, :submit
+
+    post "/design_groups/submit_edit", DesignGroupController, :submit_edit
+
+    # collaborative workbench
+    post "/collab", CollabController, :index
+    get "/collab", CollabController, :index
+    post "/collab/leave", CollabController, :leave
+
+    # email notification control
+    get "/email/unsubscribe/all", EmailController, :unsubscribe
+    get "/email/unsubscribe/collab", EmailController, :unsubscribe_collab
+
+    # review
+    post "/review/submit", ReviewController, :submit
+    get "/review/cancel", ReviewController, :cancel
+    post "/review/cancel", ReviewController, :cancel
+    post "/review/:id", ReviewController, :index
+    get "/review/:id", ReviewController, :index
+    
   end
 
   scope "/", Survey do
@@ -117,7 +165,23 @@ defmodule Survey.Router do
     get "/report/text/:qid", ReportController, :textanswer
     get "/report/tags", ReportController, :tags
     get "/report/resource", ResourceController, :report
+    get "/report/designgroups", DesignGroupController, :report
     get "/resource/preview", ResourceController, :preview
+
     get "/cohorts", AdminController, :cohorts
+    
+    get "/email/send_wk1", AdminController, :wk1
+    get "/email/send_wk2", AdminController, :wk2
+    # user info/debug
+    get "/userinfo", UserController, :info
+    post "/userinfo", UserController, :info
+
+  end
+
+  scope "/", Survey do
+    pipe_through :public
+
+    get "/email/:hash", EmailController, :redirect
+    post "/email/:hash", EmailController, :redirect
   end
 end

@@ -1,0 +1,132 @@
+
+<!doctype html>
+<html class="no-js" lang="en-us">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Collaborative Workbench</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <!-- Place favicon.ico in the root directory -->
+
+        <script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
+        <link rel="stylesheet" href="css/normalize.css">
+        
+        <script type="text/javascript" src="/js/jquery-ui.min.js"></script>
+        <link rel="stylesheet" href="/css/jquery-ui-collab.css">
+        <link rel="stylesheet" href="/css/reset.css">
+        <link rel="stylesheet" href="/css/collab-main.css">
+        <link rel="stylesheet" href="/css/chat.css">
+
+        
+        <script src="/js/modernizr-2.8.3.min.js"></script>
+        
+ <script>
+     $('document').ready(function() {
+      console.log("tabs")
+    $( "#tabs" ).tabs();
+    $("#tabs").show();
+  })
+        </script>
+    </head>
+    <body>
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <script>
+            Window.usernick = "<%= @user.nick %>"
+            Window.userid = <%= @user.id %>
+            Window.groupid = <%= @group.id %>
+        </script>
+<div class="top">
+<h2>Collaborative Workbench</h2>
+<h1>INQ101x - Teaching with Technology and Inquiry</h1>
+</div>
+
+<div class="content">
+
+<div class="groupname">
+
+    <h3><%= @group.title %></h3>
+
+
+</div>
+<div class="sidebar" name="sidebar">
+<form id="textentry">
+    <fieldset>
+
+        <textarea id="input"></textarea>
+    </fieldset>
+    <br>
+    <div>
+            <input type="submit" value="Chat" id="submit" class="right">
+    </form>
+</div>
+
+<%# #----------- presence list ----------------------------- %>
+
+<div class="people">
+<ul>
+    <%= for [id, person] <- @members do %>
+        <%= if id != @user.id do %>
+            <li class="offline presence" id="<%= id %>">
+                <span class="name"><%= person %></span>
+            </li>
+
+        <% end %>
+    <% end %>
+</ul>
+<%# #------------------------------------------------------- %>
+
+</div>
+<div class="chatarea">
+
+    <script>
+        user = '<%= @user.nick %>'
+        userid = <%= @user.id %>
+    </script>
+</div>
+<script src="/js/lodash.js"></script>
+<script src="/js/moment.min.js"></script>
+<script src="/js/phoenix.js"></script>
+<script src="/js/chat.js"></script>
+</div>
+
+<div class="maincontent">
+<div id="tabs" class="ui-tabs ui-widget ui-widget-content" style="display: none;">
+
+<!--To add new tabs, simply add a <li> in this list, using the same structure and following the link sequence. Then, add a new <iframe>, also using the same structure.--> 
+
+    <ul style="padding: 0; margin: 0;" class="ui-tabs-nav ui-helper-reset ui-helper-clearfix">
+        <li class="context-tab ui-state-default"><a href="#ui-tabs-1">Welcome</a></li>
+        <li class="context-tab ui-state-default"><a href="#ui-tabs-2">Design Group description</a></li>
+        <li class="context-tab ui-state-default"><a href="#ui-tabs-3">Resources</a></li>
+        <li class="context-tab ui-state-default"><a href="#ui-tabs-4">Etherpad</a></li>
+    </ul>
+              <%= form_for @conn, collab_path(@conn, :leave), [name: :search], fn _ -> %>
+                <%= raw ParamSession.form_session @conn %>
+
+       <input type="submit" class="right" id="leavebutton" value="LEAVE GROUP">
+   <% end %>
+</form>
+
+
+<div id="ui-tabs-1"> 
+    <br><br>
+    <h1> Welcome to the Design Strand</h1>
+    <br>
+    This Web-environment is called the “Collaborative Workbench”, and its a place we have designed where you can work with remote peers from your SIG to develop a lesson design.<br><p> <br> It includes 3 “tabs” at the top of the screen: <P><br>(1) Welcome, where you are now - which contains some introductory text from the MOOC team, <br><br><p>(2) Resources, where you will find various kinds of resources that are relevant to your design, and <br><br><p>(3) Etherpad, a simple text editor where you and your teammates can COLLABORATIVELY develop your ideas, in response to some prompts that we have added (Etherpad allows all members to type at the same time on the document). <br><br><p>In future weeks, we will add a fourth tab, called “Wiki” - where you will be able to move your Etherpad ideas into a more permanent format, although still editable and improvable (only one person at a time can edit your team’s wiki page).
+                    <br<br><p>On the left side, you can see which of your team members are logged on, and chat with them. They will see your messages even after you have logged off, so you can also think of it as a notice board where you can leave them messages.</div>
+                    <div id="ui-tabs-2"> <iframe id="detail_iframe" src="<%= ParamSession.gen_url(@conn, design_group_path(@conn, :select_detail, @group.id, embedded: true)) %>"></iframe></div>
+
+<div id="ui-tabs-3"> <iframe src="<%= ParamSession.gen_url(@conn, "/resource/list") %>"></iframe></div>
+
+<div id="ui-tabs-4"><iframe class="ui-tabs-panel ui-widget-content" src="https://etherpad.mooc.encorelab.org/p/<%= @etherpad %>?userName=<%= @user.nick %>"></iframe></div>
+
+</div>
+</div>
+
+
+</html>
