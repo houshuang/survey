@@ -18,32 +18,40 @@ defmodule Survey.Job do
     field :checked_out, :integer
     field :checked_out_pid, Survey.Term
   end
-  # TODO : right now the query doesn't give any results
-  # A: fix query
-  # B: make sure it works even if no query
+
   def get_job do
-    Survey.Repo.transaction(fn ->
+    job = Survey.Repo.transaction(fn ->
       time = seconds_now
       job = (from f in Job,
-        where: f.next_try < ^time and
+        where: (f.next_try < ^time or is_nil(f.next_try)) and
           is_nil(f.checked_out) and
-          f.tries < ^@default.max_tries,
-          limit: 1)
+          (f.tries < ^@default.max_tries or is_nil(f.tries)) and
+          not is_nil(f.mfa),
+          limit: 1) 
       |> Repo.one
+      IO.inspect(job)
+      if job do
+        [m, f, a] = job.mfa
+        {pid, ref} = Task.async(m, f, a)
 
-      {m, f, a} = job.mfa
-      pid = Task.async(m, f, a)
+        job = %{ job | checked_out: time,
+          checked_out_pid: pid,
+          tries: (job.tries || 0) + 1,
+          next_try: time + 60 * 5}
+        IO.inspect(job)
+        job
+        |> Repo.update!
+      end
+      job 
+    end)
 
-      %{ job | checked_out: time,
-        checked_out_pid: pid,
-        tries: job.tries + 1,
-        next_try: time + 60 * 5}
-      |> Repo.update!
-
-      Task.await(pid)
+    if job do
+      Task.await(job.checked_out_pid)
       Logger.info("Completed job")
       Repo.delete(job)
-    end)
+    else
+      nil
+    end
   end
 
   def prune_max_tries do
@@ -69,5 +77,6 @@ defmodule Survey.Job do
     Timex.Time.to_secs(:erlang.now)
     |> Float.floor
     |> Kernel.trunc
+    0
   end
 end
