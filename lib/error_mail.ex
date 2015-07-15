@@ -27,13 +27,15 @@ defmodule Logger.Backends.ErrorMail do
   end
 
   defp log_event(msg, ts, md, {from, to_list, format, metadata}) do
-    msg = Logger.Formatter.format(format, :error, msg, ts, Dict.take(md, metadata))
-    |> IO.iodata_to_binary
-    %Mailman.Email{
-      from: from,
-      to: to_list,
-      text: msg}
-    |> Survey.Mailer.deliver
+    if !String.contains?(msg, "GenServer :job_worker") do
+      msg = Logger.Formatter.format(format, :error, msg, ts, Dict.take(md, metadata))
+      |> IO.iodata_to_binary
+      %Mailman.Email{
+        from: from,
+        to: to_list,
+        text: msg}
+      |> Survey.Mailer.deliver
+    end
   end
 
   defp configure(options) do
