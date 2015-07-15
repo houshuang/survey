@@ -24,8 +24,8 @@ config :jobs,
   groups: %{},
   default: %{
     max_tries: 5,
-    worker_maxtime: 180,
-    wait_try_again: 300,
+    worker_maxtime: 60,
+    wait_try_again: 180,
     strategy: :backoff
   }
 

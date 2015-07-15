@@ -24,7 +24,7 @@ defmodule Survey.Job do
   # gets a job that is ready for execution, and marks it as checked out
   # with the pid of the calling process, returns nil if there are no
   # jobs ready
-  def checkout_job(pid) do
+  def checkout(pid) do
     default = Application.get_env(:jobs, :default)
     {:ok, job} = Repo.transaction(fn ->
       time = seconds_now
@@ -50,12 +50,12 @@ defmodule Survey.Job do
     Repo.get(Job, id)
   end
 
-  def completed_job(job) do
+  def completed(job) do
     Logger.info("Completed job #{job.id}: #{inspect(job.mfa)}")
     Repo.delete!(job)
   end
 
-  def failed_job(job) do
+  def failed(job) do
     Logger.warn("Failed job: #{inspect(job)}")
     %{ job | checked_out_pid: nil, checked_out: nil } 
     |> Repo.update!

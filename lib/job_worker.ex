@@ -4,7 +4,7 @@ defmodule Survey.JobWorker do
   require Logger
 
   @delay_proc 120 * 1000
-  @delay_clean 600 * 1000
+  @delay_clean 300 * 1000
 
   def start_link do
     {:ok, pid} = GenServer.start_link(__MODULE__, [], name: :job_worker)
@@ -29,13 +29,13 @@ defmodule Survey.JobWorker do
   end
 
   def handle_cast(:work, []) do
-    job = Job.checkout_job(self)
+    job = Job.checkout(self)
     if job do
       {m, f, a} = job.mfa
 
       case apply(m, f, a) do
-        :ok      -> Job.completed_job(job)
-        {:ok, _} -> Job.completed_job(job)
+        :ok      -> Job.completed(job)
+        {:ok, _} -> Job.completed(job)
         _        -> Job.failed(job)
       end
 

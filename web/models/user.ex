@@ -45,6 +45,18 @@ defmodule Survey.User do
     Survey.Job.add({Survey.Encore, :add_user, [user.id]})
   end
 
+  def create_wikis do
+    (from f in User, 
+    where: not is_nil(f.design_group_id),
+    select: f.design_group_id)
+    |> Survey.Repo.all
+    |> Enum.map(&create_wiki/1)
+  end
+
+  def create_wiki(id) do
+    Survey.Job.add({Survey.Encore, :add_group_page, [id]})
+  end
+  
   def cohorts_csv do
     csv = (from t in User, 
     where: fragment("? is not null", t.sig_id),
