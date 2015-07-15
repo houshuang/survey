@@ -195,16 +195,6 @@ defmodule Survey.HTML.Survey do
     end)
   end
   
-  def question_def(struct) do
-    Enum.reduce(struct, %{}, fn x, acc -> 
-      if is_map(x) and x[:number] do
-        Map.put acc, x.number, %{type: x.type, name: x.name}
-      else
-        acc
-      end
-    end)
-  end
-
   #--------------------------------------------------------------------------------
   
   def remove_blank_lines(x) do

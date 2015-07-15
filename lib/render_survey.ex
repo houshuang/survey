@@ -1,11 +1,8 @@
-# TODO: figure out how to parametrize queries on jsonb, otherwise hardcode
-# for now... at least finish radio, and add multi (or not necessary) and get
-# it rendering for Jim
-
 defmodule Survey.RenderSurvey do
   alias Survey.Repo
   require Ecto.Query
   import Ecto.Query
+  import Prelude
   @colors Enum.reverse([ "#ffffff", "#d7191c", "#fdae61", "#ffffbf", 
     "#ffffbf", "#abd9e9", "#2c7bb6", "#ffffff"])
 
@@ -20,9 +17,10 @@ defmodule Survey.RenderSurvey do
   def do_question(h = {i, %{type: type}}, data) do
     case type do
       "textbox" -> textanswer(h, data)
-      x -> []
       # "grid" -> gridanswer(h)
-      # "radio" -> radioanswer(h)
+      "radio" -> radioanswer(:radio, h, data)
+      "multi" -> radioanswer(:multi, h, data)
+      x -> []
     end
   end
 
@@ -88,36 +86,59 @@ defmodule Survey.RenderSurvey do
     #     rowcount: Enum.count(question.rows), minmax: minmax }}
   # end
 
-  def radioanswer({i, h}, data) do
-    # {series, options} = Report.radio(qid)
-    # labels = Poison.encode!(options)
-    # series = Poison.encode!(series)
+  def radioanswer(type, h = {i, rest}, data) do
+    case type do
+      :radio -> {series, options} = radio(h, data)
+      :multi -> {series, options} = multi(h, data)
+    end
 
-    # {:radio, %{labels: labels, series: series, question: question}}
+    labels = Poison.encode!(options)
+    series = Poison.encode!(series)
+
+    {:radio, %{labels: labels, series: series, question: rest}}
   end
 
-  def radio(qid, {query, column}) do
-    # result = (from t in query, select: [count(t.id), 
-    #   fragment("?->>?", field(t, ^column), ^qid)],
-    #   where: (fragment("length(?->>?)", field(t, ^column), ^qid)) > 0,
-    #   group_by: fragment("?->>?", field(t, ^column), ^qid))
-    #   |> Repo.all
-    result = runq(
-    "SELECT count(id), response>>'#{qid}' FROM 
-      users WHERE length(response>>'#{qid}')>0 GROUP BY response>>'#{qid}';", [qid])
-      
-      # users WHERE length(survey->>'#{qid}')>0 GROUP BY survey->>'#{qid}';", [qid])
-    # series = result.rows
-    # |> Enum.sort_by(fn {_, i} -> i end)
-    # |> Enum.map(fn {num, _} -> num end)
-    # |> List.insert_at(99, survey_length - total_responses(qid))
+  def radio({qid, rest}, data = {query, column}) do
+    (from t in query, select: [count(t.id), 
+      fragment("?->>? as x", field(t, ^column), ^qid)],
+      where: (fragment("length(?->>?)", field(t, ^column), ^qid)) > 0,
+      group_by: fragment("x"))
+    |> multi_query({qid, rest}, data)
+  end
 
-    # total = series |> Enum.sum
+  def multi({qid, rest}, data = {query, column}) do
+    (from t in query, select: [
+      fragment("count(jsonb_array_elements_text(?->?)) as count", field(t, ^column), ^qid),
+      fragment("jsonb_array_elements_text(?->?) as x", field(t, ^column), ^qid)],
+      group_by: fragment("x"))
+    |> multi_query({qid, rest}, data)
+  end
 
-    # series = series 
-    # |> Enum.map(fn num -> num/total end)
+  def multi_query(query, {qid, rest}, data) do
+    series = query
+    |> Repo.all
+    |> IO.inspect
+    |> insert_defaults(length(rest.options))
+    |> IO.inspect
+    |> Enum.sort_by(fn [_, i] -> i end)
+    |> Enum.map(fn [num, _] -> num end)
+    |> List.insert_at(99, survey_length(data) - total_responses(qid, data))
+    |> IO.inspect
+    total = Enum.sum(series)
 
-    # { series, question.options ++ ["no response"] }
+    series = Enum.map(series, fn num -> num/total end)
+
+    { series, rest.options ++ ["no response"] }
+  end
+
+  def insert_defaults(series, num_def) do
+    series
+    |> Enum.map(fn [k, v] -> {v, k} end)
+    |> Enum.into(%{})
+    |> fn x -> 
+      Map.merge(letter_range(num_def), x) 
+      end.()
+    |> Enum.map(fn {k, v} -> [v, k] end)
   end
 
   #---------------------------------------- 
@@ -125,7 +146,7 @@ defmodule Survey.RenderSurvey do
     question = h[:name]
     answers = random_five_text(i, data)
 
-    {:text, %{ answers: answers, question: question }}
+    {:text, %{ answers: answers, question: h }}
   end
   
   def random_five_text(qid, {query, column}) do
@@ -135,14 +156,60 @@ defmodule Survey.RenderSurvey do
     altquery = from p in query, select: p.id,
       where: fragment("length(?::jsonb->>?::text) > 0", field(p, ^column), ^qid)
     alternatives = altquery |> Repo.all 
-    IO.inspect(alternatives)
     textids = 0..4 
     |> Enum.map(fn _ -> :random.uniform(Enum.count(alternatives)) end)
     |> Enum.map(fn x -> Enum.at(alternatives, x) end)
 
-    query = from p in query, select: fragment("?::jsonb->?::text", field(p, ^column), ^qid),
-      where: p.id in ^textids
-    query |> Repo.all
-    |> IO.inspect
+    (from p in query, 
+      select: fragment("?::jsonb->?::text", field(p, ^column), ^qid),
+      where: p.id in ^textids)
+    |> Repo.all
   end
+
+  def prepare_text({qid, rest}, search, data = {query, column}) do
+    qid = Integer.to_string(qid)
+    query = (from f in query, select: fragment("?->>?", field(f, ^column), ^qid),
+      where: fragment("length(?->>?) > 0", field(f, ^column), ^qid))
+
+    if search && search != "" do
+      query = from f in query, 
+      where: fragment("?->>? ILIKE '%?::text%'", field(f, ^column), ^qid, ^search)
+    end
+
+    answers = Repo.all(query)
+
+    response_count = Enum.count(answers) 
+    all_items_count = total_responses(qid, data)
+    survey_length = survey_length(data)
+    answer_percentage = all_items_count / survey_length
+
+    assigns = %{
+      answers: answers, 
+      question: rest,
+      percentage_answered: answer_percentage,
+      response_count: response_count,
+      search: search,
+      all: false
+    }
+  end
+
+  #-------------------------------------------
+    def survey_length({query, column}) do
+    (from p in query, select: count(p.id),
+      where: not is_nil(field(p, ^column))) 
+    |> Repo.one
+    end
+
+  def total_responses(qid, {query, column}) do
+    (from p in query, select: count(p.id),
+      where: fragment("length(?::jsonb->>?::text) > 0", field(p, ^column), ^qid))
+    |> Repo.one
+  end
+
+  def letter_range(num) do
+    1..num
+    |> Enum.map(fn x -> {"#{[x + ?a - 1]}", 0} end)
+    |> Enum.into(%{})
+  end
+    
 end

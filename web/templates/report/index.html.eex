@@ -8,7 +8,7 @@ for x1 <- @questions do
     {:general, data} -> 
       render "_general.html", data: data
     {:text, data} -> 
-      render "_text.html", data: data
+      render "_text.html", data: data, url: @texturl
     {:radio, data} -> 
       render "_radio.html", data: data
     {:grid, data} -> 

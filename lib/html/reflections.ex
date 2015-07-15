@@ -24,7 +24,7 @@ defmodule Survey.HTML.Reflections do
 
   def gen_struct({i, file}) do
     struct = Survey.parse(file)
-    questions = Survey.question_def(struct)
+    questions = Survey.index_mapping(struct)
     html = Survey.gen_survey_from_struct(struct, :f)
     IO.puts("Parsing and storing #{file}")
     %Prompt{

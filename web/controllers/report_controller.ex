@@ -31,7 +31,8 @@ defmodule Survey.ReportController do
 
     conn 
     |> put_layout("report.html")
-    |> render "index.html", questions: questions
+    |> render "index.html", questions: questions,
+      texturl: "/admin/report/text/"
   end
 
   def do_question({i, %{type: type}}) do
@@ -51,7 +52,7 @@ defmodule Survey.ReportController do
     |> render "tags.html", data: Report.tags
   end
 
-  def text(conn, %{"qid" => qid} = params) do 
+  def fulltext(conn, %{"qid" => qid} = params) do 
     if qid == "" or qid == "all" or params["all"] do
       answers = Report.get_all_qids(params["search"]) 
                 |> Enum.filter(fn x -> x != nil end)
