@@ -12,6 +12,7 @@ defmodule Survey do
       # Start the Ecto repository
       worker(Survey.Repo, []),
       worker(Survey.ChatPresence, []),
+      supervisor(Survey.JobWorkerSupervisor, [], id: :job_worker_sup),
       supervisor(Task.Supervisor, [[name: :email_sup]])
     ]
 

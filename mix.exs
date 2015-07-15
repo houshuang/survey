@@ -48,7 +48,6 @@ defmodule Survey.Mixfile do
       {:mailman, "~> 0.1.0"},
       {:eiconv, github: "zotonic/eiconv"},
       {:hashids, "~> 2.0"},
-      {:dogma, github: "lpil/dogma"}
     ]
   end
 end
