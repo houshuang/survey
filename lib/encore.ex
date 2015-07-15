@@ -14,7 +14,7 @@ defmodule Survey.Encore do
     pwd = gen_password
     user = Survey.User.get(id)
     userdef = %{email: user.edx_email,
-      name: user.edx_email,
+      name: String.downcase(user.edx_email),
       fullname: user.nick}
     case make_request("addUser", [userdef, pwd], token) do
       h = {:ok, _} -> 
