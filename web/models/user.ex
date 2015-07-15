@@ -21,6 +21,7 @@ defmodule Survey.User do
     field :admin, :boolean
     field :resources_seen, {:array, :integer}
     field :unsubscribe, {:array, :string}
+    field :wiki_pwd, :string
     has_many :user_grades, Survey.UserGrade
     belongs_to :sig, Survey.SIG
     belongs_to :design_group, Survey.DesignGroup

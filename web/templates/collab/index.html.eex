@@ -28,6 +28,10 @@
       console.log("tabs")
     $( "#tabs" ).tabs();
     $("#tabs").show();
+etherpad_html = '<iframe class="ui-tabs-panel ui-widget-content" src="https://etherpad.mooc.encorelab.org/p/<%= @etherpad %>?userName=<%= @user.nick %>"></iframe>'  
+
+  $("#etherpad_load").on("click", function() { console.log("clicked etherpad"); $("#ui-tabs-4").html(etherpad_html); return false; })
+    
   })
         </script>
     </head>
@@ -119,11 +123,12 @@
     <br>
     This Web-environment is called the “Collaborative Workbench”, and its a place we have designed where you can work with remote peers from your SIG to develop a lesson design.<br><p> <br> It includes 3 “tabs” at the top of the screen: <P><br>(1) Welcome, where you are now - which contains some introductory text from the MOOC team, <br><br><p>(2) Resources, where you will find various kinds of resources that are relevant to your design, and <br><br><p>(3) Etherpad, a simple text editor where you and your teammates can COLLABORATIVELY develop your ideas, in response to some prompts that we have added (Etherpad allows all members to type at the same time on the document). <br><br><p>In future weeks, we will add a fourth tab, called “Wiki” - where you will be able to move your Etherpad ideas into a more permanent format, although still editable and improvable (only one person at a time can edit your team’s wiki page).
                     <br<br><p>On the left side, you can see which of your team members are logged on, and chat with them. They will see your messages even after you have logged off, so you can also think of it as a notice board where you can leave them messages.</div>
-                    <div id="ui-tabs-2"> <iframe id="detail_iframe" src="<%= ParamSession.gen_url(@conn, design_group_path(@conn, :select_detail, @group.id, embedded: true)) %>"></iframe></div>
+                    <div id="ui-tabs-2"> 
+<iframe id="detail_iframe" src="<%= ParamSession.gen_url(@conn, design_group_path(@conn, :select_detail, @group.id, embedded: true)) %>"></iframe>                    </div>
 
 <div id="ui-tabs-3"> <iframe src="<%= ParamSession.gen_url(@conn, "/resource/list") %>"></iframe></div>
 
-<div id="ui-tabs-4"><iframe class="ui-tabs-panel ui-widget-content" src="https://etherpad.mooc.encorelab.org/p/<%= @etherpad %>?userName=<%= @user.nick %>"></iframe></div>
+<div id="ui-tabs-4"><a href="#" id="etherpad_load">Click here to load Etherpad</a></div>
 
 </div>
 </div>
