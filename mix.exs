@@ -47,7 +47,7 @@ defmodule Survey.Mixfile do
       {:plug_accesslog, github: "houshuang/plug_accesslog"},
       {:erlsom, github: "willemdj/erlsom"},
       {:xmlrpc, "~> 0.6"},
-      {:mailman, "~> 0.1.0"},
+      {:mailman, github: "houshuang/mailman"},
       {:eiconv, github: "zotonic/eiconv"},
       {:hashids, "~> 2.0"},
       {:exactor, "~> 2.1.2"}
