@@ -3,8 +3,8 @@ defmodule Survey.JobWorker do
   alias Survey.Job
   require Logger
 
-  @delay_proc 30 * 1000
-  @delay_clean 60 * 1000
+  @delay_proc 120 * 1000
+  @delay_clean 600 * 1000
 
   def start_link do
     {:ok, pid} = GenServer.start_link(__MODULE__, [], name: :job_worker)
@@ -29,13 +29,16 @@ defmodule Survey.JobWorker do
   end
 
   def handle_cast(:work, []) do
-    Logger.info("Checking for work")
     job = Job.checkout_job(self)
     if job do
-      Logger.info(inspect(job))
       {m, f, a} = job.mfa
-      apply(m, f, a)
-      Job.completed_job(job)
+
+      case apply(m, f, a) do
+        :ok      -> Job.completed_job(job)
+        {:ok, _} -> Job.completed_job(job)
+        _        -> Job.failed(job)
+      end
+
       work
     else
       :erlang.send_after(@delay_proc, self, :timer)
@@ -54,7 +57,6 @@ defmodule Survey.JobWorker do
   end
 
   def handle_info(:clean, []) do
-    Logger.info("Cleaning")
     Job.clean
     :erlang.send_after(@delay_clean, self, :clean)
     {:noreply, []}

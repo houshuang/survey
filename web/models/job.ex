@@ -20,6 +20,7 @@ defmodule Survey.Job do
     %Job{mfa: mfa, group: group} |> Repo.insert!
     Survey.JobWorker.work
   end
+
   # gets a job that is ready for execution, and marks it as checked out
   # with the pid of the calling process, returns nil if there are no
   # jobs ready
@@ -38,7 +39,7 @@ defmodule Survey.Job do
         job = %{ job | checked_out: time,
           checked_out_pid: pid,
           tries: (job.tries || 0) + 1,
-          next_try: time + 60}
+          next_try: time + default.wait_try_again }
         |> Repo.update!
       end
     end)
@@ -50,7 +51,7 @@ defmodule Survey.Job do
   end
 
   def completed_job(job) do
-    Logger.info("Completed")
+    Logger.info("Completed job #{job.id}: #{inspect(job.mfa)}")
     Repo.delete!(job)
   end
 
@@ -68,14 +69,14 @@ defmodule Survey.Job do
   def prune_max_tries do
     default = Application.get_env(:jobs, :default)
     (from f in Job,
-    where: f.tries > ^default.max_tries)
+      where: f.tries > ^default.max_tries)
     |> Repo.delete_all
   end
 
   def prune_running do
     default = Application.get_env(:jobs, :default)
     (from f in Job,
-    where: f.checked_out < ^(seconds_now - default.worker_maxtime))
+      where: f.checked_out < ^(seconds_now - default.worker_maxtime))
     |> Repo.all
     |> Enum.map(&update_and_kill/1)
   end
@@ -83,7 +84,7 @@ defmodule Survey.Job do
   def update_and_kill(job) do
     Logger.warn("Killing process for job: #{inspect(job)}")
     tries = (job.tries || 0) + 1
-    %{ job | tries: tries, checked_out_pid: nil, checked_out: nil } 
+      %{ job | tries: tries, checked_out_pid: nil, checked_out: nil } 
     |> Repo.update!
     :erlang.exit(job.checked_out_pid, :kill)
   end
