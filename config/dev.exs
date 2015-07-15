@@ -54,7 +54,4 @@ config :verify_admin,
 config :grade,
   dont_submit: true
 
-config :week,
-  current: 2
-
 import_config "dev.secret.exs"
