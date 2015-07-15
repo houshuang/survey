@@ -16,6 +16,10 @@ defmodule Survey.Job do
     field :checked_out_pid, Survey.Term
   end
 
+  def add(mfa, group \\ nil) do
+    %Job{mfa: mfa, group: group} |> Repo.insert!
+    Survey.JobWorker.work
+  end
   # gets a job that is ready for execution, and marks it as checked out
   # with the pid of the calling process, returns nil if there are no
   # jobs ready
@@ -31,11 +35,10 @@ defmodule Survey.Job do
           limit: 1) 
       |> Repo.one
       if job do
-
         job = %{ job | checked_out: time,
           checked_out_pid: pid,
           tries: (job.tries || 0) + 1,
-          next_try: time + 60 * 5}
+          next_try: time + 60}
         |> Repo.update!
       end
     end)
@@ -46,31 +49,42 @@ defmodule Survey.Job do
     Repo.get(Job, id)
   end
 
-  def completed_job(id) do
-    Repo.delete(Job, id)
+  def completed_job(job) do
+    Logger.info("Completed")
+    Repo.delete!(job)
   end
 
   def failed_job(job) do
+    Logger.warn("Failed job: #{inspect(job)}")
     %{ job | checked_out_pid: nil, checked_out: nil } 
     |> Repo.update!
   end
 
+  def clean do
+    prune_running
+    prune_max_tries
+  end
+
   def prune_max_tries do
+    default = Application.get_env(:jobs, :default)
     (from f in Job,
-    where: f.tries > ^@default.max_tries)
+    where: f.tries > ^default.max_tries)
     |> Repo.delete_all
   end
 
   def prune_running do
+    default = Application.get_env(:jobs, :default)
     (from f in Job,
-    where: f.checked_out > ^(seconds_now + @default.worker_maxtime))
+    where: f.checked_out < ^(seconds_now - default.worker_maxtime))
     |> Repo.all
     |> Enum.map(&update_and_kill/1)
   end
 
   def update_and_kill(job) do
+    Logger.warn("Killing process for job: #{inspect(job)}")
     tries = (job.tries || 0) + 1
-    %{ job | tries: tries, checked_out_pid: nil, checked_out: nil } |> Repo.update!
+    %{ job | tries: tries, checked_out_pid: nil, checked_out: nil } 
+    |> Repo.update!
     :erlang.exit(job.checked_out_pid, :kill)
   end
   
@@ -78,6 +92,5 @@ defmodule Survey.Job do
     Timex.Time.to_secs(:erlang.now)
     |> Float.floor
     |> Kernel.trunc
-    0
   end
 end

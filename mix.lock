@@ -10,6 +10,7 @@
   "edown": {:git, "git://github.com/uwiger/edown.git", "d62ec85281e451a46ba30045917c119d65b72a84", [tag: "0.5"]},
   "eiconv": {:git, "git://github.com/zotonic/eiconv.git", "644fb5e7bd6640fbd073f4d28957914ea979aea0", []},
   "ex_doc": {:hex, :ex_doc, "0.7.3"},
+  "exactor": {:hex, :exactor, "2.1.2"},
   "exometer": {:git, "git://github.com/PSPDFKit-labs/exometer.git", "e7375dbed8c16b3a9258fc1bc570851fcfee00a7", []},
   "exometer_core": {:git, "git://github.com/PSPDFKit-labs/exometer_core.git", "7a2150e61919809ec8f797a7b65433533116d5ff", []},
   "exprintf": {:git, "git://github.com/parroty/exprintf.git", "5e71122ca40b0a9e0c8d4f57d64a8004b9d007ef", []},
