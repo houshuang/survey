@@ -19,7 +19,16 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
+# all numbers are seconds
+config :jobs,
+  groups: %{},
+  default: %{
+    max_tries: 5,
+    worker_maxtime: 180,
+    wait_try_again: 300,
+    strategy: :backoff
+  }
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"
-# import_config "exometer_conf.exs"

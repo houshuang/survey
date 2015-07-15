@@ -9,10 +9,13 @@ defmodule Survey do
     children = [
       # Start the endpoint when the application starts
       supervisor(Survey.Endpoint, []),
-      # Start the Ecto repository
+
       worker(Survey.Repo, []),
+
+      # mine:
       worker(Survey.ChatPresence, []),
       worker(Survey.Encore, []),
+      supervisor(Survey.JobWorkerSupervisor, [], id: :job_worker_sup),
       supervisor(Task.Supervisor, [[name: :email_sup]])
     ]
 

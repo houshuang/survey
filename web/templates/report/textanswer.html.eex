@@ -6,12 +6,8 @@
 <% end %>
 
 <%= form_for @conn, "/admin/report/text/#{@question.number}", [name: :search], fn f -> %>
-<input type='submit' style='float: right'>
+<input type='submit' name="Search" value="Search" style='float: right'>
 Search text contents: <input class='text' id='search' name='search' type='text' style='border: 1px; outline: 1px; border-color: black;' value=<%= @search %>>
-<%= if not @all do %>
-<span style='float: centre'><input name='all' type='checkbox'
-</input> Search across all text questions</span>
-<% end %>
 
 <hr style='margin: 10px'>
 <%= end %>

@@ -29,6 +29,7 @@ config :survey, Survey.Endpoint,
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, 
+  level: :info,
   format: "$date $time $metadata[$level] $message\n",
   metadata: [:id]
 

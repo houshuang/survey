@@ -15,5 +15,8 @@ defmodule Survey.Prompt do
     Survey.Repo.get(Survey.Prompt, id)
   end
 
+  def list do
+    Survey.Repo.all(Survey.Prompt)
+  end
   
 end

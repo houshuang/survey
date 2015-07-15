@@ -4,6 +4,7 @@
   "cowlib": {:hex, :cowlib, "1.0.1"},
   "csv": {:hex, :csv, "1.0.0"},
   "decimal": {:hex, :decimal, "1.1.0"},
+  "dogma": {:git, "git://github.com/lpil/dogma.git", "e113ec022565610f7370e2f1ae7c6329f9dfc85d", []},
   "dogstatsd": {:hex, :dogstatsd, "0.0.3"},
   "earmark": {:hex, :earmark, "0.1.17"},
   "ecto": {:hex, :ecto, "0.13.0"},
