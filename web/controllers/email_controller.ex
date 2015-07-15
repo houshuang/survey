@@ -17,7 +17,6 @@ defmodule Survey.EmailController do
 
   def redirect(conn, %{"hash" => hash}) do
     {:ok, [id]} = Hashids.decode(@hashid, String.strip(hash))
-    IO.inspect(id)
     struct = Survey.Cache.get(id)
     hash = (from f in Survey.User, 
     where: f.id == ^struct.userid,

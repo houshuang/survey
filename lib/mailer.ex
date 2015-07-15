@@ -1,6 +1,9 @@
 defmodule Survey.Mailer do
   def deliver(email) do
-    Mailman.deliver(email, config)
+    case Mailman.deliver(email, config) do
+      "Ok " <> rest -> {:ok, rest}
+      h -> h
+    end
   end
 
   def config do

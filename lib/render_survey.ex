@@ -117,13 +117,10 @@ defmodule Survey.RenderSurvey do
   def multi_query(query, {qid, rest}, data) do
     series = query
     |> Repo.all
-    |> IO.inspect
     |> insert_defaults(length(rest.options))
-    |> IO.inspect
     |> Enum.sort_by(fn [_, i] -> i end)
     |> Enum.map(fn [num, _] -> num end)
     |> List.insert_at(99, survey_length(data) - total_responses(qid, data))
-    |> IO.inspect
     total = Enum.sum(series)
 
     series = Enum.map(series, fn num -> num/total end)

@@ -11,7 +11,7 @@ defmodule Survey.CollabController do
     group = DesignGroup.get_by_user(user.id)
 
     if !group.design_group_id do
-      ParamSession.redirect(conn, "/design_groups/select"
+      ParamSession.redirect(conn, "/design_groups/select")
     else
       ensure_wiki(user)
       wiki_url = Survey.User.gen_wiki_url(user.id)

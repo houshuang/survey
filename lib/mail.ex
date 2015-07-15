@@ -7,6 +7,22 @@ defmodule Mail do
 
   @basename Application.get_env(:mailer, :basename)
   @hashid Hashids.new(salt: Application.get_env(:mailer, :hashid_salt))
+  @wk2 File.read!("data/templates/wk2.txt")
+
+  def send_design do
+    (from f in Survey.User,
+    where: not is_nil(f.design_group_id))
+    |> Enum.map(&send_design1/1)
+  end
+
+  def send_design1(user) do
+    if !Survey.User.is_unsubscribed?(user.id, "collab") do
+      html = Templates.collab_wk2(user.id, @basename)
+      email = %Mailman.Email{from: "noreply@mooc.encorelab.org", to: [user.edx_email],
+        subject: "Design Strand week 2 is open!", html: html}
+      Survey.Job.add({Survey.Mailer, :deliver, [email]})
+    end
+  end
 
   def send_notification(room, entered, design, userids) when is_list(userids) do
     if Application.get_env(:mailer, :disabled) do

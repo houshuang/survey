@@ -1,0 +1,54 @@
+<h3>Welcome to Week 2 of the Design Strand! </h3>
+<p><br> 
+This week, we will begin thinking about the lesson details: applying the content from this week's videos, our personal reflections about design, and any comments we received from peers. We will consider questions like: Where will the lesson occur within a broader curriculum?  What topics will it address, specifically? And what will be the desired or expected outcomes for students?  
+<p><br> 
+ 
+To start, have a look at the Review comments that other members of your SIG provided.  We have now received feedback on more than half of all designs, and more feedback is coming in every hour - so, hopefully you will find some helpful comments there. Note that, any comments from SIG peers will appear in your Workbench tab automatically, as they arrive.  So, please check back occasionally to see any updates. Then, complete the following steps to further develop your lesson idea.
+<p><br> 
+
+<ol>
+<li>Summarize any helpful ideas that may have come in from peers.</li> 
+
+<li>Finalize (well... nothing is ever final!) your learning goals and topics for the lesson.</li>
+<li>Think about the lesson in terms of the student's learning experience and describe: How will it provide your students with constructivist opportunities to express their ideas, build and connect on lesson topics, and develop a more coherent understanding?</li>
+</ol>
+
+<p><br> 
+ 
+ 
+<b>A note on working collaboratively in Etherpad:</b>
+<p><br> 
+ 
+In the Etherpad tab of the Workbench, we have added some new prompts to help you coordinate your own contributions.  In editing the Etherpad, think about this editing as "working together" on summary statements about your design, rather than as a discussion, where you respond to each other's comments.  So, if one team member adds some ideas, perhaps another one can build on those, improve them, edit and expand.
+<p><br> 
+ 
+<b>Moving your design to wiki:</b>
+<p><br> 
+ 
+Once you have gone through all of these Ethernet prompts, you are ready to begin moving some of your text into the Wiki space, polishing and improving it.  The Wiki is presented in the fourth tab of the Workbench.  Please note that - unlike Etherpad and Google Docs - the WIki cannot be directly edited.  You must click the "Edit" link at the top of the page, then make your edits, and then (most importantly!) click "Save" when you are finished.  Also, only one person at a time can edit, so please do not go into Edit mode and leave it open, as you may cause problems for your teammates.  <i>If you do click edit and receive a warning that someone else is editing the page, we advise you to write down your ideas in a side document (e.g., the Etherpad, or even another document on your own computer, and try to click "Edit" again in 15 minutes or so.</i>
+<p><br> 
+ 
+In this way, we will progress from one week to the next: making collaborative edits in the Etherpad, and then moving them over to our "clean copy" in the Wiki.  The wiki can also be expanded and improved at any time, including the addition of images, and attachments.  There is excellent support for the wiki (under the "?" icon at the top right of the screen), and you can ask any questions in the Design Strand discussion for this MOOC.
+<p><br> 
+ 
+We will be adding new sub-headers in the wiki each week, so that by the end you will have a completed lesson plan, and the wiki itself (including all other lesson designs, as well as the resources) will be available to you even when this course is completed.
+<p><br> 
+
+<b>Connecting with your group members</b>
+<p><br> 
+To be able to collaborate, communication is crucial, and we realize that this becomes more difficult online, as we are spread over different time zones. As the course progresses, we will try to introduce tools to support your collaboration. We already have the chat, and you are now notified when somebody enters the group, so that you can join them. Shortly, we'll add a way for you to email your peers from the collaborative workbench - if anyone responds to that email, the response will go to everyone in the group, but nobody will ever see anyone else's email address for privacy reasons. You can also always unsubscribe to email notifications. 
+<p><br>
+
+So thank you again, and we look forward to seeing you online in the Collaborative Workbench!
+<p><br> 
+  <h3><a href='<%= Mail.gen_url(id, basename <> "/collab") %>'>Go to your design group</a></h3>
+<p><br> 
+
+Jim, Rosemary, and the MOOC design team.
+
+<p><br>
+<p><br>
+  <p>Please don't respond to this email, replies will not be received. Add a message in the Tech issues thread in the forum, if you have any concerns.</p>
+
+  <a href='<%= Mail.gen_url(id, basename <> "/email/unsubscribe/collab") %>'>Unsubscribe from design group notifications</a> | <a href='<%= Mail.gen_url(id, basename <> "/email/unsubscribe/all") %>'>Unsubscribe from all personalized emails</a>
+
