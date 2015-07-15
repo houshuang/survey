@@ -8,16 +8,13 @@ defmodule Survey.CollabController do
 
   def index(conn, _) do
     user = conn.assigns.user
-    ensure_wiki(user)
-    wiki_url = Survey.User.gen_wiki_url(user.id)
-    if !is_nil(get_session(conn, :email)) do
-      Logger.info("#{user.id} arrived through email link")
-    end
-
     group = DesignGroup.get_by_user(user.id)
+
     if !group.design_group_id do
-      html conn, "You are not part of a design group"
+      ParamSession.redirect(conn, "/design_groups/select"
     else
+      ensure_wiki(user)
+      wiki_url = Survey.User.gen_wiki_url(user.id)
       members = DesignGroup.get_members(group.design_group_id)
       etherpad = Etherpad.ensure_etherpad(group.design_group_id)
       old_etherpads = Etherpad.past_etherpads(group.design_group_id)
@@ -52,7 +49,6 @@ defmodule Survey.CollabController do
       Survey.Encore.add_user(user.id)
     end
     group = Survey.DesignGroup.get(user.design_group_id)
-    IO.inspect(group)
     if !(group.wiki_url) do
       Survey.Encore.add_group_page(group.id)
     end
