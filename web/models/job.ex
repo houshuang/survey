@@ -7,9 +7,6 @@ defmodule Survey.Job do
   alias Survey.Repo
   alias Survey.Job
 
-  @groups Application.get_env(:jobs, :groups)
-  @default Application.get_env(:jobs, :default)
-
   schema "jobs" do
     field :group, :integer
     field :mfa, Survey.Term
@@ -19,39 +16,43 @@ defmodule Survey.Job do
     field :checked_out_pid, Survey.Term
   end
 
-  def get_job do
-    job = Survey.Repo.transaction(fn ->
+  # gets a job that is ready for execution, and marks it as checked out
+  # with the pid of the calling process, returns nil if there are no
+  # jobs ready
+  def checkout_job(pid) do
+    default = Application.get_env(:jobs, :default)
+    {:ok, job} = Repo.transaction(fn ->
       time = seconds_now
       job = (from f in Job,
         where: (f.next_try < ^time or is_nil(f.next_try)) and
           is_nil(f.checked_out) and
-          (f.tries < ^@default.max_tries or is_nil(f.tries)) and
+          (f.tries < ^default.max_tries or is_nil(f.tries)) and
           not is_nil(f.mfa),
           limit: 1) 
       |> Repo.one
-      IO.inspect(job)
       if job do
-        [m, f, a] = job.mfa
-        {pid, ref} = Task.async(m, f, a)
 
         job = %{ job | checked_out: time,
           checked_out_pid: pid,
           tries: (job.tries || 0) + 1,
           next_try: time + 60 * 5}
-        IO.inspect(job)
-        job
         |> Repo.update!
       end
-      job 
     end)
+    job
+  end
 
-    if job do
-      Task.await(job.checked_out_pid)
-      Logger.info("Completed job")
-      Repo.delete(job)
-    else
-      nil
-    end
+  def get(id) do
+    Repo.get(Job, id)
+  end
+
+  def completed_job(id) do
+    Repo.delete(Job, id)
+  end
+
+  def failed_job(job) do
+    %{ job | checked_out_pid: nil, checked_out: nil } 
+    |> Repo.update!
   end
 
   def prune_max_tries do
