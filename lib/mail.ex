@@ -12,6 +12,7 @@ defmodule Mail do
   def send_design do
     (from f in Survey.User,
     where: not is_nil(f.design_group_id))
+    |> Survey.Repo.all
     |> Enum.map(&send_design1/1)
   end
 
