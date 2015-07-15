@@ -55,6 +55,6 @@ config :grade,
   dont_submit: true
 
 config :week,
-  current: 1
+  current: 2
 
 import_config "dev.secret.exs"

@@ -16,6 +16,13 @@ defmodule Survey.Etherpad do
     field :hash, :string
   end
 
+  def past_etherpads(group) do
+    (from f in Etherpad, 
+    where: f.design_group_id == ^group,
+    order_by: f.week)
+    |> Repo.all
+  end
+
   def ensure_etherpad(group) do 
     exist = (from f in Etherpad, 
     where: f.week == ^@week,

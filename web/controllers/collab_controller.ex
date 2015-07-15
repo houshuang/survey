@@ -4,8 +4,12 @@ defmodule Survey.CollabController do
   alias Survey.Etherpad
   require Logger
 
+  @template File.read!("data/templates/wk2.txt")
+
   def index(conn, _) do
     user = conn.assigns.user
+    ensure_wiki(user)
+    wiki_url = Survey.User.gen_wiki_url(user.id)
     if !is_nil(get_session(conn, :email)) do
       Logger.info("#{user.id} arrived through email link")
     end
@@ -16,6 +20,7 @@ defmodule Survey.CollabController do
     else
       members = DesignGroup.get_members(group.design_group_id)
       etherpad = Etherpad.ensure_etherpad(group.design_group_id)
+      old_etherpads = Etherpad.past_etherpads(group.design_group_id)
 
       others = members
       |> Enum.filter(fn [x, _] -> x != user.id end)
@@ -27,7 +32,10 @@ defmodule Survey.CollabController do
       |> render "index.html", user: user, 
         group: group.design_group, 
         etherpad: etherpad,
-        members: members
+        old_etherpads: old_etherpads,
+        members: members,
+        wiki_url: wiki_url,
+        template: @template
     end
   end
 
@@ -35,6 +43,21 @@ defmodule Survey.CollabController do
     Logger.info("User left design group")
     %{ conn.assigns.user | design_group_id: nil } |> Repo.update!
     ParamSession.redirect(conn, "/design_groups/select")
+  end
+
+  #--------------------------------------------------------------------------------
+
+  def ensure_wiki(user) do
+    if !(user.wiki_pwd) do
+      Survey.Encore.add_user(user.id)
+    end
+    group = Survey.DesignGroup.get(user.design_group_id)
+    IO.inspect(group)
+    if !(group.wiki_url) do
+      Survey.Encore.add_group_page(group.id)
+    end
+    user = Survey.User.get(user.id)
+    group = Survey.DesignGroup.get(user.design_group_id)
   end
 end
 

@@ -23,16 +23,26 @@
         
         <script src="/js/modernizr-2.8.3.min.js"></script>
         
- <script>
-     $('document').ready(function() {
-      console.log("tabs")
-    $( "#tabs" ).tabs();
-    $("#tabs").show();
-etherpad_html = '<iframe class="ui-tabs-panel ui-widget-content" src="https://etherpad.mooc.encorelab.org/p/<%= @etherpad %>?userName=<%= @user.nick %>"></iframe>'  
+        <script>
+$('document').ready(function() {
+  console.log("tabs")
+  $( "#tabs" ).tabs();
+  $("#tabs").show();
+  etherpad_html = '<iframe class="ui-tabs-panel ui-widget-content" src="https://etherpad.mooc.encorelab.org/p/<%= @etherpad %>?userName=<%= @user.nick %>"></iframe>'  
 
-  $("#etherpad_load").on("click", function() { console.log("clicked etherpad"); $("#ui-tabs-4").html(etherpad_html); return false; })
-    
+  $("#etherpad-load").on("click", function() { 
+    $("#etherpad-iframe").html(etherpad_html); return false; 
   })
+  $("#etherpad-select").on('change', function() { 
+    hash = $(this).find(':selected').val()
+    if(hash!="") {
+      url = "https://etherpad.mooc.encorelab.org/p/" + hash
+      html = '<iframe class="ui-tabs-panel ui-widget-content" src="'+ url +'"></iframe>'
+      $("#etherpad-iframe").html(html)
+      return false;
+    }
+  })    
+})
         </script>
     </head>
     <body>
@@ -105,9 +115,9 @@ etherpad_html = '<iframe class="ui-tabs-panel ui-widget-content" src="https://et
 
     <ul style="padding: 0; margin: 0;" class="ui-tabs-nav ui-helper-reset ui-helper-clearfix">
         <li class="context-tab ui-state-default"><a href="#ui-tabs-1">Welcome</a></li>
-        <li class="context-tab ui-state-default"><a href="#ui-tabs-2">Design Group description</a></li>
-        <li class="context-tab ui-state-default"><a href="#ui-tabs-3">Resources</a></li>
-        <li class="context-tab ui-state-default"><a href="#ui-tabs-4">Etherpad</a></li>
+        <li class="context-tab ui-state-default"><a href="#ui-tabs-2">Constructive Feedback</a></li>
+        <li class="context-tab ui-state-default"><a href="#ui-tabs-3">Etherpad</a></li>
+        <li class="context-tab ui-state-default"><a href="#ui-tabs-4">Wiki</a></li>
     </ul>
               <%= form_for @conn, collab_path(@conn, :leave), [name: :search], fn _ -> %>
                 <%= raw ParamSession.form_session @conn %>
@@ -118,41 +128,21 @@ etherpad_html = '<iframe class="ui-tabs-panel ui-widget-content" src="https://et
 
 
 <div id="ui-tabs-1"> 
-    <br><br>
-    <h1> Welcome to Week 2 of the Design Strand</h1>
-    <br>
-Welcome to Week 2 of the Design Strand! 
-<P><br>
-This week, we will begin thinking about the lesson details: applying the content from this week's videos, our personal reflections about design, and any comments we received from peers:  Where will the lesson occur within a broader curriculum?  What topics, will it address, specifically? And what will be the desired or expected outcomes for students?  
-
-<P><br>
-To start, have a look at the Review comments that other members of your SIG provided.  We have now received feedback on more than half of all designs, and more feedback is coming in every hour - so, hopefully you will find some helpful comments there (note, any comments from SIG peers will appear in your Workbench tab automatically, as they arrive.  SO please check back occasionally to see any updates).
-
-<P><br>
-In the Etherpad tab of the Workbench, we have added some new prompts to help you coordinate your own contributions.  In editing the Etherpad, think about this editing as "working together" on summary statements about your design, rather than as a discussion, where you respond to each other's comments.  So: if one team member adds some ideas, perhaps another one can build on those, improve them, edit and expand.
-
-<P><br>
-First, we ask you to summarize any helpful ideas that may have come in from peers.  Next, we ask you to finalize (well... nothing is ever final!) your learning goals and topics for the lesson.  Third, we ask you to think about the lesson in terms of the student's learning experience: How will it provide your students with constructivist opportunities to express their ideas, build and connect on lesson topics, and develop a more coherent understanding?
-
-<P><br>
-Once you have gone through all of these Ethernet prompts, you are ready to begin moving some of your text into the Wiki space, polishing and improving it.  The Wiki is presented in the fourth tab of the Workbench.  Please note that - unlike Etherpad and Google Docs - the WIki cannot be directly edited.  You must click the "Edit" link at the top of the page, then make your edits, and then (most importantly!) click "Save" when you are finished.  Also, only one person at a time can edit, so please do not go into Edit mode and leave it open, as you may cause problems for your teammates.  If you do click edit and receive a warning that someone else is editing the page, we advise you to write down your ideas in a side document (e.g., the Etherpad, or even another document on your own computer, and try to click "Edit" again in 15 minutes or so.
-
-<P><br>
-In this way, we will progress from one week to the next: making collaborative edits in the Etherpad, and then moving them over to our "clean copy" in the Wiki.  The wiki can also be expanded and improved at any time, including the addition of images, and attachments.  There is excellent support for the wiki (under the "?" icon at the top right of the screen), and you can ask any questions in the Design Strand discussion for this MOOC.
-<P><br>
-We will be adding new sub-headers in the wiki each week, so that by the end you will have a completed lesson plan, and the wiki itself (including all other lesson designs, as well as the resources) will be available to you even when this course is completed.
-
-<P><br>
-So thank you again, and we look forward to seeing you online in the Collaborative Workbench!
-
-<P><br>
-  Jim, Rosemary, and the MOOC design team.</div>
-                    <div id="ui-tabs-2"> 
+  <%= raw @template %>
+  </div><div id="ui-tabs-2"> 
 <iframe id="detail_iframe" src="<%= ParamSession.gen_url(@conn, design_group_path(@conn, :comments)) %>"></iframe>                    </div>
 
-<div id="ui-tabs-3"> <iframe src="<%= ParamSession.gen_url(@conn, "/resource/list") %>"></iframe></div>
 
-<div id="ui-tabs-4"><a href="#" id="etherpad_load">Click here to load Etherpad</a></div>
+<div id="ui-tabs-3">
+  <select id="etherpad-select">
+    <option value="">Select past weeks</option>
+  <%= for etherpad <- @old_etherpads || [] do %>
+    <option value='<%= etherpad.hash %>'>Week <%= etherpad.week %></option>
+    <%= end %>
+  </select>
+  
+  <div id="etherpad-iframe"><a href="#" id="etherpad-load">Click here to load this week's Etherpad</a></div></div>
+<div id="ui-tabs-4"><a href="#"><iframe src="<%= @wiki_url %>"></iframe></a></div>
 
 </div>
 </div>
