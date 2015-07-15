@@ -36,9 +36,9 @@ defmodule Survey.User do
 
   def create_users do
     (from f in User,
-    where: not is_nil(design_group_id))
+    where: not is_nil(f.design_group_id))
     |> Repo.all
-    |> &create_user/1
+    |> Enum.map(&create_user/1)
   end
 
   def create_user(user) do
