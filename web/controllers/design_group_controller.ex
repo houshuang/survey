@@ -24,8 +24,10 @@ defmodule Survey.DesignGroupController do
     if already && already > 0 do
       url = ParamSession.gen_url(conn, "/design_groups/select")
       conn = put_flash(conn, :info, 
-        "Thank you for submitting #{already} #{resource_word(already)}. You are welcome to submit more ideas, or move on to <a href='#{url}' target='_blank'>select a design group to join</a>, and begin co-designing a lesson plan with other students.")
-    end
+        "Thank you for submitting #{already} #{resource_word(already)}. You are
+        welcome to submit more ideas, or move on to <a href='#{url}'
+        target='_blank'>select a design group to join</a>, and begin
+        co-designing a lesson plan with other students.") end
 
     conn
     |> put_layout("minimal.html")
@@ -82,20 +84,18 @@ defmodule Survey.DesignGroupController do
     text = if d_id do
       title = DesignGroup.get(d_id).title
       url = ParamSession.gen_url(conn, collab_path(conn, :index))
-      "You are already a member of the group <b>#{title}</b>. 
-      <a href='#{url}' target='_blank'>Click here</a> to go to the
-      collaborative workbench for your group. You can also browse the other
-      groups in your SIG, and decide to join one of those groups. In that case,
-      you will automatically leave your current group.
-      <P>You can also select a group on the left and add useful comments that
-      will help them in their design work."
+      "You are already a member of the group <b>#{title}</b>.  <a href='#{url}'
+      target='_blank'>Click here</a> to go to the collaborative workbench for
+      your group. You can also browse the other groups in your SIG, and decide
+      to join one of those groups. In that case, you will automatically leave
+      your current group.  <P>You can also select a group on the left and add
+      useful comments that will help them in their design work."
     else
       "Please select a group on the left. If there are no groups listed, users
       in your SIG have not added any ideas yet. You can go to the previous
       section in EdX and add design group ideas, and then come back here to
-      select one to work on.
-      <P>You can also select a group on the left and add useful comments that
-      will help them in their design work."
+      select one to work on.  <P>You can also select a group on the left and
+      add useful comments that will help them in their design work."
     end
 
     submitted = if params["submitted"], do: true, else: false
@@ -138,5 +138,15 @@ defmodule Survey.DesignGroupController do
     desc = Map.put(group.description, item, params["value"])
     %{ group | description: desc } |> Repo.update!
     json conn, "Success"
+  end
+
+  def comments(conn, params) do
+    group = conn.assigns.user.design_group_id
+    if !group do
+      html conn, "You are not part of a design group"
+    else
+      comments = Survey.Review.get_by_group(group)
+      render conn, "comments.html", comments: comments
+    end
   end
 end

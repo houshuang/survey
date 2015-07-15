@@ -119,12 +119,36 @@ etherpad_html = '<iframe class="ui-tabs-panel ui-widget-content" src="https://et
 
 <div id="ui-tabs-1"> 
     <br><br>
-    <h1> Welcome to the Design Strand</h1>
+    <h1> Welcome to Week 2 of the Design Strand</h1>
     <br>
-    This Web-environment is called the “Collaborative Workbench”, and its a place we have designed where you can work with remote peers from your SIG to develop a lesson design.<br><p> <br> It includes 3 “tabs” at the top of the screen: <P><br>(1) Welcome, where you are now - which contains some introductory text from the MOOC team, <br><br><p>(2) Resources, where you will find various kinds of resources that are relevant to your design, and <br><br><p>(3) Etherpad, a simple text editor where you and your teammates can COLLABORATIVELY develop your ideas, in response to some prompts that we have added (Etherpad allows all members to type at the same time on the document). <br><br><p>In future weeks, we will add a fourth tab, called “Wiki” - where you will be able to move your Etherpad ideas into a more permanent format, although still editable and improvable (only one person at a time can edit your team’s wiki page).
-                    <br<br><p>On the left side, you can see which of your team members are logged on, and chat with them. They will see your messages even after you have logged off, so you can also think of it as a notice board where you can leave them messages.</div>
+Welcome to Week 2 of the Design Strand! 
+<P><br>
+This week, we will begin thinking about the lesson details: applying the content from this week's videos, our personal reflections about design, and any comments we received from peers:  Where will the lesson occur within a broader curriculum?  What topics, will it address, specifically? And what will be the desired or expected outcomes for students?  
+
+<P><br>
+To start, have a look at the Review comments that other members of your SIG provided.  We have now received feedback on more than half of all designs, and more feedback is coming in every hour - so, hopefully you will find some helpful comments there (note, any comments from SIG peers will appear in your Workbench tab automatically, as they arrive.  SO please check back occasionally to see any updates).
+
+<P><br>
+In the Etherpad tab of the Workbench, we have added some new prompts to help you coordinate your own contributions.  In editing the Etherpad, think about this editing as "working together" on summary statements about your design, rather than as a discussion, where you respond to each other's comments.  So: if one team member adds some ideas, perhaps another one can build on those, improve them, edit and expand.
+
+<P><br>
+First, we ask you to summarize any helpful ideas that may have come in from peers.  Next, we ask you to finalize (well... nothing is ever final!) your learning goals and topics for the lesson.  Third, we ask you to think about the lesson in terms of the student's learning experience: How will it provide your students with constructivist opportunities to express their ideas, build and connect on lesson topics, and develop a more coherent understanding?
+
+<P><br>
+Once you have gone through all of these Ethernet prompts, you are ready to begin moving some of your text into the Wiki space, polishing and improving it.  The Wiki is presented in the fourth tab of the Workbench.  Please note that - unlike Etherpad and Google Docs - the WIki cannot be directly edited.  You must click the "Edit" link at the top of the page, then make your edits, and then (most importantly!) click "Save" when you are finished.  Also, only one person at a time can edit, so please do not go into Edit mode and leave it open, as you may cause problems for your teammates.  If you do click edit and receive a warning that someone else is editing the page, we advise you to write down your ideas in a side document (e.g., the Etherpad, or even another document on your own computer, and try to click "Edit" again in 15 minutes or so.
+
+<P><br>
+In this way, we will progress from one week to the next: making collaborative edits in the Etherpad, and then moving them over to our "clean copy" in the Wiki.  The wiki can also be expanded and improved at any time, including the addition of images, and attachments.  There is excellent support for the wiki (under the "?" icon at the top right of the screen), and you can ask any questions in the Design Strand discussion for this MOOC.
+<P><br>
+We will be adding new sub-headers in the wiki each week, so that by the end you will have a completed lesson plan, and the wiki itself (including all other lesson designs, as well as the resources) will be available to you even when this course is completed.
+
+<P><br>
+So thank you again, and we look forward to seeing you online in the Collaborative Workbench!
+
+<P><br>
+  Jim, Rosemary, and the MOOC design team.</div>
                     <div id="ui-tabs-2"> 
-<iframe id="detail_iframe" src="<%= ParamSession.gen_url(@conn, design_group_path(@conn, :select_detail, @group.id, embedded: true)) %>"></iframe>                    </div>
+<iframe id="detail_iframe" src="<%= ParamSession.gen_url(@conn, design_group_path(@conn, :comments)) %>"></iframe>                    </div>
 
 <div id="ui-tabs-3"> <iframe src="<%= ParamSession.gen_url(@conn, "/resource/list") %>"></iframe></div>
 

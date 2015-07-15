@@ -2,6 +2,13 @@ defmodule Prelude do
   import Ecto.Query
   require Ecto.Query
 
+  def safe_encode_base64(str) do
+    Base.encode64(str)
+    |> String.replace("+", "-")
+    |> String.replace("/", "_")
+    |> String.replace("=", ".")
+  end
+
   def string_to_int_safe(y) do
     try do
       case y do

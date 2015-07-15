@@ -123,12 +123,16 @@ defmodule Survey.Router do
     # designgroups
     post "/design_groups/add_idea", DesignGroupController, :add_idea
     get "/design_groups/add_idea", DesignGroupController, :add_idea
+
     post "/design_groups/select", DesignGroupController, :select
     get "/design_groups/select", DesignGroupController, :select
     get "/design_groups/select/sidebar", DesignGroupController, :select_sidebar
     get "/design_groups/select/detail/:id", DesignGroupController, :select_detail
     get "/design_groups/select/overview", DesignGroupController, :overview
     post "/design_groups/select/submit", DesignGroupController, :submit
+
+    get "/design_groups/comments", DesignGroupController, :comments
+    post "/design_groups/comments", DesignGroupController, :comments
 
     post "/design_groups/submit_edit", DesignGroupController, :submit_edit
 

@@ -28,6 +28,12 @@ defmodule Survey.User do
     timestamps
   end
 
+  def gen_wiki_url(id) do
+    user = get(id)
+    group = Survey.DesignGroup.get(user.design_group_id)
+    "#{group.wiki_url}?os_password=#{user.wiki_pwd}&os_username=#{URI.encode_www_form(user.edx_email)}"
+  end
+
   def cohorts_csv do
     csv = (from t in User, 
     where: fragment("? is not null", t.sig_id),

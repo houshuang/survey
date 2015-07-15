@@ -11,6 +11,7 @@ defmodule Survey.DesignGroup do
   schema "designgroups" do
     field :description, Survey.JSON
     field :title, :string
+    field :wiki_url, :string
     belongs_to :sig, Survey.SIG
     belongs_to :user, Survey.User
     timestamps updated_at: false
