@@ -36,7 +36,9 @@ defmodule Survey.JobWorker do
       case apply(m, f, a) do
         :ok      -> Job.completed(job)
         {:ok, _} -> Job.completed(job)
-        _        -> Job.failed(job)
+        x        -> 
+          Logger.warn("Job #{inspect([m, f, a])}: #{inspect(x)}")
+          Job.failed(job)
       end
 
       work

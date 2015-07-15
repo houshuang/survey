@@ -23,7 +23,7 @@ config :logger, :console,
 config :jobs,
   groups: %{},
   default: %{
-    max_tries: 5,
+    max_tries: 20,
     worker_maxtime: 60,
     wait_try_again: 180,
     strategy: :backoff
