@@ -16,7 +16,7 @@ defmodule EnsureSIG do
   def init([]), do: []
 
   def call(conn, _) do
-    if !conn.assigns.user.sig_id do
+    if !conn.assigns.user.sig_id || conn.assigns.user.sig_id == 0 do
       Logger.info("Redirecting to SIG selection page")
       conn 
       |> put_session(:ensure_sig_redirect, full_path(conn))
