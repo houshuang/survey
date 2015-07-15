@@ -34,6 +34,17 @@ defmodule Survey.User do
     "#{group.wiki_url}?os_password=#{user.wiki_pwd}&os_username=#{URI.encode_www_form(user.edx_email)}"
   end
 
+  def create_users do
+    (from f in User,
+    where: not is_nil(design_group_id))
+    |> Repo.all
+    |> &create_user/1
+  end
+
+  def create_user(user) do
+    Survey.Job.add({Survey.Encore, :add_user, [user.id]})
+  end
+
   def cohorts_csv do
     csv = (from t in User, 
     where: fragment("? is not null", t.sig_id),
