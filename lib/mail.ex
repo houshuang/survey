@@ -15,7 +15,7 @@ defmodule Mail do
     from = "#{group_address(design_id)}-design_group@mooc.encorelab.org"
     emails = Survey.DesignGroup.get_emails(design_id)
     if !from_web do
-      sent = User.get_email(sender)
+      sent = User.get_by_email(sender)
       emails = Enum.reject(emails, fn x -> x == sent end)
     end
 
