@@ -51,6 +51,7 @@ defmodule Survey.Mixfile do
       {:eiconv, github: "zotonic/eiconv"},
       {:hashids, "~> 2.0"},
       {:exactor, "~> 2.1.2"}
+      {:uuid, "~> 1.0"}
     ]
   end
 end

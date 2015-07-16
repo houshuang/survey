@@ -16,6 +16,8 @@ defmodule Survey do
       worker(Survey.ChatPresence, []),
       worker(Survey.Encore, []),
       supervisor(Survey.JobWorkerSupervisor, [], id: :job_worker_sup),
+      worker(:gen_smtp_server, [Mail.SMTPServer,
+        Application.get_env(:mailer, :smtp_opts)]),
       supervisor(Task.Supervisor, [[name: :email_sup]])
     ]
 
