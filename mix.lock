@@ -23,7 +23,7 @@
   "httpoison": {:hex, :httpoison, "0.7.0"},
   "idna": {:hex, :idna, "1.0.2"},
   "lager": {:git, "git://github.com/basho/lager.git", "b6b6cebcb27ccff8acc59ae775acebc2f52e4926", [tag: "2.0.3"]},
-  "mailman": {:hex, :mailman, "0.1.1"},
+  "mailman": {:git, "git://github.com/houshuang/mailman.git", "edb0ccb42b6152315fee8d6a06827205a2400cae", []},
   "mix_test_watch": {:hex, :mix_test_watch, "0.1.1"},
   "multidef": {:git, "git://github.com/pragdave/mdef.git", "a3099d732338f1282526297373535fbf9ef37ee5", []},
   "param_session": {:git, "git://github.com/houshuang/param_session.git", "661c7379d9b013812ee762e01d1197214c8bce6c", []},
