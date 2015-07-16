@@ -5,6 +5,7 @@ defmodule Survey.CollabController do
   require Logger
 
   @template File.read!("data/templates/wk2.txt")
+  @wiki_disabled Application.get_env(:confluence, :disabled)
 
   def index(conn, _) do
     user = conn.assigns.user
@@ -13,8 +14,12 @@ defmodule Survey.CollabController do
     if !group.design_group_id do
       ParamSession.redirect(conn, "/design_groups/select")
     else
-      ensure_wiki(user)
-      wiki_url = Survey.User.gen_wiki_url(user.id)
+      unless @wiki_disabled do
+        ensure_wiki(user)
+        wiki_url = Survey.User.gen_wiki_url(user.id)
+      else
+        wiki_url = ""
+      end
       members = DesignGroup.get_members(group.design_group_id)
       etherpad = Etherpad.ensure_etherpad(group.design_group_id)
       old_etherpads = Etherpad.past_etherpads(group.design_group_id)
@@ -42,6 +47,12 @@ defmodule Survey.CollabController do
     ParamSession.redirect(conn, "/design_groups/select")
   end
 
+  def email(conn, params) do
+    user = conn.assigns.user
+    Mail.send_group_email(user.design_group_id, user.id, user.nick, params["subject"], params["content"]) 
+    Logger.info("#{user.id} sent group mail")
+    json conn, "success"
+  end
   #--------------------------------------------------------------------------------
 
   def ensure_wiki(user) do

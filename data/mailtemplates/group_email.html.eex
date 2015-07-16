@@ -1,0 +1,9 @@
+<h4>From: <%= nick %></h4>
+
+<%= content %>
+
+<p><br><i>If you respond to this email, your response will reach all your design group members (who have not unsubscribed to emails), but your email address will not be shared.</i></p>
+<p><br>
+<h3><a href='<%= Mail.gen_url(id, basename <> "/collab") %>'>Go to your design group</a></h3>
+<p><br>
+  <a href='<%= Mail.gen_url(id, basename <> "/email/unsubscribe/collab") %>'>Unsubscribe from design group notifications</a> | <a href='<%= Mail.gen_url(id, basename <> "/email/unsubscribe/all") %>'>Unsubscribe from all personalized emails</a>

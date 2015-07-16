@@ -31,8 +31,10 @@ check_textarea_length = function(T, min) {
   var len = T.val().trim().split(" ").length;
   if (len >= min) {
     T.next('.counter').html("<font color=green>✓</font>");
+    return true;
   } else {
     T.next('.counter').html("<font color=red>At least " + (min - len) + " more words required</font>");
+    return false;
   }			
 }
 

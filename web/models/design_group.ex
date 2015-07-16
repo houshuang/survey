@@ -17,6 +17,16 @@ defmodule Survey.DesignGroup do
     timestamps updated_at: false
   end
 
+  def get_emails(id) do
+    (from f in User, 
+    where: f.design_group_id == ^id
+    and ((is_nil(f.unsubscribe) or 
+    fragment("not ? && ?", f.unsubscribe, ^["all", "collab"]))),
+    select: [f.id, f.edx_email])
+    |> Repo.all
+  end
+    
+
   def submitted_count(uid) do
     (from f in DesignGroup,
     select: count(f.id),

@@ -1,0 +1,150 @@
+
+@font-face {
+font-family: 'dosisextralight';
+src: url('../fonts/dosis-extralight-webfont.eot');
+src: url('../fonts/dosis-extralight-webfont.eot?#iefix') format('embedded-opentype'),
+     url('../fonts/dosis-extralight-webfont.woff2') format('woff2'),
+     url('../fonts/dosis-extralight-webfont.woff') format('woff'),
+     url('../fonts/dosis-extralight-webfont.ttf') format('truetype'),
+     url('../fonts/dosis-extralight-webfont.svg#dosisextralight') format('svg');
+font-weight: normal;
+font-style: normal;
+
+}
+
+
+@font-face {
+font-family: 'dosislight';
+src: url('../fonts/dosis-light-webfont.eot');
+src: url('../fonts/dosis-light-webfont.eot?#iefix') format('embedded-opentype'),
+     url('../fonts/dosis-light-webfont.woff2') format('woff2'),
+     url('../fonts/dosis-light-webfont.woff') format('woff'),
+     url('../fonts/dosis-light-webfont.ttf') format('truetype'),
+     url('../fonts/dosis-light-webfont.svg#dosislight') format('svg');
+font-weight: normal;
+font-style: normal;
+
+}	
+
+.modalDialog {
+		position: fixed;
+		font-family: Arial, Helvetica, sans-serif;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		background: rgba(0,0,0,0.8);
+		z-index: 99999;
+		opacity:0;
+		-webkit-transition: opacity 400ms ease-in;
+		-moz-transition: opacity 400ms ease-in;
+		transition: opacity 400ms ease-in;
+		pointer-events: none;
+	}
+
+.modalDialog:target {
+		opacity:1;
+		pointer-events: auto;
+	}
+
+.modalDialog > div {
+		width: 600px;
+		position: relative;
+		margin: 10% auto;
+		padding: 20px 10px 40px;
+		border-radius: 10px;
+		background: #e8e8e8;
+	}
+
+.modalform .close {
+		background: #606061;
+		color: #FFFFFF;
+		line-height: 25px;
+		position: absolute;
+		right: -12px;
+		text-align: center;
+		top: -10px;
+		width: 24px;
+		text-decoration: none;
+		font-weight: bold;
+		-webkit-border-radius: 12px;
+		-moz-border-radius: 12px;
+		border-radius: 12px;
+		-moz-box-shadow: 1px 1px 3px #000;
+		-webkit-box-shadow: 1px 1px 3px #000;
+		box-shadow: 1px 1px 3px #000;
+	}
+
+.modalform .close:hover { background: #00d9ff; }
+
+.modalform h1, h2, h3, h4, h5, h6 {
+    font-family: 'dosisextralight', sans-serif;
+}
+
+.modalform h2 {
+    text-transform: uppercase;
+    color: #3b8cb6;
+  display: block;
+  font-size: 1.5em;
+  -webkit-margin-before: 0.83em;
+  -webkit-margin-after: 0.83em;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+  font-weight: bold;
+}
+
+.modalform h4 {
+    margin-bottom: 5px;
+}
+
+
+.modalform fieldset {
+    border: 0;
+    margin: 0;
+    padding:  
+    display: block;
+  -webkit-margin-start: 2px;
+  -webkit-margin-end: 2px;
+  -webkit-padding-before: 0.35em;
+  -webkit-padding-start: 0.75em;
+  -webkit-padding-end: 0.75em;
+  -webkit-padding-after: 0.625em; 0;
+}
+
+.right {
+    float: right;
+}
+
+.modalform textarea {
+    width: 98%;
+    height: 180px;
+    font-size: 1em;
+    padding: 5px;
+}
+
+.modalform .textinput {
+    width: 98%;
+    height: 30px;
+    padding: 5px;
+    font-size: 1em;
+}
+
+.modalform a {
+    font-size: 0.8em;
+}
+
+.modalform form input[type="submit"] {
+    background: #66B008;
+    border: none;
+    height: 30px;
+    font-size: 0.8em;
+    border-radius: 5px;
+    position: relative;
+    top: -25px;
+    padding: 8px 16px;
+    margin-bottom: 20px;
+    color: #fff;
+}
+.modalform form input[type="submit"]:hover {
+    background: #3d860d;
+}

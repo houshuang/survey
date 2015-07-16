@@ -18,6 +18,7 @@
         <link rel="stylesheet" href="/css/jquery-ui-collab.css">
         <link rel="stylesheet" href="/css/reset.css">
         <link rel="stylesheet" href="/css/collab-main.css">
+        <link rel="stylesheet" href="/css/modal.css">
         <link rel="stylesheet" href="/css/chat.css">
 
         
@@ -76,7 +77,29 @@ $('document').ready(function() {
     <br>
     <div>
             <input type="submit" value="Chat" id="submit" class="right">
+<a href="#openModal">Send email</a>
     </form>
+</div>
+<div id="openModal" class="modalDialog">
+  <div>
+    <a href="#close" title="Close" class="close">X</a>
+              <%= form_for @conn, collab_path(@conn, :email), [name: :search, class: "modalform"], fn _ -> %>
+                <%= raw ParamSession.form_session @conn %>
+      <h2>Send email message to your team members</h2>
+      <fieldset>
+        <h4>Subject</h4>
+        <input type="text" name="subject" class="textinput">
+        <p class="counter"></p><!-- do not remove -->
+      </fieldset>
+      <fieldset>
+        <h4>Content</h4>
+        <textarea name="content"></textarea>
+        <p class="counter"></p><!-- do not remove -->
+      </fieldset>
+      <div class="stepsController prev left"><a href="#">Cancel</a></div>
+      <input type="submit" value="Submit" class="right" id="send-email">
+    <% end %>
+  </div>
 </div>
 
 <%# #----------- presence list ----------------------------- %>

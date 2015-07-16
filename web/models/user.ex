@@ -75,6 +75,13 @@ defmodule Survey.User do
     |> Repo.one
   end
 
+  def get_by_email(email) do
+    (from f in User,
+    where: f.edx_email == ^email,
+    limit: 1)
+    |> Repo.one
+  end
+
   def get(id) do
     Repo.get(User, id)
   end

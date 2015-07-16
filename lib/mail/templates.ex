@@ -7,4 +7,6 @@ defmodule Mail.Templates do
   [:cookie, :basename]
   EEx.function_from_file :def, :collab_wk2, "data/mailtemplates/collab_wk2.html.eex", 
   [:id, :basename]
+  EEx.function_from_file :def, :group_email, "data/mailtemplates/group_email.html.eex", 
+  [:content, :nick, :id, :basename]
 end

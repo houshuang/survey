@@ -1,4 +1,26 @@
 $(document).ready(function() {
+  Window.App = {}
+  $('.modalform textarea').each(function(){
+    var T = $(this);
+    check_textarea_length(T, 10)
+    T.on('keyup', function() {Window.App.area = check_textarea_length(T, 10) })
+  });
+  $('.modalform input').each(function(){
+    var T = $(this);
+    check_textarea_length(T, 2)
+    T.on('keyup', function() {Window.App.text = check_textarea_length(T, 2) })
+  });
+  $('.modalform').on('submit', function(e) {
+    e.preventDefault();    
+    if(Window.App.text && Window.App.area) {
+    $.post("/collab/email", $(".modalform").serialize(), function(data){
+        console.log(data);
+    });
+    $(".close")[0].click();
+    }
+    return false;
+  })
+
   topics = {
     "topics": "Topics", 
     "description": "Short description...", 
@@ -156,3 +178,14 @@ $.fn.selectRange = function(start, end) {
     }
   });
 };
+
+check_textarea_length = function(T, min) {
+  var len = T.val().trim().split(" ").length;
+  if (len >= min) {
+    T.next('.counter').html("<font color=green>✓</font>");
+    return true;
+  } else {
+    T.next('.counter').html("<font color=red>At least " + (min - len) + " more words required</font>");
+    return false;
+  }         
+}

@@ -4,6 +4,7 @@ defmodule Survey.Encore do
 
   @url Application.get_env(:confluence, :url) 
   @wk1 String.strip(File.read!("data/wikitemplates/wk1.txt"))
+  @disabled Application.get_env(:confluence, :disabled)
 
   defstart start_link do
     {:ok, token} = get_token
@@ -63,14 +64,18 @@ defmodule Survey.Encore do
   end
 
   def web_request(request_body) do
-    try do
-      case HTTPoison.post!(@url, request_body).body |> XMLRPC.decode do
-        {:ok, %{param: response}} -> {:ok, response}
-        h = {:error, x} -> h
-        h -> {:error, h}
+    if !@disabled do
+      try do
+        case HTTPoison.post!(@url, request_body).body |> XMLRPC.decode do
+          {:ok, %{param: response}} -> {:ok, response}
+          h = {:error, x} -> h
+          h -> {:error, h}
+        end
+      catch
+        e -> {:error, Exception.message(e)}
       end
-    catch
-      e -> {:error, Exception.message(e)}
+    else
+      {:ok, :disabled}
     end
   end
 
