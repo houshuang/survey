@@ -43,7 +43,7 @@ defmodule Mail.Receive do
     end
   end
 
-  def extract_group_id(to) do
+  def extract_group_id([to]) do
     if String.contains?(to, "-design_group@mooc.encorelab.org") do
       hash = String.replace(to, "-design_group@mooc.encorelab.org", "")
       Hashids.decode(@hashid, hash)
