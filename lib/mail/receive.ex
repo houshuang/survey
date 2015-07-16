@@ -11,7 +11,7 @@ defmodule Mail.Receive do
       {:error, _} -> 
       Logger.info("Email: Received email, black hole")
       nil
-      {:ok, group_id} when is_integer(group_id) -> try_forward(group_id, email)
+      {:ok, [group_id]} when is_integer(group_id) -> try_forward(group_id, email)
     end
   end
 
