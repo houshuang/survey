@@ -36,14 +36,15 @@ defmodule Mail.Receive do
         |> Mail.schedule_send
       else
         Logger.info("Email: Received valid group mail")
+        content = if email.html == "", do: email.text, else: email.html
         Mail.send_group_email(user.design_group_id, user.id, user.nick, email.subject, 
-          email.html || email.text, false)
+          content, false)
       end
     end
   end
 
   def extract_group_id(to) do
-    if String.contains?("-design_group@mooc.encorelab.org") do
+    if String.contains?(to, "-design_group@mooc.encorelab.org") do
       hash = String.replace(to, "-design_group@mooc.encorelab.org", "")
       Hashids.decode(@hashid, hash)
     else
