@@ -50,7 +50,7 @@ defmodule Survey.Mixfile do
       {:mailman, github: "houshuang/mailman"},
       {:eiconv, github: "zotonic/eiconv"},
       {:hashids, "~> 2.0"},
-      {:exactor, "~> 2.1.2"}
+      {:exactor, "~> 2.1.2"},
       {:uuid, "~> 1.0"}
     ]
   end
