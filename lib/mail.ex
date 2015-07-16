@@ -9,7 +9,7 @@ defmodule Mail do
   @hashid Hashids.new(salt: Application.get_env(:mailer, :hashid_salt))
   @wk2 File.read!("data/templates/wk2.txt")
 
-  def send_group_email(design_id, sender, sender_nick, subject, content, from_web) do
+  def send_group_email(design_id, sender, sender_nick, subject, content, from_web \\ true) do
     Survey.Email.insert(design_id, sender, subject, content, from_web) 
 
     from = "#{group_address(design_id)}-design_group@mooc.encorelab.org"
