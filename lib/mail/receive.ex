@@ -5,9 +5,12 @@ defmodule Mail.Receive do
   def receive_message(from, to, data) do
     email = data
     |> Mailman.Email.parse!
+    |> IO.inspect
 
     case extract_group_id(to) do
-      {:error, _} -> nil
+      {:error, _} -> 
+      Logger.info("Email: Received email, black hole"
+      nil
       {:ok, group_id} when is_integer(group_id) -> try_forward(group_id, email)
     end
   end
