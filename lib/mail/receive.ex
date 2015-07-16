@@ -25,7 +25,7 @@ defmodule Mail.Receive do
         text: "You just sent an email to a design group that does not exist"}
       |> Mail.schedule_send
     else
-      user = User.get_by_email(email.from)    
+      user = Survey.User.get_by_email(email.from)    
       if !user do
       Logger.info("Email: User not member of design group")
         %Mailman.Email{from: "mailer@mooc.encorelab.org", 
