@@ -9,7 +9,7 @@ defmodule Mail.Receive do
 
     case extract_group_id(to) do
       {:error, _} -> 
-      Logger.info("Email: Received email, black hole"
+      Logger.info("Email: Received email, black hole")
       nil
       {:ok, group_id} when is_integer(group_id) -> try_forward(group_id, email)
     end
