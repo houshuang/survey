@@ -7,12 +7,13 @@ defmodule Survey.Cache do
   end
 
   def store(blob) do
-    Repo.transaction(fn ->
+    {:ok, id} = Repo.transaction(fn ->
       case Repo.get_by(Survey.Cache, blob: blob) do
         %{id: id} -> id
         nil -> insert(blob)
       end
     end)
+    id
   end
 
   defp insert(blob) do
