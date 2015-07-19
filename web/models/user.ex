@@ -31,7 +31,8 @@ defmodule Survey.User do
   def gen_wiki_url(id) do
     user = get(id)
     group = Survey.DesignGroup.get(user.design_group_id)
-    "#{group.wiki_url}?os_password=#{user.wiki_pwd}&os_username=#{URI.encode_www_form(user.edx_email)}"
+    separator = if String.contains?(group.wiki_url, "?"), do: "&", else: "?"
+    "#{group.wiki_url}#{separator}os_password=#{user.wiki_pwd}&os_username=#{URI.encode_www_form(user.edx_email)}"
   end
 
   def create_users do
