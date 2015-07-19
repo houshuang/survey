@@ -1,17 +1,19 @@
 <h1>Report</h1>
 <br>
-<%= 
+<%= if assigns[:total] do %><b>Total responses:</b> <%= assigns[:total] %><p> <% end %>
+
+<%=
 for x1 <- @questions do
   case x1 do
-    {:signup, data} -> 
+    {:signup, data} ->
       render "_signup.html", data: data
-    {:general, data} -> 
+    {:general, data} ->
       render "_general.html", data: data
-    {:text, data} -> 
+    {:text, data} ->
       render "_text.html", data: data, url: @texturl
-    {:radio, data} -> 
+    {:radio, data} ->
       render "_radio.html", data: data
-    {:grid, data} -> 
+    {:grid, data} ->
       render "_grid.html", data: data
     {:tags, data} ->
       render "_tag.html", data: data |> Enum.take(5)
