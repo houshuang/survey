@@ -1,0 +1,7 @@
+# Reflection week 3
+textbox,Think about either Maria or Charlie: how did her/his lesson use technology to support student collaboration?  How did the technology help?
+meta
+	minwords=10
+textbox,Now think about the collaboration part: What did students gain from this collaboration that made it an important part of the lesson?  Why was collaboration effective for learning?
+meta
+	minwords=10

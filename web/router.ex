@@ -88,6 +88,8 @@ defmodule Survey.Router do
     get "/reflection", ReflectionController, :index
     post "/reflectionb", ReflectionController, :index_b
     get "/reflectionb", ReflectionController, :index_b
+    post "/reflectionb", ReflectionController, :index_c
+    get "/reflectionb", ReflectionController, :index_c
     get "/reflection/:id", ReflectionController, :index
     post "/reflection/:id", ReflectionController, :index
 
