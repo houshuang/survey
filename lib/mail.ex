@@ -23,7 +23,7 @@ defmodule Mail do
       from = group_address(id, design_id) <> 
         "-design_group@mooc.encorelab.org"
       html = Templates.group_email(content, sender_nick, id, @basename)
-      %Mailman.Email{from: from, to: ["shaklev@gmail.com"],
+      %Mailman.Email{from: from, to: [email],
         subject: subject, html: html}
       |> schedule_send
     end)
