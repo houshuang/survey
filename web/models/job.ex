@@ -51,7 +51,7 @@ defmodule Survey.Job do
   end
 
   def completed(job) do
-    Logger.info("Completed job #{job.id}: #{inspect(job.mfa)}")
+    Logger.info("Completed job #{job.id}")
     Repo.delete!(job)
   end
 

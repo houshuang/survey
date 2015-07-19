@@ -12,15 +12,16 @@ defmodule Mail do
   def send_group_email(design_id, sender, sender_nick, subject, content, from_web \\ true) do
     Survey.Email.insert(design_id, sender, subject, content, from_web) 
 
-    from = "#{group_address(design_id)}-design_group@mooc.encorelab.org"
     emails = Survey.DesignGroup.get_emails(design_id)
     if !from_web do
-      sent = User.get_by_email(sender)
+      sent = Survey.User.get_email(sender)
       emails = Enum.reject(emails, fn x -> x == sent end)
     end
 
     emails
     |> Enum.each(fn [id, email] ->
+      from = group_address(id, design_id) <> 
+        "-design_group@mooc.encorelab.org"
       html = Templates.group_email(content, sender_nick, id, @basename)
       %Mailman.Email{from: from, to: ["shaklev@gmail.com"],
         subject: subject, html: html}
@@ -32,8 +33,8 @@ defmodule Mail do
     Survey.Job.add({Survey.Mailer, :deliver, [email]})
   end
 
-  def group_address(id) do
-    hash = Hashids.encode(@hashid, id)
+  def group_address(sender, design_id) do
+    hash = Hashids.encode(@hashid, [sender, design_id])
   end
   
   def send_design do

@@ -5,17 +5,17 @@ defmodule Mail.Receive do
   def receive_message(from, to, data) do
     email = data
     |> Mailman.Email.parse!
-    |> IO.inspect
 
     case extract_group_id(to) do
       {:error, _} -> 
       Logger.info("Email: Received email, black hole")
       nil
-      {:ok, [group_id]} when is_integer(group_id) -> try_forward(group_id, email)
+      {:ok, [id, group_id]} when is_integer(group_id) -> 
+        try_forward(id, group_id, email)
     end
   end
 
-  def try_forward(group_id, email) do
+  def try_forward(id, group_id, email) do
     group = Survey.DesignGroup.get(group_id)
     if !group do
       Logger.info("Email: No such design group")
@@ -25,7 +25,7 @@ defmodule Mail.Receive do
         text: "You just sent an email to a design group that does not exist"}
       |> Mail.schedule_send
     else
-      user = Survey.User.get_by_email(email.from)    
+      user = Survey.User.get(id)
       if !user do
       Logger.info("Email: User not member of design group")
         %Mailman.Email{from: "mailer@mooc.encorelab.org", 
