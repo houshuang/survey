@@ -39,7 +39,6 @@ defmodule Survey.SurveyController do
   end
 
   defp clean_survey(survey) do
-    Logger.info(inspect(survey))
     survey
     |> proc_params
     |> Enum.filter(&not_empty/1)

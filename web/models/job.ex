@@ -56,7 +56,6 @@ defmodule Survey.Job do
   end
 
   def failed(job) do
-    Logger.warn("Failed job: #{inspect(job)}")
     %{ job | checked_out_pid: nil, checked_out: nil } 
     |> Repo.update!
   end
@@ -82,7 +81,7 @@ defmodule Survey.Job do
   end
 
   def update_and_kill(job) do
-    Logger.warn("Killing process for job: #{inspect(job)}")
+    Logger.warn("Killing process for job: #{job.id}")
     tries = (job.tries || 0) + 1
       %{ job | tries: tries, checked_out_pid: nil, checked_out: nil } 
     |> Repo.update!

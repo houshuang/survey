@@ -6,53 +6,46 @@ defmodule Mail.Receive do
     email = data
     |> Mailman.Email.parse!
 
-    case extract_group_id(to) do
+    case extract_user_group(to) do
+      {:ok, user, group} -> 
+        forward(user, group, email)
       {:error, _} -> 
-      Logger.info("Email: Received email, black hole")
-      nil
-      {:ok, [id, group_id]} when is_integer(group_id) -> 
-        try_forward(id, group_id, email)
+        Logger.info("Email: Received email, black hole")
+        nil
     end
   end
 
-  def try_forward(id, group_id, email) do
-    group = Survey.DesignGroup.get(group_id)
-    if !group do
-      Logger.info("Email: No such design group")
-      %Mailman.Email{from: "mailer@mooc.encorelab.org", 
-        to: email.from, 
-        subject: "No such design group", 
-        text: "You just sent an email to a design group that does not exist"}
-      |> Mail.schedule_send
-    else
-      user = Survey.User.get(id)
-      if !user do
-      Logger.info("Email: User not member of design group")
-        %Mailman.Email{from: "mailer@mooc.encorelab.org", 
-          to: email.from, 
-          subject: "Not member of design group", 
-          text: "No member of this design group has your email. Make sure you use the email that you 
-          registered with EdX to respond to messages."}
-        |> Mail.schedule_send
-      else
-        Logger.info("Email: Received valid group mail")
-        content = if email.html == "", do: email.text, else: email.html
-        Mail.send_group_email(user.design_group_id, user.id, user.nick, email.subject, 
-          content, false)
-      end
-    end
+  def forward(user, group, email) do
+    Logger.info("Email: Received valid group mail")
+
+    content = if email.html == "", do: email.text, else: email.html
+    content = "<b>From: #{user.nick}</b><p><br>" <> content 
+
+    Mail.send_group_email(user.design_group_id, 
+      user.id, user.nick, email.subject, content, false)
   end
 
-  def extract_group_id([to]) do
+  def extract_user_group([to]) do
     if String.contains?(to, "-design_group@mooc.encorelab.org") do
       hash = String.replace(to, "-design_group@mooc.encorelab.org", "")
-      Hashids.decode(@hashid, hash)
+      try do
+        [user_id, group_id] = Hashids.decode!(@hashid, hash)
+
+        group = Survey.DesignGroup.get(group_id)
+        if is_nil(group), raise: "MailReceive: No such design group"
+
+        user = Survey.User.get(user_id)
+        if is_nil(user), raise: "MailReceive: No such user" 
+        if user.design_group_id != group.id, raise: "User not member of group"
+
+        {:ok, user, group}
+
+      rescue e -> 
+        Logger.warn(inspect(e))
+        {:error, :failed}
+      end
     else
       {:error, :not_design_group}
     end
-  end
-
-  def group_address(id) do
-    hash = Hashids.encode(@hashid, id)
   end
 end

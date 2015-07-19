@@ -37,7 +37,7 @@ defmodule Survey.JobWorker do
         :ok      -> Job.completed(job)
         {:ok, _} -> Job.completed(job)
         x        -> 
-          Logger.warn("Job #{inspect([m, f, a])}: #{inspect(x)}")
+          Logger.warn("Job #{job.id}: #{inspect(x)}")
           Job.failed(job)
       end
 
