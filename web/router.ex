@@ -11,7 +11,7 @@ defmodule Survey.Router do
     plug ParamSession
     plug EnsureLti
     plug Plug.AccessLog,
-      format: @logformat, 
+      format: @logformat,
       file: "log/access_log"
     plug :accepts, ["html"]
     plug :fetch_flash
@@ -24,7 +24,7 @@ defmodule Survey.Router do
     plug ParamSession
     plug EnsureLti
     plug Plug.AccessLog,
-      format: @logformat, 
+      format: @logformat,
       file: "log/access_log"
     plug :accepts, ["html"]
     plug :fetch_flash
@@ -38,7 +38,7 @@ defmodule Survey.Router do
     plug :fetch_session
     plug VerifyAdmin
     plug Plug.AccessLog,
-      format: @logformat, 
+      format: @logformat,
       file: "log/access_log"
     plug :fetch_flash
     plug :accepts, ["html"]
@@ -51,7 +51,7 @@ defmodule Survey.Router do
       signing_salt: "LMvTyOc2"
     plug :fetch_session
     plug Plug.AccessLog,
-      format: @logformat, 
+      format: @logformat,
       file: "log/access_log"
     plug :fetch_flash
     plug :accepts, ["html"]
@@ -88,15 +88,15 @@ defmodule Survey.Router do
     get "/reflection", ReflectionController, :index
     post "/reflectionb", ReflectionController, :index_b
     get "/reflectionb", ReflectionController, :index_b
-    post "/reflectionb", ReflectionController, :index_c
-    get "/reflectionb", ReflectionController, :index_c
+    post "/reflectionc", ReflectionController, :index_c
+    get "/reflectionc", ReflectionController, :index_c
     get "/reflection/:id", ReflectionController, :index
     post "/reflection/:id", ReflectionController, :index
 
     # sig
-    get "/user/select_sig_freestanding", UserController, 
+    get "/user/select_sig_freestanding", UserController,
       :select_sig_freestanding
-    post "/user/select_sig_freestanding", UserController, 
+    post "/user/select_sig_freestanding", UserController,
       :select_sig_freestanding
 
     # review lesson designs
@@ -117,6 +117,8 @@ defmodule Survey.Router do
     get "/assessment", ReflectionController, :assessment
     post "/assessmentb", ReflectionController, :assessment_b
     get "/assessmentb", ReflectionController, :assessment_b
+    post "/assessmentc", ReflectionController, :assessment_c
+    get "/assessmentc", ReflectionController, :assessment_c
     post "/assessment/submit", ReflectionController, :assessment_submit
     get "/assessment/submit", ReflectionController, :assessment_submit
     post "/assessment/:id", ReflectionController, :assessment
@@ -154,7 +156,7 @@ defmodule Survey.Router do
     post "/review/cancel", ReviewController, :cancel
     post "/review/:id", ReviewController, :index
     get "/review/:id", ReviewController, :index
-    
+
   end
 
   scope "/", Survey do
@@ -181,7 +183,7 @@ defmodule Survey.Router do
     post "/report/reflections/text/:id/:qid", AdminController, :fulltext
 
     get "/cohorts", AdminController, :cohorts
-    
+
     get "/email/send_wk1", AdminController, :wk1
     get "/email/send_wk2", AdminController, :wk2
     # user info/debug
