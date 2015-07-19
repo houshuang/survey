@@ -12,7 +12,7 @@ defmodule Survey.Cache do
         %{id: id} -> id
         nil -> insert(blob)
       end
-    end
+    end)
   end
 
   defp insert(blob) do
