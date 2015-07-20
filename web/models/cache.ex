@@ -22,9 +22,8 @@ defmodule Survey.Cache do
   end
 
   def delete(id) do
-    Survey.Repo.get(Survey.Cache, id) |> Survey.Repo.delete!
+    Survey.Repo.delete_all(from f in Survey.Cache, where: f.id == ^id)
   end
-
 
   def get(id) do
     case Repo.get(Survey.Cache, id) do
