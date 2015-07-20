@@ -22,7 +22,7 @@ defmodule Survey.Cache do
   end
 
   def delete(id) do
-    Survey.Repo.get(Survey.Cache, id) |> Survey.Repo.delete
+    Survey.Repo.get(Survey.Cache, id) |> Survey.Repo.delete!
   end
 
 

@@ -70,7 +70,7 @@ defmodule Survey.Encore do
         # if has changed, delete old entry, update design_group
         if cache_id != old_cache_id do
           if !is_nil(old_cache_id) do
-            Survey.Cache.delete!(old_cache_id)
+            Survey.Cache.delete(old_cache_id)
           end
           %{ group | wiki_cache_id: cache_id } |> Survey.Repo.update!
         end
