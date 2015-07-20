@@ -1,6 +1,9 @@
 defmodule Survey.Cache do
   use Survey.Web, :model
   alias Survey.Repo
+  import Ecto.Query
+  require Ecto.Query
+  alias Survey.Cache
 
   schema "cache" do
     field :blob, Survey.Term
@@ -8,7 +11,8 @@ defmodule Survey.Cache do
 
   def store(blob) do
     {:ok, id} = Repo.transaction(fn ->
-      case Repo.get_by(Survey.Cache, blob: blob) do
+
+      case from(f in Cache, where: f.blob == ^blob, limit: 1) do
         %{id: id} -> id
         nil -> insert(blob)
       end
