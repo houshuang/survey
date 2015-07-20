@@ -43,9 +43,6 @@ config :logger, :error_mail,
   to_list: ["shaklev@gmail.com"],
   metadata: [:id]
 
-config :week,
-  current: 1
-
 config :quantum, cron: [
     "@hourly": fn ->
       Logger.info("Updating all wiki cache")
