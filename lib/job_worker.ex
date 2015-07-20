@@ -16,7 +16,7 @@ defmodule Survey.JobWorker do
   def work do
     GenServer.cast(:job_worker, :work)
   end
-  
+
   def clean do
     GenServer.cast(:job_worker, :clean)
   end
@@ -34,11 +34,11 @@ defmodule Survey.JobWorker do
       {m, f, a} = job.mfa
 
       case apply(m, f, a) do
-        :ok      -> Job.completed(job)
-        {:ok, _} -> Job.completed(job)
-        x        -> 
+        :ok      -> Job.completed(job.id)
+        {:ok, _} -> Job.completed(job.id)
+        x        ->
           Logger.warn("Job #{job.id}: #{inspect(x)}")
-          Job.failed(job)
+          Job.failed(job.id)
       end
 
       work
@@ -63,4 +63,4 @@ defmodule Survey.JobWorker do
     :erlang.send_after(@delay_clean, self, :clean)
     {:noreply, []}
   end
-end 
+end

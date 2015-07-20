@@ -50,12 +50,13 @@ defmodule Survey.Job do
     Repo.get(Job, id)
   end
 
-  def completed(job) do
+  def completed(id) do
     Logger.info("Completed job #{job.id}")
-    Repo.delete!(job)
+    Repo.delete_all(from f in Survey.Job, where f.id == ^id)
   end
 
-  def failed(job) do
+  def failed(id) do
+    job = Job.get(id)
     %{ job | checked_out_pid: nil, checked_out: nil }
     |> Repo.update!
   end
