@@ -1,0 +1,86 @@
+<!doctype html>
+<html class="no-js" lang="en-us">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Review Design Group</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <!-- Place favicon.ico in the root directory -->
+
+        <script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
+        <link rel="stylesheet" href="/css/normalize.css">
+
+        <script type="text/javascript" src="/js/jquery-ui.min.js"></script>
+        <link rel="stylesheet" href="/css/jquery-ui-collab.css">
+        <link rel="stylesheet" href="/css/reset.css">
+        <link rel="stylesheet" href="/css/review-main.css">
+        <link rel="stylesheet" href="/css/review-chat.css">
+
+
+        <script src="/js/modernizr-2.8.3.min.js"></script>
+        <script src="/js/lodash.js"></script>
+        <script src="/js/review.js"></script>
+ <script>
+   session = '<%= raw ParamSession.gen_cookie(@conn) %>'
+     $('document').ready(function() {
+    $( "#tabs" ).tabs();
+    $("#tabs").show();
+  })
+        </script>
+    </head>
+    <body>
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+<div class="top">
+<h2>Review Design Group</h2>
+<h1>INQ101x - Teaching with Technology and Inquiry</h1>
+</div>
+
+<div class="content">
+
+<div class="groupname">
+
+    <h3 class="title"><%= @group.title %></h3>
+
+    <div class='stepsController cancel right'><a href='/wiki-review?session=<%= ParamSession.gen_cookie(@conn) %>'>Reroll and review another group</a></div>
+
+</div>
+<!-- --------------------------------------------------------- --!>
+<div class="sidebar" name="sidebar">
+  <span id="top"></span>
+    <div class="container">
+      <div class="header">
+    </div></div>
+  <div class='blocks'>
+  <%= form_for @conn, review_path(@conn, :wiki_submit),
+  [name: :search, target: "_parent"], fn _ -> %>
+                <%= raw ParamSession.form_session @conn %>
+                <%= raw @form %>
+                <input type=hidden name=id value=<%= @group.id %>>
+<div class='stepsController submit right'><a href='#'>Submit your comments</a></div>
+   <% end %>
+</div>
+</div>
+<!-- --------------------------------------------------------- --!>
+
+<div class="maincontent">
+
+<%= if @submitted == true do %>
+    <p class='alert alert-success'>
+    Thank you for submitting a review, you have already been graded. Feel free to review more groups.</p><% end %>
+            <h3>Topics</h3><p id='topics'><span class="category"><%= @group.description && @group.description["topics"] %></span></p>
+                <h3>Short description of the basic inquiry approach</h3>
+                <p id='description'><%= @group.description && @group.description["description"] %></p>
+
+                <h3>How can technology help students to build their own ideas and collaborate with peers?</h3>
+                <p id='howtech'><%= @group.description && @group.description["howtech"] %></p>
+            <hr>
+
+<h3>Wiki content</h3>
+<%= raw @html %>
+</body>
+</html>

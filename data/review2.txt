@@ -1,0 +1,11 @@
+# Feedback to design group
+para,Last week, The design teams worked on defining their basic learning goals, topics, possible technologies and approaches - and we gave them feedback.   Now, we would like to help them think about collaboration.  How are their lessons helping students interact with peers and discuss ideas?  What advice or concerns do you have for this team?  How could they add greater levels of productive peer interaction into their lesson?
+textbox,How is this lesson incorporating collaboration?  If it is not, can you help think of any ways the designers could add collaboration?
+meta
+	minwords=10
+textbox,How could collaboration help improve students’ learning in this lesson?
+meta
+	minwords=10
+textbox,What should the designers keep in mind, as they think about weaving collaboration into their lesson?  Will it take more time, or add possible confusions for students?
+meta
+	minwords=10

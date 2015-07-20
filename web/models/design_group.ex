@@ -27,6 +27,22 @@ defmodule Survey.DesignGroup do
     |> Repo.all
   end
 
+  def get_random_wiki(sig) do
+    :random.seed(:os.timestamp)
+    IO.inspect(sig)
+    possible = (from f in DesignGroup,
+    where: not is_nil(f.wiki_cache_id) and
+    f.sig_id == ^sig,
+    select: [f.id, f.wiki_cache_id])
+    |> Repo.all
+    if Enum.empty?(possible) do
+      nil
+    else
+      [id, cache_id] = Enum.at(possible,
+        :random.uniform(Enum.count(possible)) - 1)
+      {get(id), Survey.Cache.get(cache_id)}
+    end
+  end
 
   def submitted_count(uid) do
     (from f in DesignGroup,

@@ -6,6 +6,7 @@ defmodule Survey.ReviewController do
   require Logger
   import Prelude
   @form Survey.HTML.Survey.gen_survey("data/review.txt", :f)
+  @form2 Survey.HTML.Survey.gen_survey("data/review2.txt", :f)
 
   def index(conn, params = %{"id" => id}) do
     group = DesignGroup.get(id)
@@ -31,6 +32,33 @@ defmodule Survey.ReviewController do
     } |> Repo.insert!
     Survey.Grade.submit_grade(conn, "review_wk1", 1.0)
     ParamSession.redirect(conn, "/design_groups/select?submitted=true")
+  end
+
+  def wiki(conn, params) do
+    user = conn.assigns.user
+    submitted = if params["submitted"], do: true, else: false
+    case DesignGroup.get_random_wiki(user.sig_id) do
+      nil ->
+        html conn, "No design groups ready in your SIG yet. Please
+        try again later."
+      {group, html} ->
+        conn
+        |> put_layout(false)
+        |> render "index_wiki.html", form: @form2, html: html, group: group,
+          submitted: submitted
+    end
+  end
+
+  def wiki_submit(conn, params) do
+    Logger.info("Submitted review for week 3")
+    %Review{
+      user_id: conn.assigns.user.id,
+      design_group_id: string_to_int_safe(params["id"]),
+      week: 2,
+      review: params["f"]
+    } |> Repo.insert!
+    Survey.Grade.submit_grade(conn, "review_wk2", 1.0)
+    ParamSession.redirect(conn, "/wiki-review?submitted=true")
   end
 end
 

@@ -157,6 +157,10 @@ defmodule Survey.Router do
     post "/review/:id", ReviewController, :index
     get "/review/:id", ReviewController, :index
 
+    # wiki review
+    post "wiki-review", ReviewController, :wiki
+    get "wiki-review", ReviewController, :wiki
+    post "wiki-review/submit", ReviewController, :wiki_submit
   end
 
   scope "/", Survey do
