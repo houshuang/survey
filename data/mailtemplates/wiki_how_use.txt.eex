@@ -1,0 +1,18 @@
+Hello designers,
+
+Thanks again for your willingness to try this challenging task. We hope that you have found a team with peers. Please remember that if you are alone in your team, you can feel free to work alone or you could try to join another team. If you have not heard from your teammates, you can use the "email" button in the workbench to reach out to them. We are doing our best to design technologies that can support your work, but we know these aren't perfect, and there are a few different platforms working together (EdX, Etherpad, Wiki) - so we appreciate your efforts!
+
+For anyone who has experienced difficulties or confusions, I've made this video to go over some of the features, and to show you what it looks like to move from the Etherpad to the Wiki. This is completely optional, but it does discuss some of the technical features we've put in, and gives some reasoning behind those features. https://www.youtube.com/watch?v=eUC_6dU-7FQ
+
+This week, we will begin the hard work of design - beyond thinking about the learning goals and main ideas, we will start working on the detailed lessons and technology features. Good luck, and please don't hesitate to add any questions to the Design Strand discussion board.
+
+Go to your design group: <%= Mail.gen_url(id, basename <> "/collab") %>
+
+Thanks again,
+Jim
+
+Please don't respond to this email, replies will not be received. Add a message in the Tech issues thread in the forum, if you have any concerns.
+
+Unsubscribe from design group notifications: <%= Mail.gen_url(id, basename <> "/email/unsubscribe/collab") %>
+
+Unsubscribe from all personalized emails: <%= Mail.gen_url(id, basename <> "/email/unsubscribe/all") %>
