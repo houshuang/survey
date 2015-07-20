@@ -16,6 +16,8 @@ defmodule Survey.CollabController do
     else
       unless @wiki_disabled do
         ensure_wiki(user)
+        user = conn.assigns.user
+        group = DesignGroup.get_by_user(user.id)
         wiki_url = Survey.User.gen_wiki_url(user.id)
       else
         wiki_url = ""
@@ -27,12 +29,12 @@ defmodule Survey.CollabController do
       others = members
       |> Enum.filter(fn [x, _] -> x != user.id end)
 
-      Mail.send_notification(group.design_group_id, user.nick, 
+      Mail.send_notification(group.design_group_id, user.nick,
         group.design_group.title, others)
       conn
       |> put_layout(false)
-      |> render "index.html", user: user, 
-        group: group.design_group, 
+      |> render "index.html", user: user,
+        group: group.design_group,
         etherpad: etherpad,
         old_etherpads: old_etherpads,
         members: members,
@@ -49,7 +51,7 @@ defmodule Survey.CollabController do
 
   def email(conn, params) do
     user = conn.assigns.user
-    Mail.send_group_email(user.design_group_id, user.id, user.nick, params["subject"], params["content"]) 
+    Mail.send_group_email(user.design_group_id, user.id, user.nick, params["subject"], params["content"])
     Logger.info("#{user.id} sent group mail")
     json conn, "success"
   end
@@ -63,8 +65,6 @@ defmodule Survey.CollabController do
     if !(group.wiki_url) do
       Survey.Encore.add_group_page(group.id)
     end
-    user = Survey.User.get(user.id)
-    group = Survey.DesignGroup.get(user.design_group_id)
   end
 end
 

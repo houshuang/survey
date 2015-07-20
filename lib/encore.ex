@@ -1,6 +1,8 @@
 defmodule Survey.Encore do
   use ExActor.Strict, export: :encore
   import Prelude
+  import Ecto.Query
+  require Ecto.Query
 
   @url Application.get_env(:confluence, :url)
   @wk1 String.strip(File.read!("data/wikitemplates/wk1.txt"))
@@ -44,7 +46,7 @@ defmodule Survey.Encore do
     req = case group.wiki_url do
       nil -> raise "No URL for this group"
       "https://wiki.mooc.encorelab.org/display/MOOC/" <> rest ->
-        ["MOOC", rest]
+        ["MOOC", URI.decode_www_form(rest)]
       "https://wiki.mooc.encorelab.org/pages/viewpage.action?pageId=" <> rest ->
         [rest]
       x -> raise "Mismatch in URL: #{x}"
@@ -55,6 +57,37 @@ defmodule Survey.Encore do
       x -> x
     end
     |> reply
+  end
+
+  def update_wiki_cache(id) do
+    case get_page(id) do
+      {:ok, txt} ->
+        group = Survey.DesignGroup.get(id)
+        old_cache_id = group.wiki_cache_id
+        cache_id = Survey.Cache.store(txt)
+
+        # if page has not changed, do nothing
+        # if has changed, delete old entry, update design_group
+        if cache_id != old_cache_id do
+          if !is_nil(old_cache_id) do
+            Survey.Cache.delete!(old_cache_id)
+          end
+          %{ group | wiki_cache_id: cache_id } |> Survey.Repo.update!
+        end
+        {:ok, :done}
+
+      x -> x
+    end
+  end
+
+  def update_all_wiki_cache do
+    (from f in Survey.DesignGroup,
+    where: not is_nil(f.wiki_url),
+    select: f.id)
+    |> Survey.Repo.all
+    |> Enum.map(fn id ->
+      Survey.Job.add({Survey.Encore, :update_wiki_cache, [id]})
+    end)
   end
 
   def gen_password, do: :crypto.rand_bytes(20) |> safe_encode_base64

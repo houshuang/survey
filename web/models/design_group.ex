@@ -12,20 +12,21 @@ defmodule Survey.DesignGroup do
     field :description, Survey.JSON
     field :title, :string
     field :wiki_url, :string
+    field :wiki_cache_id, :integer
     belongs_to :sig, Survey.SIG
     belongs_to :user, Survey.User
     timestamps updated_at: false
   end
 
   def get_emails(id) do
-    (from f in User, 
+    (from f in User,
     where: f.design_group_id == ^id
-    and ((is_nil(f.unsubscribe) or 
+    and ((is_nil(f.unsubscribe) or
     fragment("not ? && ?", f.unsubscribe, ^["all", "collab"]))),
     select: [f.id, f.edx_email])
     |> Repo.all
   end
-    
+
 
   def submitted_count(uid) do
     (from f in DesignGroup,
@@ -95,7 +96,7 @@ defmodule Survey.DesignGroup do
   "WITH u AS (SELECT nick, design_group_id AS design, id FROM users WHERE design_group_id IS NOT NULL) SELECT d.sig_id, u.design, d.title, u.nick, u.id  FROM u FULL JOIN designgroups d ON d.id = u.design;")
   |> Enum.group_by(fn {sig, design, title, nick, id} -> sig end)
   |> Enum.map(fn {y, x} -> {y, Enum.group_by(x, fn {sig, design, title, nick, id} -> design end)} end)
-    
+
   end
 
 end

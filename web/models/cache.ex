@@ -21,6 +21,11 @@ defmodule Survey.Cache do
     id
   end
 
+  def delete(id) do
+    Survey.Repo.get(Survey.Cache, id) |> Survey.Repo.delete
+  end
+
+
   def get(id) do
     case Repo.get(Survey.Cache, id) do
       %{blob: blob} -> blob

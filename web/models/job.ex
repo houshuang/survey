@@ -33,7 +33,7 @@ defmodule Survey.Job do
           is_nil(f.checked_out) and
           (f.tries < ^default.max_tries or is_nil(f.tries)) and
           not is_nil(f.mfa),
-          limit: 1) 
+          limit: 1)
       |> Repo.one
       if job do
         job = %{ job | checked_out: time,
@@ -56,7 +56,7 @@ defmodule Survey.Job do
   end
 
   def failed(job) do
-    %{ job | checked_out_pid: nil, checked_out: nil } 
+    %{ job | checked_out_pid: nil, checked_out: nil }
     |> Repo.update!
   end
 
@@ -83,11 +83,11 @@ defmodule Survey.Job do
   def update_and_kill(job) do
     Logger.warn("Killing process for job: #{job.id}")
     tries = (job.tries || 0) + 1
-      %{ job | tries: tries, checked_out_pid: nil, checked_out: nil } 
+      %{ job | tries: tries, checked_out_pid: nil, checked_out: nil }
     |> Repo.update!
     :erlang.exit(job.checked_out_pid, :kill)
   end
-  
+
   def seconds_now do
     Timex.Time.to_secs(:erlang.now)
     |> Float.floor
