@@ -7,9 +7,9 @@ defmodule Mail.Receive do
     |> Mailman.Email.parse!
 
     case extract_user_group(to) do
-      {:ok, user, group} -> 
+      {:ok, user, group} ->
         forward(user, group, email)
-      {:error, _} -> 
+      {:error, _} ->
         Logger.info("Email: Received email, black hole")
         nil
     end
@@ -19,9 +19,8 @@ defmodule Mail.Receive do
     Logger.info("Email: Received valid group mail")
 
     content = if email.html == "", do: email.text, else: email.html
-    content = "<b>From: #{user.nick}</b><p><br>" <> content 
 
-    Mail.send_group_email(user.design_group_id, 
+    Mail.send_group_email(user.design_group_id,
       user.id, user.nick, email.subject, content, false)
   end
 
@@ -35,12 +34,12 @@ defmodule Mail.Receive do
         if is_nil(group), raise: "MailReceive: No such design group"
 
         user = Survey.User.get(user_id)
-        if is_nil(user), raise: "MailReceive: No such user" 
+        if is_nil(user), raise: "MailReceive: No such user"
         if user.design_group_id != group.id, raise: "User not member of group"
 
         {:ok, user, group}
 
-      rescue e -> 
+      rescue e ->
         Logger.warn(inspect(e))
         {:error, :failed}
       end
