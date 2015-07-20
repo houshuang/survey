@@ -18,7 +18,8 @@ defmodule Survey.Mixfile do
   def application do
     [mod: {Survey, []},
       applications: [:phoenix, :phoenix_html, :cowboy, :logger,
-        :phoenix_ecto, :postgrex, :dogstatsd, :httpoison, :plug_accesslog ]]
+        :phoenix_ecto, :postgrex, :dogstatsd, :httpoison, :plug_accesslog,
+        :quantum ]]
   end
 
   # Specifies which paths to compile per environment
@@ -51,7 +52,8 @@ defmodule Survey.Mixfile do
       {:eiconv, github: "zotonic/eiconv"},
       {:hashids, "~> 2.0"},
       {:exactor, "~> 2.1.2"},
-      {:uuid, "~> 1.0"}
+      {:uuid, "~> 1.0"},
+      {:quantum, ">= 1.3.0"}
     ]
   end
 end

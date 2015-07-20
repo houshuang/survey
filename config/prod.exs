@@ -1,5 +1,5 @@
 use Mix.Config
-
+require Logger
 # For production, we configure the host to read the PORT
 # from the system environment. Therefore, you will need
 # to set PORT=80 before running your server.
@@ -28,11 +28,11 @@ config :survey, Survey.Endpoint,
 #
 # Where those two env variables point to a file on
 # disk for the key and cert.
-config :logger, 
+config :logger,
   backends: [:console, Logger.Backends.ErrorMail]
 
 # Do not print debug messages in production
-config :logger, :console, 
+config :logger, :console,
   level: :info,
   format: "$date $time $metadata[$level] $message\n",
   metadata: [:id]
@@ -45,6 +45,13 @@ config :logger, :error_mail,
 
 config :week,
   current: 1
+
+config :quantum, cron: [
+    "@hourly": fn ->
+      Logger.info("Updating all wiki cache")
+      Survey.Encore.update_all_wiki_cache
+    end
+]
 
 # ## Using releases
 #
