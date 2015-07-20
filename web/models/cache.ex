@@ -16,6 +16,7 @@ defmodule Survey.Cache do
       case from(f in Cache, where: f.blob == ^blobterm, limit: 1) |> Repo.all do
         %{id: id} -> id
         nil -> insert(blob)
+        [] -> insert(blob)
       end
     end)
     id
