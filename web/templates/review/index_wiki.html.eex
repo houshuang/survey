@@ -81,6 +81,6 @@
             <hr>
 
 <h3>Wiki content</h3>
-<%= raw @html %>
+<%= raw @html || "" %>
 </body>
 </html>
