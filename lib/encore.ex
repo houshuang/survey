@@ -2,7 +2,7 @@ defmodule Survey.Encore do
   use ExActor.Strict, export: :encore
   import Prelude
 
-  @url Application.get_env(:confluence, :url) 
+  @url Application.get_env(:confluence, :url)
   @wk1 String.strip(File.read!("data/wikitemplates/wk1.txt"))
   @disabled Application.get_env(:confluence, :disabled)
 
@@ -18,7 +18,7 @@ defmodule Survey.Encore do
       name: String.downcase(user.edx_email),
       fullname: user.nick}
     case make_request("addUser", [userdef, pwd], token) do
-      h = {:ok, _} -> 
+      h = {:ok, _} ->
         %{ user | wiki_pwd: pwd } |> Survey.Repo.update!
         reply(h)
       h -> reply(h)
@@ -31,24 +31,36 @@ defmodule Survey.Encore do
       title: "#{group.id}: #{group.title}",
       space: "MOOC"}
     case make_request("storePage", page, token) do
-      {:ok, resp} -> 
+      {:ok, resp} ->
         %{ group | wiki_url: String.replace(resp["url"], "http:", "https:") } |> Survey.Repo.update!
         {:ok, resp}
-      x -> x 
+      x -> x
     end
     |> reply
   end
 
   defcall get_page(id), state: token do
-    if is_integer(id), do: id = Integer.to_string(id)
-    make_request("getPage", id, token)
+    group = Survey.DesignGroup.get(id)
+    req = case group.wiki_url do
+      nil -> raise "No URL for this group"
+      "https://wiki.mooc.encorelab.org/display/MOOC/" <> rest ->
+        ["MOOC", rest]
+      "https://wiki.mooc.encorelab.org/pages/viewpage.action?pageId=" <> rest ->
+        [rest]
+      x -> raise "Mismatch in URL: #{x}"
+    end
+    IO.inspect(req)
+    case make_request("getPage", req, token) do
+      {:ok, page} -> {:ok, page["content"]}
+      x -> x
+    end
     |> reply
   end
 
   def gen_password, do: :crypto.rand_bytes(20) |> safe_encode_base64
 
   def make_request(method, param, token) do
-    request_body = %XMLRPC.MethodCall{method_name: "confluence2." <> method,  
+    request_body = %XMLRPC.MethodCall{method_name: "confluence2." <> method,
       params: List.flatten([token, param])}
     |> XMLRPC.encode!
     |> web_request
@@ -56,8 +68,8 @@ defmodule Survey.Encore do
 
   def get_token do
     url = Application.get_env(:confluence, :url)
-    request_body = %XMLRPC.MethodCall{method_name: "confluence2.login", 
-      params: [Application.get_env(:confluence, :username), 
+    request_body = %XMLRPC.MethodCall{method_name: "confluence2.login",
+      params: [Application.get_env(:confluence, :username),
       Application.get_env(:confluence, :password)]}
     |> XMLRPC.encode!
     |> web_request
