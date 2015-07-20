@@ -12,7 +12,8 @@ defmodule Survey.Cache do
   def store(blob) do
     {:ok, id} = Repo.transaction(fn ->
 
-      case from(f in Cache, where: f.blob == ^blob, limit: 1) do
+      blobterm = :erlang.term_to_binary(blob)
+      case from(f in Cache, where: f.blob == ^blobterm, limit: 1) |> Repo.all do
         %{id: id} -> id
         nil -> insert(blob)
       end
