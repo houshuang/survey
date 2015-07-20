@@ -51,8 +51,8 @@ defmodule Survey.Job do
   end
 
   def completed(id) do
-    Logger.info("Completed job #{job.id}")
-    Repo.delete_all(from f in Survey.Job, where f.id == ^id)
+    Logger.info("Completed job #{id}")
+    Repo.delete_all(from f in Survey.Job, where: f.id == ^id)
   end
 
   def failed(id) do
