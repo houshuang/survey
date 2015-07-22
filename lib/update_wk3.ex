@@ -21,6 +21,6 @@ How will your lesson allow for students to learn from their peers?  How will you
 
   def change_all_groups do
     Survey.DesignGroup.get_all_active
-    |> Enum.map(fn x -> Survey.Job.add({Survey.Update, :change_group, [x]}) end)
+    |> Enum.map(fn x -> Survey.Job.add({Survey.Update.Wk3, :change_group, [x]}) end)
   end
 end
