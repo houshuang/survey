@@ -4,7 +4,7 @@ defmodule Survey.CollabController do
   alias Survey.Etherpad
   require Logger
 
-  @template File.read!("data/templates/wk2.txt")
+  @template File.read!("data/templates/wk3.txt")
   @wiki_disabled Application.get_env(:confluence, :disabled)
 
   def index(conn, _) do
@@ -23,8 +23,8 @@ defmodule Survey.CollabController do
         wiki_url = ""
       end
       members = DesignGroup.get_members(group.design_group_id)
-      old_etherpads = Etherpad.past_etherpads(group.design_group_id)
       etherpad = Etherpad.ensure_etherpad(group.design_group_id)
+      old_etherpads = Etherpad.past_etherpads(group.design_group_id)
 
       others = members
       |> Enum.filter(fn [x, _] -> x != user.id end)
