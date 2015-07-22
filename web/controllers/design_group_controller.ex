@@ -13,8 +13,8 @@ defmodule Survey.DesignGroupController do
       {title, form} = Map.pop(form, "title")
 
       req = %DesignGroup{
-        title: title, 
-        description: form, 
+        title: title,
+        description: form,
         sig_id: user.sig_id,
         user_id: user.id }
       |> DesignGroup.insert_once
@@ -23,7 +23,7 @@ defmodule Survey.DesignGroupController do
     already = DesignGroup.submitted_count(user.id)
     if already && already > 0 do
       url = ParamSession.gen_url(conn, "/design_groups/select")
-      conn = put_flash(conn, :info, 
+      conn = put_flash(conn, :info,
         "Thank you for submitting #{already} #{resource_word(already)}. You are
         welcome to submit more ideas, or move on to <a href='#{url}'
         target='_blank'>select a design group to join</a>, and begin
@@ -61,7 +61,7 @@ defmodule Survey.DesignGroupController do
   end
 
   def select_detail(conn, params) do
-    userid = conn.assigns.user.id 
+    userid = conn.assigns.user.id
     id = string_to_int_safe(params["id"])
     embedded = if params["embedded"], do: true, else: false
     review = if params["review"], do: true, else: false
@@ -74,7 +74,7 @@ defmodule Survey.DesignGroupController do
       userlen = length(DesignGroup.get_members(design.id || 0))
       conn
       |> put_layout(false)
-      |> render "detail.html", design: design, userlen: userlen, 
+      |> render "detail.html", design: design, userlen: userlen,
         embedded: embedded, already: already, mine: mine, review: review
     end
   end
@@ -100,7 +100,7 @@ defmodule Survey.DesignGroupController do
 
     submitted = if params["submitted"], do: true, else: false
     if submitted do
-      text = "Thank you for submitting your review, you have already been graded. " <> 
+      text = "Thank you for submitting your review, you have already been graded. " <>
         "Feel free to choose another group to review.<p>" <> text
     end
 
@@ -112,13 +112,13 @@ defmodule Survey.DesignGroupController do
     id = string_to_int_safe(params["id"])
     Logger.info("Joined design group #{id}")
     %{ conn.assigns.user | design_group_id: id } |> Repo.update!
-    
+
     ParamSession.redirect(conn, "/collab")
   end
 
   # review a group
   def submit(conn, params = %{"review" => _, "id" => id}) do
-    
+
     ParamSession.redirect(conn, "/review/#{id}")
   end
 
@@ -141,12 +141,31 @@ defmodule Survey.DesignGroupController do
   end
 
   def comments(conn, params) do
+    week = string_to_int_safe(params["week"])
+    questions =
+    %{1 => [
+        "What are the strengths of this lesson idea?",
+        "Have you ever heard about any other inquiry designs that addressed this topic?",
+        "Can you think of any technology tools or environments that could be a
+        good fit to this lesson?",
+        "Any other suggestions for this design team?"
+      ],
+    2 => [
+      "How is this lesson incorporating collaboration? If it is not, can you help
+      think of any ways the designers could add collaboration?",
+      "How could collaboration help improve students’ learning in this lesson?",
+      "What should the designers keep in mind, as they think about weaving
+      collaboration into their lesson?  Will it take more time, or add possible
+      confusions for students?"
+    ]}
+
     group = conn.assigns.user.design_group_id
     if !group do
       html conn, "You are not part of a design group"
     else
       comments = Survey.Review.get_by_group(group)
-      render conn, "comments.html", comments: comments
+      render conn, "comments.html", all_comments: comments, all_questions: questions,
+        week: week
     end
   end
 end

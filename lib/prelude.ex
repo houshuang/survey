@@ -14,6 +14,7 @@ defmodule Prelude do
       case y do
         y when is_integer(y) -> y
         y when is_binary(y) -> String.to_integer(y)
+        nil -> 0
       end
     rescue
       ArgumentError -> 0
@@ -30,19 +31,19 @@ defmodule Prelude do
     Enum.map(map, fn {k,v} -> {safe_to_string(k), v} end)
     |> Enum.into(%{})
   end
-  
+
   def safe_to_atom(x) when is_atom(x), do: x
   def safe_to_atom(x) when is_binary(x), do: String.to_atom(x)
   def safe_to_string(x) when is_atom(x), do: Atom.to_string(x)
   def safe_to_string(x) when is_binary(x), do: x
-  
+
 
   def append_map(map, key, val) do
     Map.update(map, key, [val], fn x -> List.insert_at(x, 0, val) end)
   end
 
 
-  # Takes an array of params from a form. Any params of the form steam|A, steam|M 
+  # Takes an array of params from a form. Any params of the form steam|A, steam|M
   # are concatenated into a list, like steam = ["A", "M"], other params are left alone
   def proc_params(x) when is_map(x), do: Enum.reduce(x, %{}, &proc_param/2)
 
@@ -53,7 +54,7 @@ defmodule Prelude do
       [part, rest] = String.split(sel, "|", parts: 2)
       append_map(acc, part, rest)
     else
-      Map.put(acc, sel, val) 
+      Map.put(acc, sel, val)
     end
   end
 

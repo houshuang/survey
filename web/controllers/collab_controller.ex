@@ -23,8 +23,8 @@ defmodule Survey.CollabController do
         wiki_url = ""
       end
       members = DesignGroup.get_members(group.design_group_id)
-      etherpad = Etherpad.ensure_etherpad(group.design_group_id)
       old_etherpads = Etherpad.past_etherpads(group.design_group_id)
+      etherpad = Etherpad.ensure_etherpad(group.design_group_id)
 
       others = members
       |> Enum.filter(fn [x, _] -> x != user.id end)
@@ -39,7 +39,8 @@ defmodule Survey.CollabController do
         old_etherpads: old_etherpads,
         members: members,
         wiki_url: wiki_url,
-        template: @template
+        template: @template,
+        max_review: Survey.Review.max_review
     end
   end
 

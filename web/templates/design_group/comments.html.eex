@@ -1,31 +1,26 @@
 <h1>Design group comments</h1>
-<P>This page will be continually updates as people add their comments - if there are not many comments (or any) yet, come back in a few days</P>
 <p><br>
-<%= if @comments["1"] && !Enum.empty?(@comments["1"]) do %>
-<h3>What are the strengths of this lesson idea?</h3>
-<%= for point <- @comments["1"] || [] do %>
+<%
+questions = @all_questions[@week]
+comments = @all_comments[@week]
+%>
+<%= if is_nil(comments) do %>
+    <P>This page will be continually updates as people add their comments - you have not received any comments during week <%= @week %> yet, please check back in a few days</P>
+
+    <%= else %>
+<%= for {question, index} <- Enum.with_index(questions) do %>
+    <%
+comment = Map.get(comments, index + 1, [])
+question = Enum.at(questions, index)
+%>
+<%= if comment && !Enum.empty?(comment) do %>
+    <h3><%= question %></h3>
+<%= for point <- comment || [] do %>
+    <%= if String.strip(point) != "" do %>
     <li><%= point %></li>
 <% end %>
 <% end %>
 <p><br>
-<%= if @comments["2"] && !Enum.empty?(@comments["2"]) do %>
-<h3>Have you ever heard about any other inquiry designs that addressed this topic?</h3>
-<%= for point <- @comments["2"] || [] do %>
-    <li><%= point %></li>
 <% end %>
 <% end %>
-<p><br>
-<%= if @comments["3"] && !Enum.empty?(@comments["3"]) do %>
-    <h3>Can you think of any technology tools or environments that could be a good fit to this lesson?</h3> 
-<%= for point <- @comments["3"] || [] do %>
-    <li><%= point %></li>
 <% end %>
-<% end %>
-<p><br>
-<%= if @comments["4"] && !Enum.empty?(@comments["4"]) do %>
-<h3>Any other suggestions for this design team?</h3>
-<%= for point <- @comments["4"] || [] do %>
-    <li><%= point %></li>
-<% end %>
-<% end %>
-<h3></h3>

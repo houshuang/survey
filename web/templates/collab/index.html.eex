@@ -13,7 +13,7 @@
 
         <script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
         <link rel="stylesheet" href="css/normalize.css">
-        
+
         <script type="text/javascript" src="/js/jquery-ui.min.js"></script>
         <link rel="stylesheet" href="/css/jquery-ui-collab.css">
         <link rel="stylesheet" href="/css/reset.css">
@@ -21,20 +21,20 @@
         <link rel="stylesheet" href="/css/modal.css">
         <link rel="stylesheet" href="/css/chat.css">
 
-        
+
         <script src="/js/modernizr-2.8.3.min.js"></script>
-        
+
         <script>
+session = '<%= ParamSession.gen_cookie(@conn) %>'
 $('document').ready(function() {
-  console.log("tabs")
   $( "#tabs" ).tabs();
   $("#tabs").show();
-  etherpad_html = '<iframe class="ui-tabs-panel ui-widget-content" src="https://etherpad.mooc.encorelab.org/p/<%= @etherpad %>?userName=<%= @user.nick %>"></iframe>'  
+  etherpad_html = '<iframe class="ui-tabs-panel ui-widget-content" src="https://etherpad.mooc.encorelab.org/p/<%= @etherpad %>?userName=<%= @user.nick %>"></iframe>'
 
-  $("#etherpad-load").on("click", function() { 
-    $("#etherpad-iframe").html(etherpad_html); return false; 
+  $("#etherpad-load").on("click", function() {
+    $("#etherpad-iframe").html(etherpad_html); return false;
   })
-  $("#etherpad-select").on('change', function() { 
+  $("#etherpad-select").on('change', function() {
     hash = $(this).find(':selected').val()
     if(hash!="") {
       url = "https://etherpad.mooc.encorelab.org/p/" + hash
@@ -42,7 +42,18 @@ $('document').ready(function() {
       $("#etherpad-iframe").html(html)
       return false;
     }
-  })    
+  })
+  $("#review-select").on('change', function() {
+    week = $(this).find(':selected').val()
+      console.log(week)
+    if(week != "") {
+      url = "/design_groups/comments?week=" + week + "&session=" + session
+      html = '<iframe class="ui-tabs-panel ui-widget-content" src="'+ url +'"></iframe>'
+      console.log(url,html)
+      $("#detail_iframe").html(html)
+      return false;
+    }
+  })
 })
         </script>
     </head>
@@ -134,7 +145,7 @@ $('document').ready(function() {
 <div class="maincontent">
 <div id="tabs" class="ui-tabs ui-widget ui-widget-content" style="display: none;">
 
-<!--To add new tabs, simply add a <li> in this list, using the same structure and following the link sequence. Then, add a new <iframe>, also using the same structure.--> 
+<!--To add new tabs, simply add a <li> in this list, using the same structure and following the link sequence. Then, add a new <iframe>, also using the same structure.-->
 
     <ul style="padding: 0; margin: 0;" class="ui-tabs-nav ui-helper-reset ui-helper-clearfix">
         <li class="context-tab ui-state-default"><a href="#ui-tabs-1">Welcome</a></li>
@@ -150,10 +161,16 @@ $('document').ready(function() {
 </form>
 
 
-<div id="ui-tabs-1"> 
+<div id="ui-tabs-1">
   <%= raw @template %>
-  </div><div id="ui-tabs-2"> 
-<iframe id="detail_iframe" src="<%= ParamSession.gen_url(@conn, design_group_path(@conn, :comments)) %>"></iframe>                    </div>
+  </div><div id="ui-tabs-2">
+  <select id="review-select">
+    <option value="">Select past weeks</option>
+    <%= for week <- 1..@max_review do %>
+    <option value='<%= week %>'>Week <%= week %></option>
+    <%= end %>
+  </select>
+  <div id="detail_iframe"><iframe src="<%= ParamSession.gen_url(@conn, design_group_path(@conn, :comments, [week: @max_review])) %>"></iframe>                </div>    </div>
 
 
 <div id="ui-tabs-3">
@@ -163,7 +180,7 @@ $('document').ready(function() {
     <option value='<%= etherpad.hash %>'>Week <%= etherpad.week %></option>
     <%= end %>
   </select>
-  
+
   <div id="etherpad-iframe"><a href="#" id="etherpad-load">Click here to load this week's Etherpad</a></div></div>
 <div id="ui-tabs-4"><a href="#"><iframe src="<%= @wiki_url %>"></iframe></a></div>
 
