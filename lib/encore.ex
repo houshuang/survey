@@ -4,6 +4,7 @@ defmodule Survey.Encore do
   import Ecto.Query
   require Ecto.Query
 
+  @external_resource "data/wikitemplates/wk1.txt"
   @url Application.get_env(:confluence, :url)
   @wk1 String.strip(File.read!("data/wikitemplates/wk1.txt"))
   @disabled Application.get_env(:confluence, :disabled)
@@ -22,43 +23,41 @@ defmodule Survey.Encore do
     reply(token)
   end
 
-  defcall add_user(id), state: token do
+  def add_user(id) do
     pwd = gen_password
     user = Survey.User.get(id)
     userdef = %{email: user.edx_email,
       name: String.downcase(user.edx_email),
       fullname: user.nick}
-    case make_request("addUser", [userdef, pwd], token) do
+    case make_request("addUser", [userdef, pwd]) do
       h = {:ok, _} ->
         %{ user | wiki_pwd: pwd } |> Survey.Repo.update!
-        reply(h)
-      h -> reply(h)
+        h
+      h -> h
     end
   end
 
-  defcall add_group_page(id), state: token do
+  def add_group_page(id) do
     group = Survey.DesignGroup.get(id)
     page = %{content: @wk1,
       title: "#{group.id}: #{group.title}",
       space: "MOOC"}
-    case make_request("storePage", page, token) do
+    case store_page(page) do
       {:ok, resp} ->
         %{ group | wiki_url: String.replace(resp["url"], "http:", "https:") } |> Survey.Repo.update!
         {:ok, resp}
       x -> x
     end
-    |> reply
   end
 
-  defcall get_page_contents(id), state: token do
-    case GenServer.call(:encore, {:get_page, id}, 500000)
+  def get_page_contents(id) do
+    case get_page(id) do
       {:ok, page} -> {:ok, page["content"]}
       x -> x
     end
-    |> reply
   end
 
-  defcall get_page(id), state: token do
+  def get_page(id) do
     group = Survey.DesignGroup.get(id)
     req = case group.wiki_url do
       nil -> raise "No URL for this group"
@@ -68,13 +67,11 @@ defmodule Survey.Encore do
         [rest]
         x -> raise "Mismatch in URL: #{x}"
     end
-    make_request("getPage", req, token)
-    |> reply
+    make_request("getPage", req)
   end
 
-  defcall store_page(page), state: token do
-    make_request("storePage", page, token)
-    |> reply
+  def store_page(page) do
+    make_request("storePage", page)
   end
 
   def update_wiki_cache(id) do
@@ -110,11 +107,16 @@ defmodule Survey.Encore do
 
   def gen_password, do: :crypto.rand_bytes(20) |> safe_encode_base64
 
-  def make_request(method, param, token) do
+  def make_request(method, param) do
+    GenServer.call(:encore, {:make_request_internal, method, param}, 500000)
+  end
+
+  defcall make_request_internal(method, param), state: token do
     request_body = %XMLRPC.MethodCall{method_name: "confluence2." <> method,
       params: List.flatten([token, param])}
     |> XMLRPC.encode!
     |> web_request
+    |> reply
   end
 
   def get_token do
