@@ -35,7 +35,7 @@ How will your lesson allow for students to learn from their peers?  How will you
   end
 
   def mail(id) do
-    send_group_email(id, 0, "INQ101x update", "Design Track week 3 is open", content)
+    Mail.send_group_email(id, 0, "INQ101x update", "Design Track week 3 is open", @content)
   end
 
 end
