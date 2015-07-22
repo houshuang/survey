@@ -4,6 +4,7 @@ defmodule Survey.CollabController do
   alias Survey.Etherpad
   require Logger
 
+  @external_resource "data/templates/wk3.txt"
   @template File.read!("data/templates/wk3.txt")
   @wiki_disabled Application.get_env(:confluence, :disabled)
 

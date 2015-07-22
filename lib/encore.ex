@@ -50,6 +50,14 @@ defmodule Survey.Encore do
     |> reply
   end
 
+  defcall get_page_contents(id), state: token do
+    case get_page(id) do
+      {:ok, page} -> {:ok, page["content"]}
+      x -> x
+    end
+    |> reply
+  end
+
   defcall get_page(id), state: token do
     group = Survey.DesignGroup.get(id)
     req = case group.wiki_url do
@@ -58,18 +66,19 @@ defmodule Survey.Encore do
         ["MOOC", URI.decode_www_form(rest)]
       "https://wiki.mooc.encorelab.org/pages/viewpage.action?pageId=" <> rest ->
         [rest]
-      x -> raise "Mismatch in URL: #{x}"
+        x -> raise "Mismatch in URL: #{x}"
     end
-    IO.inspect(req)
-    case make_request("getPage", req, token) do
-      {:ok, page} -> {:ok, page["content"]}
-      x -> x
-    end
+    make_request("getPage", req, token)
+    |> reply
+  end
+
+  defcall store_page(page), state: token do
+    make_request("storePage", page, token)
     |> reply
   end
 
   def update_wiki_cache(id) do
-    case get_page(id) do
+    case get_page_contents(id) do
       {:ok, txt} ->
         group = Survey.DesignGroup.get(id)
         old_cache_id = group.wiki_cache_id

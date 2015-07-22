@@ -5,7 +5,7 @@ We have added a set of prompts in the etherpad designed to help you brainstorm a
 <p><br>
 We hope that your peers or MOOC staff will have added some constructive input to the work from last week (keep checking back if nothing is there - it will continually be updated as people add new comments).
 
-<p><br>
+ <p><br>
 Also you may notice an email link at the top left of the Workbench - this is to allow you to email your team, either with ideas or updates. You can hit "reply" to any such emails and your reply will go out only to your teammates.
 
 <p><br>

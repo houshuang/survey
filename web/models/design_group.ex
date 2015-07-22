@@ -18,6 +18,13 @@ defmodule Survey.DesignGroup do
     timestamps updated_at: false
   end
 
+  def get_all_active do
+    (from f in User,
+    select: fragment("distinct(?)", f.design_group_id),
+    where: not is_nil(f.design_group_id))
+    |> Repo.all
+  end
+
   def get_emails(id) do
     (from f in User,
     where: f.design_group_id == ^id
@@ -29,7 +36,6 @@ defmodule Survey.DesignGroup do
 
   def get_random_wiki(sig) do
     :random.seed(:os.timestamp)
-    IO.inspect(sig)
     possible = (from f in DesignGroup,
     where: not is_nil(f.wiki_cache_id) and
     f.sig_id == ^sig,
