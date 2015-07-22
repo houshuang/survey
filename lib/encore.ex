@@ -51,7 +51,7 @@ defmodule Survey.Encore do
   end
 
   defcall get_page_contents(id), state: token do
-    case get_page(id) do
+    case GenServer.call(:encore, {:get_page, id}, 500000)
       {:ok, page} -> {:ok, page["content"]}
       x -> x
     end
