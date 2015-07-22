@@ -13,6 +13,15 @@ defmodule Survey.Encore do
     initial_state(token)
   end
 
+  defcall renew_token, state: token do
+    {:ok, token} = get_token
+    set_and_reply(token, :ok)
+  end
+
+  defcall token, state: token do
+    reply(token)
+  end
+
   defcall add_user(id), state: token do
     pwd = gen_password
     user = Survey.User.get(id)

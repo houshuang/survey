@@ -48,6 +48,10 @@ config :quantum, cron: [
       Logger.info("Updating all wiki cache")
       Survey.Encore.update_all_wiki_cache
     end
+    "0,30 * * * *": fn ->
+      Logger.info("Renewing wiki token")
+      Survey.Encore.renew_token
+    end
 ]
 
 # ## Using releases

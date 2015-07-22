@@ -24,9 +24,9 @@ defmodule Survey.ResourceTag do
   end
 
   def get_tags(sig) when is_integer(sig) do
-    from(t in ResourceTag) 
-    |> and_and(:sigs, [sig]) 
-    |> only_tags 
+    from(t in ResourceTag)
+    |> and_and(:sigs, [sig])
+    |> only_tags
     |> alphabetize
     |> Repo.all
   end
@@ -40,7 +40,7 @@ defmodule Survey.ResourceTag do
   defp update_tag(sig, tagstr) when is_integer sig and is_binary tagstr do
     if tag = Repo.get_by(ResourceTag, name: tagstr) do
       nsig = merge_lists(tag.sigs, [sig])
-      ntag = %{tag | sigs: nsig} 
+      ntag = %{tag | sigs: nsig}
       if ntag != tag, do: Repo.update!(ntag)
     else
       %ResourceTag{name: tagstr, sigs: [sig]}
