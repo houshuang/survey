@@ -46,7 +46,7 @@ defmodule Survey.Encore do
 
   def calc_difference(group) do
     {:ok, text} = get_page_contents(group)
-    text
+    text = text
     |> html_to_freq
     |> Map.merge(@wk1_freq, fn k, v1, v2 -> v1 - v2 end)
     |> Enum.reduce(0, fn
