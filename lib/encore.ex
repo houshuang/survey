@@ -40,8 +40,28 @@ defmodule Survey.Encore do
 
   def update_difference(id) do
     group = Survey.DesignGroup.get(id)
-    %{ group | wiki_rev: calc_difference(id) } |> Survey.Repo.update!
+    diff = calc_difference(id)
+    {:ok, rev, contrib} = get_revisions(id)
+
+    %{ group |
+      wiki_diff: diff,
+      wiki_rev: rev,
+      wiki_contributors: contrib
+    } |> Survey.Repo.update!
     {:ok, :done}
+  end
+
+  def get_revisions(id) do
+    pg = get_page(id) |> ok
+    revs = make_request("getPageHistory", pg["id"]) |> ok
+    curpage = get_page(id) |> ok
+    revs = [ curpage | revs ]
+    |> Enum.filter(fn %{"modifier" => mod} -> mod != "encore" end)
+    len = length(revs)
+    contrib = Enum.map(revs, fn %{"modifier" => mod} -> mod end)
+    |> Enum.into(HashSet.new)
+    |> HashSet.size
+    {:ok, len, contrib}
   end
 
   def calc_difference(group) do

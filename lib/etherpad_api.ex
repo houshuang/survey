@@ -47,9 +47,17 @@ defmodule Survey.Etherpad.API do
     end
   end
 
+  def get_authors(hash, week) do
+    map = %{padID: hash}
+    {:ok, %{"authorIDs" => ids}} = run("listAuthorsOfPad", map)
+    length(ids)
+  end
+
   def update_difference(group) do
     rev = Survey.Etherpad.past_etherpads(group)
-    |> Enum.map(fn x -> {x.week, calc_difference(x.hash, x.week)} end)
+    |> Enum.map(fn x ->
+      {x.week, %{diff: calc_difference(x.hash, x.week), authors: get_authors(x.hash, x.week)}}
+    end)
     |> Enum.into(%{})
     group = Survey.DesignGroup.get(group)
     %{ group | etherpad_rev: rev } |> Survey.Repo.update!
@@ -61,7 +69,9 @@ defmodule Survey.Etherpad.API do
     {wk, prompt} = Enum.at(@prompts, week - 1)
     String.split(prompt, "\n")
     |> Enum.reduce(text, fn x, acc -> String.replace(acc, prompt, "") end)
-    |> String.length
+    |> String.split(" ")
+    |> Enum.filter(fn x -> x != "" end)
+    |> length
     |> case do
       x when x < 10 -> nil
       x -> x

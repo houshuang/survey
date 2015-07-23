@@ -93,4 +93,6 @@ defmodule Prelude do
     |> Enum.reduce(%{}, fn x, acc -> Map.update(acc, x, 1, &(&1 + 1)) end)
   end
 
+  def ok({:ok, x}), do: x
+  def ok(y), do: raise y
 end
