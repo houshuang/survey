@@ -180,6 +180,7 @@ defmodule Survey.Router do
     get "/report/tags", ReportController, :tags
     get "/report/resource", ResourceController, :report
     get "/report/designgroups", DesignGroupController, :report
+    get "/report/designgroups/activity", AdminController, :group_activity
     get "/resource/preview", ResourceController, :preview
     get "/report/reflections", AdminController, :reflections
     get "/report/reflections/:id", AdminController, :reflections

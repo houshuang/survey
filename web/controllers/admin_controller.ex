@@ -11,16 +11,6 @@ defmodule Survey.AdminController do
     text conn, cohorts
   end
 
-  def wk1(conn, _) do
-    Mail.send_wk1(conn)
-    html conn, "OK"
-  end
-
-  def wk2(conn, _) do
-    Mail.send_wk2
-    html conn, "OK"
-  end
-
   # ---------------------------------------------------------------
 
   def reflections(conn, params = %{"id" => id}) do
@@ -55,4 +45,12 @@ defmodule Survey.AdminController do
     |> put_layout("report.html")
     |> render Survey.ReportView, "textanswer.html", assigns
   end
+
+  #----------------------------------------------------------------------
+  def group_activity(conn, params) do
+    conn
+    |> put_layout(false)
+    |> render "group_activity.html", groups: Survey.DesignGroup.get_all_active_full
+  end
+
 end

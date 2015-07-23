@@ -13,6 +13,7 @@ defmodule Survey.DesignGroup do
     field :title, :string
     field :wiki_url, :string
     field :wiki_cache_id, :integer
+    field :wiki_rev, :integer
     belongs_to :sig, Survey.SIG
     belongs_to :user, Survey.User
     timestamps updated_at: false
@@ -23,6 +24,11 @@ defmodule Survey.DesignGroup do
     select: fragment("distinct(?)", f.design_group_id),
     where: not is_nil(f.design_group_id))
     |> Repo.all
+  end
+
+  def get_all_active_full do
+    runq("
+    WITH usercount AS (SELECT count(id) AS count, design_group_id AS gid FROM users WHERE design_group_id IS NOT NULL GROUP BY design_group_id) SELECT d.id, d.title, d.sig_id, d.wiki_url, u.count FROM designgroups d INNER JOIN usercount u ON d.id = u.gid;")
   end
 
   def get_emails(id) do

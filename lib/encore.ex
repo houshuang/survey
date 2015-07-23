@@ -42,7 +42,7 @@ defmodule Survey.Encore do
     page = %{content: @wk1,
       title: "#{group.id}: #{group.title}",
       space: "MOOC"}
-    case store_page(page) do
+    case make_request("storePage", page) do
       {:ok, resp} ->
         %{ group | wiki_url: String.replace(resp["url"], "http:", "https:") } |> Survey.Repo.update!
         {:ok, resp}
@@ -75,8 +75,12 @@ defmodule Survey.Encore do
   end
 
   def update_wiki_cache(id) do
-    case get_page_contents(id) do
-      {:ok, txt} ->
+    case get_page(id) do
+      {:ok, page} ->
+        txt = Map.get(page, "content")
+        rev = Map.get(page, "version")
+        |> string_to_int_safe
+
         group = Survey.DesignGroup.get(id)
         old_cache_id = group.wiki_cache_id
         cache_id = Survey.Cache.store(txt)
@@ -87,7 +91,7 @@ defmodule Survey.Encore do
           if !is_nil(old_cache_id) do
             Survey.Cache.delete(old_cache_id)
           end
-          %{ group | wiki_cache_id: cache_id } |> Survey.Repo.update!
+          %{ group | wiki_cache_id: cache_id, wiki_rev: rev - 1 } |> Survey.Repo.update!
         end
         {:ok, :done}
 
