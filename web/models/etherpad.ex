@@ -17,14 +17,22 @@ defmodule Survey.Etherpad do
   end
 
   def past_etherpads(group) do
-    (from f in Etherpad, 
+    (from f in Etherpad,
     where: f.design_group_id == ^group,
     order_by: f.week)
     |> Repo.all
   end
 
-  def ensure_etherpad(group) do 
-    exist = (from f in Etherpad, 
+  def find(group, week) do
+    exist = (from f in Etherpad,
+    where: f.week == ^week,
+    where: f.design_group_id == ^group,
+    select: f.hash)
+    |> Repo.one
+  end
+
+  def ensure_etherpad(group) do
+    exist = (from f in Etherpad,
     where: f.week == ^@week,
     where: f.design_group_id == ^group)
     |> Repo.one
@@ -33,7 +41,7 @@ defmodule Survey.Etherpad do
       exist.hash
     else
       nonce = unique_nonce
-      API.create_pad(nonce, @prompt) 
+      API.create_pad(nonce, @prompt)
       %Etherpad{week: @week, design_group_id: group, hash: nonce}
       |> Repo.insert!
       nonce

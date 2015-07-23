@@ -72,4 +72,25 @@ defmodule Prelude do
     "n" => 13, "o" => 14, "p" => 15, "q" => 16, "r" => 17, "s" => 18, "t" => 19,
     "u" => 20, "v" => 21, "w" => 22, "x" => 23, "y" => 24, "z" => 25}[ch]
   end
+
+  def get_file_list(path) do
+    Path.wildcard("data/#{path}/*.txt")
+    |> Enum.map(fn x -> {extract_num(x), File.read!(x)} end)
+  end
+
+  def extract_num(x) do
+    Path.basename(x, ".txt")
+    |> string_to_int_safe
+  end
+
+  def html_to_freq(html) do
+    html
+    |> String.replace("<", " <")
+    |> Floki.text
+    |> (fn x -> Regex.replace(~r/[()\[\\\/]"'.,;:-_=?!]/, x, "") end).()
+    |> String.split(" ")
+    |> Enum.filter(fn x -> x != "" end)
+    |> Enum.reduce(%{}, fn x, acc -> Map.update(acc, x, 1, &(&1 + 1)) end)
+  end
+
 end

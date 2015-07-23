@@ -7,6 +7,7 @@ defmodule Survey.Encore do
   @external_resource "data/wikitemplates/wk1.txt"
   @url Application.get_env(:confluence, :url)
   @wk1 String.strip(File.read!("data/wikitemplates/wk1.txt"))
+  @wk1_freq String.strip(File.read!("data/wikitemplates/wk1.txt")) |> html_to_freq
   @disabled Application.get_env(:confluence, :disabled)
 
   defstart start_link do
@@ -37,12 +38,34 @@ defmodule Survey.Encore do
     end
   end
 
+  def update_difference(group) do
+    group = Survey.DesignGroup.get(group)
+    %{ group | wiki_rev: calc_difference(group) } |> Survey.Repo.update!
+    {:ok, :done}
+  end
+
+  def calc_difference(group) do
+    {:ok, text} = get_page_contents(group)
+    text
+    |> html_to_freq
+    |> Map.merge(@wk1_freq, fn k, v1, v2 -> v1 - v2 end)
+    |> Enum.reduce(0, fn
+      {_, nil}, acc          -> acc
+      {_, v}, acc when v > 0 -> acc + v
+      {_, _}, acc            -> acc
+    end)
+    case text do
+      x when x < 4 -> 0
+      x -> x
+    end
+  end
+
   def add_group_page(id) do
     group = Survey.DesignGroup.get(id)
     page = %{content: @wk1,
       title: "#{group.id}: #{group.title}",
       space: "MOOC"}
-    case make_request("storePage", page) do
+    case store_page(page) do
       {:ok, resp} ->
         %{ group | wiki_url: String.replace(resp["url"], "http:", "https:") } |> Survey.Repo.update!
         {:ok, resp}

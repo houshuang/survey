@@ -14,6 +14,7 @@ defmodule Survey.DesignGroup do
     field :wiki_url, :string
     field :wiki_cache_id, :integer
     field :wiki_rev, :integer
+    field :etherpad_rev, Survey.Term
     belongs_to :sig, Survey.SIG
     belongs_to :user, Survey.User
     timestamps updated_at: false

@@ -53,7 +53,8 @@ defmodule Survey.Mixfile do
       {:hashids, "~> 2.0"},
       {:exactor, "~> 2.1.2"},
       {:uuid, "~> 1.0"},
-      {:quantum, ">= 1.3.0"}
+      {:quantum, ">= 1.3.0"},
+      {:floki, github: "philss/floki"}
     ]
   end
 end
