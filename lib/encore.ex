@@ -38,9 +38,9 @@ defmodule Survey.Encore do
     end
   end
 
-  def update_difference(group) do
-    group = Survey.DesignGroup.get(group)
-    %{ group | wiki_rev: calc_difference(group) } |> Survey.Repo.update!
+  def update_difference(id) do
+    group = Survey.DesignGroup.get(id)
+    %{ group | wiki_rev: calc_difference(id) } |> Survey.Repo.update!
     {:ok, :done}
   end
 
