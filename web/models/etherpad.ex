@@ -58,7 +58,7 @@ defmodule Survey.Etherpad do
   end
 
   def lookup_hash(hash) do
-    (from f in Survey.Etherpad,
+    (from f in Etherpad,
     where: f.hash == ^hash)
     |> Repo.all
   end
@@ -70,5 +70,12 @@ defmodule Survey.Etherpad do
     manynums = num <> num <> num <> num <> num <> num
     String.ljust(manynums, 32, ?0)
   end
+
+  def max_weeks do
+    (from f in Etherpad,
+    select: max(f.week))
+    |> Repo.one
+  end
+
 end
 

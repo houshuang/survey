@@ -39,6 +39,12 @@ defmodule Survey.Review do
     |> Enum.into(%{})
   end
 
+  def get_all do
+    (from f in Review)
+    |> Repo.all
+    |> Prelude.Map.group_by([:design_group_id, :week])
+  end
+
   def max_review do
     (from f in Review,
     select: max(f.week))

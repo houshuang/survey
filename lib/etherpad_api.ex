@@ -1,5 +1,8 @@
 defmodule Survey.Etherpad.API do
   import Prelude
+  require Logger
+  import Ecto.Query
+  require Ecto.Query
   @prompts get_file_list("etherpad")
 
   def gen_request(command, map) do
@@ -61,6 +64,7 @@ defmodule Survey.Etherpad.API do
     |> Enum.into(%{})
     group = Survey.DesignGroup.get(group)
     %{ group | etherpad_rev: rev } |> Survey.Repo.update!
+    Logger.info("Updated Etherpad difference for #{group}")
     {:ok, :done}
   end
 

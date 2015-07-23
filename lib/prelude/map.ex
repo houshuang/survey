@@ -15,7 +15,7 @@ defmodule Prelude.Map do
   end
 
   defp extract_and_put(map, item, groups) do
-    path = Enum.map(groups, fn group -> item[group] end)
+    path = Enum.map(groups, fn group -> Map.get(item, group) end)
     deep_put(map, path, item)
   end
 

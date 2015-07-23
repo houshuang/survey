@@ -42,22 +42,33 @@
 
 <table id='groups' class='tablesorter'>
   <thead>
-    <th>id</th><th>SIG</th><th>Title</th><th>Members</th><th>Wiki</th>
+    <th>id</th><th>SIG</th><th>Title</th><th>Members</th><th>Wiki authors</th><th>Wiki revs</th><th>Wiki diff</th>
+    <%= for wk <- 1..@etherpad_max do %><th>Etherpad wk<%= wk %> authors</th><th>Etherpad wk<%= wk %> diff</th><% end %>
   </thead>
   <tbody>
-    <%= for {id, title, sig, wiki, count} <- @groups do %>
+    <%= for group <- @groups do %>
       <tr>
-        <td><%= id %></td>
-        <td><%= sig %></td>
-          <td><%= title %></td>
-        <td><%= count %></td>
+        <td><%= group.id %></td>
+        <td><%= group.sig_id %></td>
+          <td><%= group.title %></td>
+        <td><%= @num_members[group.id] %></td>
         <td>
-          <%= if wiki && wiki != "" do %>
-          <a href='<%= wiki %>'>Wiki page</a>
-        <% end %>
-        </td></tr>
-        <% end %>
+          <%= group.wiki_contributors %>
+        </td>
+        <td><%= group.wiki_rev %></td>
+        <td><%= group.wiki_diff %></td>
 
+        <%= for wk <- 1..@etherpad_max do %>
+          <%= if group.etherpad_rev[wk] do %>
+        <td><%= group.etherpad_rev[wk][:authors] %></td>
+        <td><%= group.etherpad_rev[wk][:diff] %></td>
+        <%= else %>
+        <td><%= %></td>
+        <td><%= %></td>
+      <% end %>
+      <% end %>
+      </tr>
+      <% end %>
   </tbody>
 </table>
 

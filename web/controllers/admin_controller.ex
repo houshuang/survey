@@ -50,7 +50,10 @@ defmodule Survey.AdminController do
   def group_activity(conn, params) do
     conn
     |> put_layout(false)
-    |> render "group_activity.html", groups: Survey.DesignGroup.get_all_active_full
+    |> render "group_activity.html", groups: Survey.DesignGroup.get_all_active_full,
+    reviews: Survey.Review.get_all, etherpad_max: Survey.Etherpad.max_weeks,
+    num_members: Survey.DesignGroup.get_num_members
+
   end
 
 end

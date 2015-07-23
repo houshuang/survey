@@ -30,8 +30,17 @@ defmodule Survey.DesignGroup do
   end
 
   def get_all_active_full do
-    runq("
-    WITH usercount AS (SELECT count(id) AS count, design_group_id AS gid FROM users WHERE design_group_id IS NOT NULL GROUP BY design_group_id) SELECT d.id, d.title, d.sig_id, d.wiki_url, u.count FROM designgroups d INNER JOIN usercount u ON d.id = u.gid;")
+    Enum.map(get_all_active, &get/1)
+  end
+
+  def get_num_members do
+    (from f in User,
+    select: [f.design_group_id, count(f.id)],
+    where: not is_nil(f.design_group_id),
+    group_by: f.design_group_id)
+    |> Repo.all
+    |> Enum.map(fn [k, v] -> {k, v} end)
+    |> Enum.into(%{})
   end
 
   def get_emails(id) do
@@ -92,7 +101,6 @@ defmodule Survey.DesignGroup do
     preload: [:design_group])
     |> Repo.one
   end
-
 
   def all_involved do
     runq(

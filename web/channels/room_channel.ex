@@ -25,7 +25,7 @@ defmodule Survey.RoomChannel do
     push socket, "join", %{status: "connected", presence: users, previous: previous}
 
     ChatPresence.get_locks(room)
-    |> Enum.each(fn {_, topic, %{"usernick" => nick}} -> 
+    |> Enum.each(fn {_, topic, %{"usernick" => nick}} ->
       push socket, "edit:lock", %{topic: topic, user: nick} end)
 
     {:noreply, socket}
@@ -38,7 +38,7 @@ defmodule Survey.RoomChannel do
 
   def terminate(reason, socket) do
     {room, user} = ChatPresence.remove_user(socket)
-    
+
     locks = Survey.ChatPresence.close_locks(socket)
     if locks do
       {_, topic, _} = locks
@@ -46,6 +46,10 @@ defmodule Survey.RoomChannel do
         msg: " has left ", save: true}
     end
     Logger.info("User left room")
+
+    Survey.Encore.update_difference(room)
+    Survey.Etherpad.API.update_difference(room)
+
     Survey.Endpoint.broadcast "admin", "user:left", %{user: user, room: room}
     broadcast! socket, "user:left", user
     :ok
@@ -55,7 +59,7 @@ defmodule Survey.RoomChannel do
     if msg["body"] != "" do
       time = Ecto.DateTime.to_string(Ecto.DateTime.utc)
       msgstruct = %{
-        user: msg["user"], 
+        user: msg["user"],
         body: msg["body"],
         time: time}
       broadcast! socket, "new:msg", msgstruct
