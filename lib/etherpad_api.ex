@@ -64,7 +64,7 @@ defmodule Survey.Etherpad.API do
     |> Enum.into(%{})
     group = Survey.DesignGroup.get(group)
     %{ group | etherpad_rev: rev } |> Survey.Repo.update!
-    Logger.info("Updated Etherpad difference for #{group}")
+    Logger.info("Updated Etherpad difference for #{group.id}")
     {:ok, :done}
   end
 
