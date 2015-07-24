@@ -3,6 +3,7 @@ defmodule Survey.Encore do
   import Prelude
   import Ecto.Query
   require Ecto.Query
+  require Logger
 
   @external_resource "data/wikitemplates/wk1.txt"
   @url Application.get_env(:confluence, :url)
@@ -48,6 +49,7 @@ defmodule Survey.Encore do
       wiki_rev: rev,
       wiki_contributors: contrib
     } |> Survey.Repo.update!
+    Logger.info("Updated wiki difference for #{id}")
     {:ok, :done}
   end
 
