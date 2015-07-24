@@ -44,6 +44,7 @@
   <thead>
     <th>id</th><th>SIG</th><th>Title</th><th>Members</th><th>Currently online</th>
     <th>Chats</th><th>Emails</th>
+    <%= for wk <- 1..@max_review do %><th>Review wk<%= wk %></th><% end %>
     <th>Wiki authors</th><th>Wiki revs</th><th>Wiki diff</th>
     <%= for wk <- 1..@etherpad_max do %><th>Etherpad wk<%= wk %> authors</th><th>Etherpad wk<%= wk %> diff</th><% end %>
   </thead>
@@ -62,6 +63,17 @@
           %></td>
         <td><%= @chats[group.id] || 0 %></td>
         <td><%= @emails[group.id] || 0 %></td>
+        <%= for wk <- 1..@max_review do %>
+          <%= if @reviews[group.id][wk] do %>
+            <td><%= case @reviews[group.id][wk] do
+              nil -> ""
+              %{} -> 1
+              x when is_list(x) -> length(x)
+            end%></td>
+          <%= else %>
+        <td></td>
+      <% end %>
+      <% end %>
         <td>
           <%= group.wiki_contributors %>
         </td>

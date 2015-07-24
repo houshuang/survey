@@ -51,7 +51,8 @@ defmodule Survey.AdminController do
     conn
     |> put_layout(false)
     |> render "group_activity.html", groups: Survey.DesignGroup.get_all_active_full,
-    reviews: Survey.Review.get_all, etherpad_max: Survey.Etherpad.max_weeks,
+    reviews: Survey.Review.get_all, max_review: Survey.Review.max_review,
+    etherpad_max: Survey.Etherpad.max_weeks,
     num_members: Survey.DesignGroup.get_num_members,
     online: Survey.ChatPresence.get_all_users_by_room,
     chats: Survey.Chat.get_length,
