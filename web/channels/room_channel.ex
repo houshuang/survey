@@ -15,18 +15,20 @@ defmodule Survey.RoomChannel do
   end
 
   def handle_info({:after_join, {msg, room}}, socket) do
-    broadcast! socket, "user:entered", msg
-    Survey.Endpoint.broadcast "admin", "user:entered", %{msg: msg, room: room}
-    Logger.info("User entered room")
     ChatPresence.add_user(room, msg, socket)
+    if msg["userid"] != 0 do
+      broadcast! socket, "user:entered", msg
+      Survey.Endpoint.broadcast "admin", "user:entered", %{msg: msg, room: room}
+      Logger.info("User entered room")
 
-    users = ChatPresence.get(room)
-    previous = Chat.get(room, nil)
-    push socket, "join", %{status: "connected", presence: users, previous: previous}
+      ChatPresence.get_locks(room)
+      |> Enum.each(fn {_, topic, %{"usernick" => nick}} ->
+        push socket, "edit:lock", %{topic: topic, user: nick} end)
 
-    ChatPresence.get_locks(room)
-    |> Enum.each(fn {_, topic, %{"usernick" => nick}} ->
-      push socket, "edit:lock", %{topic: topic, user: nick} end)
+    end
+      users = ChatPresence.get(room)
+      previous = Chat.get(room, nil)
+      push socket, "join", %{status: "connected", presence: users, previous: previous}
 
     {:noreply, socket}
   end
@@ -39,19 +41,21 @@ defmodule Survey.RoomChannel do
   def terminate(reason, socket) do
     {room, user} = ChatPresence.remove_user(socket)
 
-    locks = Survey.ChatPresence.close_locks(socket)
-    if locks do
-      {_, topic, _} = locks
-      broadcast! socket, "edit:open", %{user: user["usernick"], topic: topic,
-        msg: " has left ", save: true}
+    if user["user_id"] != 0 do
+      locks = Survey.ChatPresence.close_locks(socket)
+      if locks do
+        {_, topic, _} = locks
+        broadcast! socket, "edit:open", %{user: user["usernick"], topic: topic,
+          msg: " has left ", save: true}
+      end
+      Logger.info("User left room")
+
+      Survey.Encore.update_difference(room)
+      Survey.Etherpad.API.update_difference(room)
+
+      Survey.Endpoint.broadcast "admin", "user:left", %{user: user, room: room}
+      broadcast! socket, "user:left", user
     end
-    Logger.info("User left room")
-
-    Survey.Encore.update_difference(room)
-    Survey.Etherpad.API.update_difference(room)
-
-    Survey.Endpoint.broadcast "admin", "user:left", %{user: user, room: room}
-    broadcast! socket, "user:left", user
     :ok
   end
 

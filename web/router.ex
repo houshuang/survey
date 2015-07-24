@@ -187,6 +187,7 @@ defmodule Survey.Router do
     get "/report/reflections/text/:id/:qid", AdminController, :fulltext
     post "/report/reflections/text/:id/:qid", AdminController, :fulltext
 
+    get "/collab/:id", CollabController, :admin
     get "/cohorts", AdminController, :cohorts
 
     get "/email/send_wk1", AdminController, :wk1

@@ -134,17 +134,22 @@ $('document').ready(function() {
     <script>
         user = '<%= @user.nick %>'
         userid = <%= @user.id %>
+        admin = <%= @admin %>
     </script>
 </div>
 <script src="/js/lodash.js"></script>
 <script src="/js/moment.min.js"></script>
 <script src="/js/phoenix.js"></script>
+
 <script src="/js/chat.js"></script>
 </div>
 
 <div class="maincontent">
 <div id="tabs" class="ui-tabs ui-widget ui-widget-content" style="display: none;">
 
+  <%= if @admin do %>
+  <h4>Logged in as admin visitor</h4>
+<% end %>
 <!--To add new tabs, simply add a <li> in this list, using the same structure and following the link sequence. Then, add a new <iframe>, also using the same structure.-->
 
     <ul style="padding: 0; margin: 0;" class="ui-tabs-nav ui-helper-reset ui-helper-clearfix">

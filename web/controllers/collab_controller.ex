@@ -3,6 +3,7 @@ defmodule Survey.CollabController do
   alias Survey.DesignGroup
   alias Survey.Etherpad
   require Logger
+  import Prelude
 
   @external_resource "data/templates/wk3.txt"
   @template File.read!("data/templates/wk3.txt")
@@ -41,8 +42,42 @@ defmodule Survey.CollabController do
         members: members,
         wiki_url: wiki_url,
         template: @template,
-        max_review: Survey.Review.max_review
+        max_review: Survey.Review.max_review,
+        admin: false
     end
+  end
+
+  def admin(conn, %{"id" => id}) do
+    group = DesignGroup.get(string_to_int_safe(id))
+
+    if !group.id do
+      html conn, "Design group does not exist"
+    else
+      unless @wiki_disabled do
+        wiki_url = group.wiki_url
+      else
+        wiki_url = ""
+      end
+      members = DesignGroup.get_members(group.id)
+      etherpad = Etherpad.ensure_etherpad(group.id)
+      old_etherpads = Etherpad.past_etherpads(group.id)
+
+      others = members
+
+      conn
+      |> put_layout(false)
+      |> render "index.html",
+        user: %{nick: "Admin", id: 0},
+        group: group,
+        etherpad: etherpad,
+        old_etherpads: old_etherpads,
+        members: members,
+        wiki_url: wiki_url,
+        template: @template,
+        max_review: Survey.Review.max_review,
+        admin: true
+    end
+
   end
 
   def leave(conn, _) do

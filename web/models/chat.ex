@@ -15,7 +15,7 @@ defmodule Survey.Chat do
   end
 
   def insert(obj, room) do
-    %Chat{nick: obj["user"], body: obj["body"], room: room} |> Repo.insert! 
+    %Chat{nick: obj["user"], body: obj["body"], room: room} |> Repo.insert!
   end
 
   def get(room, limit \\ 10) do
@@ -26,14 +26,23 @@ defmodule Survey.Chat do
     if limit do
       query = from t in query, limit: ^limit
     end
-    query 
+    query
     |> Repo.all
     |> Enum.reverse
     |> Enum.map(fn [user, body, date] -> %{
-      user: user, 
-      body: body, 
-      time: Ecto.DateTime.to_string(date)} 
+      user: user,
+      body: body,
+      time: Ecto.DateTime.to_string(date)}
     end)
+  end
+
+  def get_length do
+    query = (from t in Chat,
+    group_by: t.room,
+    select: [t.room, count(t.id)])
+    |> Repo.all
+    |> Enum.map(fn [k, v] -> {k, v} end)
+    |> Enum.into(%{})
   end
 
   def get_each do
@@ -43,9 +52,9 @@ defmodule Survey.Chat do
     |> Repo.all
     |> Enum.map(fn [room, user, body, date] -> %{
       room: room,
-      user: user, 
-      body: body, 
-      time: Ecto.DateTime.to_string(date)} 
+      user: user,
+      body: body,
+      time: Ecto.DateTime.to_string(date)}
     end)
     |> Enum.group_by(fn x -> x.room end)
     |> Enum.map(fn {id, list} -> Enum.take(list, 3) end)

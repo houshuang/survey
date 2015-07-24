@@ -42,7 +42,9 @@
 
 <table id='groups' class='tablesorter'>
   <thead>
-    <th>id</th><th>SIG</th><th>Title</th><th>Members</th><th>Wiki authors</th><th>Wiki revs</th><th>Wiki diff</th>
+    <th>id</th><th>SIG</th><th>Title</th><th>Members</th><th>Currently online</th>
+    <th>Chats</th><th>Emails</th>
+    <th>Wiki authors</th><th>Wiki revs</th><th>Wiki diff</th>
     <%= for wk <- 1..@etherpad_max do %><th>Etherpad wk<%= wk %> authors</th><th>Etherpad wk<%= wk %> diff</th><% end %>
   </thead>
   <tbody>
@@ -50,18 +52,26 @@
       <tr>
         <td><%= group.id %></td>
         <td><%= group.sig_id %></td>
-          <td><%= group.title %></td>
+        <td><a href='/admin/collab/<%= group.id %>'><%= group.title %></a></td>
         <td><%= @num_members[group.id] %></td>
+        <td><%= case length(@online[group.id] || []) do
+          nil -> ""
+          0 -> ""
+          x -> raw "<b><font color=green>#{x}</font></b>"
+          end
+          %></td>
+        <td><%= @chats[group.id] || 0 %></td>
+        <td><%= @emails[group.id] || 0 %></td>
         <td>
           <%= group.wiki_contributors %>
         </td>
         <td><%= group.wiki_rev %></td>
-        <td><%= group.wiki_diff %></td>
+        <td><a href='<%= group.wiki_url %>'><%= group.wiki_diff %></a></td>
 
         <%= for wk <- 1..@etherpad_max do %>
           <%= if group.etherpad_rev[wk] do %>
         <td><%= group.etherpad_rev[wk][:authors] %></td>
-        <td><%= group.etherpad_rev[wk][:diff] %></td>
+        <td><a href='https://etherpad.mooc.encorelab.org/p/<%= group.etherpad_rev[wk][:hash] %>'><%= group.etherpad_rev[wk][:diff] %></a></td>
         <%= else %>
         <td><%= %></td>
         <td><%= %></td>

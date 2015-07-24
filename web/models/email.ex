@@ -22,5 +22,14 @@ defmodule Survey.Email do
       from_web: from_web}
     |> Repo.insert!
   end
+
+  def num_by_group do
+    (from f in Email,
+    select: [f.design_group_id, count(f.id)],
+    group_by: f.design_group_id)
+    |> Repo.all
+    |> Enum.map(fn [k, v] -> {k, v} end)
+    |> Enum.into(%{})
+  end
 end
 
