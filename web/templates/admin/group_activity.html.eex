@@ -52,7 +52,7 @@
       <tr>
         <td><%= group.id %></td>
         <td><%= group.sig_id %></td>
-        <td><a href='/admin/collab/<%= group.id %>'><%= group.title %></a></td>
+        <td><a href='/admin/collab/<%= group.id %>' target='_blank'><%= group.title %></a></td>
         <td><%= @num_members[group.id] %></td>
         <td><%= case length(@online[group.id] || []) do
           nil -> ""
