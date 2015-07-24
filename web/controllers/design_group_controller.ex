@@ -159,13 +159,17 @@ defmodule Survey.DesignGroupController do
       confusions for students?"
     ]}
 
-    group = conn.assigns.user.design_group_id
+    if params["admin"] == "true" do
+      group = string_to_int_safe(params["group"])
+    else
+      group = conn.assigns.user.design_group_id
+    end
     if !group do
       html conn, "You are not part of a design group"
     else
-      comments = Survey.Review.get_by_group(group)
-      render conn, "comments.html", all_comments: comments, all_questions: questions,
-        week: week
-    end
+    comments = Survey.Review.get_by_group(group)
+    render conn, "comments.html", all_comments: comments, all_questions: questions,
+      week: week
+  end
   end
 end

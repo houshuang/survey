@@ -47,7 +47,7 @@ $('document').ready(function() {
     week = $(this).find(':selected').val()
       console.log(week)
     if(week != "") {
-      url = "/design_groups/comments?week=" + week + "&session=" + session
+      url = "/design_groups/comments?week=" + week + "&group=<%= @group.id %>&admin=<%= @admin %>&session=" + session
       html = '<iframe class="ui-tabs-panel ui-widget-content" src="'+ url +'"></iframe>'
       console.log(url,html)
       $("#detail_iframe").html(html)
@@ -175,7 +175,8 @@ $('document').ready(function() {
     <option value='<%= week %>'>Week <%= week %></option>
     <%= end %>
   </select>
-  <div id="detail_iframe"><iframe src="<%= ParamSession.gen_url(@conn, design_group_path(@conn, :comments, [week: @max_review])) %>"></iframe>                </div>    </div>
+  <div id="detail_iframe"><iframe src="<%= ParamSession.gen_url(@conn, design_group_path(@conn, :comments, [week: @max_review, group: @group.id, admin: @admin])) %>"></iframe>
+  </div>    </div>
 
 
 <div id="ui-tabs-3">
