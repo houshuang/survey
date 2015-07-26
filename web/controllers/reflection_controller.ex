@@ -14,7 +14,7 @@ defmodule Survey.ReflectionController do
   def index(conn, params) do
     if !params["id"] do
       id = 1
-    else 
+    else
       id = params["id"]
     end
     prompt = Prompt.get(id)
@@ -24,7 +24,7 @@ defmodule Survey.ReflectionController do
 
     reflection = Reflection.get(conn.assigns.user.id, prompt.id)
     if reflection do
-      conn = put_flash(conn, :info, 
+      conn = put_flash(conn, :info,
         "Thank you for submitting your reflection this week, you have already been graded. Feel free to modify and submit again.")
     end
 
@@ -42,6 +42,11 @@ defmodule Survey.ReflectionController do
     index(conn, params)
   end
 
+  def index_d(conn, params) do
+    params = Map.put(params, "id", 4)
+    index(conn, params)
+  end
+
   def submit(conn, params) do
     id = params["id"]
     form = params["f"]
@@ -54,13 +59,13 @@ defmodule Survey.ReflectionController do
   def assessment(conn, params) do
     if !params["id"] do
       id = 101
-    else 
+    else
       id = params["id"]
     end
     prompt = Repo.get(Prompt, id)
     reflection = Reflection.get(conn.assigns.user.id, prompt.id)
     if reflection do
-      conn = put_flash(conn, :info, 
+      conn = put_flash(conn, :info,
         "Thank you for submitting your assessment this week, you have already been graded. Feel free to modify and submit again.")
     end
     render conn, "assessment.html", html: prompt.html, id: id,
@@ -74,6 +79,11 @@ defmodule Survey.ReflectionController do
 
   def assessment_c(conn, params) do
     params = Map.put(params, "id", 103)
+    assessment(conn, params)
+  end
+
+  def assessment_d(conn, params) do
+    params = Map.put(params, "id", 104)
     assessment(conn, params)
   end
 

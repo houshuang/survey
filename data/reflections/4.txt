@@ -1,0 +1,14 @@
+# Reflection week 4
+textbox,Imagine your classroom with all students bringing their own smart phones or being provided with personal tablet computers.  What kinds of activities could you design that would engage them and promote learning?
+meta
+	minwords=10
+textbox,Assuming, again, that your students all had access to personal handheld devices, why do you think it is so challenging to design effective applications for inquiry curriculum?
+meta
+	minwords=10
+radio,Has the MOOC influenced your thinking about inquiry and technology?
+	Very much! I have not considered these ideas before, and find them extremely interesting and helpful
+	Yes, somewhat. I had considered most of the ideas before, but hadn’t thought about them as seriously
+	Maybe a little bit. It has been worth my time, and I’ve found the materials and activities to be worthwhile
+	Not really. There hasn’t been anything too helpful or interesting.
+textbox,Are there any comments or suggestions you would make to us, at this point?
+

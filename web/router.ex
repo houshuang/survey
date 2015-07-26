@@ -90,6 +90,8 @@ defmodule Survey.Router do
     get "/reflectionb", ReflectionController, :index_b
     post "/reflectionc", ReflectionController, :index_c
     get "/reflectionc", ReflectionController, :index_c
+    post "/reflectiond", ReflectionController, :index_d
+    get "/reflectiond", ReflectionController, :index_d
     get "/reflection/:id", ReflectionController, :index
     post "/reflection/:id", ReflectionController, :index
 
@@ -119,6 +121,8 @@ defmodule Survey.Router do
     get "/assessmentb", ReflectionController, :assessment_b
     post "/assessmentc", ReflectionController, :assessment_c
     get "/assessmentc", ReflectionController, :assessment_c
+    post "/assessmentd", ReflectionController, :assessment_d
+    get "/assessmentd", ReflectionController, :assessment_d
     post "/assessment/submit", ReflectionController, :assessment_submit
     get "/assessment/submit", ReflectionController, :assessment_submit
     post "/assessment/:id", ReflectionController, :assessment
