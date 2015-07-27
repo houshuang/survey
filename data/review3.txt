@@ -1,0 +1,7 @@
+# Feedback to design group
+textbox,If this lesson is already using smart phones or tablets, what can you suggest about improving the design?  If it is not, can you think of any ways that such devices could be integrated?
+meta
+	minwords=10
+textbox,What should the designers keep in mind, as they begin to finalize their designs?  Do you have any suggestions for assessments or student projects?
+meta
+	minwords=10
