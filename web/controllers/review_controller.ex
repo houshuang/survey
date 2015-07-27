@@ -7,6 +7,7 @@ defmodule Survey.ReviewController do
   import Prelude
   @form Survey.HTML.Survey.gen_survey("data/review.txt", :f)
   @form2 Survey.HTML.Survey.gen_survey("data/review2.txt", :f)
+  @form3 Survey.HTML.Survey.gen_survey("data/review3.txt", :f)
 
   def index(conn, params = %{"id" => id}) do
     group = DesignGroup.get(id)
@@ -44,20 +45,20 @@ defmodule Survey.ReviewController do
       {group, html} ->
         conn
         |> put_layout(false)
-        |> render "index_wiki.html", form: @form2, html: html, group: group,
+        |> render "index_wiki.html", form: @form3, html: html, group: group,
           submitted: submitted
     end
   end
 
   def wiki_submit(conn, params) do
-    Logger.info("Submitted review for week 3")
+    Logger.info("Submitted review for week 4")
     %Review{
       user_id: conn.assigns.user.id,
       design_group_id: string_to_int_safe(params["id"]),
-      week: 2,
+      week: 3,
       review: params["f"]
     } |> Repo.insert!
-    Survey.Grade.submit_grade(conn, "review_wk2", 1.0)
+    Survey.Grade.submit_grade(conn, "review_wk3", 1.0)
     ParamSession.redirect(conn, "/wiki-review?submitted=true")
   end
 end
