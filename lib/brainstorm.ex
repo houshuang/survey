@@ -1,4 +1,5 @@
 defmodule Brainstorm do
+  require Logger
 
   def get_state(room) do
     if :ets.member(:brainstorm, room) do
@@ -17,7 +18,7 @@ defmodule Brainstorm do
   end
 
   def do_op(room, user_id, op) do
-    IO.inspect(op)
+    Logger.info("#{user_id} is doing op #{inspect(op)} in room #{room}")
     { id, room, state, userstate } = get_state(room)
     case op do
       ["new_idea", idea] ->
