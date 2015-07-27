@@ -22,9 +22,13 @@ defmodule Brainstorm do
     case op do
       ["new_idea", idea] ->
         nick = Survey.User.get_nick(user_id)
-        idea_id = (state
-        |> Map.keys
-        |> Enum.max) + 1
+        idea_id = if Enum.empty?(Map.keys(state)) do
+          1
+        else
+          (state
+          |> Map.keys
+          |> Enum.max) + 1
+        end
         state = Map.put(state, idea_id,
           %{ idea: idea, user_id: user_id, user_nick: nick, comments: [], score: 0 })
         userstate = Map.update(userstate, user_id, [idea_id], fn user ->

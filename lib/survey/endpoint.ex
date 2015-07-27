@@ -8,7 +8,7 @@ defmodule Survey.Endpoint do
 
   plug Plug.Static,
     at: "/", from: :survey, gzip: true,
-    only: ~w(lessonplans css fonts fonts img images js favicon.ico robots.txt)
+    only: ~w(lessonplans css fonts fonts img images js favicon.ico robots.txt brainstorm)
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.

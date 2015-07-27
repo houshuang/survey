@@ -168,9 +168,13 @@ defmodule Survey.Router do
     get "/review/:id", ReviewController, :index
 
     # wiki review
-    post "wiki-review", ReviewController, :wiki
-    get "wiki-review", ReviewController, :wiki
-    post "wiki-review/submit", ReviewController, :wiki_submit
+    post "/wiki-review", ReviewController, :wiki
+    get "/wiki-review", ReviewController, :wiki
+    post "/wiki-review/submit", ReviewController, :wiki_submit
+
+    # brainstorm
+    post "/brainstorm", BrainstormController, :index
+    get "/brainstorm", BrainstormController, :index
   end
 
   scope "/", Survey do
