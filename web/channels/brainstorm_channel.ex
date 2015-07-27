@@ -25,9 +25,9 @@ defmodule Survey.BrainstormChannel do
   def handle_info({:after_join, {msg, room}}, socket) do
     Logger.info("User entered brainstorming room")
 
-    push socket, "join", %{status: "connected"}
+    push socket, "join", %{status: "connected", state: Brainstorm.simple_state(room)}
 
-    {:noreply, socket}
+    {:noreply, assign(socket, :room, room) |> assign(:user, msg["user"])}
   end
 
   def handle_info(:ping, socket) do
@@ -39,9 +39,10 @@ defmodule Survey.BrainstormChannel do
     :ok
   end
 
-  def handle_in("new:msg", msg, socket) do
-    broadcast! socket, "new:msg", %{}
-    {:reply, :ok, assign(socket, :user, msg["user"])}
+  def handle_in("new:op", msg, socket) do
+    state = Brainstorm.do_op(socket.assigns[:room], socket.assigns[:user], msg)
+    broadcast! socket, "new:state", %{state: state}
+    {:reply, :ok, socket}
   end
 
   def handle_in("phx_join", msg, socket) do

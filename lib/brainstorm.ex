@@ -10,25 +10,35 @@ defmodule Brainstorm do
     { id, room, state, userstate }
   end
 
-  def do_op(room, op) do
+  def simple_state(room) do
+    { id, room, state, userstate } = get_state(room)
+    state
+    |> Enum.map(fn {k, v} -> Map.put(v, :id, k) end)
+  end
+
+  def do_op(room, user_id, op) do
+    IO.inspect(op)
     { id, room, state, userstate } = get_state(room)
     case op do
-      {:new_idea, idea_id, user_id, idea} ->
+      ["new_idea", idea] ->
         nick = Survey.User.get_nick(user_id)
+        idea_id = (state
+        |> Map.keys
+        |> Enum.max) + 1
         state = Map.put(state, idea_id,
           %{ idea: idea, user_id: user_id, user_nick: nick, comments: [], score: 0 })
         userstate = Map.update(userstate, user_id, [idea_id], fn user ->
           [ idea_id | user ]
         end)
 
-      {:new_comment, idea_id, user_id, comment} ->
+      ["new_comment", idea_id, comment] ->
         nick = Survey.User.get_nick(user_id)
         state = Map.update(state, idea_id, %{}, fn idea ->
           newcomment = %{user_id: user_id, user_nick: nick, comment: comment}
           %{ idea | comments: [ newcomment | idea.comments ] }
         end)
 
-      {:vote, idea_id, user_id} ->
+      ["vote", idea_id] ->
         if not idea_id in Map.get(userstate, user_id, []) do
           state = Map.update(state, idea_id, %{}, fn idea ->
             %{ idea | score: idea.score + 1 }
@@ -40,7 +50,8 @@ defmodule Brainstorm do
     end
 
     :ets.insert(:brainstorm, { id, room, state, userstate })
-    # broadcast changes
     Survey.Brainstorm.store(id, room, state, userstate)
+    state
+    |> Enum.map(fn {k, v} -> Map.put(v, :id, k) end)
   end
 end

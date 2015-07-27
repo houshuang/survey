@@ -25,6 +25,7 @@ defmodule Survey do
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Survey.Supervisor]
     :ets.new(:brainstorm, [:named_table, :set, :public])
+    :ets.new(:brainstorm_socket, [:named_table, :set, :public])
     Supervisor.start_link(children, opts)
   end
 
