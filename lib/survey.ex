@@ -24,6 +24,7 @@ defmodule Survey do
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Survey.Supervisor]
+    :ets.new(:brainstorm, [:named_table, :set, :public])
     Supervisor.start_link(children, opts)
   end
 

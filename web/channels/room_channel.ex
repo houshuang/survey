@@ -26,9 +26,9 @@ defmodule Survey.RoomChannel do
         push socket, "edit:lock", %{topic: topic, user: nick} end)
 
     end
-      users = ChatPresence.get(room)
-      previous = Chat.get(room, nil)
-      push socket, "join", %{status: "connected", presence: users, previous: previous}
+    users = ChatPresence.get(room)
+    previous = Chat.get(room, nil)
+    push socket, "join", %{status: "connected", presence: users, previous: previous}
 
     {:noreply, socket}
   end

@@ -47,7 +47,7 @@ defmodule Survey.User do
   end
 
   def create_wikis do
-    (from f in User, 
+    (from f in User,
     where: not is_nil(f.design_group_id),
     select: f.design_group_id)
     |> Survey.Repo.all
@@ -57,16 +57,16 @@ defmodule Survey.User do
   def create_wiki(id) do
     Survey.Job.add({Survey.Encore, :add_group_page, [id]})
   end
-  
+
   def cohorts_csv do
-    csv = (from t in User, 
+    csv = (from t in User,
     where: fragment("? is not null", t.sig_id),
     select: [t.edx_userid, t.edx_email, t.sig_id])
     |> Repo.all
     |> CSV.Encoder.encode
     |> Enum.to_list
     |> Enum.join("")
-    
+
     "username,email,cohort\r\n" <> csv
   end
 
@@ -88,10 +88,18 @@ defmodule Survey.User do
   end
 
   def get_email(id) do
-    (from f in Survey.User, 
+    (from f in Survey.User,
     where: f.id == ^id,
     select: [f.edx_email])
     |> Repo.one
+  end
+
+  def get_nick(id) do
+    (from f in Survey.User,
+    where: f.id == ^id,
+    select: [f.nick])
+    |> Repo.one
+    |> Enum.at(0)
   end
 
   def unsubscribe(user, component) do

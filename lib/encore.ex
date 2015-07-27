@@ -40,16 +40,18 @@ defmodule Survey.Encore do
   end
 
   def update_difference(id) do
-    group = Survey.DesignGroup.get(id)
-    diff = calc_difference(id)
-    {:ok, rev, contrib} = get_revisions(id)
+    if !@disabled do
+      group = Survey.DesignGroup.get(id)
+      diff = calc_difference(id)
+      {:ok, rev, contrib} = get_revisions(id)
 
-    %{ group |
-      wiki_diff: diff,
-      wiki_rev: rev,
-      wiki_contributors: contrib
-    } |> Survey.Repo.update!
-    Logger.info("Updated wiki difference for #{id}")
+      %{ group |
+        wiki_diff: diff,
+        wiki_rev: rev,
+        wiki_contributors: contrib
+      } |> Survey.Repo.update!
+      Logger.info("Updated wiki difference for #{id}")
+    end
     {:ok, :done}
   end
 
