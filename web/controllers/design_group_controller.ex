@@ -157,7 +157,16 @@ defmodule Survey.DesignGroupController do
       "What should the designers keep in mind, as they think about weaving
       collaboration into their lesson?  Will it take more time, or add possible
       confusions for students?"
-    ]}
+    ],
+    3 => [
+      "If this lesson is already using smart phones or tablets, what can you
+      suggest about improving the design?  If it is not, can you think of any
+      ways that such devices could be integrated?",
+      "What should the designers keep in mind, as they begin to finalize their
+      designs?  Do you have any suggestions for assessments or student
+      projects?"
+    ]
+    }
 
     if params["admin"] == "true" do
       group = string_to_int_safe(params["group"])
