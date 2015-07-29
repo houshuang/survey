@@ -1,8 +1,8 @@
 defmodule Survey.Update.Wk3 do
   alias Survey.Encore
   @above "<h1>5. What is the activity structure of the lesson?</h1>"
-  @new "<p><span>4b. Peer Collaboration</span></p><p><span style=\"color: rgb(0,0,0);\"><em>
-How will your lesson allow for students to learn from their peers?  How will you allow their inquiry products to contribute to peers or the wider classroom community?</em></span></p><p><span style=\"color: rgb(128,0,0);\"> - - - add your response here (delete this line of text) - - -</span></p>"
+  @new "<p><span>4c. Use of Handheld or Mobile Computers</span></p><p><span style=\"color: rgb(0,0,0);\"><em>
+Will students or teacher use smart phones, tablets, or any other mobile devices?  If you haven't yet considered this, perhaps there could there be a supplemental activity that students complete outside of class.</em></span></p><p><span style=\"color: rgb(128,0,0);\"> - - - add your response here (delete this line of text) - - -</span></p>"
 
   def change_text(txt) do
     if String.contains?(txt, @above) do
