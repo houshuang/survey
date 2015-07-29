@@ -17,7 +17,7 @@ $(document).ready(function(){
           T.val(newValue);
         } else {
           T.next('.counter').text(valueNum - len);
-        }			
+        }
       });
     }
     if (min) {
@@ -45,7 +45,7 @@ check_textarea_length = function(T, min) {
     T.next('.counter').html("<font color=green>✓</font>");
   } else {
     T.next('.counter').html("<font color=red>At least " + (min - len) + " more words required</font>");
-  }			
+  }
 }
 
 
@@ -73,7 +73,6 @@ validate_page = function(pg) {
   var warnings= []
   if(!validate_textarea('1')) { warnings.push("Please write more than ten words in the first textbox") }
   if(!validate_textarea('2')) { warnings.push("Please write more than ten words in the second textbox") }
-  if(!validate_textarea('3')) { warnings.push("Please write more than ten words in the third textbox") }
   return warnings;
 }
 
