@@ -7,7 +7,7 @@ defmodule Survey.Etherpad do
   require Ecto.Query
   alias Survey.Etherpad.API
 
-  @week Application.get_env(:week, :current)
+  @week Application.get_env(:etherpad_week, :current)
   @prompt File.read!("data/etherpad/#{@week}.txt")
 
   schema "etherpads" do

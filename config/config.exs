@@ -29,8 +29,8 @@ config :jobs,
     strategy: :backoff
   }
 
-config :week,
-  current: 3
+config :etherpad_week,
+  current: 4
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

@@ -5,8 +5,8 @@ defmodule Survey.CollabController do
   require Logger
   import Prelude
 
-  @external_resource "data/templates/wk3.txt"
-  @template File.read!("data/templates/wk3.txt")
+  @external_resource "data/templates/wk4.txt"
+  @template File.read!("data/templates/wk4.txt")
   @wiki_disabled Application.get_env(:confluence, :disabled)
 
   def index(conn, _) do
