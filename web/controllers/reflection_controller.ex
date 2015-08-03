@@ -47,6 +47,11 @@ defmodule Survey.ReflectionController do
     index(conn, params)
   end
 
+  def index_e(conn, params) do
+    params = Map.put(params, "id", 5)
+    index(conn, params)
+  end
+
   def submit(conn, params) do
     id = params["id"]
     form = params["f"]
@@ -84,6 +89,11 @@ defmodule Survey.ReflectionController do
 
   def assessment_d(conn, params) do
     params = Map.put(params, "id", 104)
+    assessment(conn, params)
+  end
+
+  def assessment_e(conn, params) do
+    params = Map.put(params, "id", 105)
     assessment(conn, params)
   end
 

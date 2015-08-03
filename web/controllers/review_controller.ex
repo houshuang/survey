@@ -55,10 +55,10 @@ defmodule Survey.ReviewController do
     %Review{
       user_id: conn.assigns.user.id,
       design_group_id: string_to_int_safe(params["id"]),
-      week: 3,
+      week: 4,
       review: params["f"]
     } |> Repo.insert!
-    Survey.Grade.submit_grade(conn, "review_wk3", 1.0)
+    Survey.Grade.submit_grade(conn, "review_wk4", 1.0)
     ParamSession.redirect(conn, "/wiki-review?submitted=true")
   end
 end

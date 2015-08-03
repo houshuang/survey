@@ -9,7 +9,8 @@
   <body>
 
     <script id="userstate" type="application/json">
-{"user_id": <%= @user_id %>, "room": <%= @room %>}
+{"user_id": <%= @user_id %>, "room": <%= @room %>,
+"intro": "<%= raw @intro %>"}
     </script>
     <script src="/brainstorm/bundle.js"></script>
   </body>

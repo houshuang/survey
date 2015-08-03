@@ -1,0 +1,10 @@
+# Reflection week 5
+textbox,When you think about your students, what kinds of ideas or products could be supported by the “student-contributed content” approach?  How would this help you as a teacher?
+meta
+	minwords=5
+textbox,What kinds of advantages could be offered by a “collective inquiry” approach - where students add and build on ideas and resources, then use their collective product as a resource for further inquiry?
+meta
+	minwords=5
+textbox,You may have noticed that we have been trying to enact a collective inquiry approach in this MOOC, where the community is organized into SIGS who share resources, vote, tag and comment on ideas, collaborate and support their peers in lesson design.  Can you comment on your own experience, as a participant in this approach?
+meta
+	minwords=5
