@@ -2,12 +2,7 @@ defmodule Brainstorm do
   require Logger
 
   def get_state(room) do
-    if :ets.member(:brainstorm, room) do
-      { id, room, state, userstate } = Enum.at(:ets.lookup(:brainstorm, room), 0)
-    else
-      %{ id: id, state: state, userstate: userstate } = Survey.Brainstorm.get_or_create(room)
-      :ets.insert(:brainstorm, { id, room, state, userstate })
-    end
+    %{ id: id, state: state, userstate: userstate } = Survey.Brainstorm.get_or_create(room)
     { id, room, state, userstate }
   end
 
@@ -54,7 +49,6 @@ defmodule Brainstorm do
         end
     end
 
-    :ets.insert(:brainstorm, { id, room, state, userstate })
     Survey.Brainstorm.store(id, room, state, userstate)
     state
     |> Enum.map(fn {k, v} -> Map.put(v, :id, k) end)
