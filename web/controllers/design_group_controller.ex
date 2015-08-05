@@ -165,6 +165,8 @@ defmodule Survey.DesignGroupController do
       "What should the designers keep in mind, as they begin to finalize their
       designs?  Do you have any suggestions for assessments or student
       projects?"
+    ],
+  4 => ["How could student-generated content be relevant to this design?","What should the designers keep in mind, as they begin to finalize their designs?  Do you have any suggestions for assessments or student projects?"
     ]
     }
 
