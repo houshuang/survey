@@ -26,6 +26,7 @@ defmodule Survey.ReflectionController do
     if reflection do
       conn = put_flash(conn, :info,
         "Thank you for submitting your reflection this week, you have already been graded. Feel free to modify and submit again.")
+      Survey.Grade.submit_grade(conn, "reflection_#{id}", 1.0)
     end
 
     render conn, "index.html", html: prompt.html, id: id,
@@ -72,6 +73,12 @@ defmodule Survey.ReflectionController do
     if reflection do
       conn = put_flash(conn, :info,
         "Thank you for submitting your assessment this week, you have already been graded. Feel free to modify and submit again.")
+      grade = case reflection.response["1"] do
+        "a" -> 0.0
+        "b" -> 0.5
+        "c" -> 1.0
+      end
+      Survey.Grade.submit_grade(conn, "assessment_#{id}", grade)
     end
     render conn, "assessment.html", html: prompt.html, id: id,
       reflection: reflection
