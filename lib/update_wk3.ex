@@ -12,6 +12,8 @@ defmodule Survey.Update.Wk3 do
       else
         txt <> @new <> @bottom
       end
+    else
+      txt
     end
   end
 
@@ -33,7 +35,7 @@ defmodule Survey.Update.Wk3 do
     # end
 
     # def mail(id) do
-      #   Mail.send_group_email(id, 0, "INQ101x update", "Design Track week 3 is open", @content)
+      #   Mail.send_group_email(id, 0, "INQ101x update", "Design Track week 5 is open", @content)
       # end
 
 end
