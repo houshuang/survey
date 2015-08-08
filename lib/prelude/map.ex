@@ -44,5 +44,14 @@ defmodule Prelude.Map do
     |> fn x -> elem(x, 0) end.()
   end
 
+  # remove a map key arbitrarily deep in a structure, similar to put_in
+  # for example
+  #
+  # a = {a: %{b: %{c: %{d: 1, e: 1}}}}
+  # del_in(a, [:a;, :b, :c] :d) -> %{a: %{b: %{c: %{e: 1}}}}
+  def del_in(object, path, item) do
+    obj = get_in(object, path)
+    put_in(object, path, Map.delete(obj, item))
+  end
 end
 
