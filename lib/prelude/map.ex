@@ -9,14 +9,10 @@ defmodule Prelude.Map do
   # => %{1 => %{1 => %{cat: 1, group: 1, name: "per"},
   #      2 => %{cat: 2, group: 1, name: "stian"}}}
   def group_by(lst, groups) do
-    Enum.reduce(lst, %{}, fn x, acc ->
-      extract_and_put(acc, x, groups)
+    Enum.reduce(lst, %{}, fn item, map ->
+      path = Enum.map(groups, fn group -> Map.get(item, group) end)
+      deep_put(map, path, item)
     end)
-  end
-
-  defp extract_and_put(map, item, groups) do
-    path = Enum.map(groups, fn group -> Map.get(item, group) end)
-    deep_put(map, path, item)
   end
 
   # put an arbitrarily deep key into an existing map. If a value
