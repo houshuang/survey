@@ -1,0 +1,23 @@
+Some kind of module with ops callbacks. Init to start a new state. State will always be a pure function of reducing the module over a list of ops (possibly fetched from the database).
+
+The database simply keeps an ordered list of ops, with times, enabling replay functionality, and arbitrary diffing.
+
+Problem is that we have two sequences of minimal updates - one is the ops, and the other is the diffs. However, this separation is necessary if we want to centralize functionality on the server.
+
+Question of metadata, external state... if someone adds a comment, do we also store their user id and nick in state? Or just user id and look up nick on rendering (what if they changed their nick?) When is state entered - when op is created on client (restricted to individual client state), in dispatcher, or in individual op? Do we special-case user, which is assigned on the socket? Are there usecases where we would need different kinds of state? We could special case user and deliver it as an implicit value to every callback...
+
+Look into macros (__using__) which define default functions, but let these be overriden by user.
+
+All callbacks must be pure, otherwise cannot reliable rerun. defoverrideable [init: 1, ...]
+
+
+defmodule Live do
+  using StateSync
+
+  @context [:chat, :presence]
+  defop "user:online", args, state, do: Set.put(state, args.usernick)
+  defop "user:left", args, state, do: Set.delete(state, args.usernick)
+
+  @context [:chat, :msglist]
+  defop "new:msg", args, state, do: [args.newmsg | state]
+end
