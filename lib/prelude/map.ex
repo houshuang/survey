@@ -19,10 +19,10 @@ defmodule Prelude.Map do
   # already exists at that level, it is turned into a list
   # for example:
 
-  # map_deep_put(%{}, [:a, :b, :c], "1")
+  # deep_put(%{}, [:a, :b, :c], "1")
   # => %{a: %{b: %{c: "1"}}}
 
-  # map_deep_put(%{a: %{b: %{c: "1"}}}, [:a, :b, :c, :d], "2")
+  # deep_put(%{a: %{b: %{c: "1"}}}, [:a, :b, :c, :d], "2")
   # => %{a: %{b: %{c: [{:d, "2"}, "1"]}}}
   def deep_put(map, path, val, override \\ false) do
     state = {map, []}
@@ -49,5 +49,23 @@ defmodule Prelude.Map do
     obj = get_in(object, path)
     put_in(object, path, Map.delete(obj, item))
   end
-end
 
+  # shallow atomify of map keys (no error if keys are already atoms)
+  def atomify(map) do
+    Enum.map(map, fn {k,v} -> {Prelude.safe_to_atom(k), v} end)
+    |> Enum.into(%{})
+  end
+
+  # shallow stringify of atom map keys (no error if keys are already strings)
+  def stringify(map) do
+    Enum.map(map, fn {k,v} -> {Prelude.safe_to_string(k), v} end)
+    |> Enum.into(%{})
+  end
+
+  # assumes that a map key points to an array, and appends item to array.
+  # if map key does not exist, it will be created.
+  def append(map, key, val) do
+    Map.update(map, key, [val], fn x -> List.insert_at(x, 0, val) end)
+  end
+
+end
