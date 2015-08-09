@@ -18,9 +18,16 @@ defmodule ExDiff do
     end)
 
     diff = List.flatten([removed, added, same])
+    |> Enum.filter(fn x -> !is_nil(x) end)
+
     diffenc = Poison.encode!(diff)
     newenc = Poison.encode!(new)
-    if String.length(diffenc) > String.length(newenc), do: %{ op: "replace", path: path, value: new }, else: diff
+    if String.length(diffenc) > String.length(newenc) do
+      %{ op: "replace", path: path, value: new }
+    else
+      diff
+    end
+
   end
 
   def diff(old, new, path) when is_list(old) and is_list(new) do
@@ -45,10 +52,16 @@ defmodule ExDiff do
     end
 
     diff = List.flatten([changes, rest])
+    |> Enum.filter(fn x -> !is_nil(x) end)
+
     diffenc = Poison.encode!(diff)
     newenc = Poison.encode!(new)
-    if String.length(diffenc) > String.length(newenc), do: %{ op: "replace", path: path, value: new }, else: diff
-  end
+    if String.length(diffenc) > String.length(newenc) do
+      %{ op: "replace", path: path, value: new }
+    else
+      diff
+    end
+ end
 
   def diff(old, new, path) do
     %{ op: "replace", path: path, value: new }
