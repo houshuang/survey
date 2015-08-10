@@ -17,4 +17,12 @@ defmodule Survey.BrainstormController do
     |> put_layout(false)
     |> render "index.html", user_id: user.id, room: 100 + user.sig_id, intro: @wk2
   end
+
+  def live(conn, _) do
+    user = conn.assigns.user
+    conn
+    |> put_layout(false)
+    |> render "live.html", user: user, room: user.sig_id, intro: @wk1
+  end
+
 end

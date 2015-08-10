@@ -181,6 +181,8 @@ defmodule Survey.Router do
     get "/brainstorm", BrainstormController, :index
     post "/brainstormb", BrainstormController, :index_b
     get "/brainstormb", BrainstormController, :index_b
+    post "/live", BrainstormController, :live
+    get "/live", BrainstormController, :live
   end
 
   scope "/", Survey do
