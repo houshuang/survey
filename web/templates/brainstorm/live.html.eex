@@ -10,7 +10,10 @@
 
     <script id="userstate" type="application/json">
 {"user_id": "<%= @user.id %>", "room": <%= @room %>,
-"user_nick": "<%= @user.nick %>"}
+"user_nick": "<%= @user.nick %>",
+"chat_disabled": true,
+"title": "<%= @title %>",
+"embed": "<%= @embed %>"}
     </script>
     <script src="/live/bundle.js"></script>
   </body>

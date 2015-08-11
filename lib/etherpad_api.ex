@@ -57,15 +57,17 @@ defmodule Survey.Etherpad.API do
   end
 
   def update_difference(group) do
-    rev = Survey.Etherpad.past_etherpads(group)
+    rev = Survey.Etherpad.past_etherpads(group) || []
     |> Enum.map(fn x ->
       {x.week, %{diff: calc_difference(x.hash, x.week), authors: get_authors(x.hash, x.week),
         hash: x.hash}}
     end)
     |> Enum.into(%{})
     group = Survey.DesignGroup.get(group)
-    %{ group | etherpad_rev: rev } |> Survey.Repo.update!
-    Logger.info("Updated Etherpad difference for #{group.id}")
+    if group do
+      %{ group | etherpad_rev: rev } |> Survey.Repo.update!
+      Logger.info("Updated Etherpad difference for #{group.id}")
+    end
     {:ok, :done}
   end
 
