@@ -109,7 +109,7 @@ defmodule Survey.ReflectionController do
     assessment(conn, params)
   end
 
-  def assessment_e(conn, params) do
+  def assessment_f(conn, params) do
     params = Map.put(params, "id", 106)
     assessment(conn, params)
   end
