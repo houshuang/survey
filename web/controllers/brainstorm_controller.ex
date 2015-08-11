@@ -22,14 +22,14 @@ defmodule Survey.BrainstormController do
     user = conn.assigns.user
     conn
     |> put_layout(false)
-    |> render "live.html", user: user, room: user.sig_id, embed: "Please suggest questions below for the panelists to discuss during the upcoming live event. Even if you cannot attend the live event, you can leave questions here, and watch the recording which will be made available afterwards.", title: "Panel 2: UTS teachers, and Jim  (Thursday, 2:30 EST, 1830 GST)"
+    |> render "live.html", user: user, room: user.sig_id, embed: "Please suggest questions below for the panelists to discuss during the upcoming live event. Even if you cannot attend the live event, you can leave questions here, and watch the recording which will be made available afterwards.", title: "Panel 1: MOOC Instructors and 1 teacher: Jim, Rosemary and Mike (Wednesday, 10:30 EST, 1430 GST)", room: 1001
   end
 
   def live_b(conn, _) do
     user = conn.assigns.user
     conn
     |> put_layout(false)
-    |> render "live.html", user: user, room: user.sig_id, embed: "Please suggest questions below for the panelists to discuss during the upcoming live event. Even if you cannot attend the live event, you can leave questions here, and watch the recording which will be made available afterwards.", title: "Panel 1: MOOC Instructors and 1 teacher: Jim, Rosemary and Mike (Wednesday, 10:30 EST, 1430 GST)"
+    |> render "live.html", user: user, room: user.sig_id, embed: "Please suggest questions below for the panelists to discuss during the upcoming live event. Even if you cannot attend the live event, you can leave questions here, and watch the recording which will be made available afterwards.", title: "Panel 2: UTS teachers, and Jim  (Thursday, 2:30 EST, 1830 GST)", room: 1002
   end
 
 end
