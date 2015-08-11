@@ -1,0 +1,7 @@
+# Reflection week 6
+textbox,Think about your current classroom.  What kinds of diversity are there? How could an inquiry lesson take advantage of students' individual differences and highlight the diversity as an advantage of the community?
+meta
+	minwords=5
+textbox,Inquiry lessons typically include reflective and collaborative activities, data collection, group projects, designs, and the use of various technology environments. A primary issue is that of engagement, where students understand the activities, and are making progress with interest and enthusiasm.  What can the teacher do, before and  during the enactment, to help make sure students are engaged?
+meta
+	minwords=5
