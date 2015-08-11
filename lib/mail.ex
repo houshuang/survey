@@ -45,11 +45,10 @@ defmodule Mail do
   end
 
   def send_design1(user) do
-    if !Survey.User.is_unsubscribed?(user.id, "collab") do
-      html = Templates.how_use(user.id, @basename)
-      text = Templates.how_use_txt(user.id, @basename)
+    if !Survey.User.is_unsubscribed?(user.id, "all") do
+      html = Templates.wk6
       email = %Mailman.Email{from: "noreply@mooc.encorelab.org", to: [user.edx_email],
-        subject: "How to use the Collaborative Workbench", html: html, text: text}
+        subject: "Welcome to the last week of the course", html: html, text: html}
       Survey.Job.add({Survey.Mailer, :deliver, [email]})
     end
   end

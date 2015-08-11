@@ -11,4 +11,5 @@ defmodule Mail.Templates do
   [:content, :nick, :id, :basename]
   EEx.function_from_file :def, :how_use, "data/mailtemplates/wiki_how_use.html.eex", [:id, :basename]
   EEx.function_from_file :def, :how_use_txt, "data/mailtemplates/wiki_how_use.txt.eex", [:id, :basename]
+  EEx.function_from_file :def, :wk6, "data/mailtemplates/wk6.html.eex", []
 end
