@@ -154,6 +154,7 @@ $('document').ready(function() {
 
     <ul style="padding: 0; margin: 0;" class="ui-tabs-nav ui-helper-reset ui-helper-clearfix">
         <li class="context-tab ui-state-default"><a href="#ui-tabs-1">Welcome</a></li>
+        <li class="context-tab ui-state-default"><a href="#ui-tabs-2">Edit Group Description</a></li>
         <li class="context-tab ui-state-default"><a href="#ui-tabs-2">Constructive Feedback</a></li>
         <li class="context-tab ui-state-default"><a href="#ui-tabs-3">Etherpad</a></li>
         <li class="context-tab ui-state-default"><a href="#ui-tabs-4">Wiki</a></li>
@@ -168,7 +169,11 @@ $('document').ready(function() {
 
 <div id="ui-tabs-1">
   <%= raw @template %>
-  </div><div id="ui-tabs-2">
+</div>
+
+                   <div id="ui-tabs-2"> <iframe id="detail_iframe" src="<%= ParamSession.gen_url(@conn, design_group_path(@conn, :select_detail, @group.id, embedded: true)) %>"></iframe></div>
+
+<div id="ui-tabs-3">
   <select id="review-select">
     <option value="">Select past weeks</option>
     <%= for week <- 1..@max_review do %>
@@ -179,7 +184,7 @@ $('document').ready(function() {
   </div>    </div>
 
 
-<div id="ui-tabs-3">
+<div id="ui-tabs-4">
   <select id="etherpad-select">
     <option value="">Select past weeks</option>
   <%= for etherpad <- @old_etherpads || [] do %>
@@ -188,7 +193,7 @@ $('document').ready(function() {
   </select>
 
   <div id="etherpad-iframe"><a href="#" id="etherpad-load">Click here to load this week's Etherpad</a></div></div>
-<div id="ui-tabs-4"><a href="#"><iframe src="<%= @wiki_url %>"></iframe></a></div>
+<div id="ui-tabs-5"><a href="#"><iframe src="<%= @wiki_url %>"></iframe></a></div>
 
 </div>
 </div>
