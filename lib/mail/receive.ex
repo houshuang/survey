@@ -3,15 +3,19 @@ defmodule Mail.Receive do
   @hashid Hashids.new(salt: Application.get_env(:mailer, :hashid_salt))
 
   def receive_message(from, to, data) do
-    email = data
-    |> Mailman.Email.parse!
+    try do
+      email = data
+      |> Mailman.Email.parse!
 
-    case extract_user_group(to) do
-      {:ok, user, group} ->
-        forward(user, group, email)
-      {:error, _} ->
-        Logger.info("Email: Received email, black hole")
-        nil
+      case extract_user_group(to) do
+        {:ok, user, group} ->
+          forward(user, group, email)
+        {:error, _} ->
+          Logger.info("Email: Received email, black hole")
+          nil
+      end
+    catch
+      e -> Logger.warn(inspect(e))
     end
   end
 
