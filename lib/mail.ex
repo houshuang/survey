@@ -46,9 +46,9 @@ defmodule Mail do
 
   def send_design1(user) do
     if !Survey.User.is_unsubscribed?(user.id, "all") do
-      html = Templates.wk6
+      html = Templates.reminder(user.id, @basename)
       email = %Mailman.Email{from: "noreply@mooc.encorelab.org", to: [user.edx_email],
-        subject: "Welcome to the last week of the course", html: html, text: html}
+        subject: "INQ101x Live Event is about to start!", html: html, text: html}
       Survey.Job.add({Survey.Mailer, :deliver, [email]})
     end
   end
@@ -89,9 +89,9 @@ defmodule Mail do
       html: html }
   end
 
-  def send_wk2 do
+  def send_reminder do
     template = %Mailman.Email{
-      subject: "Welcome to Week 2",
+      subject: "INQ101x Live Event about to start",
       from: "noreply@mooc.encorelab.org",
     }
 
