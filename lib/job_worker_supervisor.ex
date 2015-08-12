@@ -7,10 +7,10 @@ use Supervisor
 
   def init([]) do
     children = [
-      worker(Survey.JobWorker, [], restart: :permanent)
-      worker(Survey.JobWorker, [], restart: :permanent)
-      worker(Survey.JobWorker, [], restart: :permanent)
-      worker(Survey.JobWorker, [], restart: :permanent)
+      worker(Survey.JobWorker, [], restart: :permanent),
+      worker(Survey.JobWorker, [], restart: :permanent),
+      worker(Survey.JobWorker, [], restart: :permanent),
+      worker(Survey.JobWorker, [], restart: :permanent),
       worker(Survey.JobWorker, [], restart: :permanent)
     ]
 
