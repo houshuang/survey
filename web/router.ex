@@ -6,11 +6,13 @@ defmodule Survey.Router do
     channel "rooms:*", RoomChannel
     channel "admin", AdminChannel
     channel "brainstorm:*", BrainstormChannel
+    channel "control", ControlChannel
   end
   socket "/ws/websocket", Survey do
     channel "rooms:*", RoomChannel
     channel "admin", AdminChannel
     channel "brainstorm:*", BrainstormChannel
+    channel "control", ControlChannel
   end
 
   pipeline :browser do
