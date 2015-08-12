@@ -11,7 +11,7 @@
     <script id="userstate" type="application/json">
 {"user_id": "<%= @user.id %>", "room": <%= @room %>,
 "user_nick": "<%= @user.nick %>",
-"admin": <%= @dev %>,
+"admin": <%= @admin %>,
 "chat_enabled": <%= @chat_enabled %>,
 "title": "<%= @title %>",
 "embed": "<%= @embed %>",
