@@ -47,6 +47,23 @@ defmodule Brainstorm do
             [ idea_id | user ]
           end)
         end
+
+      ["archive", idea_id] ->
+        state = Map.update(state, idea_id, %{}, fn idea ->
+          case idea[:archived] do
+            nil -> Map.put(idea, :archived, true)
+            true -> Map.delete(idea, :archived)
+          end
+        end)
+
+      ["trash", idea_id] ->
+        state = Map.update(state, idea_id, %{}, fn idea ->
+          case idea[:archived] do
+            nil -> Map.put(idea, :archived, "trash")
+            true -> Map.put(idea, :archived, "trash")
+            "trash" -> Map.delete(idea, :archived)
+          end
+        end)
     end
 
     Survey.Brainstorm.store(id, room, state, userstate)
