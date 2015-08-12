@@ -22,7 +22,8 @@ defmodule Survey.BrainstormController do
     user = conn.assigns.user
     conn
     |> put_layout(false)
-    |> render "live.html", user: user, room: user.sig_id, embed: "Please suggest questions below for the panelists to discuss during the upcoming live event. Even if you cannot attend the live event, you can leave questions here, and watch the recording which will be made available afterwards.", title: "Panel 1: MOOC Instructors and 1 teacher: Jim, Rosemary and Mike (Wednesday, 10:30 EST, 1430 GST)", room: 1001, chat_enabled: true, admin: admin?(user)
+    |> render "live.html", user: user, room: user.sig_id, embed: "<div><b>Important: Please do NOT click on the small horizontal screen that says 'join the conversation'.
+Instead, click the 'X' to make that box disappear.</b><p /><iframe width='560' height='315' src='https://www.youtube.com/embed/fN8Ap68p2_8' frameborder='0' allowfullscreen></iframe></div>", title: "Panel 1: MOOC Instructors and 1 teacher: Jim, Rosemary and Mike (Wednesday, 10:30 EST, 1430 GST)", room: 1001, chat_enabled: true, admin: admin?(user)
   end
 
   def live_b(conn, _) do
