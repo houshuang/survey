@@ -29,7 +29,8 @@ defmodule Logger.Backends.ErrorMail do
   defp log_event(msg, ts, md, {from, to_list, format, metadata}) do
     msg = Logger.Formatter.format(format, :error, msg, ts, Dict.take(md, metadata))
           |> IO.iodata_to_binary
-    if !String.contains?(inspect(msg), "GenServer :job_worker") do
+    if !String.contains?(inspect(msg), "GenServer :job_worker") &&
+      !String.contains("bad_charset") do
       %Mailman.Email{
         from: from,
         to: to_list,
