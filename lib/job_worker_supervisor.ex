@@ -7,11 +7,7 @@ use Supervisor
 
   def init([]) do
     children = [
-      worker(Survey.JobWorker, [], restart: :permanent, id: 1),
-      worker(Survey.JobWorker, [], restart: :permanent, id: 2),
-      worker(Survey.JobWorker, [], restart: :permanent, id: 3),
-      worker(Survey.JobWorker, [], restart: :permanent, id: 4),
-      worker(Survey.JobWorker, [], restart: :permanent, id: 5)
+      worker(Survey.JobWorker, [], restart: :permanent)
     ]
 
     supervise(children, strategy: :one_for_one, max_restarts: 5000, max_seconds: 5)
