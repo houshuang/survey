@@ -46,7 +46,6 @@
     <th>Chats</th><th>Emails</th>
     <%= for wk <- 1..@max_review do %><th>Review wk<%= wk %></th><% end %>
     <th>Wiki authors</th><th>Wiki revs</th><th>Wiki diff</th>
-    <%= for wk <- 1..@etherpad_max do %><th>Etherpad wk<%= wk %> authors</th><th>Etherpad wk<%= wk %> diff</th><% end %>
   </thead>
   <tbody>
     <%= for group <- @groups do %>
@@ -80,15 +79,6 @@
         <td><%= group.wiki_rev %></td>
         <td><a href='<%= group.wiki_url %>'><%= group.wiki_diff %></a></td>
 
-        <%= for wk <- 1..@etherpad_max do %>
-          <%= if rev = Map.get(group.etherpad_rev, wk) do %>
-        <td><%= rev[:authors] %></td>
-        <td><a href='https://etherpad.mooc.encorelab.org/p/<%= rev[:hash] %>'><%= rev[:diff] %></a></td>
-        <%= else %>
-        <td><%= %></td>
-        <td><%= %></td>
-      <% end %>
-      <% end %>
       </tr>
       <% end %>
   </tbody>
