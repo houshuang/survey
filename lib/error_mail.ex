@@ -30,7 +30,7 @@ defmodule Logger.Backends.ErrorMail do
     msg = Logger.Formatter.format(format, :error, msg, ts, Dict.take(md, metadata))
           |> IO.iodata_to_binary
     if !String.contains?(inspect(msg), "GenServer :job_worker") &&
-      !String.contains?("bad_charset") do
+      !String.contains?(inspect(msg), "bad_charset") do
       %Mailman.Email{
         from: from,
         to: to_list,
