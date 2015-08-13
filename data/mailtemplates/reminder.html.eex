@@ -1,4 +1,4 @@
-<h2>Reminder: Join our second and final live event in 15 minutes</h2>
-Our live event is starting in about 15 minutes, at 2:30PM EST (18:30 GST). You will have a chance to interact live with several of the key people from this MOOC, and we'd love to hear your ideas, questions and feedback. Please go to the Live section of Week 6 in the EdX MOOC, or follow this direct link: <a href='<%= Mail.gen_url(id, basename <> "/live_b") %>'>Live Session 1</a>
+<h2>Reminder: Join our second and final live event in 25 minutes</h2>
+Our live event is starting in about 25 minutes, at 2:30PM EST (18:30 GST). You will have a chance to interact live with several of the key people from this MOOC, and we'd love to hear your ideas, questions and feedback. Please go to the Live section of Week 6 in the EdX MOOC, or follow this direct link: <a href='<%= Mail.gen_url(id, basename <> "/live_b") %>'>Live Session 2</a>
 
   <p>Please don't respond to this email, replies will not be received. Add a message in the Tech issues thread in the forum, if you have any concerns.</p>
