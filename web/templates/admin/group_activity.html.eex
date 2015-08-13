@@ -81,9 +81,9 @@
         <td><a href='<%= group.wiki_url %>'><%= group.wiki_diff %></a></td>
 
         <%= for wk <- 1..@etherpad_max do %>
-          <%= if group.etherpad_rev[wk] do %>
-        <td><%= group.etherpad_rev[wk][:authors] %></td>
-        <td><a href='https://etherpad.mooc.encorelab.org/p/<%= group.etherpad_rev[wk][:hash] %>'><%= group.etherpad_rev[wk][:diff] %></a></td>
+          <%= if rev = Map.get(group.etherpad_rev, wk) do %>
+        <td><%= rev[:authors] %></td>
+        <td><a href='https://etherpad.mooc.encorelab.org/p/<%= rev[:hash] %>'><%= rev[:diff] %></a></td>
         <%= else %>
         <td><%= %></td>
         <td><%= %></td>
