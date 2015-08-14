@@ -19,7 +19,7 @@ $(document).ready(function(){
           T.val(newValue);
         } else {
           T.next('.counter').text(valueNum - len);
-        }			
+        }
       });
     }
     if (min) {
@@ -30,7 +30,7 @@ $(document).ready(function(){
 
 });
 
-// Still need text input and grid 
+// Still need text input and grid
 function restore(item, i, type) {
   switch(type) {
     case "textbox":
@@ -56,13 +56,13 @@ check_textarea_length = function(T, min) {
     T.next('.counter').html("<font color=green>✓</font>");
   } else {
     T.next('.counter').html("<font color=red>At least " + (min - len) + " more words required</font>");
-  }			
+  }
 }
 
 
 validate = function(res) {
-  res = validate_page();
-  if (res.length === 0) {
+  // res = validate_page();
+  // if (res.length === 0) {
     $('.header').html("")
 
     $('form').submit();
@@ -80,7 +80,7 @@ validate = function(res) {
       300, function(){
 
       });
-  }
+  // }
 }
 
 validate_page = function(pg) {
