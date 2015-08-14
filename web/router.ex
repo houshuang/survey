@@ -188,6 +188,11 @@ defmodule Survey.Router do
     get "/gallerywalk", ReviewController, :gallerywalk
     get "/gallerywalk", ReviewController, :gallerywalk
 
+    # exit survey
+    get "/exit-survey", ReflectionController, :exit
+    post "/exit-survey", ReflectionController, :exit
+
+
     # brainstorm
     post "/brainstorm", BrainstormController, :index
     get "/brainstorm", BrainstormController, :index
