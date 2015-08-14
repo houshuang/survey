@@ -87,6 +87,6 @@ defmodule Survey.ReviewController do
   end
 
   def gallerywalk_initial(conn, _) do
-    html conn, "<h3>Please select a group on the left to view their design project, and leave a comment</h3>"
+    html conn, "<h3>Please select a group on the left to view their design project, and leave at least one comment to get graded</h3>"
   end
 end

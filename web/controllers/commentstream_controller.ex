@@ -6,6 +6,7 @@ defmodule Survey.CommentstreamController do
     p = params["f"]
     if p["comment"] && String.strip(p["comment"]) != "" do
       Commentstream.add(p["resourcetype"], p["identifier"], p["comment"], conn.assigns.user.id, conn.assigns.user.nick)
+      Survey.Grade.submit(conn, "gallerywalk", 1.0)
       json conn, "Submitted"
     else
       json conn, "No comment"
