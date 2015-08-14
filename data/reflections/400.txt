@@ -1,4 +1,4 @@
-multi,As an educator, how much potential do you feel MOOCs have as a form of professional learning?
+radio,As an educator, how much potential do you feel MOOCs have as a form of professional learning?
 	Lots of potential
 	Some potential
 	Little potential
@@ -54,13 +54,13 @@ rows
 	The role of a teacher in enacting inquiry is quite different from that of normal classroom teaching
 	Technology allows for student-centered designs, and there are an increasing number of available tools and applications to support teachers in designing such activities.
 
-multi,What would be an ideal length of time for an inquiry learning experience?
+radio,What would be an ideal length of time for an inquiry learning experience?
 	a few minutes per class period
 	an entire class period
 	several consecutive class periods
 	several weeks of class time
 	1 month or more of class time
-multi,How often do you think inquiry lessons should be included?
+radio,How often do you think inquiry lessons should be included?
 	every day
 	once per week
 	once per month
