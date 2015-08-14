@@ -132,7 +132,7 @@ defmodule Survey.Encore do
       {:ok, page} ->
         url = ["MOOC", page["id"]]
         {:ok, txt} = make_request("renderContent", List.flatten([url, ""]))
-        txt = String.replace(txt, "src=\"/download/attachments", "src=\"https://wiki.mooc.encorelab.org/download/attachments")
+        txt = String.replace(txt, "src=\"/download/attachments", "src=\"https://wiki.mooc.encorelab.org/download/attachments") |> String.replace("<base href=\"http://wiki.mooc.encorelab.org\"/>", "")
         rev = Map.get(page, "version")
         |> string_to_int_safe
 
