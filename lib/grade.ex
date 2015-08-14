@@ -57,7 +57,7 @@ defmodule Survey.Grade do
 
         if !dbentry.submitted do
           case res = PlugLti.Grade.call(lti, grade) do
-            :ok -> 
+            :ok ->
               Repo.update!(%{dbentry | submitted: true})
               Logger.info("Submitted grade for #{component}")
             {:error, message} -> Logger.warn(
@@ -70,8 +70,8 @@ defmodule Survey.Grade do
           :ok
         end
 
-      rescue 
-        e in [NoCacheMatch, NoLTISession] -> 
+      rescue
+        e in [NoCacheMatch, NoLTISession] ->
           Logger.warn "Grade: " <> Exception.message(e)
           {:error, Exception.message(e)}
         e -> raise e
@@ -85,7 +85,7 @@ defmodule Survey.Grade do
     if component do
       query = from f in query, where: f.component == ^component
     end
-    query 
+    query
     |> Repo.all
     |> Enum.map(&simple_submit/1)
   end
@@ -96,14 +96,14 @@ defmodule Survey.Grade do
     if component do
       query = from f in query, where: f.component == ^component
     end
-    query 
+    query
     |> Repo.all
     |> Enum.map(&simple_submit/1)
   end
 
   def simple_submit(usergrade) do
     case PlugLti.Grade.call(Survey.Cache.get(usergrade.cache_id), usergrade.grade) do
-      :ok -> 
+      :ok ->
       Logger.info("Submitted grade for #{usergrade.cache_id}")
       {:error, message} -> Logger.warn(
       "Not able to submit grade, cache id #{usergrade.cache_id}, message: #{inspect(message)}")
