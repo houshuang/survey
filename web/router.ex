@@ -181,6 +181,8 @@ defmodule Survey.Router do
     post "/wiki-review", ReviewController, :wiki
     get "/wiki-review", ReviewController, :wiki
     post "/wiki-review/submit", ReviewController, :wiki_submit
+    post "/gallerywalk", ReviewController, :gallerywalk
+    get "/gallerywalk", ReviewController, :gallerywalk
 
     # brainstorm
     post "/brainstorm", BrainstormController, :index

@@ -16,7 +16,7 @@ defmodule Prelude.Map do
 
   defp extract_and_put(map, item, groups) do
     path = Enum.map(groups, fn group -> Map.get(item, group) end)
-    deep_put(map, path, item)
+    deep_put(map, path, [item])
   end
 
   # put an arbitrarily deep key into an existing map. If a value

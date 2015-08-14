@@ -2,6 +2,8 @@ defmodule Survey.ReviewController do
   use Survey.Web, :controller
   alias Survey.DesignGroup
   alias Survey.Review
+  import Ecto.Query
+  require Ecto.Query
   alias Survey.Repo
   require Logger
   import Prelude
@@ -61,6 +63,17 @@ defmodule Survey.ReviewController do
     Survey.Grade.submit_grade(conn, "review_wk4", 1.0)
     ParamSession.redirect(conn, "/wiki-review?submitted=true")
   end
+
+  def gallerywalk(conn, params) do
+    groupids = [10, 70, 114, 153, 216, 294, 2, 13, 18, 28, 75, 108, 121, 157, 202, 213, 21, 56,
+      149, 170, 63, 181, 188, 231, 240]
+    groups = (from f in Survey.DesignGroup, where: f.id in ^groupids)
+              |> Survey.Repo.all
+              |> Prelude.Map.group_by([:sig_id])
+    sigs = Survey.SIG.map
+
+    conn
+    |> put_layout(false)
+    |> render "gallerywalk.html", groups: groups, sigs: sigs
+  end
 end
-
-
