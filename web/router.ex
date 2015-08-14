@@ -189,8 +189,8 @@ defmodule Survey.Router do
     post "/gallerywalk", ReviewController, :gallerywalk
 
     # exit survey
-    get "/exit-survey", ReflectionController, :exit
-    post "/exit-survey", ReflectionController, :exit
+    get "/exit", ReflectionController, :exit
+    post "/exit", ReflectionController, :exit
 
 
     # brainstorm
