@@ -130,10 +130,7 @@ defmodule Survey.Encore do
   def update_wiki_cache(id) do
     case get_page(id) do
       {:ok, page} ->
-        url = case get_wiki_url(id) do
-          [x] -> ["MOOC", x]
-          h= ["MOOC", x] -> h
-        end
+        url = ["MOOC", page["id"]]
         {:ok, txt} = make_request("renderContent", List.flatten([url, ""]))
         txt = String.replace(txt, "src=\"/download/attachments", "src=\"https://wiki.mooc.encorelab.org/download/attachments")
         rev = Map.get(page, "version")
