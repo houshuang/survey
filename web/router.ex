@@ -186,7 +186,7 @@ defmodule Survey.Router do
     get "/gallerywalk/initial", ReviewController, :gallerywalk_initial
     post "/gallerywalk/initial", ReviewController, :gallerywalk_initial
     get "/gallerywalk", ReviewController, :gallerywalk
-    get "/gallerywalk", ReviewController, :gallerywalk
+    post "/gallerywalk", ReviewController, :gallerywalk
 
     # exit survey
     get "/exit-survey", ReflectionController, :exit
