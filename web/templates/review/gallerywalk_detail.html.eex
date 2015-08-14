@@ -1,0 +1,8 @@
+<div><a href="#comments">Jump to comments</a></div>
+<style>
+h1 { font-size: 28px !important; }
+h2 { font-size: 22px !important; } </style>
+<h1><%= @title %></h1>
+<%= raw @htmlstr %>
+<hr>
+<%= render Survey.CommentstreamView, "_comments.html", comments: @comments, conn: @conn %>

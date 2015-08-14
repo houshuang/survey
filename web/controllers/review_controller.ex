@@ -76,4 +76,17 @@ defmodule Survey.ReviewController do
     |> put_layout(false)
     |> render "gallerywalk.html", groups: groups, sigs: sigs
   end
+
+  def gallerywalk_detail(conn, %{"id" => id}) do
+    group = Survey.DesignGroup.get(id)
+    htmlstr = Survey.Cache.get(group.wiki_cache_id)
+    comments = Survey.Commentstream.get("gallerywalk", id)
+    title = group.title
+    conn
+    |> render "gallerywalk_detail.html", htmlstr: htmlstr, comments: comments, title: title
+  end
+
+  def gallerywalk_initial(conn, _) do
+    html conn, "<h3>Please select a group on the left to view their design project, and leave a comment</h3>"
+  end
 end

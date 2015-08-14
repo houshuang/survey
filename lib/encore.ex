@@ -106,9 +106,9 @@ defmodule Survey.Encore do
     end
   end
 
-  def get_page(id) do
+  def get_wiki_url(id) do
     group = Survey.DesignGroup.get(id)
-    req = case group.wiki_url do
+    case group.wiki_url do
       nil -> raise "No URL for this group"
       "https://wiki.mooc.encorelab.org/display/MOOC/" <> rest ->
         ["MOOC", URI.decode_www_form(rest)]
@@ -116,6 +116,10 @@ defmodule Survey.Encore do
         [rest]
         x -> raise "Mismatch in URL: #{x}"
     end
+  end
+
+  def get_page(id) do
+    req = get_wiki_url(id)
     make_request("getPage", req)
   end
 
@@ -126,7 +130,12 @@ defmodule Survey.Encore do
   def update_wiki_cache(id) do
     case get_page(id) do
       {:ok, page} ->
-        txt = Map.get(page, "content")
+        url = case get_wiki_url(id) do
+          [x] -> ["MOOC", x]
+          h= ["MOOC", x] -> h
+        end
+        {:ok, txt} = make_request("renderContent", List.flatten([url, ""]))
+        txt = String.replace(txt, "src=\"/download/attachments", "src=\"https://wiki.mooc.encorelab.org/download/attachments")
         rev = Map.get(page, "version")
         |> string_to_int_safe
 
