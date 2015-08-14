@@ -114,10 +114,10 @@ defmodule Survey.HTML.Survey do
     if length(h.choicerange) == 3 && string_is_integer(Enum.at(h.choicerange, 2)) do
       [min, max, num] = h.choicerange
       elems = List.flatten [min, List.duplicate("", String.to_integer(num) - 2), max]
-      labels = Enum.to_list(1..length(elems)) |> Enum.map(&Integer.to_string/1)
     else
       elems = labels = h.choicerange
     end
+    labels = Enum.to_list(1..length(elems)) |> Enum.map(&Integer.to_string/1)
 
     headercells = elems
     |> Enum.with_index

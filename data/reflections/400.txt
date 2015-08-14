@@ -1,0 +1,122 @@
+multi,As an educator, how much potential do you feel MOOCs have as a form of professional learning?
+	Lots of potential
+	Some potential
+	Little potential
+	No potential
+
+textbox,What was the greatest learning or insight about inquiry and technology that you gained from this course?
+textbox,What was something that you gained from this MOOC that you could take back to your own teaching?
+textbox,What were some obstacles or problems that you found with the course?
+
+grid,How valuable were these elements of the MOOC for your learning?
+choicerange
+	Didn't do it
+	Not at all important
+	Somewhat important
+	Important
+	Very important
+rows
+	Professor Slotta’s videos
+	UTS leaders’ videos
+	Classroom case study videos
+	Personal reflections
+	Online discussions
+	Inquiry activities
+	Design strand activities
+
+grid,How interesting did you find each of the following themes?
+choicerange
+	Not at all important
+	Somewhat important
+	Important
+	Very important
+rows
+	Defining inquiry
+	Designing inquiry Activities and Assessments
+	Collaborative Learning
+	Handheld and Mobile Devices
+	Student Contributed Content and Collective Inquiry
+	Inquiry Enactment
+
+textbox,How would you describe the role of the teacher in an inquiry-based learning environment?
+
+grid,This course put forward a particular vision or perspective about technology-enhanced inquiry for K-12 classrooms.  Please rate the following statements about the content of this course.
+choicerange
+	Strongly disagree
+	Disagree
+	Neutral
+	Agree
+	Strongly agree
+rows
+	There was nothing very new or surprising about these ideas; they are quite basic and familiar to most teachers.
+	The ideas and approaches are intriguing, but not likely to be useful for most teachers
+	The ideas about backward design are important, and useful for all teachers.
+	The role of a teacher in enacting inquiry is quite different from that of normal classroom teaching
+	Technology allows for student-centered designs, and there are an increasing number of available tools and applications to support teachers in designing such activities.
+
+multi,What would be an ideal length of time for an inquiry learning experience?
+	a few minutes per class period
+	an entire class period
+	several consecutive class periods
+	several weeks of class time
+	1 month or more of class time
+multi,How often do you think inquiry lessons should be included?
+	every day
+	once per week
+	once per month
+	once per unit or semester
+
+grid,How confident are you in enacting the following instructional practices?
+choicerange
+	Not confident
+	A little confident
+	Confident
+	Highly confident
+rows
+	Providing alternative explanations or examples when students are confused
+	Responding to difficult questions from your students
+	Adjusting your lessons to differentiate for individual student needs
+	Using a variety of assessment strategies
+	Monitoring student understanding on an ongoing basis throughout a unit
+	Assessing student understanding at the conclusion of a unit
+	Providing appropriate challenges for high-achieving students
+	Developing lessons that combine subject matter, technologies, and teaching approaches.
+
+grid,What is your opinion of working with your peers in an online course?
+choicerange
+	Not at all
+	To a large extent
+	5
+rows
+	It is important to have frequent discussions and exchanges with other students
+	It is important for me to explain my ideas to other students
+	It is important to ask other students to explain their ideas to me
+	Other students usually listened carefully to my ideas
+
+grid,Opinion about activities and content of course
+choicerange
+	Not at all
+	To a large extent
+	5
+rows
+	The level of activities required of participants was appropriate
+	The activities helped me to achieve my goals as a learner.
+	I enjoyed and benefited from the interactions with peers in discussions and inquiry activities.
+	The topics, activities, and resources of this course will be useful to me in my future teaching
+
+grid,If you participated in design strand activities, how useful did you find the following collaboration and communication tools?
+choicerange
+	Didn't know it was there
+	Not useful
+	Somewhat useful
+	Useful
+	Very useful
+rows
+	Live chat with design team members
+	Email notifications of when a team member entered
+	Email between team members
+	Etherpad prompts and editing
+	Wiki editing
+	Critical review and feedback from MOOC peers
+	Welcome message each week in design strand
+	Technology and Inquiry Resources that were brainstormed in the early weeks of the course
