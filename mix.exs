@@ -38,7 +38,7 @@ defmodule Survey.Mixfile do
       {:cowboy, "~> 1.0"},
       {:poison, "~> 1.4.0"},
       {:mix_test_watch, "~> 0.1.0"},
-      {:multidef, github: "pragdave/mdef"},
+      {:multidef, github: "pragdave/mdef", branch: "mdefp"},
       {:plug_lti, github: "houshuang/plug_lti"},
       {:httpoison, "~> 0.7"},
       {:dogstatsd, "0.0.3"},
