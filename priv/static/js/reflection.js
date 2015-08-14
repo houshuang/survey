@@ -70,18 +70,18 @@ validate = function(res) {
     $('.blocks').html("<h3>Submitting and redirecting, please don't close window...</h3>")
     return false;
   }
-  else {
-    var txt = _.map(res, function(x) { return x + "<br>" }).join("")
-    txt = "<p class='alert alert-warning'>"+ txt +"</p>"
-    $('.header').html(txt)
-    var simbolo = "0";
-    $('html,body').animate({
-      scrollTop: $('#top').offset().top},
-      300, function(){
+  // else {
+  //   var txt = _.map(res, function(x) { return x + "<br>" }).join("")
+  //   txt = "<p class='alert alert-warning'>"+ txt +"</p>"
+  //   $('.header').html(txt)
+  //   var simbolo = "0";
+  //   $('html,body').animate({
+  //     scrollTop: $('#top').offset().top},
+  //     300, function(){
 
-      });
+  //     });
   // }
-}
+// }
 
 validate_page = function(pg) {
   var warnings= []
