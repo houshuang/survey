@@ -22,7 +22,7 @@
         <span id="textbox">
           <textarea id="comment_area" name='f[comment]'></textarea></span>
         <p class='counter' length='500'>
-          <div class='stepsController submit right' id="submit"><a href='#comments'>Submit comment</a></div>
+          <div class='stepsController submit right' id="submit" style='color: #fff !important'><a href='#comments'>Submit comment</a></div>
         </fieldset>
       <% end %>
     </div>
