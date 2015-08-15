@@ -48,7 +48,7 @@ defmodule Mail do
     if !Survey.User.is_unsubscribed?(user.id, "all") do
       html = Templates.reminder(user.id, @basename)
       email = %Mailman.Email{from: "noreply@mooc.encorelab.org", to: [user.edx_email],
-        subject: "INQ101x Live Event is about to start!", html: html, text: html}
+        subject: "INQ101x: Last inquiry activity Gallery Walk opened", html: html, text: html}
       Survey.Job.add({Survey.Mailer, :deliver, [email]})
     end
   end
