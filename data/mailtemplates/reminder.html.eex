@@ -3,7 +3,7 @@ Dear MOOC participants,
 The final inquiry activity of our course will be a "Gallery Walk" where we have published all the inquiry lesson designs from the Design Strand, for you to examine and comment upon.  For those of you who are pursuing the verified certificate, this will serve as the graded "lesson critique" inquiry activity from week 6.
 
 <p><br>
-We have created a page, where you can survey all the lessons, organized by topic, and leave comments for your peers. You can find it in your week 6 listing, or <a href='<%= Mail.gen_url(id, basename <> "gallerywalk") %>'>click here to go directly to it.</a>
+We have created a page, where you can survey all the lessons, organized by topic, and leave comments for your peers. You can find it in your week 6 listing, or <a href='<%= Mail.gen_url(id, basename <> "/gallerywalk") %>'>click here to go directly to it.</a>
 
 <p><br>
 Thanks again for participating in this summer inquiry course.  We will send one final email with a link to an exit survey and final notes of thanks.
