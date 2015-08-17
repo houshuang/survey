@@ -11,8 +11,8 @@
         <div id="commentlist">
         <%= if @comments.comments && !Enum.empty?(@comments.comments) do %>
           <%= for comment <- Enum.reverse(@comments.comments) do %>
-            <p><%= comment["text"] %>
-              <i>(<%= comment["nick"] %>)</i></p>
+            <li><%= comment["text"] %>
+              <i>(<%= comment["nick"] %>)</i></li>
           <% end %>
         <% end %>
       </div>
