@@ -64,7 +64,7 @@ defmodule Survey.ReviewController do
     ParamSession.redirect(conn, "/wiki-review?submitted=true")
   end
 
-  def gallerywalk(conn, params) do
+  def gallerywalk(conn, params, logged_in \\ true) do
     groupids = [10, 70, 114, 153, 216, 294, 2, 13, 18, 28, 75, 108, 121, 157, 202, 213, 21, 56,
       149, 170, 63, 181, 188, 231, 240]
     groups = (from f in Survey.DesignGroup, where: f.id in ^groupids)
@@ -74,7 +74,11 @@ defmodule Survey.ReviewController do
 
     conn
     |> put_layout(false)
-    |> render "gallerywalk.html", groups: groups, sigs: sigs
+    |> render "gallerywalk.html", groups: groups, sigs: sigs, logged_in: logged_in
+  end
+
+  def gallerywalk_public(conn, params) do
+    gallerywalk(conn, params, false)
   end
 
   def gallerywalk_detail(conn, %{"id" => id}) do

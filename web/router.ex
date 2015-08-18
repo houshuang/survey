@@ -244,5 +244,12 @@ defmodule Survey.Router do
 
     get "/email/:hash", EmailController, :redirect
     post "/email/:hash", EmailController, :redirect
+
+    post "/public/gallerywalk/detail/:id", ReviewController, :gallerywalk_detail
+    get "/public/gallerywalk/detail/:id", ReviewController, :gallerywalk_detail
+    get "/public/gallerywalk/initial", ReviewController, :gallerywalk_initial
+    post "/public/gallerywalk/initial", ReviewController, :gallerywalk_initial
+    get "/public/gallerywalk", ReviewController, :gallerywalk_public
+    post "/public/gallerywalk", ReviewController, :gallerywalk_public
   end
 end

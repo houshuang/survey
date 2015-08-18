@@ -23,9 +23,6 @@
         <script src="/js/modernizr-2.8.3.min.js"></script>
         <script src="/js/lodash.js"></script>
         <script src="/js/review.js"></script>
- <script>
-   session = '<%= raw ParamSession.gen_cookie(@conn) %>'
-        </script>
     </head>
     <body>
         <!--[if lt IE 8]>
@@ -44,7 +41,13 @@
     <h1><%= @sigs[sig] %></h1>
     <ul>
     <%= for group <- List.flatten(sig_groups) do %>
-      <li style='margin: 8px'><a href='<%= ParamSession.gen_url(@conn, "gallerywalk/detail/#{group.id}") %>' target='iframe'><%= group.title %></a></li>
+      <li style='margin: 8px'><a href=
+      <%= if @logged_in do %>
+      '<%= ParamSession.gen_url(@conn, "gallerywalk/detail/#{group.id}") %>'
+      <%= else %>
+      '<%= "gallerywalk/detail/#{group.id}" %>'
+    <% end %>
+      target='iframe'><%= group.title %></a></li>
     <% end %>
     </ul>
   <% end %>
@@ -53,7 +56,7 @@
 <!-- --------------------------------------------------------- --!>
 
 <div class="maincontent">
-<iframe name="iframe" class="iframe" style='width: 100%; height: 100%' src="<%= ParamSession.gen_url(@conn, "/gallerywalk/initial") %>">
+<iframe name="iframe" class="iframe" style='width: 100%; height: 100%' src="/public/gallerywalk/initial">
 </div>
 </body>
 </html>

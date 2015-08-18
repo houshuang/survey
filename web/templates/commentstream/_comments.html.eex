@@ -16,6 +16,7 @@
           <% end %>
         <% end %>
       </div>
+      <%= if Map.has_key?(@conn.assigns, :user)  do %>
         <label id="addnew"><i>Add new comment</i></label>
         <hr style='margin: 10px 10px 10px 0;'>
 
@@ -24,10 +25,11 @@
         <p class='counter' length='500'>
           <div class='stepsController submit right' id="submit" style='color: #fff !important'><a href='#comments' style='color: #fff !important'>Submit comment</a></div>
         </fieldset>
-      <% end %>
     </div>
   </div>
 </div>
 <script>var nick='<%= @conn.assigns.user.nick %>'</script>
 <script src="/js/jquery-1.8.3.min.js"></script>
 <script src="/js/commentstream.js"></script>
+      <% end %>
+<% end %>
