@@ -1,5 +1,5 @@
 radio,As an educator, how much potential do you feel MOOCs have as a form of professional learning?
-	Lots of potential
+	Lot's of potential
 	Some potential
 	Little potential
 	No potential

@@ -21,7 +21,7 @@ defmodule Survey.SurveyController do
     if conn.assigns.user.exitsurvey_state do
       render conn, "survey_success.html"
     else
-      render conn, "exit.html"
+      render conn, "exit.html", message: "Thank you for completing the survey! We look forward to your ideas and creativity during the rest of the course."
     end
   end
 
@@ -37,7 +37,7 @@ defmodule Survey.SurveyController do
 
   def submit_exit(conn, params) do
     set_survey_exit(conn, params, true)
-    render conn, "survey_success.html"
+    render conn, "survey_success.html", message: "Thank you for completing the survey, and for taking part in this course. Best of luck in integrating ideas and inspiration from this course in your future endeavours!"
   end
 
   def submitajax_exit(conn, params) do
