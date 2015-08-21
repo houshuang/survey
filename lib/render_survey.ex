@@ -18,36 +18,36 @@ defmodule Survey.RenderSurvey do
     case type do
       "textbox" -> textanswer(h, data)
       "text" -> textanswer(h, data)
-      "grid" -> gridanswer(h)
+      # "grid" -> gridanswer(h)
       "radio" -> radioanswer(:radio, h, data)
       "multi" -> radioanswer(:multi, h, data)
       x -> []
     end
   end
 
-  def gridanswer({qid, rest}, data) do
-    question = Report.get_question(qid)
-    labels = Poison.encode!(question.rows)
+  # def gridanswer({qid, rest}, data) do
+  #   question = Report.get_question(qid)
+  #   labels = Poison.encode!(question.rows)
 
-    minmax = [ "", Enum.at(question.choicerange,0),
-      "","","","",Enum.at(question.choicerange,1), ""]
-    |> Enum.reverse
-    |> Poison.encode!
+  #   minmax = [ "", Enum.at(question.choicerange,0),
+  #     "","","","",Enum.at(question.choicerange,1), ""]
+  #   |> Enum.reverse
+  #   |> Poison.encode!
 
-    series = 0..Enum.count(question.rows)-1
-    |> Enum.map(fn x -> "#{qid}.#{int_to_letter(x)}" end)
-    |> Enum.map(fn x -> Report.answers(qid, x) end)
-    |> Report.recast
-    |> Enum.reverse
-    |> Enum.with_index
-    |> Enum.map(fn {x, i} ->
-        %{data: x, color: Enum.at(@colors, i)}
-      end)
-    |> Poison.encode!
+  #   series = 0..Enum.count(question.rows)-1
+  #   |> Enum.map(fn x -> "#{qid}.#{int_to_letter(x)}" end)
+  #   |> Enum.map(fn x -> Report.answers(qid, x) end)
+  #   |> Report.recast
+  #   |> Enum.reverse
+  #   |> Enum.with_index
+  #   |> Enum.map(fn {x, i} ->
+  #       %{data: x, color: Enum.at(@colors, i)}
+  #     end)
+  #   |> Poison.encode!
 
-    {:grid, %{ series: series, labels: labels, question: question,
-        rowcount: Enum.count(question.rows), minmax: minmax }}
-  end
+  #   {:grid, %{ series: series, labels: labels, question: question,
+  #       rowcount: Enum.count(question.rows), minmax: minmax }}
+  # end
 
   def radioanswer(type, h = {i, rest}, data) do
     case type do
