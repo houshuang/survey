@@ -25,7 +25,8 @@ defmodule Survey.ReflectionController do
     reflection = Reflection.get(conn.assigns.user.id, prompt.id)
     if reflection do
       conn = put_flash(conn, :info,
-        "Thank you for submitting your reflection this week, you have already been graded. Feel free to modify and submit again.")
+        "Thank you for submitting your reflection this week, you have already been
+        graded. Feel free to modify and submit again.")
       Survey.Grade.submit_grade(conn, "reflection_#{id}", 1.0)
     end
 

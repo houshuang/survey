@@ -22,6 +22,13 @@ defmodule Prelude do
     end
   end
 
+  def string_is_integer(str) do
+    case Integer.parse(str) do
+      {_, ""} -> true
+      _       -> false
+    end
+  end
+
   def atomify_map(map) do
     Enum.map(map, fn {k,v} -> {safe_to_atom(k), v} end)
     |> Enum.into(%{})

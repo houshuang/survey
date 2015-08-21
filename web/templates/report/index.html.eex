@@ -24,6 +24,7 @@ for x1 <- @questions do
     {:steams, data} ->
       render "_steam.html", data: data
     {tag, data} -> raw ""
+    [] -> raw ""
   end
 end
 

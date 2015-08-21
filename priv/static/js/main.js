@@ -2,9 +2,9 @@ $(document).ready(function(){
     $("form").rememberState({objName: 'search'});
     $(".numeric").keyup(function() {
 	// Get the non Numeric char that was enetered
-	var nonNumericChars = $(this).val().replace(/[0-9]/g, '');                                  
-	// Now set the value in text box 
-	$(this).val( $(this).val().replace(nonNumericChars, ''));    
+	var nonNumericChars = $(this).val().replace(/[0-9]/g, '');
+	// Now set the value in text box
+	$(this).val( $(this).val().replace(nonNumericChars, ''));
 
     });
     Window.counter = 1;
@@ -45,7 +45,7 @@ $(document).ready(function(){
 		T.val(newValue);
 	    } else {
 		T.next('.counter').text(valueNum - len);
-	    }			
+	    }
 	});
 
     });
@@ -58,7 +58,7 @@ buttons = function() {
     Window.blocksLength = Window.blocksLength;
     var txt = "";
     if (Window.counter == Window.blocksLength && Window.counter !== undefined) {
-	txt =  "<div class='stepsController prev left'><a href='#'>Previous</a></div>" + 
+	txt =  "<div class='stepsController prev left'><a href='#'>Previous</a></div>" +
 	    "<div class='stepsController submit right'><a href='#'>Submit</a></div>";
     } else if (Window.counter == 1 || Window.counter === undefined) {
 	txt = "<div class='stepsController next right'><a href='#'>Next</a></div>";
@@ -75,7 +75,7 @@ buttonclick = function(e) {
     if(e.text == "Submit") {
 	$('form').submit();
     }
-    $.post("/survey/submitajax", $("form").serialize(), function(data){
+    $.post(submitajax, $("form").serialize(), function(data){
     });
     var simbolo = "0";
     if($(e).parent().hasClass('next')){

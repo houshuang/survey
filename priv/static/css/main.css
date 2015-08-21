@@ -185,7 +185,7 @@ html body {
 }
 .stepsbar .bar .progress span {
     position: absolute;
-    
+
     right: 0;
     font-size: 13px;
     top: -20px;
@@ -212,7 +212,7 @@ html body {
 .blocks form .block fieldset input[type="text"], .blocks form .block fieldset input[type="email"] {
     width: 100%;
     border: solid 1px #ccc;
-} 
+}
 .blocks form .block fieldset textarea {
     border: solid 1px #ccc;
     width: 100%;
@@ -251,17 +251,17 @@ html body {
 }
 
 .blocks form .block fieldset .table .line .cellgradient4 { background: #0F00E5; }
-.blocks form .block fieldset .table .line .cellgradient3 { background: #2C1CEB; } 
-.blocks form .block fieldset .table .line .cellgradient2 { background: #4A39F1; } 
-.blocks form .block fieldset .table .line .cellgradient1 { background: #6855F7; } 
-.blocks form .block fieldset .table .line .cellgradient0 { background: #8672FD; } 
+.blocks form .block fieldset .table .line .cellgradient3 { background: #2C1CEB; }
+.blocks form .block fieldset .table .line .cellgradient2 { background: #4A39F1; }
+.blocks form .block fieldset .table .line .cellgradient1 { background: #6855F7; }
+.blocks form .block fieldset .table .line .cellgradient0 { background: #8672FD; }
 
 
 .blocks form .block fieldset .table .line.answers .cell {
     width: 12%
     text-align: center;
     font-size: 13px;
-    padding: 30px 20px;
+    padding: 15px 10px;
     font-weight: bolder;
     /* background: #0877B0; */
     color: #fff;

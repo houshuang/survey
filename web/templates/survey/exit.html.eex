@@ -8,9 +8,9 @@
 </div>
 
 <div class='blocks'>
-  <%= form_for @conn, survey_path(@conn, :submit), [name: :search], fn _ -> %>
+  <%= form_for @conn, survey_path(@conn, :submit_exit), [name: :search], fn _ -> %>
   <%= raw ParamSession.form_session @conn %>
-  <%= survey %>
+  <%= exitsurvey %>
     <div class='navbuttons'></div>
   <% end %>
 </div>
@@ -19,6 +19,5 @@
     <script src="/js/main.js"></script>
     <script src="/js/remember-state.js"></script>
     <script>
-submit='/survey/submit';
-submitajax='/survey/submitajax';
+submitajax='/survey/submitajax-exit';
     </script>

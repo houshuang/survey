@@ -1,5 +1,6 @@
 defmodule Survey.HTML.Survey do
   import MultiDef
+  import Prelude
 
   #--------------------------------------------------------------------------------
   # main pipeline
@@ -266,13 +267,6 @@ defmodule Survey.HTML.Survey do
 
   defp map_merge(h, elem, kv) do
     Map.update(h, elem, kv, fn x -> Map.merge(x, kv) end)
-  end
-
-  defp string_is_integer(str) do
-    case Integer.parse(str) do
-      {_, ""} -> true
-      _ -> false
-    end
   end
 
 end

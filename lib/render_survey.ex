@@ -3,7 +3,7 @@ defmodule Survey.RenderSurvey do
   require Ecto.Query
   import Ecto.Query
   import Prelude
-  @colors Enum.reverse([ "#ffffff", "#d7191c", "#fdae61", "#ffffbf", 
+  @colors Enum.reverse([ "#ffffff", "#d7191c", "#fdae61", "#ffffbf",
     "#ffffbf", "#abd9e9", "#2c7bb6", "#ffffff"])
 
   #----------------------------------------
@@ -17,74 +17,37 @@ defmodule Survey.RenderSurvey do
   def do_question(h = {i, %{type: type}}, data) do
     case type do
       "textbox" -> textanswer(h, data)
-      # "grid" -> gridanswer(h)
+      "text" -> textanswer(h, data)
+      "grid" -> gridanswer(h)
       "radio" -> radioanswer(:radio, h, data)
       "multi" -> radioanswer(:multi, h, data)
       x -> []
     end
   end
 
-  # def text(conn, %{"qid" => qid} = params) do 
-    # if qid == "" or qid == "all" or params["all"] do
-    #   answers = Report.get_all_qids(params["search"]) 
-    #             |> Enum.filter(fn x -> x != nil end)
-    #   response_count = Enum.count(answers) 
+  def gridanswer({qid, rest}, data) do
+    question = Report.get_question(qid)
+    labels = Poison.encode!(question.rows)
 
-    #   assigns = %{
-    #     answers: answers, 
-    #     question: %{number: 'all'},
-    #     all: true,
-    #     response_count: response_count,
-    #     search: params["search"]
-    #   }
-    # else
-    #   answers = Report.get_qid(qid, params["search"]) 
-    #             |> Repo.all
-    #             |> Enum.filter(fn x -> x != nil end)
-    #   response_count = Enum.count(answers) 
-    #   all_items_count = Report.total_responses(qid)
-    #   survey_length = Report.survey_length
-    #   answer_percentage = all_items_count / survey_length
+    minmax = [ "", Enum.at(question.choicerange,0),
+      "","","","",Enum.at(question.choicerange,1), ""]
+    |> Enum.reverse
+    |> Poison.encode!
 
-    #   assigns = %{
-    #     answers: answers, 
-    #     question: Report.get_question(qid),
-    #     percentage_answered: answer_percentage,
-    #     response_count: response_count,
-    #     search: params["search"],
-    #     all: false
-    #     }
-    # end
+    series = 0..Enum.count(question.rows)-1
+    |> Enum.map(fn x -> "#{qid}.#{int_to_letter(x)}" end)
+    |> Enum.map(fn x -> Report.answers(qid, x) end)
+    |> Report.recast
+    |> Enum.reverse
+    |> Enum.with_index
+    |> Enum.map(fn {x, i} ->
+        %{data: x, color: Enum.at(@colors, i)}
+      end)
+    |> Poison.encode!
 
-    # conn 
-    # |> put_layout("report.html")
-    # |> render "textanswer.html", assigns  
-
-  # end
-
-  # def gridanswer(qid) do 
-    # question = Report.get_question(qid)
-    # labels = Poison.encode!(question.rows)
-
-    # minmax = [ "", Enum.at(question.choicerange,0), 
-    #   "","","","",Enum.at(question.choicerange,1), ""] 
-    # |> Enum.reverse
-    # |> Poison.encode!
-
-    # series = 0..Enum.count(question.rows)-1
-    # |> Enum.map(fn x -> "#{qid}.#{int_to_letter(x)}" end)
-    # |> Enum.map(fn x -> Report.answers(qid, x) end)
-    # |> Report.recast
-    # |> Enum.reverse
-    # |> Enum.with_index
-    # |> Enum.map(fn {x, i} -> 
-    #     %{data: x, color: Enum.at(@colors, i)}
-    #   end)
-    # |> Poison.encode!
-
-    # {:grid, %{ series: series, labels: labels, question: question,
-    #     rowcount: Enum.count(question.rows), minmax: minmax }}
-  # end
+    {:grid, %{ series: series, labels: labels, question: question,
+        rowcount: Enum.count(question.rows), minmax: minmax }}
+  end
 
   def radioanswer(type, h = {i, rest}, data) do
     case type do
@@ -99,7 +62,7 @@ defmodule Survey.RenderSurvey do
   end
 
   def radio({qid, rest}, data = {query, column}) do
-    (from t in query, select: [count(t.id), 
+    (from t in query, select: [count(t.id),
       fragment("?->>? as x", field(t, ^column), ^qid)],
       where: (fragment("length(?->>?)", field(t, ^column), ^qid)) > 0,
       group_by: fragment("x"))
@@ -132,32 +95,32 @@ defmodule Survey.RenderSurvey do
     series
     |> Enum.map(fn [k, v] -> {v, k} end)
     |> Enum.into(%{})
-    |> fn x -> 
-      Map.merge(letter_range(num_def), x) 
+    |> fn x ->
+      Map.merge(letter_range(num_def), x)
       end.()
     |> Enum.map(fn {k, v} -> [v, k] end)
   end
 
-  #---------------------------------------- 
+  #----------------------------------------
   def textanswer({i, h}, data) do
     question = h[:name]
     answers = random_five_text(i, data)
 
     {:text, %{ answers: answers, question: h }}
   end
-  
+
   def random_five_text(qid, {query, column}) do
     :random.seed(:os.timestamp)
 
     # get a list of filled in answers
     altquery = from p in query, select: p.id,
       where: fragment("length(?::jsonb->>?::text) > 0", field(p, ^column), ^qid)
-    alternatives = altquery |> Repo.all 
-    textids = 0..4 
+    alternatives = altquery |> Repo.all
+    textids = 0..4
     |> Enum.map(fn _ -> :random.uniform(Enum.count(alternatives)) end)
     |> Enum.map(fn x -> Enum.at(alternatives, x) end)
 
-    (from p in query, 
+    (from p in query,
       select: fragment("?::jsonb->?::text", field(p, ^column), ^qid),
       where: p.id in ^textids)
     |> Repo.all
@@ -169,19 +132,19 @@ defmodule Survey.RenderSurvey do
       where: fragment("length(?->>?) > 0", field(f, ^column), ^qid))
 
     if search && search != "" do
-      query = from f in query, 
+      query = from f in query,
       where: fragment("?->>? ILIKE '%?::text%'", field(f, ^column), ^qid, ^search)
     end
 
     answers = Repo.all(query)
 
-    response_count = Enum.count(answers) 
+    response_count = Enum.count(answers)
     all_items_count = total_responses(qid, data)
     survey_length = survey_length(data)
     answer_percentage = all_items_count / survey_length
 
     assigns = %{
-      answers: answers, 
+      answers: answers,
       question: rest,
       percentage_answered: answer_percentage,
       response_count: response_count,
@@ -193,7 +156,7 @@ defmodule Survey.RenderSurvey do
   #-------------------------------------------
     def survey_length({query, column}) do
     (from p in query, select: count(p.id),
-      where: not is_nil(field(p, ^column))) 
+      where: not is_nil(field(p, ^column)))
     |> Repo.one
     end
 
@@ -208,5 +171,5 @@ defmodule Survey.RenderSurvey do
     |> Enum.map(fn x -> {"#{[x + ?a - 1]}", 0} end)
     |> Enum.into(%{})
   end
-    
+
 end

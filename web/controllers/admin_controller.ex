@@ -28,6 +28,19 @@ defmodule Survey.AdminController do
       texturl: "/admin/report/reflections/text/#{id}/", total: total
   end
 
+  def exit(conn, _) do
+    questions = Survey.HTML.Survey.parse("data/exitsurvey.txt") |> Survey.HTML.Survey.index_mapping
+    query = (from f in Survey.User, where: f.exitsurvey_state == true)
+    total = (from f in query, select: count(f.id)) |> Survey.Repo.one
+
+    questions = Survey.RenderSurvey.render_survey(questions, {query, :exitsurvey})
+
+    conn
+    |> put_layout("report.html")
+    |> render Survey.ReportView, "index.html", questions: questions,
+      texturl: "", total: total
+  end
+
   def reflections(conn, params) do
     render conn, "reflection_list.html", reflections: Survey.Prompt.list
   end

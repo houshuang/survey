@@ -17,6 +17,8 @@ defmodule Survey.User do
     field :survey, Survey.JSON
     field :yearsteaching, :integer
     field :surveystate, :integer
+    field :exitsurvey_state, :boolean
+    field :exitsurvey, Survey.JSON
     field :allow_email, :boolean
     field :admin, :boolean
     field :resources_seen, {:array, :integer}

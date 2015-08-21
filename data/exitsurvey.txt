@@ -7,14 +7,14 @@ radio,As an educator, how much potential do you feel MOOCs have as a form of pro
 textbox,What was the greatest learning or insight about inquiry and technology that you gained from this course?
 textbox,What was something that you gained from this MOOC that you could take back to your own teaching?
 textbox,What were some obstacles or problems that you found with the course?
-
+section
 grid,How valuable were these elements of the MOOC for your learning?
 choicerange
 	Didn't do it
-	Not at all important
-	Somewhat important
-	Important
-	Very important
+	Not at all valuable
+	Somewhat valuable
+	Valuable
+	Very valuable
 rows
 	Professor Slotta’s videos
 	UTS leaders’ videos
@@ -24,12 +24,13 @@ rows
 	Inquiry activities
 	Design strand activities
 
+section
 grid,How interesting did you find each of the following themes?
 choicerange
-	Not at all important
-	Somewhat important
-	Important
-	Very important
+	Not at all interesting
+	Somewhat interesting
+	Interesting
+	Very interesting
 rows
 	Defining inquiry
 	Designing inquiry Activities and Assessments
@@ -38,6 +39,7 @@ rows
 	Student Contributed Content and Collective Inquiry
 	Inquiry Enactment
 
+section
 textbox,How would you describe the role of the teacher in an inquiry-based learning environment?
 
 grid,This course put forward a particular vision or perspective about technology-enhanced inquiry for K-12 classrooms.  Please rate the following statements about the content of this course.
@@ -54,6 +56,7 @@ rows
 	The role of a teacher in enacting inquiry is quite different from that of normal classroom teaching
 	Technology allows for student-centered designs, and there are an increasing number of available tools and applications to support teachers in designing such activities.
 
+section
 radio,What would be an ideal length of time for an inquiry learning experience?
 	a few minutes per class period
 	an entire class period
@@ -82,6 +85,7 @@ rows
 	Providing appropriate challenges for high-achieving students
 	Developing lessons that combine subject matter, technologies, and teaching approaches.
 
+section
 grid,What is your opinion of working with your peers in an online course?
 choicerange
 	Not at all
@@ -93,7 +97,7 @@ rows
 	It is important to ask other students to explain their ideas to me
 	Other students usually listened carefully to my ideas
 
-grid,Opinion about activities and content of course
+grid,What do you think about the activities and contents of the course?
 choicerange
 	Not at all
 	To a large extent
@@ -104,6 +108,7 @@ rows
 	I enjoyed and benefited from the interactions with peers in discussions and inquiry activities.
 	The topics, activities, and resources of this course will be useful to me in my future teaching
 
+section
 grid,If you participated in design strand activities, how useful did you find the following collaboration and communication tools?
 choicerange
 	Didn't know it was there

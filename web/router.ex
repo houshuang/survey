@@ -74,6 +74,12 @@ defmodule Survey.Router do
     post "/survey/submit", SurveyController, :submit
     post "/survey/submitajax", SurveyController, :submitajax
 
+    # exit survey
+    get "/exit", SurveyController, :exit
+    post "/exit", SurveyController, :exit
+    post "/survey/submit-exit", SurveyController, :submit_exit
+    post "/survey/submitajax-exit", SurveyController, :submitajax_exit
+
     # resource submission/review
     post "/resource/add", ResourceController, :add
     get "/resource/add", ResourceController, :add
@@ -188,11 +194,6 @@ defmodule Survey.Router do
     get "/gallerywalk", ReviewController, :gallerywalk
     post "/gallerywalk", ReviewController, :gallerywalk
 
-    # exit survey
-    get "/exit", ReflectionController, :exit
-    post "/exit", ReflectionController, :exit
-
-
     # brainstorm
     post "/brainstorm", BrainstormController, :index
     get "/brainstorm", BrainstormController, :index
@@ -219,6 +220,7 @@ defmodule Survey.Router do
     get "/report/text/:qid", ReportController, :fulltext
     post "/report/text/:qid", ReportController, :fulltext
     get "/report/tags", ReportController, :tags
+    get "/report/exit", AdminController, :exit
     get "/report/resource", ResourceController, :report
     get "/report/designgroups", DesignGroupController, :report
     get "/report/designgroups/activity", AdminController, :group_activity

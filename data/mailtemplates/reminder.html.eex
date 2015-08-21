@@ -1,14 +1,23 @@
 Dear MOOC participants,
 <p><br>
-The final inquiry activity of our course will be a "Gallery Walk" where we have published all the inquiry lesson designs from the Design Strand, for you to examine and comment upon.  For those of you who are pursuing the verified certificate, this will serve as the graded "lesson critique" inquiry activity from week 6.
+This is one of the final emails relating to the course.  We hope it is one that you will respond to, because we are asking for your help completing our exit survey.  As educators and educational researchers we are studying our own efforts - particularly the aspects concerned with inquiry in a MOOC - and this survey is a crucial part of that research.
 
 <p><br>
-We have created a page, where you can survey all the lessons, organized by topic, and leave comments for your peers. You can find it in your week 6 listing, or <a href='<%= Mail.gen_url(id, basename <> "/gallerywalk") %>'>click here to go directly to it.</a>
+You are receiving this email because you completed the entry survey, and as you can imagine, it is highly useful to have both an entry and exit response from each participant.
 
 <p><br>
-Thanks again for participating in this summer inquiry course.  We will send one final email with a link to an exit survey and final notes of thanks.
+So, if you could please take 10 minutes to fill in this survey, it would provide us with important feedback about your experience, as well as about the course design. <a href='<%= Mail.gen_url(id, basename <> "/exit") %>'>Click here to go directly to it.</a>
 
 <p><br>
+Again, please do not hesitate to ask any questions in the discussion forums (we will continue to monitor them) and we will reply promptly.
+
+<p><br>
+Thank you very much for doing this survey for us.  We have enjoyed being part of the course and we hope you have too.  We hope you enjoy the rest of your summer and (for those of you who are classroom teachers) good luck getting back to school!
+
+<p><br>
+Sincerely,<br>
 <em>Jim, Rosemary and the MOOC design team</em>
 
-<p>Please don't respond to this email, replies will not be received. Add a message in the Tech issues thread in the forum, if you have any concerns.</p>
+<p><br>
+<em>PS: You can expect at least one more email from us, asking you if you are interested in joining an inquiry lesson design community, where we will build on all the technology resources and lesson designs from the MOOC in a wiki space, organized by SIG topics. </em>
+
