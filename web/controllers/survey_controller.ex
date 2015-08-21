@@ -11,28 +11,28 @@ defmodule Survey.SurveyController do
 
   def index(conn, _) do
     if conn.assigns.user.surveystate == 99 do
-      render conn, "survey_success.html"
+      render conn, "survey_success.html", message: "Thank you for completing the survey! We look forward to your ideas and creativity during the rest of the course."
     else
       render conn, "index.html"
     end
   end
 
-  def exit(conn, _) do
-    if conn.assigns.user.exitsurvey_state do
-      render conn, "survey_success.html"
-    else
-      render conn, "exit.html", message: "Thank you for completing the survey! We look forward to your ideas and creativity during the rest of the course."
-    end
-  end
-
   def submit(conn, params) do
     set_survey(conn, params, true)
-    render conn, "survey_success.html"
+    render conn, "survey_success.html", message: "Thank you for completing the survey! We look forward to your ideas and creativity during the rest of the course."
   end
 
   def submitajax(conn, params) do
     set_survey(conn, params)
     text conn, "Success"
+  end
+
+  def exit(conn, _) do
+    if conn.assigns.user.exitsurvey_state do
+      render conn, "survey_success.html", message: "Thank you for completing the survey, and for taking part in this course. Best of luck in integrating ideas and inspiration from this course in your future endeavours!"
+    else
+      render conn, "exit.html"
+    end
   end
 
   def submit_exit(conn, params) do
