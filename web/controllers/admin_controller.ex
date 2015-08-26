@@ -38,7 +38,18 @@ defmodule Survey.AdminController do
     conn
     |> put_layout("report.html")
     |> render Survey.ReportView, "index.html", questions: questions,
-      texturl: "", total: total
+      texturl: "exit/text/", total: total
+  end
+
+  def exit_text(conn, %{"qid" => qid} = params) do
+    qid = string_to_int_safe(qid)
+    query = (from f in Survey.User, where: f.exitsurvey_state == true)
+    questions = Survey.HTML.Survey.parse("data/exitsurvey.txt") |> Survey.HTML.Survey.index_mapping
+    assigns = Survey.RenderSurvey.prepare_text({qid, questions[qid]},
+      params["search"], {query, :exitsurvey})
+    conn
+    |> put_layout("report.html")
+    |> render Survey.ReportView, "textanswer.html", assigns
   end
 
   def reflections(conn, params) do

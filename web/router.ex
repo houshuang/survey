@@ -221,6 +221,7 @@ defmodule Survey.Router do
     post "/report/text/:qid", ReportController, :fulltext
     get "/report/tags", ReportController, :tags
     get "/report/exit", AdminController, :exit
+    get "/report/exit/text/:qid", AdminController, :exit_text
     get "/report/resource", ResourceController, :report
     get "/report/designgroups", DesignGroupController, :report
     get "/report/designgroups/activity", AdminController, :group_activity
