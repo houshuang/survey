@@ -53,5 +53,33 @@ defmodule Prelude.Map do
     obj = get_in(object, path)
     put_in(object, path, Map.delete(obj, item))
   end
+
+  # turns all string map keys into atoms, leaving existing atoms alone (only top level).
+  def atomify_map(map) do
+    Enum.map(map, fn {k,v} -> {Prelude.String.to_atom(k), v} end)
+    |> Enum.into(%{})
+  end
+
+  # turns all atom map keys into strings, leaving existing strings alone (only top level).
+  def stringify_map(map) do
+    Enum.map(map, fn {k,v} -> {Prelude.Atom.to_string(k), v} end)
+    |> Enum.into(%{})
+  end
+
+  # converts strings to atoms, but leaves existing atoms alone
+  def to_atom(x) when is_atom(x), do: x
+  def to_atom(x) when is_binary(x), do: String.to_atom(x)
+
+  # appends to an array value in a map, creating one if the key does not exist
+  def append_list(map, key, val) do
+    Map.update(map, key, [val], fn x -> List.insert_at(x, 0, val) end)
+  end
+
+  # switch the keys with the values in a map
+  def switch(map) when is_map(map) do
+    map
+    |> Enum.map(fn {k, v} -> {v, k} end)
+    |> Enum.into(%{})
+  end
 end
 
