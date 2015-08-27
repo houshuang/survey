@@ -18,15 +18,85 @@ defmodule Survey.RenderSurvey do
     case type do
       "textbox" -> textanswer(h, data)
       "text" -> textanswer(h, data)
-      # "grid" -> gridanswer(h)
+      # "grid" -> gridanswer(h, data)
       "radio" -> radioanswer(:radio, h, data)
       "multi" -> radioanswer(:multi, h, data)
       x -> []
     end
   end
 
-  # def gridanswer({qid, rest}, data) do
-  #   question = Report.get_question(qid)
+  # def answers(qid, subq, {query, column}) do
+  #   result =
+  #   (from t in query, select: [count(t.id),
+  #     fragment("?->>? as x", field(t, ^column), ^subq)],
+  #     where: (fragment("length(?->>?)", field(t, ^column), ^subq)) > 0,
+  #     group_by: fragment("x"))
+  #     |> Repo.all
+
+  #   if result.num_rows == 0 do
+  #     [0, 0, 0, 0, 0, 0, 0, 0]
+  #   else
+  #     question = result.rows
+  #     |> pad_rows(qid) # also reverses order
+  #     |> Enum.sort_by(fn {i, _} -> String.to_integer(i) end)
+  #     |> Enum.map(fn {_, x} -> x end)
+  #     |> percentageify
+  #   end
+  # end
+
+  # def pad_rows(rows, qid) do
+  #   question = get_question(qid)
+
+  #   size = Enum.at(question.choicerange, 2)
+  #   |> String.to_integer
+
+  #   padding = 1..size
+  #   |> Enum.map(fn x -> {Integer.to_string(x), 0} end)
+  #   |> Enum.into(%{})
+
+  #   if Enum.empty?(rows) do
+  #     padding
+  #   else
+  #     rows = rows
+  #     |> Enum.map(fn {k, v} -> {v, k} end)
+  #     |> Enum.into(%{})
+
+  #     Map.merge(padding, rows)
+  #   end
+  # end
+
+  # def percentageify(lst) do
+  #   sum = Enum.sum(lst)
+  #   perclst = Enum.map(lst, fn x -> x/sum end)
+  #   left = Enum.at(perclst, 0) + Enum.at(perclst, 1) + (Enum.at(perclst, 2) / 2)
+  #   lbuffer = (1 - left)
+  #   rbuffer = 1 - (Enum.sum(perclst) - left)
+  #   [ lbuffer,
+  #     Enum.at(perclst, 0),
+  #     Enum.at(perclst, 1),
+  #     (Enum.at(perclst, 2)/2),
+  #     (Enum.at(perclst, 2)/2),
+  #     Enum.at(perclst, 3),
+  #     Enum.at(perclst, 4),
+  #     rbuffer ]
+  #   |> Enum.map(fn x -> clean_nils(x, 0) end)
+  #   |> Enum.map(fn x -> round(x * 100) end)
+  # end
+
+  # def clean_nils(nil, alt), do: alt
+  # def clean_nils(x, _), do: x
+
+  # def recast(lsts) do
+  #   acc = 1..Enum.count(Enum.at(lsts, 0)) |> Enum.map(fn _ -> [] end)
+  #   Enum.reduce(lsts, acc, fn x, acc ->
+  #     acc
+  #     |> Enum.with_index
+  #     |> Enum.map(fn {y, i} -> [Enum.at(x, i) | y] end)
+  #   end)
+  #   |> Enum.map(fn x -> Enum.reverse(x) end)
+  # end
+
+  # def gridanswer({qid, question}, data = {query, column}) do
   #   labels = Poison.encode!(question.rows)
 
   #   minmax = [ "", Enum.at(question.choicerange,0),
@@ -36,7 +106,7 @@ defmodule Survey.RenderSurvey do
 
   #   series = 0..Enum.count(question.rows)-1
   #   |> Enum.map(fn x -> "#{qid}.#{int_to_letter(x)}" end)
-  #   |> Enum.map(fn x -> Report.answers(qid, x) end)
+  #   |> Enum.map(fn x -> answers.(qid, x, data) end)
   #   |> Report.recast
   #   |> Enum.reverse
   #   |> Enum.with_index

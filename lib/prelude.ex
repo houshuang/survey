@@ -65,6 +65,7 @@ defmodule Prelude do
     end
   end
 
+  def int_to_letter(i), do: "#{[i + ?a]}"
 
   def indexify(lst) when is_list(lst) do
     lst
