@@ -96,6 +96,10 @@ defmodule Survey.Router do
     get "/resource/tag-cloud", ResourceController, :tag_cloud
     get "resource/list", ResourceController, :list
 
+
+    # issue #1 in plug_lti made it impossible to verify paths with
+    # wildcard routes, thus the silly pattern below. Fixed in upcoming version.
+
     # reflection
     post "/reflection/submission", ReflectionController, :submit
     post "/reflection", ReflectionController, :index
