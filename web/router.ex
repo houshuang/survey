@@ -2,19 +2,6 @@ defmodule Survey.Router do
   use Survey.Web, :router
   @logformat "%u %t %m \"%U\" %>s %b %D"
 
-  socket "/ws", Survey do
-    channel "rooms:*", RoomChannel
-    channel "admin", AdminChannel
-    channel "brainstorm:*", BrainstormChannel
-    channel "control", ControlChannel
-  end
-  socket "/ws/websocket", Survey do
-    channel "rooms:*", RoomChannel
-    channel "admin", AdminChannel
-    channel "brainstorm:*", BrainstormChannel
-    channel "control", ControlChannel
-  end
-
   pipeline :browser do
     plug ParamSession
     plug EnsureLti

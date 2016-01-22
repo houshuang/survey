@@ -48,13 +48,13 @@ defmodule Survey.JobWorker do
     {:noreply, []}
   end
 
-  def handle_info(:timer, []) do
-    work
+  def handle_cast(:clean, []) do
+    send self, :clean
     {:noreply, []}
   end
 
-  def handle_cast(:clean, []) do
-    send self, :clean
+  def handle_info(:timer, []) do
+    work
     {:noreply, []}
   end
 

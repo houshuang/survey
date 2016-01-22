@@ -19,7 +19,7 @@ defmodule Survey.Mixfile do
     [mod: {Survey, []},
       applications: [:phoenix, :phoenix_html, :cowboy, :logger,
         :phoenix_ecto, :postgrex, :dogstatsd, :httpoison, :plug_accesslog,
-        :quantum ]]
+        :quantum, :tzdata ]]
   end
 
   # Specifies which paths to compile per environment
@@ -30,11 +30,12 @@ defmodule Survey.Mixfile do
   #
   # Type `mix help deps` for examples and options
   defp deps do
-    [{:phoenix, "~> 0.13"},
-      {:phoenix_ecto, "~> 0.4"},
+    [
+      {:phoenix, "~> 1.1"},
+      {:phoenix_ecto, "~> 2.0"},
+      {:phoenix_html, "~> 2.3"},
       {:postgrex, ">= 0.0.0"},
-      {:phoenix_html, "~> 1.0"},
-      {:phoenix_live_reload, "~> 0.4", only: :dev},
+      {:phoenix_live_reload, "~> 1.0.3", only: :dev},
       {:cowboy, "~> 1.0"},
       {:poison, "~> 1.4.0"},
       {:mix_test_watch, "~> 0.1.0"},

@@ -35,11 +35,11 @@ defmodule Mail.Receive do
         [user_id, group_id] = Hashids.decode!(@hashid, hash)
 
         group = Survey.DesignGroup.get(group_id)
-        if is_nil(group), raise: "MailReceive: No such design group"
+        if is_nil(group), do: raise "MailReceive: No such design group"
 
         user = Survey.User.get(user_id)
-        if is_nil(user), raise: "MailReceive: No such user"
-        if user.design_group_id != group.id, raise: "User not member of group"
+        if is_nil(user), do: raise "MailReceive: No such user"
+        if user.design_group_id != group.id, do: raise "User not member of group"
 
         {:ok, user, group}
 

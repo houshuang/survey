@@ -6,6 +6,8 @@ defmodule Survey.Endpoint do
   # You should set gzip to true if you are running phoenix.digest
   # when deploying your static files in production.
 
+  socket "/ws", Survey.UserSocket
+  socket "/ws/websocket", Survey.UserSocket
   plug Plug.Static,
     at: "/", from: :survey, gzip: true,
     only: ~w(lessonplans css fonts fonts img images js favicon.ico robots.txt brainstorm live)
@@ -28,5 +30,5 @@ defmodule Survey.Endpoint do
   plug Plug.Head
 
 
-  plug :router, Survey.Router
+  plug Survey.Router
 end

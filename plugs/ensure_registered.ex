@@ -64,7 +64,7 @@ defmodule EnsureRegistered do
     # we need to show a page asking user to manually "redirect him/herself"
     if get_session(conn, :edx_userid) do
       conn 
-      |> put_session(:ensure_registered_redirect, full_path(conn))
+      |> put_session(:ensure_registered_redirect, conn.request_path)
       |> ParamSession.redirect("/user/register")
       |> Conn.halt
     else

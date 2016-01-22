@@ -19,7 +19,7 @@ defmodule EnsureSIG do
     if !conn.assigns.user.sig_id || conn.assigns.user.sig_id == 0 do
       Logger.info("Redirecting to SIG selection page")
       conn 
-      |> put_session(:ensure_sig_redirect, full_path(conn))
+      |> put_session(:ensure_sig_redirect, conn.request_path)
       |> ParamSession.redirect("/user/select_sig")
       |> Conn.halt
     else

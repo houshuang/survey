@@ -36,8 +36,8 @@ config :logger, :console,
 # Configure your database
 config :survey, Survey.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
+  username: "stian",
+  password: "",
   database: "survey_dev",
   extensions: [{Extensions.JSON, library: Poison}],
   size: 10 # The amount of database connections in the pool
