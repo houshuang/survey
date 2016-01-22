@@ -8,6 +8,6 @@ defmodule Survey.UserSocket do
   channel "control", ControlChannel
 
   ## Transports
-  transport :websocket, Phoenix.Transports.WebSocket
-  transport :longpoll, Phoenix.Transports.LongPoll
+  transport :websocket, Phoenix.Transports.WebSocket, check_origin: false
+  transport :longpoll, Phoenix.Transports.LongPoll, check_origin: false
 end
